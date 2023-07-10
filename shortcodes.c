@@ -83,7 +83,7 @@ cs = 0;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("foo AbarB bat");
+    bstring output = parse("ABAAB");
     printf("%s\n", output->data);
     return 0;
 }

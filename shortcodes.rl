@@ -15,20 +15,23 @@ bstring grab_chunk(char *start, char *end) {
   spc = space*;
   sep = space+;
 
-  label = alpha+ 
+  name = alpha+ 
     > mark
-    % {printf("label: '%s'\n", grab_chunk(mark, p)->data);};
+    % {printf("name: '%s'\n", grab_chunk(mark, p)->data);};
+  argname = alpha+ 
+    > mark
+    % {printf("argname: '%s'\n", grab_chunk(mark, p)->data);};
   value = (('"' [^"]* '"') | alnum+) 
     > mark 
     % {printf("value: '%s'\n", grab_chunk(mark, p)->data);};
-  arg = (label '=' value) 
+  arg = (argname '=' value) 
     > mark
     % {printf("arg: '%s'\n", grab_chunk(mark, p)->data);};
 
   start = '{{';
   end = '}}';
 
-  main := (start spc label (sep (value | arg))* spc end);
+  main := (start spc name (sep (arg | value))* spc end);
 
 }%%
 
@@ -55,7 +58,7 @@ bstring parse(char *_input) {
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{   foo  \"sarasa\" foobar foo=\"bar\" }}");
+    bstring output = parse("{{ thename  \"onearg\" another arg=\"val3\" }}");
     printf("\n%s\n", output->data);
     return 0;
 }

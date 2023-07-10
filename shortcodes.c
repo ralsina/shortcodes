@@ -8,7 +8,7 @@ bstring grab_chunk(char *start, char *end) {
 }
 
 
-#line 33 "shortcodes.rl"
+#line 36 "shortcodes.rl"
 
 
 bstring parse(char *_input) {
@@ -21,7 +21,7 @@ static const int shortcode_error = 0;
 static const int shortcode_en_main = 1;
 
 
-#line 37 "shortcodes.rl"
+#line 40 "shortcodes.rl"
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
@@ -41,7 +41,7 @@ static const int shortcode_en_main = 1;
 	cs = shortcode_start;
 	}
 
-#line 51 "shortcodes.rl"
+#line 54 "shortcodes.rl"
     
 #line 47 "shortcodes.c"
 	{
@@ -104,16 +104,16 @@ case 4:
 	goto st0;
 tr4:
 #line 20 "shortcodes.rl"
-	{printf("label: '%s'\n", grab_chunk(mark, p)->data);}
+	{printf("name: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 tr14:
-#line 23 "shortcodes.rl"
+#line 26 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 tr24:
-#line 23 "shortcodes.rl"
-	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 #line 26 "shortcodes.rl"
+	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
+#line 29 "shortcodes.rl"
 	{printf("arg: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 st5:
@@ -165,16 +165,16 @@ case 7:
 	goto st0;
 tr6:
 #line 20 "shortcodes.rl"
-	{printf("label: '%s'\n", grab_chunk(mark, p)->data);}
+	{printf("name: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 tr15:
-#line 23 "shortcodes.rl"
+#line 26 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 tr25:
-#line 23 "shortcodes.rl"
-	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 #line 26 "shortcodes.rl"
+	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
+#line 29 "shortcodes.rl"
 	{printf("arg: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 st8:
@@ -246,8 +246,8 @@ case 10:
 		goto st9;
 	goto st0;
 tr18:
-#line 20 "shortcodes.rl"
-	{printf("label: '%s'\n", grab_chunk(mark, p)->data);}
+#line 23 "shortcodes.rl"
+	{printf("argname: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st11;
 st11:
 	if ( ++p == pe )
@@ -337,14 +337,14 @@ case 14:
 	_out: {}
 	}
 
-#line 52 "shortcodes.rl"
+#line 55 "shortcodes.rl"
 
     printf("\nLabel is: '%s'\n", label->data);
     return output;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{   foo  \"sarasa\" foobar foo=\"bar\" }}");
+    bstring output = parse("{{ thename  \"onearg\" another arg=\"val3\" }}");
     printf("\n%s\n", output->data);
     return 0;
 }

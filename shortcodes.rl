@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "bstrlib/bstrlib.h"
 
-
-
 bstring grab_chunk(char *start, char *end) {
   blk2bstr(start, end-start);
 }
@@ -19,47 +17,65 @@ bstring grab_chunk(char *start, char *end) {
 
   name = alpha+ 
     > mark
-    % {printf("name: '%s'\n", grab_chunk(mark, p)->data);};
+    % {bcatcstr(output, "N"); 
+       bcatblk(output, mark, p-mark);
+       bcatcstr(output, "\n");
+      };
   argname = alpha+ 
     > mark
-    % {printf("argname: '%s'\n", grab_chunk(mark, p)->data);};
-  value = (('"' [^"]* '"') | alnum+) 
-    > mark 
-    % {printf("value: '%s'\n", grab_chunk(mark, p)->data);};
-  arg = (argname '=' value) 
+    % {bcatcstr(output, "A"); 
+       bcatblk(output, mark, p-mark);
+       bcatcstr(output, "\n");
+      };
+  qvalue = ('"' [^"]* '"')
     > mark
-    % {printf("arg: '%s'\n", grab_chunk(mark, p)->data);};
+    % {bcatcstr(output, "V"); 
+       bcatblk(output, mark+1, p-mark-2);
+       bcatcstr(output, "\n");
+      };
 
-  start = '{{';
-  end = '}}';
+  value = alnum+
+    > mark
+    % {bcatcstr(output, "V"); 
+       bcatblk(output, mark, p-mark);
+       bcatcstr(output, "\n");
+      };
 
-  main := (start spc name (sep (arg | value))* spc end);
+  arg = ((argname '=')? (value|qvalue));
+
+  start_p = '{{%';
+  end_p = '%}}';
+
+  start_b = '{{<';
+  end_b = '>}}';
+
+  start = start_p | start_b ;
+  end = end_p | end_b ;
+
+  shortcode = (start spc name (sep arg)* spc end)
+  > {bcatcstr(output, "---\n");}
+  % {bcatcstr(output, "\n");};
+
+  main := (any* shortcode)*;
 }%%
 
-bstring parse(char *_input) {
+bstring parse(char *input) {
     %%write data;
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
-    bstring output = bfromcstr("out");
-
-    bstring input = bfromcstr(_input);
-    char *p = input->data;
-    char *pe = p + blength(input);
+    char *p = input;
+    char *pe = p + strlen(input);
 
     char *mark = 0;
-    bstring label;
-    
- 
+    bstring output = bfromcstr("");
     %% write init;
     %% write exec;
-
-    printf("\nLabel is: '%s'\n", label->data);
     return output;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{ thename  \"onearg\" another arg=\"val3\" }}");
+    bstring output = parse("{{< thename  \"onearg\">}} {{% another argname=\"val3\" %}}");
     printf("\n%s\n", output->data);
     return 0;
 }

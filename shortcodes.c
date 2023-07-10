@@ -3,17 +3,19 @@
 #include <stdio.h>
 #include "bstrlib/bstrlib.h"
 
+
+
 bstring grab_chunk(char *start, char *end) {
   blk2bstr(start, end-start);
 }
 
 
-#line 35 "shortcodes.rl"
+#line 37 "shortcodes.rl"
 
 
 bstring parse(char *_input) {
     
-#line 17 "shortcodes.c"
+#line 19 "shortcodes.c"
 static const int shortcode_start = 1;
 static const int shortcode_first_final = 15;
 static const int shortcode_error = 0;
@@ -21,7 +23,7 @@ static const int shortcode_error = 0;
 static const int shortcode_en_main = 1;
 
 
-#line 39 "shortcodes.rl"
+#line 41 "shortcodes.rl"
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
@@ -36,14 +38,14 @@ static const int shortcode_en_main = 1;
     
  
     
-#line 40 "shortcodes.c"
+#line 42 "shortcodes.c"
 	{
 	cs = shortcode_start;
 	}
 
-#line 53 "shortcodes.rl"
+#line 55 "shortcodes.rl"
     
-#line 47 "shortcodes.c"
+#line 49 "shortcodes.c"
 	{
 	if ( p == pe )
 		goto _test_eof;
@@ -79,7 +81,7 @@ case 3:
 		goto tr3;
 	goto st0;
 tr3:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -88,7 +90,7 @@ st4:
 	if ( ++p == pe )
 		goto _test_eof4;
 case 4:
-#line 92 "shortcodes.c"
+#line 94 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr4;
 		case 125: goto tr6;
@@ -103,24 +105,24 @@ case 4:
 		goto st4;
 	goto st0;
 tr4:
-#line 20 "shortcodes.rl"
+#line 22 "shortcodes.rl"
 	{printf("name: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 tr14:
-#line 26 "shortcodes.rl"
+#line 28 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 tr24:
-#line 26 "shortcodes.rl"
+#line 28 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
-#line 29 "shortcodes.rl"
+#line 31 "shortcodes.rl"
 	{printf("arg: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st5;
 st5:
 	if ( ++p == pe )
 		goto _test_eof5;
 case 5:
-#line 124 "shortcodes.c"
+#line 126 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st5;
 		case 34: goto tr8;
@@ -139,7 +141,7 @@ case 5:
 		goto tr9;
 	goto st0;
 tr8:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -148,7 +150,7 @@ st6:
 	if ( ++p == pe )
 		goto _test_eof6;
 case 6:
-#line 152 "shortcodes.c"
+#line 154 "shortcodes.c"
 	if ( (*p) == 34 )
 		goto st7;
 	goto st6;
@@ -164,24 +166,24 @@ case 7:
 		goto tr14;
 	goto st0;
 tr6:
-#line 20 "shortcodes.rl"
+#line 22 "shortcodes.rl"
 	{printf("name: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 tr15:
-#line 26 "shortcodes.rl"
+#line 28 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 tr25:
-#line 26 "shortcodes.rl"
+#line 28 "shortcodes.rl"
 	{printf("value: '%s'\n", grab_chunk(mark, p)->data);}
-#line 29 "shortcodes.rl"
+#line 31 "shortcodes.rl"
 	{printf("arg: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st8;
 st8:
 	if ( ++p == pe )
 		goto _test_eof8;
 case 8:
-#line 185 "shortcodes.c"
+#line 187 "shortcodes.c"
 	if ( (*p) == 125 )
 		goto st15;
 	goto st0;
@@ -191,7 +193,7 @@ st15:
 case 15:
 	goto st0;
 tr9:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -200,7 +202,7 @@ st9:
 	if ( ++p == pe )
 		goto _test_eof9;
 case 9:
-#line 204 "shortcodes.c"
+#line 206 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr14;
 		case 125: goto tr15;
@@ -218,7 +220,7 @@ case 9:
 		goto st9;
 	goto st0;
 tr10:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -227,7 +229,7 @@ st10:
 	if ( ++p == pe )
 		goto _test_eof10;
 case 10:
-#line 231 "shortcodes.c"
+#line 233 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr14;
 		case 61: goto tr18;
@@ -246,14 +248,14 @@ case 10:
 		goto st9;
 	goto st0;
 tr18:
-#line 23 "shortcodes.rl"
+#line 25 "shortcodes.rl"
 	{printf("argname: '%s'\n", grab_chunk(mark, p)->data);}
 	goto st11;
 st11:
 	if ( ++p == pe )
 		goto _test_eof11;
 case 11:
-#line 257 "shortcodes.c"
+#line 259 "shortcodes.c"
 	if ( (*p) == 34 )
 		goto tr20;
 	if ( (*p) < 65 ) {
@@ -266,7 +268,7 @@ case 11:
 		goto tr21;
 	goto st0;
 tr20:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -275,7 +277,7 @@ st12:
 	if ( ++p == pe )
 		goto _test_eof12;
 case 12:
-#line 279 "shortcodes.c"
+#line 281 "shortcodes.c"
 	if ( (*p) == 34 )
 		goto st13;
 	goto st12;
@@ -291,7 +293,7 @@ case 13:
 		goto tr24;
 	goto st0;
 tr21:
-#line 11 "shortcodes.rl"
+#line 13 "shortcodes.rl"
 	{
     mark = p;
   }
@@ -300,7 +302,7 @@ st14:
 	if ( ++p == pe )
 		goto _test_eof14;
 case 14:
-#line 304 "shortcodes.c"
+#line 306 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr24;
 		case 125: goto tr25;
@@ -337,7 +339,7 @@ case 14:
 	_out: {}
 	}
 
-#line 54 "shortcodes.rl"
+#line 56 "shortcodes.rl"
 
     printf("\nLabel is: '%s'\n", label->data);
     return output;

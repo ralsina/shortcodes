@@ -32,7 +32,6 @@ bstring grab_chunk(char *start, char *end) {
   end = '}}';
 
   main := (start spc name (sep (arg | value))* spc end);
-
 }%%
 
 bstring parse(char *_input) {

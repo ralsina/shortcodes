@@ -8,7 +8,7 @@ bstring grab_chunk(char *start, char *end) {
 }
 
 
-#line 36 "shortcodes.rl"
+#line 35 "shortcodes.rl"
 
 
 bstring parse(char *_input) {
@@ -21,7 +21,7 @@ static const int shortcode_error = 0;
 static const int shortcode_en_main = 1;
 
 
-#line 40 "shortcodes.rl"
+#line 39 "shortcodes.rl"
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
@@ -41,7 +41,7 @@ static const int shortcode_en_main = 1;
 	cs = shortcode_start;
 	}
 
-#line 54 "shortcodes.rl"
+#line 53 "shortcodes.rl"
     
 #line 47 "shortcodes.c"
 	{
@@ -337,7 +337,7 @@ case 14:
 	_out: {}
 	}
 
-#line 55 "shortcodes.rl"
+#line 54 "shortcodes.rl"
 
     printf("\nLabel is: '%s'\n", label->data);
     return output;

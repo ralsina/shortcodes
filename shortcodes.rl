@@ -1,15 +1,34 @@
 #include <stdio.h>
 #include "bstrlib/bstrlib.h"
 
+bstring grab_chunk(char *start, char *end) {
+  blk2bstr(start, end-start);
+}
+
 %%{
   machine shortcode;
 
-  label = alpha+ > {label_start = p; printf("%s", label_start);} > {printf("=>%s", label_start);};
+  action mark {
+    mark = p;
+  }
 
-  start = '{{' % {printf("start");};
-  end = '}}' > {printf("end");};
+  spc = space*;
+  sep = space+;
 
-  main := (start label? end);
+  label = alpha+ 
+    > mark
+    % {printf("label: '%s'\n", grab_chunk(mark, p)->data);};
+  value = (('"' [^"]* '"') | alnum+) 
+    > mark 
+    % {printf("value: '%s'\n", grab_chunk(mark, p)->data);};
+  arg = (label '=' value) 
+    > mark
+    % {printf("arg: '%s'\n", grab_chunk(mark, p)->data);};
+
+  start = '{{';
+  end = '}}';
+
+  main := (start spc label (sep (value | arg))* spc end);
 
 }%%
 
@@ -24,18 +43,19 @@ bstring parse(char *_input) {
     char *p = input->data;
     char *pe = p + blength(input);
 
-    char *label_start = 0;
-    char *label_end = 0;
+    char *mark = 0;
+    bstring label;
     
  
     %% write init;
     %% write exec;
 
+    printf("\nLabel is: '%s'\n", label->data);
     return output;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{foo}}");
+    bstring output = parse("{{   foo  \"sarasa\" foobar foo=\"bar\" }}");
     printf("\n%s\n", output->data);
     return 0;
 }

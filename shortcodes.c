@@ -11,7 +11,7 @@ bstring parse(char *_input) {
     
 #line 13 "shortcodes.c"
 static const int shortcode_start = 1;
-static const int shortcode_first_final = 1;
+static const int shortcode_first_final = 6;
 static const int shortcode_error = 0;
 
 static const int shortcode_en_main = 1;
@@ -26,18 +26,18 @@ static const int shortcode_en_main = 1;
     bstring input = bfromcstr(_input);
     char *p = input->data;
     char *pe = p + blength(input);
+
+    char *label_start = 0;
+    char *label_end = 0;
     
  
     
-#line 33 "shortcodes.c"
+#line 36 "shortcodes.c"
 	{
 	cs = shortcode_start;
-	ts = 0;
-	te = 0;
-	act = 0;
 	}
 
-#line 29 "shortcodes.rl"
+#line 32 "shortcodes.rl"
     
 #line 43 "shortcodes.c"
 	{
@@ -45,45 +45,94 @@ static const int shortcode_en_main = 1;
 		goto _test_eof;
 	switch ( cs )
 	{
-tr0:
-#line 11 "shortcodes.rl"
-	{te = p+1;{printf("start");}}
-	goto st1;
-tr2:
-#line 12 "shortcodes.rl"
-	{te = p+1;{printf("end");}}
-	goto st1;
-st1:
-#line 1 "NONE"
-	{ts = 0;}
-	if ( ++p == pe )
-		goto _test_eof1;
 case 1:
-#line 1 "NONE"
-	{ts = p;}
-#line 65 "shortcodes.c"
-	switch( (*p) ) {
-		case 65: goto tr0;
-		case 66: goto tr2;
-	}
+	if ( (*p) == 123 )
+		goto st2;
 	goto st0;
 st0:
 cs = 0;
 	goto _out;
+st2:
+	if ( ++p == pe )
+		goto _test_eof2;
+case 2:
+	if ( (*p) == 123 )
+		goto st3;
+	goto st0;
+st3:
+	if ( ++p == pe )
+		goto _test_eof3;
+case 3:
+	if ( (*p) == 125 )
+		goto tr4;
+	if ( (*p) > 90 ) {
+		if ( 97 <= (*p) && (*p) <= 122 )
+			goto tr3;
+	} else if ( (*p) >= 65 )
+		goto tr3;
+	goto st0;
+tr3:
+#line 9 "shortcodes.rl"
+	{printf("start");}
+#line 7 "shortcodes.rl"
+	{label_start = p; printf("%s", label_start);}
+#line 7 "shortcodes.rl"
+	{printf("=>%s", label_start);}
+	goto st4;
+st4:
+	if ( ++p == pe )
+		goto _test_eof4;
+case 4:
+#line 87 "shortcodes.c"
+	if ( (*p) == 125 )
+		goto tr6;
+	if ( (*p) > 90 ) {
+		if ( 97 <= (*p) && (*p) <= 122 )
+			goto st4;
+	} else if ( (*p) >= 65 )
+		goto st4;
+	goto st0;
+tr4:
+#line 9 "shortcodes.rl"
+	{printf("start");}
+#line 10 "shortcodes.rl"
+	{printf("end");}
+	goto st5;
+tr6:
+#line 10 "shortcodes.rl"
+	{printf("end");}
+	goto st5;
+st5:
+	if ( ++p == pe )
+		goto _test_eof5;
+case 5:
+#line 110 "shortcodes.c"
+	if ( (*p) == 125 )
+		goto st6;
+	goto st0;
+st6:
+	if ( ++p == pe )
+		goto _test_eof6;
+case 6:
+	goto st0;
 	}
-	_test_eof1: cs = 1; goto _test_eof; 
+	_test_eof2: cs = 2; goto _test_eof; 
+	_test_eof3: cs = 3; goto _test_eof; 
+	_test_eof4: cs = 4; goto _test_eof; 
+	_test_eof5: cs = 5; goto _test_eof; 
+	_test_eof6: cs = 6; goto _test_eof; 
 
 	_test_eof: {}
 	_out: {}
 	}
 
-#line 30 "shortcodes.rl"
+#line 33 "shortcodes.rl"
 
     return output;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("ABAAB");
-    printf("%s\n", output->data);
+    bstring output = parse("{{foo}}");
+    printf("\n%s\n", output->data);
     return 0;
 }

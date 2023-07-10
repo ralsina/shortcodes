@@ -8,7 +8,7 @@ bstring grab_chunk(char *start, char *end) {
 }
 
 
-#line 60 "shortcodes.rl"
+#line 63 "shortcodes.rl"
 
 
 bstring parse(char *input) {
@@ -21,7 +21,7 @@ static const int shortcode_error = -1;
 static const int shortcode_en_main = 24;
 
 
-#line 64 "shortcodes.rl"
+#line 67 "shortcodes.rl"
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
@@ -36,7 +36,7 @@ static const int shortcode_en_main = 24;
 	cs = shortcode_start;
 	}
 
-#line 73 "shortcodes.rl"
+#line 76 "shortcodes.rl"
     
 #line 42 "shortcodes.c"
 	{
@@ -49,7 +49,7 @@ case 24:
 		goto tr1;
 	goto st0;
 tr45:
-#line 57 "shortcodes.rl"
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	goto st0;
 st0:
@@ -61,13 +61,13 @@ case 0:
 		goto tr1;
 	goto st0;
 tr1:
-#line 56 "shortcodes.rl"
+#line 57 "shortcodes.rl"
 	{bcatcstr(output, "---\n");}
 	goto st1;
 tr46:
-#line 56 "shortcodes.rl"
-	{bcatcstr(output, "---\n");}
 #line 57 "shortcodes.rl"
+	{bcatcstr(output, "---\n");}
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	goto st1;
 st1:
@@ -79,7 +79,7 @@ case 1:
 		goto tr2;
 	goto st0;
 tr2:
-#line 56 "shortcodes.rl"
+#line 57 "shortcodes.rl"
 	{bcatcstr(output, "---\n");}
 	goto st2;
 st2:
@@ -127,31 +127,34 @@ case 4:
 		case 62: goto tr6;
 		case 123: goto tr1;
 	}
-	if ( (*p) < 65 ) {
+	if ( (*p) < 47 ) {
 		if ( 9 <= (*p) && (*p) <= 13 )
 			goto tr5;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 57 ) {
+		if ( (*p) > 90 ) {
+			if ( 97 <= (*p) && (*p) <= 122 )
+				goto st4;
+		} else if ( (*p) >= 65 )
 			goto st4;
 	} else
 		goto st4;
 	goto st0;
 tr5:
-#line 20 "shortcodes.rl"
+#line 21 "shortcodes.rl"
 	{bcatcstr(output, "N"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
       }
 	goto st5;
 tr16:
-#line 32 "shortcodes.rl"
+#line 33 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark+1, p-mark-2);
        bcatcstr(output, "\n");
       }
 	goto st5;
 tr40:
-#line 39 "shortcodes.rl"
+#line 40 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -161,7 +164,7 @@ st5:
 	if ( ++p == pe )
 		goto _test_eof5;
 case 5:
-#line 165 "shortcodes.c"
+#line 168 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st5;
 		case 34: goto tr9;
@@ -188,28 +191,28 @@ tr9:
   }
 	goto st6;
 tr47:
-#line 57 "shortcodes.rl"
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	goto st6;
 st6:
 	if ( ++p == pe )
 		goto _test_eof6;
 case 6:
-#line 199 "shortcodes.c"
+#line 202 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st7;
 		case 123: goto tr15;
 	}
 	goto st6;
 tr48:
-#line 57 "shortcodes.rl"
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	goto st7;
 st7:
 	if ( ++p == pe )
 		goto _test_eof7;
 case 7:
-#line 213 "shortcodes.c"
+#line 216 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr16;
 		case 37: goto tr17;
@@ -220,21 +223,21 @@ case 7:
 		goto tr16;
 	goto st0;
 tr6:
-#line 20 "shortcodes.rl"
+#line 21 "shortcodes.rl"
 	{bcatcstr(output, "N"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
       }
 	goto st8;
 tr17:
-#line 32 "shortcodes.rl"
+#line 33 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark+1, p-mark-2);
        bcatcstr(output, "\n");
       }
 	goto st8;
 tr41:
-#line 39 "shortcodes.rl"
+#line 40 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -244,7 +247,7 @@ st8:
 	if ( ++p == pe )
 		goto _test_eof8;
 case 8:
-#line 248 "shortcodes.c"
+#line 251 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st9;
@@ -267,34 +270,34 @@ case 25:
 		goto tr46;
 	goto tr45;
 tr15:
-#line 56 "shortcodes.rl"
+#line 57 "shortcodes.rl"
 	{bcatcstr(output, "---\n");}
 	goto st10;
 tr49:
-#line 56 "shortcodes.rl"
-	{bcatcstr(output, "---\n");}
 #line 57 "shortcodes.rl"
+	{bcatcstr(output, "---\n");}
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	goto st10;
 st10:
 	if ( ++p == pe )
 		goto _test_eof10;
 case 10:
-#line 284 "shortcodes.c"
+#line 287 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st7;
 		case 123: goto tr20;
 	}
 	goto st6;
 tr20:
-#line 56 "shortcodes.rl"
+#line 57 "shortcodes.rl"
 	{bcatcstr(output, "---\n");}
 	goto st11;
 st11:
 	if ( ++p == pe )
 		goto _test_eof11;
 case 11:
-#line 298 "shortcodes.c"
+#line 301 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st7;
 		case 37: goto st12;
@@ -330,7 +333,7 @@ st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 334 "shortcodes.c"
+#line 337 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr23;
 		case 34: goto st7;
@@ -338,31 +341,34 @@ case 13:
 		case 62: goto tr24;
 		case 123: goto tr15;
 	}
-	if ( (*p) < 65 ) {
+	if ( (*p) < 47 ) {
 		if ( 9 <= (*p) && (*p) <= 13 )
 			goto tr23;
-	} else if ( (*p) > 90 ) {
-		if ( 97 <= (*p) && (*p) <= 122 )
+	} else if ( (*p) > 57 ) {
+		if ( (*p) > 90 ) {
+			if ( 97 <= (*p) && (*p) <= 122 )
+				goto st13;
+		} else if ( (*p) >= 65 )
 			goto st13;
 	} else
 		goto st13;
 	goto st6;
 tr23:
-#line 20 "shortcodes.rl"
+#line 21 "shortcodes.rl"
 	{bcatcstr(output, "N"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
       }
 	goto st14;
 tr31:
-#line 32 "shortcodes.rl"
+#line 33 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark+1, p-mark-2);
        bcatcstr(output, "\n");
       }
 	goto st14;
 tr35:
-#line 39 "shortcodes.rl"
+#line 40 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -372,7 +378,7 @@ st14:
 	if ( ++p == pe )
 		goto _test_eof14;
 case 14:
-#line 376 "shortcodes.c"
+#line 382 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st14;
 		case 34: goto tr27;
@@ -402,7 +408,7 @@ st15:
 	if ( ++p == pe )
 		goto _test_eof15;
 case 15:
-#line 406 "shortcodes.c"
+#line 412 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr31;
 		case 34: goto st7;
@@ -414,21 +420,21 @@ case 15:
 		goto tr31;
 	goto st6;
 tr24:
-#line 20 "shortcodes.rl"
+#line 21 "shortcodes.rl"
 	{bcatcstr(output, "N"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
       }
 	goto st16;
 tr32:
-#line 32 "shortcodes.rl"
+#line 33 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark+1, p-mark-2);
        bcatcstr(output, "\n");
       }
 	goto st16;
 tr36:
-#line 39 "shortcodes.rl"
+#line 40 "shortcodes.rl"
 	{bcatcstr(output, "V"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -438,7 +444,7 @@ st16:
 	if ( ++p == pe )
 		goto _test_eof16;
 case 16:
-#line 442 "shortcodes.c"
+#line 448 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st7;
 		case 123: goto tr15;
@@ -474,7 +480,7 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 478 "shortcodes.c"
+#line 484 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr35;
 		case 34: goto st7;
@@ -504,7 +510,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 508 "shortcodes.c"
+#line 514 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr35;
 		case 34: goto st7;
@@ -526,7 +532,7 @@ case 19:
 		goto st18;
 	goto st6;
 tr38:
-#line 26 "shortcodes.rl"
+#line 27 "shortcodes.rl"
 	{bcatcstr(output, "A"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -536,7 +542,7 @@ st20:
 	if ( ++p == pe )
 		goto _test_eof20;
 case 20:
-#line 540 "shortcodes.c"
+#line 546 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr27;
 		case 123: goto tr15;
@@ -560,7 +566,7 @@ st21:
 	if ( ++p == pe )
 		goto _test_eof21;
 case 21:
-#line 564 "shortcodes.c"
+#line 570 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr41;
@@ -589,7 +595,7 @@ st22:
 	if ( ++p == pe )
 		goto _test_eof22;
 case 22:
-#line 593 "shortcodes.c"
+#line 599 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr41;
@@ -610,7 +616,7 @@ case 22:
 		goto st21;
 	goto st0;
 tr43:
-#line 26 "shortcodes.rl"
+#line 27 "shortcodes.rl"
 	{bcatcstr(output, "A"); 
        bcatblk(output, mark, p-mark);
        bcatcstr(output, "\n");
@@ -620,7 +626,7 @@ st23:
 	if ( ++p == pe )
 		goto _test_eof23;
 case 23:
-#line 624 "shortcodes.c"
+#line 630 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr9;
 		case 123: goto tr1;
@@ -668,21 +674,21 @@ case 23:
 	switch ( cs ) {
 	case 25: 
 	case 26: 
-#line 57 "shortcodes.rl"
+#line 58 "shortcodes.rl"
 	{bcatcstr(output, "\n");}
 	break;
-#line 675 "shortcodes.c"
+#line 681 "shortcodes.c"
 	}
 	}
 
 	}
 
-#line 74 "shortcodes.rl"
+#line 77 "shortcodes.rl"
     return output;
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{< thename  \"onearg\">}} {{% another argname=\"val3\" %}}");
+    bstring output = parse("{{< thename  \"onearg\">}} {{% sc/42 another argname=\"val3\" %}}");
     printf("\n%s\n", output->data);
     return 0;
 }

@@ -14,8 +14,9 @@ bstring grab_chunk(char *start, char *end) {
 
   spc = space*;
   sep = space+;
+  path = (alnum | '/' )+;
 
-  name = alpha+ 
+  name = (alpha+ path?) 
     > mark
     % {bcatcstr(output, "N"); 
        bcatblk(output, mark, p-mark);
@@ -56,6 +57,8 @@ bstring grab_chunk(char *start, char *end) {
   > {bcatcstr(output, "---\n");}
   % {bcatcstr(output, "\n");};
 
+  
+
   main := (any* shortcode)*;
 }%%
 
@@ -75,7 +78,7 @@ bstring parse(char *input) {
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{< thename  \"onearg\">}} {{% another argname=\"val3\" %}}");
+    bstring output = parse("{{< thename  \"onearg\">}} {{% sc/42 another argname=\"val3\" %}}");
     printf("\n%s\n", output->data);
     return 0;
 }

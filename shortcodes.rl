@@ -63,6 +63,8 @@ bstring grab_chunk(char *start, char *end) {
   closing_shortcode = (start spc '/' name spc end)
   @ {
     bcatStatic(output, "--- closing\n");
+    // TODO: fail on error. 
+    // TODO: Use a stack of open shortcodes rather than 1
     printf("closing from %s to %s", open_name->data, new_name->data);
   };
 

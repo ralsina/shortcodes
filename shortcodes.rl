@@ -21,6 +21,7 @@ bstring grab_chunk(char *start, char *end) {
     % {bcatStatic(output, "N ");
        bcatblk(output, mark, p-mark);
        bcatStatic(output, "\n");
+       bassignblk (new_name, mark, p-mark);
       };
   argname = alpha+
     > mark
@@ -54,10 +55,16 @@ bstring grab_chunk(char *start, char *end) {
   end = end_p | end_b ;
 
   shortcode = (start spc name (sep arg)* spc end)
-  @ {bcatStatic(output, "+++ opening\n");};
+  @ {
+      bcatStatic(output, "+++ opening\n");
+      bassign(open_name, new_name);
+    };
 
   closing_shortcode = (start spc '/' name spc end)
-  @ {bcatStatic(output, "--- closing\n");};
+  @ {
+    bcatStatic(output, "--- closing\n");
+    printf("closing from %s to %s", open_name->data, new_name->data);
+  };
 
 
   main := (any* (shortcode | closing_shortcode))*;
@@ -70,6 +77,8 @@ bstring parse(char *input) {
 
     char *p = input;
     char *pe = p + strlen(input);
+    bstring open_name = bfromcstr("");
+    bstring new_name = bfromcstr("");
 
     char *mark = 0;
     bstring output = bfromcstr("");

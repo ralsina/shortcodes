@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "bglibs/str.h"
+#include "bglibs/gstack.h"
 
 %%{
   machine shortcode;
@@ -55,14 +56,20 @@
   @ {
       str_cats(&output, "+++ opening\n");
       str_copy(&open_name, &new_name);
+      data_mark = p;
     };
 
-  closing_shortcode = (start spc '/' name spc end);
+  closing_shortcode = (start spc '/' name spc end)
+  > {
+    // Starting a shortcode, close data
+    str_copyb(&data, data_mark+1, p-data_mark-2);
+  };
+
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
     str_cats(&output, "--- closing\n");
-    // TODO: Use a stack of open shortcodes rather than 1
     printf("closing from %s to %s\n", open_name.s, new_name.s);
+    printf("data: %s\n", data.s);
     if (str_cmp(&open_name, 0, &new_name, 0) != 0) {
       // Closing the wrong code
       // TODO error reporting
@@ -81,25 +88,32 @@ str parse(char *input) {
 
     char *p = input;
     char *pe = p + strlen(input);
-    str open_name, new_name, output;
+    str open_name, new_name, output, data;
     str_init(&open_name);
     str_init(&new_name);
     str_init(&output);
+    str_init(&data);
 
-    char *mark = 0;
+    char *mark = p;
+    char *data_mark = p;
+
     %% write init;
     %% write exec;
     return output;
 }
+
+struct shortcode {
+  str name;
+  str args;
+  str content;
+};
 
 int main(int argc, char **argv) {
     str output = parse("
       sarasa
       {{< o1  arg1  >}}
       stuff
-      {{< c1  arg2  >}}
-      foobar
-      {{% /c1%}}
+      {{< c1  arg2  >}}foobar{{% /c1%}}
       {{< o2  arg1  >}}      
       {{< o3  arg1  >}}
       more stuff

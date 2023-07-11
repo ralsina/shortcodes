@@ -50,10 +50,10 @@
   end_b = '>}}';
 
   start = start_p | start_b ;
-  end = end_p | end_b ;\
+  end = end_p | end_b ;
 
   shortcode = (start spc name (sep arg)* spc end)
-  > {sc_start = p-start;};
+  > {sc_start = p-start;}
   @ {
       str_cats(&output, "+++ opening\n");
       str_copy(&open_name, &new_name);

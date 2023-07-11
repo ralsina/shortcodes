@@ -63,9 +63,13 @@ bstring grab_chunk(char *start, char *end) {
   closing_shortcode = (start spc '/' name spc end)
   @ {
     bcatStatic(output, "--- closing\n");
-    // TODO: fail on error. 
     // TODO: Use a stack of open shortcodes rather than 1
-    printf("closing from %s to %s", open_name->data, new_name->data);
+    printf("closing from %s to %s\n", open_name->data, new_name->data);
+    if (bstrcmp(open_name, new_name) != 0) {
+      // Closing the wrong code
+      return 0;
+    }
+    btrunc(open_name,0);
   };
 
 
@@ -92,7 +96,12 @@ bstring parse(char *input) {
 int main(int argc, char **argv) {
     bstring output = parse("
       {{< o1  arg1  >}}
+      {{< c1  arg2  >}}
       {{% /c1%}}");
+    if (output == 0) {
+      printf("parse error\n");
+      return 1;
+    }
     printf("\n%s\n", output->data);
     return 0;
 }

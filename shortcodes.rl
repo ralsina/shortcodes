@@ -60,7 +60,8 @@ bstring grab_chunk(char *start, char *end) {
       bassign(open_name, new_name);
     };
 
-  closing_shortcode = (start spc '/' name spc end)
+  closing_shortcode = (start spc '/' name spc end);
+  matched_shortcode = (shortcode any* closing_shortcode)
   @ {
     bcatStatic(output, "--- closing\n");
     // TODO: Use a stack of open shortcodes rather than 1
@@ -72,8 +73,7 @@ bstring grab_chunk(char *start, char *end) {
     btrunc(open_name,0);
   };
 
-
-  main := (any* (shortcode | closing_shortcode))*;
+  main := (any* (shortcode | matched_shortcode))*;
 }%%
 
 bstring parse(char *input) {
@@ -95,9 +95,16 @@ bstring parse(char *input) {
 
 int main(int argc, char **argv) {
     bstring output = parse("
+      sarasa
       {{< o1  arg1  >}}
+      stuff
       {{< c1  arg2  >}}
-      {{% /c1%}}");
+      foobar
+      {{% /c1%}}
+      {{< o2  arg1  >}}      
+      {{< o3  arg1  >}}
+      more stuff
+      ");
     if (output == 0) {
       printf("parse error\n");
       return 1;

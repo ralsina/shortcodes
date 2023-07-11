@@ -18,27 +18,17 @@
     %{ shortcodes[c_sc].name.start = mark-start;
        shortcodes[c_sc].name.len = p-mark;
        shortcodes[c_sc].matching = 0;
-       str_copyb(&new_name, mark, p-mark);
       };
   argname = alpha+
     > mark
-    % {str_cats(&output, "A ");
-       str_catb(&output, mark, p-mark);
-       str_cats(&output, "\n");
-      };
+    % {};
   qvalue = ('"' [^"]* '"')
     > mark
-    % {str_cats(&output, "V ");
-       str_catb(&output, mark+1, p-mark-2);
-       str_cats(&output, "\n");
-      };
+    % {};
 
   value = alnum+
     > mark
-    % {str_cats(&output, "V ");
-       str_catb(&output, mark, p-mark);
-       str_cats(&output, "\n");
-      };
+    % {};
 
   arg = ((argname '=')? (value|qvalue));
 
@@ -56,7 +46,6 @@
       shortcodes[c_sc].start = p-start-1;
     }
   @ {
-      str_copy(&open_name, &new_name);
       shortcodes[c_sc].len = p-start-shortcodes[c_sc].start+1;
       data_mark = p+1;
       c_sc++;
@@ -64,23 +53,36 @@
 
   closing_shortcode = (start spc '/' name spc end)
   > {
-    // Starting a shortcode, close data
-    shortcodes[c_sc-1].data.start = data_mark-start;
-    shortcodes[c_sc-1].data.len = p-data_mark-1;
-    str_copyb(&sc, start+shortcodes[c_sc-1].data.start, shortcodes[c_sc-1].data.len);
+    // Starting a shortcode, close data (if previous shortcode is opening)
+    // If it's closing, then previous text can't be data.
+    if (shortcodes[c_sc-1].matching == 0) {
+      shortcodes[c_sc-1].data.start = data_mark-start;
+      shortcodes[c_sc-1].data.len = p-data_mark-1;
+    }
   };
 
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
     shortcodes[c_sc-1].matching = 1;
     shortcodes[c_sc-1].len = p-start-shortcodes[c_sc-1].start + 1;
-    shortcodes[c_sc].name.start = 0;
-    if (str_cmp(&open_name, 0, &new_name, 0) != 0) {
+    if (
+        shortcodes[c_sc-1].name.len != shortcodes[c_sc].name.len ||
+        strncmp(
+          start + shortcodes[c_sc-1].name.start,
+          start + shortcodes[c_sc].name.start,
+          shortcodes[c_sc-1].name.len) !=0) 
+     {
+      printf("Mismatched tags!\n");
+      str_copyb(&sc,start + shortcodes[c_sc-1].name.start, shortcodes[c_sc-1].name.len);
+      printf("opened: %s\n", sc.s);
+      str_copyb(&sc,start + shortcodes[c_sc].name.start, shortcodes[c_sc].name.len);
+      printf("closed: %s\n", sc.s);
       // Closing the wrong code
       // TODO error reporting
       return;
     }
-    str_truncate(&open_name,0);
+    // Reuse this shortcode entry for next one
+    shortcodes[c_sc].name.start = 0;
   };
 
   main := (any* (shortcode | matched_shortcode))*;
@@ -110,11 +112,6 @@ void parse(char *input) {
     char *start = input;
     char *p = input;
     char *pe = p + strlen(input);
-    str open_name, new_name, output, data;
-    str_init(&open_name);
-    str_init(&new_name);
-    str_init(&output);
-    str_init(&data);
 
     shortcode shortcodes[1000]; 
     int c_sc = 0;
@@ -143,7 +140,8 @@ void parse(char *input) {
 }
 
 int main(int argc, char **argv) {
-    parse("{{< c1  arg2  >}}foobar{{% /c1%}}{{% sarasa %}}");
+    parse(
+"bbb{{% sarasa %}}ccc{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa %}}");
     // if (output == 0) {
     //   printf("parse error\n");
     //   return 1;

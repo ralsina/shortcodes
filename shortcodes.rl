@@ -16,30 +16,30 @@ bstring grab_chunk(char *start, char *end) {
   sep = space+;
   path = (alnum | '/' )+;
 
-  name = (alpha+ path?) 
+  name = (alpha+ path?)
     > mark
-    % {bcatcstr(output, "N"); 
+    % {bcatStatic(output, "N ");
        bcatblk(output, mark, p-mark);
-       bcatcstr(output, "\n");
+       bcatStatic(output, "\n");
       };
-  argname = alpha+ 
+  argname = alpha+
     > mark
-    % {bcatcstr(output, "A"); 
+    % {bcatStatic(output, "A ");
        bcatblk(output, mark, p-mark);
-       bcatcstr(output, "\n");
+       bcatStatic(output, "\n");
       };
   qvalue = ('"' [^"]* '"')
     > mark
-    % {bcatcstr(output, "V"); 
+    % {bcatStatic(output, "V ");
        bcatblk(output, mark+1, p-mark-2);
-       bcatcstr(output, "\n");
+       bcatStatic(output, "\n");
       };
 
   value = alnum+
     > mark
-    % {bcatcstr(output, "V"); 
+    % {bcatStatic(output, "V ");
        bcatblk(output, mark, p-mark);
-       bcatcstr(output, "\n");
+       bcatStatic(output, "\n");
       };
 
   arg = ((argname '=')? (value|qvalue));
@@ -54,12 +54,13 @@ bstring grab_chunk(char *start, char *end) {
   end = end_p | end_b ;
 
   shortcode = (start spc name (sep arg)* spc end)
-  > {bcatcstr(output, "---\n");}
-  % {bcatcstr(output, "\n");};
+  @ {bcatStatic(output, "+++ opening\n");};
 
-  
+  closing_shortcode = (start spc '/' name spc end)
+  @ {bcatStatic(output, "--- closing\n");};
 
-  main := (any* shortcode)*;
+
+  main := (any* (shortcode | closing_shortcode))*;
 }%%
 
 bstring parse(char *input) {
@@ -78,7 +79,9 @@ bstring parse(char *input) {
 }
 
 int main(int argc, char **argv) {
-    bstring output = parse("{{< thename  \"onearg\">}} {{% sc/42 another argname=\"val3\" %}}");
+    bstring output = parse("
+      {{< o1  arg1  >}}
+      {{% /c1%}}");
     printf("\n%s\n", output->data);
     return 0;
 }

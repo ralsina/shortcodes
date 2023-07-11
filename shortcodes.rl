@@ -50,9 +50,10 @@
   end_b = '>}}';
 
   start = start_p | start_b ;
-  end = end_p | end_b ;
+  end = end_p | end_b ;\
 
   shortcode = (start spc name (sep arg)* spc end)
+  > {sc_start = p-start;};
   @ {
       str_cats(&output, "+++ opening\n");
       str_copy(&open_name, &new_name);
@@ -86,6 +87,7 @@ str parse(char *input) {
     char *eof, *ts, *te = 0;
     int cs, act = 0;
 
+    char *start = input;
     char *p = input;
     char *pe = p + strlen(input);
     str open_name, new_name, output, data;
@@ -93,6 +95,9 @@ str parse(char *input) {
     str_init(&new_name);
     str_init(&output);
     str_init(&data);
+
+    int sc_start = 0;
+    int sc_end = 0;
 
     char *mark = p;
     char *data_mark = p;
@@ -104,8 +109,8 @@ str parse(char *input) {
 
 struct shortcode {
   str name;
-  str args;
-  str content;
+  int start;
+  int end;
 };
 
 int main(int argc, char **argv) {

@@ -15,30 +15,30 @@
 
   name = (alpha+ path?)
     > mark
-    %{ shortcodes[c_sc].name.start = mark-start;
-       shortcodes[c_sc].name.len = p-mark;
-       shortcodes[c_sc].matching = 0;
+    %{ sc_list[c_sc].name.start = mark-start;
+       sc_list[c_sc].name.len = p-mark;
+       sc_list[c_sc].matching = 0;
       };
   argname = alpha+
     > mark
     % {
-      shortcodes[c_sc].argnames[shortcodes[c_sc].argcount].start = mark-start;
-      shortcodes[c_sc].argnames[shortcodes[c_sc].argcount].len = p-mark;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
     };
   qvalue = ('"' [^"]* '"')
     > mark
     % {
-      shortcodes[c_sc].argvals[shortcodes[c_sc].argcount].start = mark-start;
-      shortcodes[c_sc].argvals[shortcodes[c_sc].argcount].len = p-mark;
-      shortcodes[c_sc].argcount++;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
+      sc_list[c_sc].argcount++;
     };
 
   value = alnum+
     > mark
     % {
-      shortcodes[c_sc].argvals[shortcodes[c_sc].argcount].start = mark-start;
-      shortcodes[c_sc].argvals[shortcodes[c_sc].argcount].len = p-mark;
-      shortcodes[c_sc].argcount++;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
+      sc_list[c_sc].argcount++;
     };
 
   arg = ((argname '=')? (value|qvalue));
@@ -54,10 +54,10 @@
 
   shortcode = (start spc name (sep arg)* spc end)
   > {
-      shortcodes[c_sc].start = p-start-1;
+      sc_list[c_sc].start = p-start-1;
     }
   @ {
-      shortcodes[c_sc].len = p-start-shortcodes[c_sc].start+1;
+      sc_list[c_sc].len = p-start-sc_list[c_sc].start+1;
       data_mark = p+1;
       c_sc++;
     };
@@ -66,32 +66,32 @@
   > {
     // Starting a shortcode, close data (if previous shortcode is opening)
     // If it's closing, then previous text can't be data.
-    if (shortcodes[c_sc-1].matching == 0) {
-      shortcodes[c_sc-1].data.start = data_mark-start;
-      shortcodes[c_sc-1].data.len = p-data_mark-1;
+    if (sc_list[c_sc-1].matching == 0) {
+      sc_list[c_sc-1].data.start = data_mark-start;
+      sc_list[c_sc-1].data.len = p-data_mark-1;
     }
   };
 
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
-    shortcodes[c_sc-1].matching = 1;
-    shortcodes[c_sc-1].len = p-start-shortcodes[c_sc-1].start + 1;
+    sc_list[c_sc-1].matching = 1;
+    sc_list[c_sc-1].len = p-start-sc_list[c_sc-1].start + 1;
     if (
-        shortcodes[c_sc-1].name.len != shortcodes[c_sc].name.len ||
+        sc_list[c_sc-1].name.len != sc_list[c_sc].name.len ||
         strncmp(
-          start + shortcodes[c_sc-1].name.start,
-          start + shortcodes[c_sc].name.start,
-          shortcodes[c_sc-1].name.len) !=0) 
+          start + sc_list[c_sc-1].name.start,
+          start + sc_list[c_sc].name.start,
+          sc_list[c_sc-1].name.len) !=0) 
      {
       printf("Mismatched tags!\n");
-      str_copyb(&sc,start + shortcodes[c_sc-1].name.start, shortcodes[c_sc-1].name.len);
+      str_copyb(&sc,start + sc_list[c_sc-1].name.start, sc_list[c_sc-1].name.len);
       printf("opened: %s\n", sc.s);
-      str_copyb(&sc,start + shortcodes[c_sc].name.start, shortcodes[c_sc].name.len);
+      str_copyb(&sc,start + sc_list[c_sc].name.start, sc_list[c_sc].name.len);
       printf("closed: %s\n", sc.s);
       return 1;
     }
     // Reuse this shortcode entry for next one
-    shortcodes[c_sc].name.start = 0;
+    sc_list[c_sc].name.start = 0;
   };
 
   main := (any* (shortcode | matched_shortcode))*;
@@ -125,7 +125,7 @@ int parse(char *input) {
   char *p = input;
   char *pe = p + strlen(input);
 
-  shortcode shortcodes[1000]; 
+  shortcode sc_list[1000]; 
   int c_sc = 0;
 
   int sc_start = 0;
@@ -139,20 +139,20 @@ int parse(char *input) {
   %% write init;
   %% write exec;
 
-  for (int i=0; shortcodes[i].name.start!=0; i++) {
-    str_copyb(&sc, start + shortcodes[i].name.start, shortcodes[i].name.len);
-    printf("sc_name: %s (%d)\n", sc.s, shortcodes[i].matching );
-    str_copyb(&sc, start + shortcodes[i].start, shortcodes[i].len);
+  for (int i=0; sc_list[i].name.start!=0; i++) {
+    str_copyb(&sc, start + sc_list[i].name.start, sc_list[i].name.len);
+    printf("sc_name: %s (%d)\n", sc.s, sc_list[i].matching );
+    str_copyb(&sc, start + sc_list[i].start, sc_list[i].len);
     printf("full_sc: %s\n", sc.s);
-    if (shortcodes[i].matching) {
-      str_copyb(&sc, start + shortcodes[i].data.start, shortcodes[i].data.len);
+    if (sc_list[i].matching) {
+      str_copyb(&sc, start + sc_list[i].data.start, sc_list[i].data.len);
       printf("sc_data: %s\n", sc.s);
     }
 
-    for (int j=0; j< shortcodes[i].argcount; j++) {
-      str_copyb(&sc, start + shortcodes[i].argnames[j].start, shortcodes[i].argnames[j].len);
+    for (int j=0; j< sc_list[i].argcount; j++) {
+      str_copyb(&sc, start + sc_list[i].argnames[j].start, sc_list[i].argnames[j].len);
       printf("argname %d: %s\n", j, sc.s);
-      str_copyb(&sc, start + shortcodes[i].argvals[j].start, shortcodes[i].argvals[j].len);
+      str_copyb(&sc, start + sc_list[i].argvals[j].start, sc_list[i].argvals[j].len);
       printf("argval %d: %s\n", j, sc.s);
     }
   }
@@ -162,7 +162,7 @@ int parse(char *input) {
 int main(int argc, char **argv) {
     parse(
 "bbb{{% sarasa sar1 sar2 \"sar3\" %}}ccc
-{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=pepe %}}");
+{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=\"pepe\" %}}");
     // if (output == 0) {
     //   printf("parse error\n");
     //   return 1;

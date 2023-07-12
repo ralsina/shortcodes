@@ -43,10 +43,10 @@
 
   arg = ((argname '=')? (value|qvalue));
 
-  start_p = '{{%';
+  start_p = ('{{%');
   end_p = '%}}';
 
-  start_b = '{{<';
+  start_b = ('{{<');
   end_b = '>}}';
 
   content = spc name (sep arg)* spc;
@@ -73,8 +73,10 @@
 
   closing_shortcode = (start spc '/' name spc end)
   > {
-    // Starting a shortcode, close data (if previous shortcode is opening)
-    // If it's closing, then previous text can't be data.
+    // Starting a "closing" shortcode ( {{ /foo }}), 
+    // close data (if previous shortcode is opening)
+    // If previous shortcode was closing, then previous 
+    // text can't be data.
     if (sc_list[c_sc-1].matching == 0) {
       sc_list[c_sc-1].data.start = data_mark-start;
       sc_list[c_sc-1].data.len = p-data_mark-1;

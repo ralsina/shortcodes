@@ -46,6 +46,30 @@ Ensure(parse, mismatched_brackets)
     assert_that(result[0].name.len, is_equal_to(0));
 }
 
+Ensure(parse, mismatched_brackets_inside_data_are_ok)
+{
+    char *input = "foobar {{% sc %}} >}}blah {{% /sc %}} ";
+    result = parse(input);
+    // 1 shortcode
+    assert_that(result[1].name.len, is_equal_to(0));
+    chunk_s(input, result[0].whole);
+    assert_that(s.s, is_equal_to_string("{{% sc %}} >}}blah {{% /sc %}}"));
+    chunk_s(input, result[0].data);
+    assert_that(s.s, is_equal_to_string(" >}}blah "));
+}
+
+Ensure(parse, mismatched_brackets_in_qval_are_ok)
+{
+    char *input = "foobar {{% sc  \">}}blah\" %}} {{% /sc %}}";
+    result = parse(input);
+    // 1 shortcode
+    assert_that(result[1].name.len, is_equal_to(0));
+    chunk_s(input, result[0].whole);
+    assert_that(s.s, is_equal_to_string("{{% sc  \">}}blah\" %}} {{% /sc %}}"));
+    chunk_s(input, result[0].argvals[0]);
+    assert_that(s.s, is_equal_to_string(">}}blah"));
+}
+
 Ensure(parse, inner_spaces_optional)
 {
     char *input = "foobar {{%    shortcode%}}blah";
@@ -166,18 +190,31 @@ Ensure(parse, shortcode_args)
     assert_that(s.s, is_equal_to_string("v2"));
 }
 
+Ensure(parse, escaped_shortcode)
+{
+    char *input = "foobar \\{{% shortcode %}}";
+    result = parse(input);
+    // No shortcodes
+    assert_that(result[0].name.len, is_equal_to(0));
+}
+
 
 int main(int argc, char **argv)
 {
     str_init(&s);
     TestSuite *suite = create_test_suite();
     add_test_with_context(suite, parse, empty_string);
-    add_test_with_context(suite, parse, mismatched_brackets);
     add_test_with_context(suite, parse, simple_shortcode);
+    add_test_with_context(suite, parse, mismatched_brackets);
+    add_test_with_context(suite, parse, mismatched_brackets_inside_data_are_ok);
+    add_test_with_context(suite, parse, mismatched_brackets_in_qval_are_ok);
     add_test_with_context(suite, parse, name_can_be_path);
     add_test_with_context(suite, parse, inner_spaces_optional);
     add_test_with_context(suite, parse, multiple_shortcodes);
     add_test_with_context(suite, parse, matching_shortcode);
     add_test_with_context(suite, parse, shortcode_args);
+
+    // Bugs
+    // add_test_with_context(suite, parse, escaped_shortcode);
     return run_test_suite(suite, create_text_reporter());
 }

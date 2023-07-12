@@ -8,6 +8,9 @@ shortcodes: shortcodes.c
 	$(CC) shortcodes.c -lbg -g -o shortcodes
 tests: shortcodes.c shortcodes.h tests.c
 	$(CC) tests.c shortcodes.c -lbg -lcgreen -g -o tests
+test: tests
 	./tests
 clean:
 	rm -f shortcodes shortcodes.c
+
+.PHONY: test run

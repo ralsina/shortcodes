@@ -55,6 +55,20 @@ Ensure(parse, inner_spaces_optional)
     assert_that(s.s, is_equal_to_string("{{%    shortcode%}}"));
 }
 
+Ensure(parse, name_can_be_path)
+{
+    char *input = "foobar {{% shortcode/foo/bar %}}blah";
+    result = parse(input);
+    // Only 1 shortcode
+    assert_that(result[1].name.len, is_equal_to(0));
+
+    // It's a simple one called shortcode, no args
+    chunk_s(input, result[0].name);
+    assert_that(s.s, is_equal_to_string("shortcode/foo/bar"));
+    assert_that(result[0].matching, is_equal_to(0));
+    assert_that(result[0].argcount, is_equal_to(0));
+}
+
 Ensure(parse, multiple_shortcodes)
 {
     char *input = "foobar {{% shortcode %}}blah {{<sc2 >}}blahblah";
@@ -151,6 +165,7 @@ int main(int argc, char **argv)
     TestSuite *suite = create_test_suite();
     add_test_with_context(suite, parse, empty_string);
     add_test_with_context(suite, parse, simple_shortcode);
+    add_test_with_context(suite, parse, name_can_be_path);
     add_test_with_context(suite, parse, inner_spaces_optional);
     add_test_with_context(suite, parse, multiple_shortcodes);
     add_test_with_context(suite, parse, matching_shortcode);

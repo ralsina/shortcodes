@@ -129,10 +129,3 @@ shortcode *parse(char *input) {
 
   return sc_list;
 }
-
-// int main(int argc, char **argv) {
-//     parse(
-// "bbb{{% sarasa sar1 sar2 \"sar3\" %}}ccc"
-// "{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=\"pepe\" %}}");
-//     return 0;
-// };

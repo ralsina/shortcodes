@@ -1,12 +1,16 @@
 #ifndef SHORTCODES_H
 #define SHORTCODES_H
+
+// A chunk is a reference to a piece of string
+// from "start" relative to its start
+// and goes on for len characters.
 struct chunk
 {
     int start, len;
 };
-
 typedef struct chunk chunk;
 
+// Describes a parsed shortcode
 struct shortcode
 {
     chunk whole;

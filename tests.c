@@ -38,6 +38,14 @@ Ensure(parse, simple_shortcode)
     assert_that(s.s, is_equal_to_string("{{% shortcode %}}"));
 }
 
+Ensure(parse, mismatched_brackets)
+{
+    char *input = "foobar {{% shortcode >}}blah";
+    result = parse(input);
+    // No shortcodes
+    assert_that(result[0].name.len, is_equal_to(0));
+}
+
 Ensure(parse, inner_spaces_optional)
 {
     char *input = "foobar {{%    shortcode%}}blah";
@@ -164,6 +172,7 @@ int main(int argc, char **argv)
     str_init(&s);
     TestSuite *suite = create_test_suite();
     add_test_with_context(suite, parse, empty_string);
+    add_test_with_context(suite, parse, mismatched_brackets);
     add_test_with_context(suite, parse, simple_shortcode);
     add_test_with_context(suite, parse, name_can_be_path);
     add_test_with_context(suite, parse, inner_spaces_optional);

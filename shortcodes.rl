@@ -49,10 +49,19 @@
   start_b = '{{<';
   end_b = '>}}';
 
+  content = spc name (sep arg)* spc;
+
   start = start_p | start_b ;
   end = end_p | end_b ;
 
-  shortcode = (start spc name (sep arg)* spc end)
+  mismatched = ((start_p content end_b) | (start_b content end_p)) 
+  @{
+    // Since it's mismatched, remove the name
+    sc_list[c_sc].name.start = 0;
+    sc_list[c_sc].name.len=0;
+  };
+
+  shortcode = ((start_p content end_p) | (start_b content end_b))
   > {
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -83,11 +92,6 @@
           start + sc_list[c_sc].name.start,
           sc_list[c_sc-1].name.len) !=0) 
      {
-      // printf("Mismatched tags!\n");
-      // str_copyb(&sc,start + sc_list[c_sc-1].name.start, sc_list[c_sc-1].name.len);
-      // printf("opened: %s\n", sc.s);
-      // str_copyb(&sc,start + sc_list[c_sc].name.start, sc_list[c_sc].name.len);
-      // printf("closed: %s\n", sc.s);
       return NULL;
     }
     // Reuse this shortcode entry for next one
@@ -95,7 +99,7 @@
     sc_list[c_sc].name.len=0;
 };
 
-  main := (any* (shortcode | matched_shortcode))*;
+  main := (any* (shortcode | matched_shortcode | mismatched))*;
 }%%
 
 
@@ -121,24 +125,6 @@ shortcode *parse(char *input) {
   %% write init;
   %% write exec;
 
-  // for (int i=0; sc_list[i].name.start!=0; i++) {
-  //   str_copyb(&sc, start + sc_list[i].name.start, sc_list[i].name.len);
-  //   printf("sc_name: %s (%d)\n", sc.s, sc_list[i].matching );
-  //   str_copyb(&sc, start + sc_list[i].start, sc_list[i].len);
-  //   printf("full_sc: %s\n", sc.s);
-  //   if (sc_list[i].matching) {
-  //     str_copyb(&sc, start + sc_list[i].data.start, sc_list[i].data.len);
-  //     printf("sc_data: %s\n", sc.s);
-  //   }
-
-  //   for (int j=0; j< sc_list[i].argcount; j++) {
-  //     str_copyb(&sc, start + sc_list[i].argnames[j].start, sc_list[i].argnames[j].len);
-  //     printf("argname %d: %s\n", j, sc.s);
-  //     str_copyb(&sc, start + sc_list[i].argvals[j].start, sc_list[i].argvals[j].len);
-  //     printf("argval %d: %s\n", j, sc.s);
-  //   }
-  // }
-  // TODO: handle errors
   return sc_list;
 }
 

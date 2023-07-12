@@ -23,17 +23,18 @@ Ensure(parse, empty_string)
 
 Ensure(parse, simple_shortcode)
 {
-    char *input = "{{% shortcode %}}";
+    char *input = "foobar {{% shortcode %}}blah";
     result = parse(input);
-    chunk_s(input, result[0].name);
-
     // Only 1 shortcode
     assert_that(result[1].name.len, is_equal_to(0));
 
     // It's a simple one called shortcode, no args
+    chunk_s(input, result[0].name);
     assert_that(s.s, is_equal_to_string("shortcode"));
     assert_that(result[0].matching, is_equal_to(0));
     assert_that(result[0].argcount, is_equal_to(0));
+    chunk_s(input, result[0].whole);
+    assert_that(s.s, is_equal_to_string("{{% shortcode %}}"));
 }
 
 Ensure(parse, matching_shortcode)
@@ -43,7 +44,7 @@ Ensure(parse, matching_shortcode)
     chunk_s(input, result[0].name);
 
     // Only 1 shortcode
-    // assert_that(result[1].name.len, is_equal_to(0));
+    assert_that(result[1].name.len, is_equal_to(0));
 
     // It's a matching one called shortcode, no args
     assert_that(s.s, is_equal_to_string("shortcode"));

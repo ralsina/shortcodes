@@ -9,8 +9,7 @@ typedef struct chunk chunk;
 
 struct shortcode
 {
-    int start;
-    int len;
+    chunk whole;
     chunk name;
     chunk data;
     char matching;

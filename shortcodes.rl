@@ -54,10 +54,10 @@
 
   shortcode = (start spc name (sep arg)* spc end)
   > {
-      sc_list[c_sc].start = p-start-1;
+      sc_list[c_sc].whole.start = p-start-1;
     }
   @ {
-      sc_list[c_sc].len = p-start-sc_list[c_sc].start+1;
+      sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
       c_sc++;
     };
@@ -75,7 +75,7 @@
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
     sc_list[c_sc-1].matching = 1;
-    sc_list[c_sc-1].len = p-start-sc_list[c_sc-1].start + 1;
+    sc_list[c_sc-1].whole.len = p-start-sc_list[c_sc-1].whole.start + 1;
     if (
         sc_list[c_sc-1].name.len != sc_list[c_sc].name.len ||
         strncmp(
@@ -92,7 +92,8 @@
     }
     // Reuse this shortcode entry for next one
     sc_list[c_sc].name.start = 0;
-  };
+    sc_list[c_sc].name.len=0;
+};
 
   main := (any* (shortcode | matched_shortcode))*;
 }%%

@@ -1,6 +1,6 @@
-#include <stdio.h>
 #include <string.h>
-#include "bglibs/str.h"
+#include "shortcodes.h"
+
 
 %%{
   machine shortcode;
@@ -83,12 +83,12 @@
           start + sc_list[c_sc].name.start,
           sc_list[c_sc-1].name.len) !=0) 
      {
-      printf("Mismatched tags!\n");
-      str_copyb(&sc,start + sc_list[c_sc-1].name.start, sc_list[c_sc-1].name.len);
-      printf("opened: %s\n", sc.s);
-      str_copyb(&sc,start + sc_list[c_sc].name.start, sc_list[c_sc].name.len);
-      printf("closed: %s\n", sc.s);
-      return 1;
+      // printf("Mismatched tags!\n");
+      // str_copyb(&sc,start + sc_list[c_sc-1].name.start, sc_list[c_sc-1].name.len);
+      // printf("opened: %s\n", sc.s);
+      // str_copyb(&sc,start + sc_list[c_sc].name.start, sc_list[c_sc].name.len);
+      // printf("closed: %s\n", sc.s);
+      return NULL;
     }
     // Reuse this shortcode entry for next one
     sc_list[c_sc].name.start = 0;
@@ -98,25 +98,8 @@
 }%%
 
 
-struct chunk {
-  int start, len;
-};
+shortcode *parse(char *input) {
 
-typedef struct chunk chunk;
-
-struct shortcode {
-  int start;
-  int len;
-  chunk name;
-  chunk data;
-  char matching;
-  chunk argnames[100];
-  chunk argvals[100];
-  int argcount;
-};
-typedef struct shortcode shortcode;
-
-int parse(char *input) {
   %%write data;
   char *eof, *ts, *te = 0;
   int cs, act = 0;
@@ -133,30 +116,29 @@ int parse(char *input) {
 
   char *mark = p;
   char *data_mark = p;
-  str sc;
-  str_init(&sc);
 
   %% write init;
   %% write exec;
 
-  for (int i=0; sc_list[i].name.start!=0; i++) {
-    str_copyb(&sc, start + sc_list[i].name.start, sc_list[i].name.len);
-    printf("sc_name: %s (%d)\n", sc.s, sc_list[i].matching );
-    str_copyb(&sc, start + sc_list[i].start, sc_list[i].len);
-    printf("full_sc: %s\n", sc.s);
-    if (sc_list[i].matching) {
-      str_copyb(&sc, start + sc_list[i].data.start, sc_list[i].data.len);
-      printf("sc_data: %s\n", sc.s);
-    }
+  // for (int i=0; sc_list[i].name.start!=0; i++) {
+  //   str_copyb(&sc, start + sc_list[i].name.start, sc_list[i].name.len);
+  //   printf("sc_name: %s (%d)\n", sc.s, sc_list[i].matching );
+  //   str_copyb(&sc, start + sc_list[i].start, sc_list[i].len);
+  //   printf("full_sc: %s\n", sc.s);
+  //   if (sc_list[i].matching) {
+  //     str_copyb(&sc, start + sc_list[i].data.start, sc_list[i].data.len);
+  //     printf("sc_data: %s\n", sc.s);
+  //   }
 
-    for (int j=0; j< sc_list[i].argcount; j++) {
-      str_copyb(&sc, start + sc_list[i].argnames[j].start, sc_list[i].argnames[j].len);
-      printf("argname %d: %s\n", j, sc.s);
-      str_copyb(&sc, start + sc_list[i].argvals[j].start, sc_list[i].argvals[j].len);
-      printf("argval %d: %s\n", j, sc.s);
-    }
-  }
-  return 0;
+  //   for (int j=0; j< sc_list[i].argcount; j++) {
+  //     str_copyb(&sc, start + sc_list[i].argnames[j].start, sc_list[i].argnames[j].len);
+  //     printf("argname %d: %s\n", j, sc.s);
+  //     str_copyb(&sc, start + sc_list[i].argvals[j].start, sc_list[i].argvals[j].len);
+  //     printf("argval %d: %s\n", j, sc.s);
+  //   }
+  // }
+  // TODO: handle errors
+  return sc_list;
 }
 
 // int main(int argc, char **argv) {

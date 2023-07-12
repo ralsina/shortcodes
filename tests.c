@@ -33,23 +33,30 @@ Ensure(parse, simple_shortcode)
     assert_that(s.s, is_equal_to_string("shortcode"));
     assert_that(result[0].matching, is_equal_to(0));
     assert_that(result[0].argcount, is_equal_to(0));
+    // The whole shortcode is the whole thing
     chunk_s(input, result[0].whole);
     assert_that(s.s, is_equal_to_string("{{% shortcode %}}"));
 }
 
 Ensure(parse, matching_shortcode)
 {
-    char *input = "{{% shortcode %}}foo bar{{% /shortcode %}}";
+    char *input = "blah {{% shortcode %}}foo bar{{% /shortcode %}} blah";
     result = parse(input);
-    chunk_s(input, result[0].name);
 
     // Only 1 shortcode
     assert_that(result[1].name.len, is_equal_to(0));
 
     // It's a matching one called shortcode, no args
+    chunk_s(input, result[0].name);
     assert_that(s.s, is_equal_to_string("shortcode"));
     assert_that(result[0].matching, is_equal_to(1));
     assert_that(result[0].argcount, is_equal_to(0));
+    // data is the stuff between the shortcode tags
+    chunk_s(input, result[0].data);
+    assert_that(s.s, is_equal_to_string("foo bar"));
+    // The whole shortcode is the whole thing
+    chunk_s(input, result[0].whole);
+    assert_that(s.s, is_equal_to_string("{{% shortcode %}}foo bar{{% /shortcode %}}"));
 }
 
 int main(int argc, char **argv)

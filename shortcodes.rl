@@ -159,13 +159,9 @@ int parse(char *input) {
   return 0;
 }
 
-int main(int argc, char **argv) {
-    parse(
-"bbb{{% sarasa sar1 sar2 \"sar3\" %}}ccc
-{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=\"pepe\" %}}");
-    // if (output == 0) {
-    //   printf("parse error\n");
-    //   return 1;
-    // }
-    return 0;
-}
+// int main(int argc, char **argv) {
+//     parse(
+// "bbb{{% sarasa sar1 sar2 \"sar3\" %}}ccc"
+// "{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=\"pepe\" %}}");
+//     return 0;
+// };

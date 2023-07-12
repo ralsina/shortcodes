@@ -101,6 +101,50 @@ Ensure(parse, matching_shortcode)
     assert_that(s.s, is_equal_to_string("{{% shortcode %}}foo bar{{% /shortcode %}}"));
 }
 
+Ensure(parse, shortcode_args)
+{
+    char *input = "foobar {{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}blah";
+    result = parse(input);
+    // Only 1 shortcode
+    assert_that(result[1].name.len, is_equal_to(0));
+
+    // The whole shortcode is the whole thing
+    chunk_s(input, result[0].whole);
+    assert_that(s.s, is_equal_to_string("{{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}"));
+
+    // Name is shortcode
+    chunk_s(input, result[0].name);
+    assert_that(s.s, is_equal_to_string("shortcode"));
+    assert_that(result[0].matching, is_equal_to(0));
+
+    // Has 5 args
+    assert_that(result[0].argcount, is_equal_to(5));
+
+    // Arg1 is foo, no name
+    assert_that(result[0].argnames[0].len, is_equal_to(0));
+    chunk_s(input, result[0].argvals[0]);
+    assert_that(s.s, is_equal_to_string("foo"));
+    // Arg2 is bar, no name
+    assert_that(result[0].argnames[1].len, is_equal_to(0));
+    chunk_s(input, result[0].argvals[1]);
+    assert_that(s.s, is_equal_to_string("bar"));
+    // Arg3 is 42, no name
+    assert_that(result[0].argnames[2].len, is_equal_to(0));
+    chunk_s(input, result[0].argvals[2]);
+    assert_that(s.s, is_equal_to_string("42"));
+    // Arg4 is bat=v1
+    chunk_s(input, result[0].argnames[3]);
+    assert_that(s.s, is_equal_to_string("bat"));
+    chunk_s(input, result[0].argvals[3]);
+    assert_that(s.s, is_equal_to_string("v1"));
+    // Arg5 is baz=v2
+    chunk_s(input, result[0].argnames[4]);
+    assert_that(s.s, is_equal_to_string("baz"));
+    chunk_s(input, result[0].argvals[4]);
+    assert_that(s.s, is_equal_to_string("v2"));
+}
+
+
 int main(int argc, char **argv)
 {
     str_init(&s);
@@ -110,5 +154,6 @@ int main(int argc, char **argv)
     add_test_with_context(suite, parse, inner_spaces_optional);
     add_test_with_context(suite, parse, multiple_shortcodes);
     add_test_with_context(suite, parse, matching_shortcode);
+    add_test_with_context(suite, parse, shortcode_args);
     return run_test_suite(suite, create_text_reporter());
 }

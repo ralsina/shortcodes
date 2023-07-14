@@ -2,7 +2,6 @@
 
 ## Things That May Get Done
 
-* Produce decent error structures
 * Inform tag type (% or <) in result
 * Handle other kinds of quotes
 * Handle escaping quote characters
@@ -11,5 +10,6 @@
 * Add self-closing shortcodes `{{< foo />}}` 
   (also, how TF do they work?)
 * Add inline shortcodes `{{< time.inline >}}{{ now }}{{< /time.inline >}}`
-
+* Start integrating with Crystal
+* ~~Produce decent error structures~~
 * ~~Detect mismatched start/end like {{% foo >}}~~ 

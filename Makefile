@@ -1,16 +1,13 @@
-CC=tcc
-all: tests
-run: shortcodes
-	./shortcodes
+CC=gcc
+all: test
 shortcodes.c: shortcodes.rl
 	ragel -G2 shortcodes.rl -o shortcodes.c
-shortcodes: shortcodes.c
-	$(CC) shortcodes.c -g -o shortcodes
-tests: shortcodes.c shortcodes.h tests.c
-	$(CC) tests.c shortcodes.c -lbg -lcgreen -g -o tests
-test: tests
-	./tests
+tests.so: shortcodes.c tests.c
+	$(CC) -fPIC -shared -g -o $@ $^ -lbg -lcgreen
 clean:
-	rm -f shortcodes shortcodes.c
-
-.PHONY: test run
+	rm -f shortcodes.c *.o *.so tests
+test: tests.so
+	cgreen-runner $^
+debug:
+	cgreen-debug tests.so
+.PHONY: test debug

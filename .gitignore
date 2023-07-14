@@ -54,3 +54,4 @@ dkms.conf
 shortcodes.c
 shortcodes
 tests
+.cgreen*

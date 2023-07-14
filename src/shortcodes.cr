@@ -60,7 +60,6 @@ module Shortcodes
   def parse(input : String)
     r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
     result = Result.new
-    p! r.sccount
 
     (0...r.sccount).each do |i|
       sc = r.shortcodes[i]

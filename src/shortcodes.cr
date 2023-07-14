@@ -30,7 +30,7 @@ lib LibShortcodes
   fun parse(input : Pointer(LibC::Char), len : UInt32) : ScResult
 end
 
-module Shortcodes  
+module Shortcodes
   struct Arg
     property name : String = ""
     property value : String = ""
@@ -40,8 +40,8 @@ module Shortcodes
   end
 
   struct Error
-    @position: UInt32
-    @code: UInt32
+    property position : UInt32
+    property code : UInt32
 
     def initialize(@position, @code)
     end
@@ -52,9 +52,15 @@ module Shortcodes
     property data : String = ""
     property matching : Int32 = 0
     property args : Array(Arg) = [] of Arg
-    property errors : Array(Error) = [] of Error
     property whole : String = ""
-    def initialize(@name, @data, @matching, @args, @whole)
+
+    def initialize(
+      @name,
+      @data,
+      @matching,
+      @args,
+      @whole
+    )
     end
   end
 
@@ -81,14 +87,6 @@ module Shortcodes
         )
       end
 
-      errors = [] of Error
-      (0...r.errcount).each do |k|
-        errors << Error.new(
-          r.errors[k].position,
-          r.errors[k].code,
-        )
-      end
-
       result.shortcodes << Shortcode.new(
         extract(sc.name, input),
         extract(sc.data, input),
@@ -97,17 +95,22 @@ module Shortcodes
         extract(sc.whole, input),
       )
     end
+    (0...r.errcount).each do |k|
+      result.errors << Error.new(
+        r.errors[k].position,
+        r.errors[k].code,
+      )
+    end
     result
   end
 
-
-  #### Error codes
+  # ### Error codes
   #
   # You are closing the wrong shortcode.
   # Example:
   # {{% foo %}}  {{% /bar %}}
   ERR_MISMATCHED_CLOSING_TAG = 1
-  
+
   # You are using mismatched brackets.
   # Example:
   # {{% foo >}}

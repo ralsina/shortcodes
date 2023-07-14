@@ -122,7 +122,8 @@ sc_result parse(char *input, unsigned int len) {
   char *pe = p + len;
 
   sc_result result;
-  shortcode *sc_list = result.sc; 
+  result.errcount = 0;
+  shortcode *sc_list = result.sc;
   int c_sc = 0;
 
   char *mark = p;

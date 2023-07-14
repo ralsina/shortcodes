@@ -2,44 +2,21 @@ require "./spec_helper"
 include Shortcodes
 
 describe "Shortcodes" do
-  # TODO: Write tests
-
-  it "works" do
-    input = "foo{{% bar %}}baz{{% /bar %}}qux"
-    result = parse(input)
-    result.shortcodes.size.should eq 1
-    result.shortcodes[0].args.size.should eq 0
-    result.shortcodes[0].name.should eq "bar"
+  it "should parse empty string" do
+    result = parse("")
+    result.shortcodes.size.should eq 0
+    result.errors.size.should eq 0
   end
-end
 
-# Port tests below to spec
-
-# #include <cgreen/cgreen.h>
-# #include <bglibs/str.h>
-# #include "shortcodes.h"
-
-# Describe(parse);
-# BeforeEach(parse) {}
-# AfterEach(parse) {}
-
-# sc_result result;
-# str s;
-
-# void chunk_s(char *buffer, chunk c)
-# {
-#     str_copyb(&s, buffer + c.start, c.len);
-# }
-
-# Ensure(parse, empty_string)
-# {
-#     char *input = "";
-#     result = parse(input);
-#     // This means no shortcodes in it
-#     assert_that(result.sccount, is_equal_to(0));
-#     assert_that(result.errcount, is_equal_to(0));
-# }
-
+  it "should parse simeple shortcode" do
+    result = parse("foobar {{% shortcode %}}blah")
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "shortcode"
+    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].args.size.should eq 0
+    result.shortcodes[0].whole.should eq "{{% shortcode %}}" 
+  end
 # Ensure(parse, simple_shortcode)
 # {
 #     char *input = "foobar {{% shortcode %}}blah";
@@ -241,3 +218,4 @@ end
 # //     // No shortcodes
 # //     assert_that(result.sc[0].name.len, is_equal_to(0));
 # // }
+end

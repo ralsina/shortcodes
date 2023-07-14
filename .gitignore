@@ -51,7 +51,6 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-shortcodes.c
-shortcodes
+shortcodes.0
 tests
 .cgreen*

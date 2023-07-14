@@ -1,4 +1,4 @@
-@[Link(ldflags: "#{__DIR__}/../shortcodes.o")]
+@[Link(ldflags: "#{__DIR__}/shortcodes.o")]
 lib Shortcodes
 
   struct Chunk

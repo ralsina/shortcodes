@@ -91,7 +91,7 @@ describe "Shortcodes" do
     result.shortcodes[1].args.size.should eq 0
     result.shortcodes[1].whole.should eq "{{<sc2 >}}"
   end
-  
+
   it "should parse matching shortcodes" do
     input = "foobar {{% shortcode %}}blah {{% /shortcode %}} blah"
     result = parse(input)
@@ -124,7 +124,6 @@ describe "Shortcodes" do
     result.shortcodes[0].args[4].value.should eq "v2"
     result.shortcodes[0].whole.should eq "{{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}"
   end
-
 
   # // BUG?
   # // Ensure(parse, escaped_shortcode)

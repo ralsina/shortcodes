@@ -58,9 +58,7 @@ module Shortcodes
   end
 
   def parse(input : String)
-    p! 111
     r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
-    p! 222
     result = Result.new
 
     r.shortcodes.each_with_index.map do |sc, i|
@@ -80,6 +78,6 @@ module Shortcodes
         args,
       )
     end
-    r
+    result
   end
 end

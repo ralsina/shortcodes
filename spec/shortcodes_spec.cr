@@ -5,11 +5,11 @@ describe "Shortcodes" do
   # TODO: Write tests
 
   it "works" do
-    parse("foo{{% bar %}}baz{{% /bar %}}qux")
-    # p! result.shortcodes
-    # result.shortcodes.size.should eq 1
-    # result.shortcodes[0].args.size.should eq 0
-    # result.shortcodes[0].name.should eq "bar"
+    result = parse("foo{{% bar %}}baz{{% /bar %}}qux")
+    p! result.shortcodes
+    result.shortcodes.size.should eq 1
+    result.shortcodes[0].args.size.should eq 0
+    result.shortcodes[0].name.should eq "bar"
   end
 end
 

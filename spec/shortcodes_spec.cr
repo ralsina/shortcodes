@@ -36,16 +36,7 @@ describe "Shortcodes" do
     input[result.errors[0].position, 3].should eq ">}}"
   end
 
-  it "should accept mismatched brackets inside data are ok" do
-    input = "foobar {{% sc %}} >}}blah {{% /sc %}} "
-    result = parse(input)
-    result.shortcodes.size.should eq 1
-    result.errors.size.should eq 0
-    result.shortcodes[0].whole.should eq "{{% sc %}} >}}blah {{% /sc %}}"
-    result.shortcodes[0].data.should eq " >}}blah "
-  end
-
-  it "should accept mismatched brackets in qvals" do
+  it "foo should accept mismatched brackets in qvals" do
     input = "foobar {{% sc  \">}}blah\" %}} {{% /sc %}}"
     result = parse(input)
     result.shortcodes.size.should eq 1
@@ -54,6 +45,18 @@ describe "Shortcodes" do
     result.shortcodes[0].args.size.should eq 1
     result.shortcodes[0].args[0].@value.should eq ">}}blah"
   end
+
+  it "foo should accept mismatched brackets inside data are ok" do
+    input = "foobar {{% sc %}} >}}blah {{% /sc %}} "
+    result = parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].whole.should eq "{{% sc %}} >}}blah {{% /sc %}}"
+    result.shortcodes[0].data.should eq " >}}blah "
+    result.shortcodes[0].args.size.should eq 1
+    result.shortcodes[0].args[0].@value.should eq ">}}blah"
+  end
+
 
   it "should consider spaces in shortcodes optional" do
     input = "foobar {{%    shortcode%}}blah"
@@ -125,12 +128,11 @@ describe "Shortcodes" do
     result.shortcodes[0].whole.should eq "{{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}"
   end
 
-  # // BUG?
-  # // Ensure(parse, escaped_shortcode)
-  # // {
-  # //     char *input = "foobar \\{{% shortcode %}}";
-  # //     result = parse(input);
-  # //     // No shortcodes
-  # //     assert_that(result.sc[0].name.len, is_equal_to(0));
-  # // }
+  # BUG?
+  # it "should ignore escaped shortcodes" do
+  #   input = "foobar \\{{% shortcode %}}blah"
+  #   result = parse(input)
+  #   result.shortcodes.size.should eq 0
+  #   result.errors.size.should eq 0
+  # end
 end

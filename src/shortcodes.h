@@ -57,4 +57,4 @@ Example:
 #define ERR_MISMATCHED_BRACKET 2
 
 
-sc_result parse(char *);
+sc_result parse(char *, unsigned int);

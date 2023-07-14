@@ -1,5 +1,5 @@
 @[Link(ldflags: "#{__DIR__}/shortcodes.o")]
-lib Shortcodes
+lib LibShortcodes
   struct Chunk
     start : UInt32
     len : UInt32
@@ -27,5 +27,59 @@ lib Shortcodes
     errcount : UInt32
   end
 
-  fun parse(input : Pointer(LibC::Char)) : ScResult
+  fun parse(input : Pointer(LibC::Char), len : UInt32) : ScResult
+end
+
+module Shortcodes
+  struct Arg
+    property name : String = ""
+    property value : String = ""
+
+    def initialize(@name, @value)
+    end
+  end
+
+  struct Shortcode
+    property name : String = ""
+    property data : String = ""
+    property matching : Int32 = 0
+    property args : Array(Arg) = [] of Arg
+
+    def initialize(@name, @data, @matching, @args)
+    end
+  end
+
+  struct Result
+    property shortcodes : Array(Shortcode) = [] of Shortcode
+  end
+
+  def extract(c : LibShortcodes::Chunk, s : String)
+    s[c.start, c.len]
+  end
+
+  def parse(input : String)
+    p! 111
+    r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
+    p! 222
+    result = Result.new
+
+    r.shortcodes.each_with_index.map do |sc, i|
+      next if i >= r.sccount
+      args = [] of Arg
+      sc.argnames.each_with_index.map do |_, j|
+        next if i >= sc.argcount
+        args << Arg.new(
+          extract(sc.argnames[j], input),
+          extract(sc.argvals[j], input),
+        )
+      end
+      result.shortcodes << Shortcode.new(
+        extract(sc.name, input),
+        extract(sc.data, input),
+        sc.matching,
+        args,
+      )
+    end
+    r
+  end
 end

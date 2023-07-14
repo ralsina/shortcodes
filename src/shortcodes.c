@@ -8,7 +8,7 @@
 
 
 
-sc_result parse(char *input) {
+sc_result parse(char *input, unsigned int len) {
 
   
 #line 15 "shortcodes.c"
@@ -25,7 +25,7 @@ static const int shortcode_en_main = 141;
 
   char *start = input;
   char *p = input;
-  char *pe = p + strlen(input);
+  char *pe = p + len;
 
   sc_result result;
   shortcode *sc_list = result.sc; 

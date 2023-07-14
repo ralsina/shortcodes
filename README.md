@@ -53,8 +53,12 @@ To run tests:
 
 2. Run `shards install`
 
-## Usage
+## Usage in Crystal
 
 ```crystal
 require "shortcodes"
 ```
+
+## Usage in C
+
+Just copy `shortcodes.c` and `shortcodes.h` into your project and have fun.

@@ -10,4 +10,8 @@ test: tests.so
 	cgreen-runner $^
 debug:
 	cgreen-debug tests.so
+%o: %c
+	$(CC) -g -c -o $@ $^
+shortcodes.a: shortcodes.o
+	ar rcs $@ $^
 .PHONY: test debug

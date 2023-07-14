@@ -5,7 +5,8 @@
 // and goes on for len characters.
 struct chunk
 {
-    unsigned int start, len;
+    unsigned int start;
+    unsigned int len;
 };
 typedef struct chunk chunk;
 

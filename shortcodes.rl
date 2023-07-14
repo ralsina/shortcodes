@@ -1,7 +1,6 @@
 #include <string.h>
 #include "shortcodes.h"
 
-
 %%{
   machine shortcode;
 
@@ -59,6 +58,9 @@
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
     sc_list[c_sc].name.len=0;
+    result.errors[result.errcount].position = p-start-2;
+    result.errors[result.errcount].code = ERR_MISMATCHED_BRACKET;
+    result.errcount++;
   };
 
   shortcode = ((start_p content end_p) | (start_b content end_b))
@@ -85,27 +87,30 @@
 
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
-    sc_list[c_sc-1].matching = 1;
-    sc_list[c_sc-1].whole.len = p-start-sc_list[c_sc-1].whole.start + 1;
     if (
         sc_list[c_sc-1].name.len != sc_list[c_sc].name.len ||
         strncmp(
           start + sc_list[c_sc-1].name.start,
           start + sc_list[c_sc].name.start,
           sc_list[c_sc-1].name.len) !=0) 
-     {
-      return NULL;
+    {
+      result.errors[result.errcount].position = 
+          sc_list[c_sc].whole.start;
+      result.errors[result.errcount].code = ERR_MISMATCHED_CLOSING_TAG;
+      result.errcount++;
+    } else {
+      // The previous shortcode is matching (mark it)
+      sc_list[c_sc-1].matching = 1;
+      sc_list[c_sc-1].whole.len = p-start-sc_list[c_sc-1].whole.start + 1;
     }
-    // Reuse this shortcode entry for next one
-    sc_list[c_sc].name.start = 0;
-    sc_list[c_sc].name.len=0;
+    // Do NOT increase c_sc
 };
 
   main := (any* (shortcode | matched_shortcode | mismatched))*;
 }%%
 
 
-shortcode *parse(char *input) {
+sc_result parse(char *input) {
 
   %%write data;
   char *eof, *ts, *te = 0;
@@ -115,11 +120,9 @@ shortcode *parse(char *input) {
   char *p = input;
   char *pe = p + strlen(input);
 
-  shortcode sc_list[1000]; 
+  sc_result result;
+  shortcode *sc_list = result.sc; 
   int c_sc = 0;
-
-  int sc_start = 0;
-  int sc_end = 0;
 
   char *mark = p;
   char *data_mark = p;
@@ -127,12 +130,6 @@ shortcode *parse(char *input) {
   %% write init;
   %% write exec;
 
-  return sc_list;
+  result.sccount = c_sc;
+  return result;
 }
-
-// int main(int argc, char **argv) {
-//     parse(
-// "bbb{{% sarasa sar1 sar2 \"sar3\" %}}ccc"
-// "{{< c1  arg2  >}}foobar{{% /c1%}}aaa{{% sarasa name=\"pepe\" %}}");
-//     return 0;
-// };

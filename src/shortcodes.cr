@@ -60,12 +60,12 @@ module Shortcodes
   def parse(input : String)
     r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
     result = Result.new
+    p! r.sccount
 
-    r.shortcodes.each_with_index.map do |sc, i|
-      next if i >= r.sccount
+    (0...r.sccount).each do |i|
+      sc = r.shortcodes[i]
       args = [] of Arg
-      sc.argnames.each_with_index.map do |_, j|
-        next if i >= sc.argcount
+      (0...sc.argcount).each do |j|
         args << Arg.new(
           extract(sc.argnames[j], input),
           extract(sc.argvals[j], input),

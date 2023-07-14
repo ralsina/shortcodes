@@ -113,7 +113,8 @@
 sc_result parse(char *input, unsigned int len) {
 
   %%write data;
-  char *eof, *ts, *te = 0;
+  char *eof = input + len;
+  char *ts, *te = 0;
   int cs, act = 0;
 
   char *start = input;

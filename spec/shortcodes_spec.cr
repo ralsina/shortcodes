@@ -5,7 +5,8 @@ describe "Shortcodes" do
   # TODO: Write tests
 
   it "works" do
-    result = parse("foo{{% bar %}}baz{{% /bar %}}qux")
+  input = "foo{{% bar %}}baz{{% /bar %}}qux"
+    result = parse(input)
     p! result.shortcodes
     result.shortcodes.size.should eq 1
     result.shortcodes[0].args.size.should eq 0

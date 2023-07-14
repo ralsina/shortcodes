@@ -4,9 +4,9 @@ describe "Shortcodes" do
   # TODO: Write tests
 
   it "works" do
-    result = Shortcodes.parse("foo{{% bar %}}baz{{% /bar %}}qux");
-    p! result.sccount;
-    p! result.shortcodes[0].matching;
+    result = Shortcodes.parse("foo{{% bar %}}baz{{% /bar %}}qux")
+    result.sccount.should eq 1
+    result.shortcodes[0].matching.should eq 1
   end
 end
 

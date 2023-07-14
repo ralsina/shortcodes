@@ -1,13 +1,12 @@
 @[Link(ldflags: "#{__DIR__}/shortcodes.o")]
 lib Shortcodes
-
   struct Chunk
     start : UInt32
     len : UInt32
   end
 
   struct ScError
-    position: UInt32
+    position : UInt32
     code : UInt32
   end
 
@@ -28,5 +27,5 @@ lib Shortcodes
     errcount : UInt32
   end
 
-  fun parse(input : Pointer(LibC::Char)) : ScResult;
+  fun parse(input : Pointer(LibC::Char)) : ScResult
 end

@@ -1,4 +1,3 @@
-CC=gcc
 shortcodes.c: shortcodes.rl
 	ragel -G2 shortcodes.rl -o shortcodes.c
 clean:

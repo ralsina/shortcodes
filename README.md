@@ -47,7 +47,7 @@ To run tests:
 
    ```yaml
    dependencies:
-     cr-discount:
+     shortcodes:
        github: ralsina/shortcodes
    ```
 

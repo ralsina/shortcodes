@@ -1,15 +1,14 @@
 require "./spec_helper"
-include Shortcodes
 
 describe "Shortcodes" do
   it "should parse empty string" do
-    result = parse("")
+    result = Shortcodes.parse("")
     result.shortcodes.size.should eq 0
     result.errors.size.should eq 0
   end
 
   it "should parse simeple shortcode" do
-    result = parse("foobar {{% shortcode %}}blah")
+    result = Shortcodes.parse("foobar {{% shortcode %}}blah")
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -20,25 +19,25 @@ describe "Shortcodes" do
 
   it "should report mismatched tags" do
     input = "foobar {{% shortcode %}}blah{{% /foo %}}"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 1
-    result.errors[0].code.should eq ERR_MISMATCHED_CLOSING_TAG
+    result.errors[0].code.should eq Shortcodes::ERR_MISMATCHED_CLOSING_TAG
     input[result.errors[0].position, 8].should eq "{{% /foo"
   end
 
   it "should report mismatched brackets" do
     input = "foobar {{% shortcode >}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 0
     result.errors.size.should eq 1
-    result.errors[0].code.should eq ERR_MISMATCHED_BRACKET
+    result.errors[0].code.should eq Shortcodes::ERR_MISMATCHED_BRACKET
     input[result.errors[0].position, 3].should eq ">}}"
   end
 
   it "should accept mismatched brackets inside data are ok" do
     input = "foobar {{% sc %}} >}}blah {{% /sc %}} "
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% sc %}} >}}blah {{% /sc %}}"
@@ -48,7 +47,7 @@ describe "Shortcodes" do
 
   it "should accept mismatched brackets in qvals" do
     input = "foobar {{% sc  \">}}blah\" %}} {{% /sc %}}"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% sc  \">}}blah\" %}} {{% /sc %}}"
@@ -58,7 +57,7 @@ describe "Shortcodes" do
 
   it "should consider spaces in shortcodes optional" do
     input = "foobar {{%    shortcode%}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -69,7 +68,7 @@ describe "Shortcodes" do
 
   it "should allow path-like names" do
     input = "foobar {{% shortcode/foo/bar %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode/foo/bar"
@@ -80,7 +79,7 @@ describe "Shortcodes" do
 
   it "should parse multiple shortcodes" do
     input = "foobar {{% shortcode %}}blah {{<sc2 >}}blahblah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 2
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -95,7 +94,7 @@ describe "Shortcodes" do
 
   it "should parse matching shortcodes" do
     input = "foobar {{% shortcode %}}blah {{% /shortcode %}} blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -107,7 +106,7 @@ describe "Shortcodes" do
 
   it "should parse quoted arg" do
     input = "foobar {{% shortcode \"bar\" %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -119,7 +118,7 @@ describe "Shortcodes" do
 
   it "should parse unquoted arg" do
     input = "foobar {{% shortcode bar %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -131,7 +130,7 @@ describe "Shortcodes" do
 
   it "should parse named arg" do
     input = "foobar {{% shortcode foo=bar %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -143,7 +142,7 @@ describe "Shortcodes" do
 
   it "should parse named, quoted arg" do
     input = "foobar {{% shortcode foo=\"bar\" %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -155,7 +154,7 @@ describe "Shortcodes" do
 
   it "should parse multiple shortcode args" do
     input = "foobar {{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}blah"
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
@@ -176,7 +175,7 @@ describe "Shortcodes" do
 
   it "should ignore nested shortcodes" do
     input = %({{% raw %}}{{% figure %}}{{% /raw %}})
-    result = parse(input)
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "raw"
@@ -187,7 +186,7 @@ describe "Shortcodes" do
   # BUG?
   # it "should ignore escaped shortcodes" do
   #   input = "foobar \\{{% shortcode %}}blah"
-  #   result = parse(input)
+  #   result = Shortcodes.parse(input)
   #   result.shortcodes.size.should eq 0
   #   result.errors.size.should eq 0
   # end

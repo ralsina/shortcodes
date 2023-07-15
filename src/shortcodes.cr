@@ -73,11 +73,11 @@ module Shortcodes
     property errors : Array(Error) = [] of Error
   end
 
-  def extract(c : LibShortcodes::Chunk, s : String)
+  def self.extract(c : LibShortcodes::Chunk, s : String)
     s[c.start, c.len]
   end
 
-  def parse(input : String)
+  def self.parse(input : String)
     r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
     result = Result.new
 

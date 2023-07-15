@@ -14,14 +14,15 @@
 
   name = (alpha+ path?)
     > mark
-    %{ sc_list[c_sc].name.start = mark-start;
-       sc_list[c_sc].name.len = p-mark;
-       sc_list[c_sc].matching = 0;
-       sc_list[c_sc].argcount = 0;
-       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
-       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
-       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
-       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
+    %{ 
+      sc_list[c_sc].name.start = mark-start;
+      sc_list[c_sc].name.len = p-mark;
+      sc_list[c_sc].matching = 0;
+      sc_list[c_sc].argcount = 0;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
       };
   argname = alpha+
     > mark
@@ -35,6 +36,10 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
       sc_list[c_sc].argcount++;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
     };
 
   value = alnum+
@@ -43,6 +48,10 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
       sc_list[c_sc].argcount++;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
+      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
     };
 
   arg = ((argname '=')? (value|qvalue));

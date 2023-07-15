@@ -50,7 +50,7 @@ module Shortcodes
   struct Shortcode
     property name : String = ""
     property data : String = ""
-    property matching : Bool = false
+    property? matching : Bool = false
     property args : Array(Arg) = [] of Arg
     property whole : String = ""
     property position : UInt32 = 0
@@ -93,7 +93,7 @@ module Shortcodes
 
       result.shortcodes << Shortcode.new(
         extract(sc.name, input),
-        sc.matching == 1 ? extract(sc.data, input): "",
+        sc.matching == 1 ? extract(sc.data, input) : "",
         sc.matching == 1,
         args,
         extract(sc.whole, input),

@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdio.h>
 #include "shortcodes.h"
 
 %%{
@@ -88,36 +89,41 @@
     };
 
   closing_shortcode = (start spc '/' name spc end)
-  > {
-    // Starting a "closing" shortcode ( {{ /foo }}), 
-    // close data (if previous shortcode is opening)
-    // If previous shortcode was closing, then previous 
-    // text can't be data.
-    if (sc_list[c_sc-1].matching == 0) {
-      sc_list[c_sc-1].data.start = data_mark-start;
-      sc_list[c_sc-1].data.len = p-data_mark-1;
-    }
-  };
+  > {sc_mark = p;};
 
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
-    if (
-        sc_list[c_sc-1].name.len != sc_list[c_sc].name.len ||
-        strncmp(
-          start + sc_list[c_sc-1].name.start,
-          start + sc_list[c_sc].name.start,
-          sc_list[c_sc-1].name.len) !=0) 
-    {
+    // First find what opening shortcode we are closing
+    // IF ANY!
+    int found = 0;
+    for (int i=c_sc-1; i>=0; i--) {
+      if (sc_list[i].name.len == sc_list[c_sc].name.len &&
+          strncmp(
+            start + sc_list[i].name.start,
+            start + sc_list[c_sc].name.start,
+            sc_list[c_sc-1].name.len) ==0) {
+        // This is the one!
+        // So, it's a matching shortcode
+        sc_list[i].matching = 1;
+        // We tamper with its data
+        sc_list[i].data.start = sc_list[i].whole.start+sc_list[i].whole.len;
+        sc_list[i].data.len = sc_mark - start - sc_list[i].data.start - 1;
+        // It goes all the way to the end of this tag
+        sc_list[i].whole.len = p-start-sc_list[i].whole.start + 1;
+
+        // We ignore every other shortcode because it's nested
+        c_sc = i+1;
+        found = 1;
+      } 
+    }
+    if (!found) {
+      // We are not closing any shortcode, error
       result.errors[result.errcount].position = 
           sc_list[c_sc].whole.start;
       result.errors[result.errcount].code = ERR_MISMATCHED_CLOSING_TAG;
       result.errcount++;
-    } else {
-      // The previous shortcode is matching (mark it)
-      sc_list[c_sc-1].matching = 1;
-      sc_list[c_sc-1].whole.len = p-start-sc_list[c_sc-1].whole.start + 1;
-    }
-    // Do NOT increase c_sc
+      // Do NOT increase c_sc
+    } 
 };
 
   main := (any* (shortcode | matched_shortcode | mismatched))*;
@@ -142,6 +148,7 @@ sc_result parse(char *input, unsigned int len) {
 
   char *mark = p;
   char *data_mark = p;
+  char *sc_mark = p;
 
   %% write init;
   %% write exec;

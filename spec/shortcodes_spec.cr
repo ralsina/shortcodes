@@ -46,7 +46,7 @@ describe "Shortcodes" do
     result.shortcodes[0].args.size.should eq 0
   end
 
-  it "foo should accept mismatched brackets in qvals" do
+  it "should accept mismatched brackets in qvals" do
     input = "foobar {{% sc  \">}}blah\" %}} {{% /sc %}}"
     result = parse(input)
     result.shortcodes.size.should eq 1
@@ -56,7 +56,7 @@ describe "Shortcodes" do
     result.shortcodes[0].args[0].@value.should eq ">}}blah"
   end
 
-  it "foo should consider spaces in shortcodes optional" do
+  it "should consider spaces in shortcodes optional" do
     input = "foobar {{%    shortcode%}}blah"
     result = parse(input)
     result.shortcodes.size.should eq 1
@@ -175,12 +175,13 @@ describe "Shortcodes" do
   end
 
   it "should ignore nested shortcodes" do
-    input = %({{% raw %}}
-              {{% figure %}}
-              {{% /raw %}})
+    input = %({{% raw %}}{{% figure %}}{{% /raw %}})
     result = parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "raw"
+    result.shortcodes[0].matching?.should be_true
+    result.shortcodes[0].data.should eq "{{% figure %}}" 
   end
 
   # BUG?

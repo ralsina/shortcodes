@@ -174,6 +174,15 @@ describe "Shortcodes" do
     result.shortcodes[0].whole.should eq "{{% shortcode foo \"bar\" 42 bat=v1 baz=\"v2\" %}}"
   end
 
+  it "should ignore nested shortcodes" do
+    input = %({{% raw %}}
+              {{% figure %}}
+              {{% /raw %}})
+    result = parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+  end
+
   # BUG?
   # it "should ignore escaped shortcodes" do
   #   input = "foobar \\{{% shortcode %}}blah"

@@ -50,16 +50,20 @@ module Shortcodes
   struct Shortcode
     property name : String = ""
     property data : String = ""
-    property matching : Int32 = 0
+    property matching : Bool = false
     property args : Array(Arg) = [] of Arg
     property whole : String = ""
+    property position : UInt32 = 0
+    property len : UInt32 = 0
 
     def initialize(
       @name,
       @data,
       @matching,
       @args,
-      @whole
+      @whole,
+      @position,
+      @len
     )
     end
   end
@@ -89,10 +93,12 @@ module Shortcodes
 
       result.shortcodes << Shortcode.new(
         extract(sc.name, input),
-        extract(sc.data, input),
-        sc.matching,
+        sc.matching == 1 ? extract(sc.data, input): "",
+        sc.matching == 1,
         args,
         extract(sc.whole, input),
+        sc.whole.start,
+        sc.whole.len,
       )
     end
     (0...r.errcount).each do |k|

@@ -13,7 +13,7 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].matching.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}"
   end
@@ -46,7 +46,7 @@ describe "Shortcodes" do
     result.shortcodes[0].args.size.should eq 0
   end
 
-  it "should accept mismatched brackets in qvals" do
+  it "foo should accept mismatched brackets in qvals" do
     input = "foobar {{% sc  \">}}blah\" %}} {{% /sc %}}"
     result = parse(input)
     result.shortcodes.size.should eq 1
@@ -56,13 +56,13 @@ describe "Shortcodes" do
     result.shortcodes[0].args[0].@value.should eq ">}}blah"
   end
 
-  it "should consider spaces in shortcodes optional" do
+  it "foo should consider spaces in shortcodes optional" do
     input = "foobar {{%    shortcode%}}blah"
     result = parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].matching.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{%    shortcode%}}"
   end
@@ -73,7 +73,7 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode/foo/bar"
-    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].matching.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode/foo/bar %}}"
   end
@@ -84,11 +84,11 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 2
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].matching.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}"
     result.shortcodes[1].name.should eq "sc2"
-    result.shortcodes[1].matching.should eq 0
+    result.shortcodes[1].matching.should be_false
     result.shortcodes[1].args.size.should eq 0
     result.shortcodes[1].whole.should eq "{{<sc2 >}}"
   end
@@ -99,7 +99,7 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching.should eq 1
+    result.shortcodes[0].matching.should be_true
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}blah {{% /shortcode %}}"
     result.shortcodes[0].data.should eq "blah "
@@ -111,7 +111,7 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching.should eq 0
+    result.shortcodes[0].matching.should be_false
     result.shortcodes[0].args.size.should eq 5
     result.shortcodes[0].args[0].name.should eq ""
     result.shortcodes[0].args[0].value.should eq "foo"

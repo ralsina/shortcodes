@@ -77,6 +77,21 @@ module Shortcodes
     s[c.start, c.len]
   end
 
+  def self.nice_error(e : Error, s : String)
+    return "" if e.position.nil?
+    line = s[0,e.position].count('\n')
+    column = e.position - (s[0,e.position].rindex('\n') || 0)
+    error_line = s.split('\n')[line]
+    msg = {
+      ERR_MISMATCHED_BRACKET => "Mismatched closing bracket style",
+      ERR_MISMATCHED_CLOSING_TAG => "Closing shortcode that was never opened"
+    }
+    %(Error in line #{line + 1}, column #{column + 1}
+  #{msg[e.code]}
+  #{error_line}
+  #{" "*column+"⬆️ HERE"}) 
+  end
+
   def self.parse(input : String)
     r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
     result = Result.new

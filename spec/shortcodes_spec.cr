@@ -211,7 +211,7 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "áé😃"
   end
 
-  it "should hanfle unicode qvals" do
+  it "should handle unicode qvals" do
     input = "{{% foo arg=\"áé😃\" \"😅😅😅\" %}}"
     result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1

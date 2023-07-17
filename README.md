@@ -21,6 +21,7 @@ as close as practical.
 * Capture data between tags in matched shortcodes
 * Capture arguments with and without names
 * Capture values with and without quotes (with details, see [TODO](TODO.md))
+* UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)
 
 ## Building
 

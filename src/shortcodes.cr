@@ -74,7 +74,9 @@ module Shortcodes
   end
 
   def self.extract(c : LibShortcodes::Chunk, s : String)
-    s[c.start, c.len]
+    # This is to account for UTF-8 character width
+    # because start and end are in bytes, not chars.
+    String.new(s.to_slice[c.start, c.len])
   end
 
   def self.nice_error(e : Error, s : String)

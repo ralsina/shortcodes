@@ -188,6 +188,39 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{% figure %}}"
   end
 
+  it "should handle unicode" do
+    input = "áé😃"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+    result.errors.size.should eq 0
+  end
+
+  it "should handle unicode outside the shortcode" do
+    input = "áé😃{{% foo %}}áé😃"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].whole.should eq "{{% foo %}}"
+  end
+
+  it "should handle unicode data" do
+    input = "{{% foo %}}áé😃{{%/foo%}}"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].data.should eq "áé😃"
+  end
+
+  it "should hanfle unicode qvals" do
+    input = "{{% foo arg=\"áé😃\" \"😅😅😅\" %}}"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].args.size.should eq 2
+    result.shortcodes[0].args[0].value.should eq "áé😃"
+    result.shortcodes[0].args[1].value.should eq "😅😅😅"
+  end
+
   # BUG?
   # it "should ignore escaped shortcodes" do
   #   input = "foobar \\{{% shortcode %}}blah"

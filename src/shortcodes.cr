@@ -15,6 +15,7 @@ lib LibShortcodes
     name : Chunk
     data : Chunk
     matching : LibC::Char
+    markdown : LibC::Char
     argnames : Chunk[100]
     argvals : Chunk[100]
     argcount : UInt32
@@ -51,6 +52,7 @@ module Shortcodes
     property name : String = ""
     property data : String = ""
     property? matching : Bool = false
+    property? markdown : Bool = false
     property args : Array(Arg) = [] of Arg
     property whole : String = ""
     property position : UInt32 = 0
@@ -60,6 +62,7 @@ module Shortcodes
       @name,
       @data,
       @matching,
+      @markdown,
       @args,
       @whole,
       @position,
@@ -112,6 +115,7 @@ module Shortcodes
         extract(sc.name, input),
         sc.matching == 1 ? extract(sc.data, input) : "",
         sc.matching == 1,
+        sc.markdown == 1,
         args,
         extract(sc.whole, input),
         sc.whole.start,

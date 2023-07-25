@@ -58,10 +58,12 @@
   arg = ((argname '=')? (value|qvalue));
 
   start_p = ('{{%');
-  end_p = '%}}';
+  end_p = '%}}'
+  @{sc_list[c_sc].markdown = 1;};
 
   start_b = ('{{<');
-  end_b = '>}}';
+  end_b = '>}}' 
+  @{sc_list[c_sc].markdown = 0;};
 
   content = spc name (sep arg)* spc;
 

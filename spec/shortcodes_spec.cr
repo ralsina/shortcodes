@@ -221,6 +221,15 @@ describe "Shortcodes" do
     result.shortcodes[0].args[1].value.should eq "😅😅😅"
   end
 
+  it "should only mark as markdown if it ends with %}}" do
+    input = "{{% foo %}} {{< bar >}}"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 2
+    result.errors.size.should eq 0
+    result.shortcodes[0].markdown?.should be_true
+    result.shortcodes[1].markdown?.should be_false
+  end
+
   # BUG?
   # it "should ignore escaped shortcodes" do
   #   input = "foobar \\{{% shortcode %}}blah"

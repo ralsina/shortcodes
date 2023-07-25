@@ -116,6 +116,7 @@
         // We ignore every other shortcode because it's nested
         c_sc = i+1;
         found = 1;
+        break;
       } 
     }
     if (!found) {

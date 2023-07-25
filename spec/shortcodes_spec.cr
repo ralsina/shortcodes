@@ -188,6 +188,16 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{% figure %}}"
   end
 
+  it "should ignore nested matching shortcodes" do
+    input = %({{< raw >}}{{%heading%}}inner{{%/heading%}}{{< /raw >}})
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "raw"
+    result.shortcodes[0].matching?.should be_true
+    result.shortcodes[0].data.should eq "{{%heading%}}inner{{%/heading%}}"
+  end
+
   it "should handle unicode" do
     input = "áé😃"
     result = Shortcodes.parse(input)

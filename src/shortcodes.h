@@ -26,6 +26,7 @@ struct shortcode
     chunk data;
     char matching;
     char markdown;
+    char closed;
     chunk argnames[100];
     chunk argvals[100];
     unsigned int argcount;

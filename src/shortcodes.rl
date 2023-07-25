@@ -19,6 +19,7 @@
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
+      sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
@@ -99,7 +100,7 @@
     // IF ANY!
     int found = 0;
     for (int i=c_sc-1; i>=0; i--) {
-      if (sc_list[i].name.len == sc_list[c_sc].name.len &&
+      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
@@ -107,6 +108,7 @@
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
+        sc_list[i].closed = 1;
         // We tamper with its data
         sc_list[i].data.start = sc_list[i].whole.start+sc_list[i].whole.len;
         sc_list[i].data.len = sc_mark - start - sc_list[i].data.start - 1;

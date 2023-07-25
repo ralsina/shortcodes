@@ -240,6 +240,15 @@ describe "Shortcodes" do
     result.shortcodes[1].markdown?.should be_false
   end
 
+  it "should not mush similar shortcodes" do
+    input = "{{%h%}}1{{%/h%}} {{%h%}}2{{%/h%}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 0
+    result.shortcodes[0].data.should eq "1"
+    result.shortcodes[1].data.should eq "2"
+    result.shortcodes.size.should eq 2
+  end
+
   # BUG?
   # it "should ignore escaped shortcodes" do
   #   input = "foobar \\{{% shortcode %}}blah"

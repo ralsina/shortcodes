@@ -211,6 +211,7 @@ describe "Shortcodes" do
     result.shortcodes[0].matching?.should be_true
     result.shortcodes[0].data.should eq "{{% figure %}}"
   end
+
   it "should ignore nested matched shortcodes" do
     input = %({{< raw >}}{{% foo %}}{{% /foo %}}{{< /raw >}})
     result = Shortcodes.parse(input)
@@ -220,6 +221,7 @@ describe "Shortcodes" do
     result.shortcodes[0].matching?.should be_true
     result.shortcodes[0].data.should eq "{{% foo %}}{{% /foo %}}"
   end
+
   it "should ignore nested shortcodes with inner inline" do
     input = %({{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}})
     result = Shortcodes.parse(input)

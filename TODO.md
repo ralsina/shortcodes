@@ -12,3 +12,7 @@
 * ✅ Start integrating with Crystal
 * ✅ Produce decent error structures
 * ✅ Detect mismatched start/end like {{% foo >}}
+
+## Things That Will Not Get Done
+
+* Support shortcodes being escaped AND self-closing `{{%/* foo *//%}}`  (WHY)

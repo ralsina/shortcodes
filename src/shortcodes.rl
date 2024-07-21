@@ -27,7 +27,7 @@
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;

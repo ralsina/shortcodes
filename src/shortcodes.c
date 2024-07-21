@@ -198,7 +198,7 @@ tr8:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -295,7 +295,7 @@ tr9:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -843,7 +843,7 @@ tr40:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -875,7 +875,7 @@ tr41:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -957,7 +957,7 @@ tr44:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -993,7 +993,7 @@ tr43:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1034,7 +1034,7 @@ tr59:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1070,7 +1070,7 @@ tr60:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1136,7 +1136,7 @@ tr65:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1233,7 +1233,7 @@ tr66:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1345,7 +1345,7 @@ tr69:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1526,7 +1526,7 @@ tr99:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -1559,7 +1559,7 @@ tr100:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2018,7 +2018,7 @@ tr103:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2056,7 +2056,7 @@ tr102:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2098,7 +2098,7 @@ tr118:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2136,7 +2136,7 @@ tr119:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2205,7 +2205,7 @@ tr124:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2294,7 +2294,7 @@ tr125:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2411,7 +2411,7 @@ tr128:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2649,7 +2649,7 @@ tr166:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -2682,7 +2682,7 @@ tr167:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3141,7 +3141,7 @@ tr170:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3179,7 +3179,7 @@ tr169:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3221,7 +3221,7 @@ tr185:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3259,7 +3259,7 @@ tr186:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3328,7 +3328,7 @@ tr191:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3395,7 +3395,7 @@ tr192:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3543,7 +3543,7 @@ tr195:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3663,7 +3663,7 @@ tr194:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3705,7 +3705,7 @@ tr217:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3805,7 +3805,7 @@ tr222:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -3907,7 +3907,7 @@ tr223:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4040,7 +4040,7 @@ tr2033:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4242,7 +4242,7 @@ tr266:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4275,7 +4275,7 @@ tr267:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4734,7 +4734,7 @@ tr270:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4772,7 +4772,7 @@ tr269:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4814,7 +4814,7 @@ tr285:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4852,7 +4852,7 @@ tr286:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -4921,7 +4921,7 @@ tr291:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5027,7 +5027,7 @@ tr292:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5144,7 +5144,7 @@ tr295:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5226,7 +5226,7 @@ tr2008:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5291,7 +5291,7 @@ tr2009:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5586,7 +5586,7 @@ tr343:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -5620,7 +5620,7 @@ tr344:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6087,7 +6087,7 @@ tr347:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6127,7 +6127,7 @@ tr346:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6170,7 +6170,7 @@ tr362:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6210,7 +6210,7 @@ tr363:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6282,7 +6282,7 @@ tr368:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6372,7 +6372,7 @@ tr369:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6494,7 +6494,7 @@ tr372:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6579,7 +6579,7 @@ tr1548:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6667,7 +6667,7 @@ tr443:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6734,7 +6734,7 @@ tr444:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6914,7 +6914,7 @@ tr418:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -6948,7 +6948,7 @@ tr419:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7415,7 +7415,7 @@ tr422:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7455,7 +7455,7 @@ tr421:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7498,7 +7498,7 @@ tr437:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7538,7 +7538,7 @@ tr438:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7610,7 +7610,7 @@ tr446:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7653,7 +7653,7 @@ tr448:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7693,7 +7693,7 @@ tr447:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7822,7 +7822,7 @@ tr455:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -7908,7 +7908,7 @@ tr456:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8055,7 +8055,7 @@ tr1959:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8120,7 +8120,7 @@ tr1960:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8308,7 +8308,7 @@ tr569:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8373,7 +8373,7 @@ tr570:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8567,7 +8567,7 @@ tr513:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -8600,7 +8600,7 @@ tr514:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9059,7 +9059,7 @@ tr517:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9097,7 +9097,7 @@ tr516:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9139,7 +9139,7 @@ tr532:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9177,7 +9177,7 @@ tr533:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9246,7 +9246,7 @@ tr538:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9313,7 +9313,7 @@ tr539:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9461,7 +9461,7 @@ tr542:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9581,7 +9581,7 @@ tr541:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9623,7 +9623,7 @@ tr564:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9792,7 +9792,7 @@ tr574:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9909,7 +9909,7 @@ tr2038:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -9976,7 +9976,7 @@ tr2039:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10173,7 +10173,7 @@ tr616:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10206,7 +10206,7 @@ tr617:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10665,7 +10665,7 @@ tr620:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10703,7 +10703,7 @@ tr619:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10745,7 +10745,7 @@ tr635:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10783,7 +10783,7 @@ tr636:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10852,7 +10852,7 @@ tr641:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -10958,7 +10958,7 @@ tr642:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11075,7 +11075,7 @@ tr645:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11159,7 +11159,7 @@ tr2013:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11248,7 +11248,7 @@ tr726:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11315,7 +11315,7 @@ tr727:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11488,7 +11488,7 @@ tr701:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11521,7 +11521,7 @@ tr702:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -11980,7 +11980,7 @@ tr705:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12018,7 +12018,7 @@ tr704:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12060,7 +12060,7 @@ tr720:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12098,7 +12098,7 @@ tr721:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12167,7 +12167,7 @@ tr729:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12209,7 +12209,7 @@ tr731:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12247,7 +12247,7 @@ tr730:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12371,7 +12371,7 @@ tr738:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12458,7 +12458,7 @@ tr575:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12575,7 +12575,7 @@ tr578:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12676,7 +12676,7 @@ tr1964:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12743,7 +12743,7 @@ tr1965:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -12825,7 +12825,7 @@ tr1850:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13034,7 +13034,7 @@ tr794:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13068,7 +13068,7 @@ tr795:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13535,7 +13535,7 @@ tr798:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13575,7 +13575,7 @@ tr797:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13618,7 +13618,7 @@ tr813:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13658,7 +13658,7 @@ tr814:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13730,7 +13730,7 @@ tr819:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13818,7 +13818,7 @@ tr1590:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -13906,7 +13906,7 @@ tr820:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14028,7 +14028,7 @@ tr823:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14115,7 +14115,7 @@ tr1939:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14205,7 +14205,7 @@ tr907:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14272,7 +14272,7 @@ tr908:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14452,7 +14452,7 @@ tr882:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14486,7 +14486,7 @@ tr883:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14953,7 +14953,7 @@ tr886:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -14993,7 +14993,7 @@ tr885:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15036,7 +15036,7 @@ tr901:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15076,7 +15076,7 @@ tr902:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15148,7 +15148,7 @@ tr910:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15191,7 +15191,7 @@ tr912:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15231,7 +15231,7 @@ tr911:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15360,7 +15360,7 @@ tr919:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15448,7 +15448,7 @@ tr1046:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15536,7 +15536,7 @@ tr920:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15623,7 +15623,7 @@ tr1047:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15803,7 +15803,7 @@ tr954:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -15837,7 +15837,7 @@ tr955:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16304,7 +16304,7 @@ tr958:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16344,7 +16344,7 @@ tr957:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16387,7 +16387,7 @@ tr973:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16427,7 +16427,7 @@ tr974:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16499,7 +16499,7 @@ tr979:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16587,7 +16587,7 @@ tr1934:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16652,7 +16652,7 @@ tr1935:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16826,7 +16826,7 @@ tr980:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -16980,7 +16980,7 @@ tr983:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17103,7 +17103,7 @@ tr982:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17146,7 +17146,7 @@ tr1020:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17251,7 +17251,7 @@ tr1025:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17337,7 +17337,7 @@ tr1026:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17583,7 +17583,7 @@ tr1049:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17626,7 +17626,7 @@ tr1051:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17666,7 +17666,7 @@ tr1050:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17762,7 +17762,7 @@ tr1760:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -17827,7 +17827,7 @@ tr1761:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18309,7 +18309,7 @@ tr1089:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18399,7 +18399,7 @@ tr1090:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18521,7 +18521,7 @@ tr1093:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18645,7 +18645,7 @@ tr1855:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18712,7 +18712,7 @@ tr1856:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -18860,7 +18860,7 @@ tr1859:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19002,7 +19002,7 @@ tr1805:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19069,7 +19069,7 @@ tr1806:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19217,7 +19217,7 @@ tr1809:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19464,7 +19464,7 @@ tr1178:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19498,7 +19498,7 @@ tr1179:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -19965,7 +19965,7 @@ tr1182:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20005,7 +20005,7 @@ tr1181:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20048,7 +20048,7 @@ tr1197:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20088,7 +20088,7 @@ tr1198:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20160,7 +20160,7 @@ tr1203:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20250,7 +20250,7 @@ tr1599:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20340,7 +20340,7 @@ tr1204:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20462,7 +20462,7 @@ tr1207:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20526,7 +20526,7 @@ tr1600:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20706,7 +20706,7 @@ tr1247:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -20740,7 +20740,7 @@ tr1248:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21207,7 +21207,7 @@ tr1251:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21247,7 +21247,7 @@ tr1250:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21290,7 +21290,7 @@ tr1266:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21330,7 +21330,7 @@ tr1267:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21402,7 +21402,7 @@ tr1272:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21492,7 +21492,7 @@ tr1273:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21614,7 +21614,7 @@ tr1276:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21701,7 +21701,7 @@ tr1557:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21830,7 +21830,7 @@ tr1988:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -21897,7 +21897,7 @@ tr1989:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22045,7 +22045,7 @@ tr1992:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22292,7 +22292,7 @@ tr1348:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22326,7 +22326,7 @@ tr1349:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22793,7 +22793,7 @@ tr1352:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22833,7 +22833,7 @@ tr1351:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22876,7 +22876,7 @@ tr1367:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22916,7 +22916,7 @@ tr1368:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -22988,7 +22988,7 @@ tr1373:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23055,7 +23055,7 @@ tr1374:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23209,7 +23209,7 @@ tr1377:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23332,7 +23332,7 @@ tr1376:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23375,7 +23375,7 @@ tr1398:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23480,7 +23480,7 @@ tr1403:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23568,7 +23568,7 @@ tr1898:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23656,7 +23656,7 @@ tr1404:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23743,7 +23743,7 @@ tr1899:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -23897,7 +23897,7 @@ tr1902:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24179,7 +24179,7 @@ tr1447:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24269,7 +24269,7 @@ tr1448:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24391,7 +24391,7 @@ tr1451:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24546,7 +24546,7 @@ tr1450:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24589,7 +24589,7 @@ tr1476:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24629,7 +24629,7 @@ tr1558:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24809,7 +24809,7 @@ tr1488:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -24843,7 +24843,7 @@ tr1489:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25310,7 +25310,7 @@ tr1492:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25350,7 +25350,7 @@ tr1491:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25393,7 +25393,7 @@ tr1507:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25433,7 +25433,7 @@ tr1508:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25505,7 +25505,7 @@ tr1513:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25595,7 +25595,7 @@ tr1514:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25717,7 +25717,7 @@ tr1517:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25872,7 +25872,7 @@ tr1516:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -25915,7 +25915,7 @@ tr1543:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26020,7 +26020,7 @@ tr1549:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26179,7 +26179,7 @@ tr1560:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26222,7 +26222,7 @@ tr1562:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26262,7 +26262,7 @@ tr1561:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26577,7 +26577,7 @@ tr1275:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26620,7 +26620,7 @@ tr1585:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26725,7 +26725,7 @@ tr1591:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26884,7 +26884,7 @@ tr1602:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26927,7 +26927,7 @@ tr1604:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -26967,7 +26967,7 @@ tr1603:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27282,7 +27282,7 @@ tr1206:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27325,7 +27325,7 @@ tr1627:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27430,7 +27430,7 @@ tr1632:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27518,7 +27518,7 @@ tr1765:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27585,7 +27585,7 @@ tr1766:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27739,7 +27739,7 @@ tr1769:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -27862,7 +27862,7 @@ tr1633:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28108,7 +28108,7 @@ tr1675:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28198,7 +28198,7 @@ tr1676:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28320,7 +28320,7 @@ tr1679:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28475,7 +28475,7 @@ tr1678:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28518,7 +28518,7 @@ tr1705:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28649,7 +28649,7 @@ tr1092:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28692,7 +28692,7 @@ tr1715:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -28892,7 +28892,7 @@ tr1940:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29046,7 +29046,7 @@ tr1943:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29347,7 +29347,7 @@ tr822:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29390,7 +29390,7 @@ tr1755:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29567,7 +29567,7 @@ tr1768:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29610,7 +29610,7 @@ tr1770:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29650,7 +29650,7 @@ tr1851:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -29904,7 +29904,7 @@ tr1968:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30024,7 +30024,7 @@ tr739:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30261,7 +30261,7 @@ tr1808:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30303,7 +30303,7 @@ tr1810:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30495,7 +30495,7 @@ tr2014:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30643,7 +30643,7 @@ tr2017:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30852,7 +30852,7 @@ tr644:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -30894,7 +30894,7 @@ tr1845:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31063,7 +31063,7 @@ tr1858:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31105,7 +31105,7 @@ tr1860:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31225,7 +31225,7 @@ tr2042:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31431,7 +31431,7 @@ tr577:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31473,7 +31473,7 @@ tr1882:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31765,7 +31765,7 @@ tr1901:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -31808,7 +31808,7 @@ tr1903:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32186,7 +32186,7 @@ tr371:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32229,7 +32229,7 @@ tr1929:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32406,7 +32406,7 @@ tr1942:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32449,7 +32449,7 @@ tr1944:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32578,7 +32578,7 @@ tr294:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32620,7 +32620,7 @@ tr1954:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32789,7 +32789,7 @@ tr1967:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32831,7 +32831,7 @@ tr1969:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -32869,7 +32869,7 @@ tr2034:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33185,7 +33185,7 @@ tr1991:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33227,7 +33227,7 @@ tr1993:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33354,7 +33354,7 @@ tr127:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33396,7 +33396,7 @@ tr2003:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33565,7 +33565,7 @@ tr2016:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33607,7 +33607,7 @@ tr2018:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33732,7 +33732,7 @@ tr68:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33773,7 +33773,7 @@ tr2028:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33934,7 +33934,7 @@ tr2041:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -33975,7 +33975,7 @@ tr2043:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34063,7 +34063,7 @@ tr12:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34225,7 +34225,7 @@ tr2056:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34314,7 +34314,7 @@ tr2057:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34431,7 +34431,7 @@ tr2060:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34686,7 +34686,7 @@ tr2094:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34753,7 +34753,7 @@ tr2095:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -34901,7 +34901,7 @@ tr2098:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35057,7 +35057,7 @@ tr2097:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35099,7 +35099,7 @@ tr2118:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35194,7 +35194,7 @@ tr2122:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35296,7 +35296,7 @@ tr2123:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35429,7 +35429,7 @@ tr3478:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35612,7 +35612,7 @@ tr2163:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35718,7 +35718,7 @@ tr2164:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35835,7 +35835,7 @@ tr2167:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -35953,7 +35953,7 @@ tr3455:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36018,7 +36018,7 @@ tr3456:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36293,7 +36293,7 @@ tr2210:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36383,7 +36383,7 @@ tr2211:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36505,7 +36505,7 @@ tr2214:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36627,7 +36627,7 @@ tr3043:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36715,7 +36715,7 @@ tr2256:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36782,7 +36782,7 @@ tr2257:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36942,7 +36942,7 @@ tr2259:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -36985,7 +36985,7 @@ tr2261:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37025,7 +37025,7 @@ tr2260:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37186,7 +37186,7 @@ tr2267:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37272,7 +37272,7 @@ tr2268:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37419,7 +37419,7 @@ tr3410:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37484,7 +37484,7 @@ tr3411:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37672,7 +37672,7 @@ tr2349:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37737,7 +37737,7 @@ tr2350:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37912,7 +37912,7 @@ tr2321:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -37979,7 +37979,7 @@ tr2322:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38127,7 +38127,7 @@ tr2325:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38283,7 +38283,7 @@ tr2324:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38325,7 +38325,7 @@ tr2345:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38488,7 +38488,7 @@ tr2354:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38605,7 +38605,7 @@ tr3483:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38672,7 +38672,7 @@ tr3484:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38850,7 +38850,7 @@ tr2394:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -38956,7 +38956,7 @@ tr2395:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39073,7 +39073,7 @@ tr2398:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39193,7 +39193,7 @@ tr3460:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39282,7 +39282,7 @@ tr2450:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39349,7 +39349,7 @@ tr2451:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39503,7 +39503,7 @@ tr2453:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39545,7 +39545,7 @@ tr2455:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39583,7 +39583,7 @@ tr2454:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39738,7 +39738,7 @@ tr2461:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39825,7 +39825,7 @@ tr2355:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -39942,7 +39942,7 @@ tr2358:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40043,7 +40043,7 @@ tr3415:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40110,7 +40110,7 @@ tr3416:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40192,7 +40192,7 @@ tr3312:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40381,7 +40381,7 @@ tr2513:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40469,7 +40469,7 @@ tr3080:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40557,7 +40557,7 @@ tr2514:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40679,7 +40679,7 @@ tr2517:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40803,7 +40803,7 @@ tr3392:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40893,7 +40893,7 @@ tr2572:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -40960,7 +40960,7 @@ tr2573:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41120,7 +41120,7 @@ tr2575:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41163,7 +41163,7 @@ tr2577:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41203,7 +41203,7 @@ tr2576:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41364,7 +41364,7 @@ tr2583:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41452,7 +41452,7 @@ tr2677:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41540,7 +41540,7 @@ tr2584:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41627,7 +41627,7 @@ tr2678:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41787,7 +41787,7 @@ tr2615:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41875,7 +41875,7 @@ tr3387:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -41940,7 +41940,7 @@ tr3388:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42114,7 +42114,7 @@ tr2616:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42268,7 +42268,7 @@ tr2619:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42428,7 +42428,7 @@ tr2618:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42471,7 +42471,7 @@ tr2653:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42571,7 +42571,7 @@ tr2657:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42657,7 +42657,7 @@ tr2658:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42902,7 +42902,7 @@ tr2680:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42945,7 +42945,7 @@ tr2682:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -42985,7 +42985,7 @@ tr2681:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43081,7 +43081,7 @@ tr3233:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43146,7 +43146,7 @@ tr3234:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43627,7 +43627,7 @@ tr2716:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43717,7 +43717,7 @@ tr2717:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43839,7 +43839,7 @@ tr2720:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -43963,7 +43963,7 @@ tr3317:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44030,7 +44030,7 @@ tr3318:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44178,7 +44178,7 @@ tr3321:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44320,7 +44320,7 @@ tr3273:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44387,7 +44387,7 @@ tr3274:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44535,7 +44535,7 @@ tr3277:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44762,7 +44762,7 @@ tr2797:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44852,7 +44852,7 @@ tr3088:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -44942,7 +44942,7 @@ tr2798:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45064,7 +45064,7 @@ tr2801:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45165,7 +45165,7 @@ tr3089:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45325,7 +45325,7 @@ tr2837:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45415,7 +45415,7 @@ tr2838:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45537,7 +45537,7 @@ tr2841:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45661,7 +45661,7 @@ tr3051:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45790,7 +45790,7 @@ tr3437:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -45857,7 +45857,7 @@ tr3438:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46005,7 +46005,7 @@ tr3441:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46232,7 +46232,7 @@ tr2907:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46299,7 +46299,7 @@ tr2908:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46453,7 +46453,7 @@ tr2911:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46613,7 +46613,7 @@ tr2910:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46656,7 +46656,7 @@ tr2930:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46756,7 +46756,7 @@ tr2934:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46844,7 +46844,7 @@ tr3355:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -46932,7 +46932,7 @@ tr2935:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47019,7 +47019,7 @@ tr3356:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47173,7 +47173,7 @@ tr3359:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47454,7 +47454,7 @@ tr2975:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47544,7 +47544,7 @@ tr2976:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47666,7 +47666,7 @@ tr2979:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47821,7 +47821,7 @@ tr2978:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47864,7 +47864,7 @@ tr3002:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -47904,7 +47904,7 @@ tr3052:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48064,7 +48064,7 @@ tr3011:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48154,7 +48154,7 @@ tr3012:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48276,7 +48276,7 @@ tr3015:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48468,7 +48468,7 @@ tr3014:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48511,7 +48511,7 @@ tr3039:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48611,7 +48611,7 @@ tr3044:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48769,7 +48769,7 @@ tr3054:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48812,7 +48812,7 @@ tr3056:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -48852,7 +48852,7 @@ tr3055:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49167,7 +49167,7 @@ tr2840:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49210,7 +49210,7 @@ tr3076:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49310,7 +49310,7 @@ tr3081:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49468,7 +49468,7 @@ tr3091:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49511,7 +49511,7 @@ tr3093:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49551,7 +49551,7 @@ tr3092:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49866,7 +49866,7 @@ tr2800:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -49909,7 +49909,7 @@ tr3113:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50009,7 +50009,7 @@ tr3117:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50097,7 +50097,7 @@ tr3238:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50164,7 +50164,7 @@ tr3239:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50318,7 +50318,7 @@ tr3242:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50441,7 +50441,7 @@ tr3118:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50686,7 +50686,7 @@ tr3157:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50776,7 +50776,7 @@ tr3158:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -50898,7 +50898,7 @@ tr3161:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51053,7 +51053,7 @@ tr3160:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51096,7 +51096,7 @@ tr3185:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51227,7 +51227,7 @@ tr2719:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51270,7 +51270,7 @@ tr3194:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51470,7 +51470,7 @@ tr3393:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51624,7 +51624,7 @@ tr3396:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51925,7 +51925,7 @@ tr2516:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -51968,7 +51968,7 @@ tr3229:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52139,7 +52139,7 @@ tr3241:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52182,7 +52182,7 @@ tr3243:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52222,7 +52222,7 @@ tr3313:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52476,7 +52476,7 @@ tr3419:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52596,7 +52596,7 @@ tr2462:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52832,7 +52832,7 @@ tr3276:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -52874,7 +52874,7 @@ tr3278:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53066,7 +53066,7 @@ tr3461:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53214,7 +53214,7 @@ tr3464:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53423,7 +53423,7 @@ tr2397:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53465,7 +53465,7 @@ tr3308:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53628,7 +53628,7 @@ tr3320:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53670,7 +53670,7 @@ tr3322:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53790,7 +53790,7 @@ tr3487:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -53996,7 +53996,7 @@ tr2357:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54038,7 +54038,7 @@ tr3341:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54329,7 +54329,7 @@ tr3358:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54372,7 +54372,7 @@ tr3360:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54750,7 +54750,7 @@ tr2213:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54793,7 +54793,7 @@ tr3383:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -54964,7 +54964,7 @@ tr3395:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55007,7 +55007,7 @@ tr3397:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55136,7 +55136,7 @@ tr2166:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55178,7 +55178,7 @@ tr3406:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55341,7 +55341,7 @@ tr3418:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55383,7 +55383,7 @@ tr3420:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55421,7 +55421,7 @@ tr3479:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55736,7 +55736,7 @@ tr3440:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55778,7 +55778,7 @@ tr3442:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55905,7 +55905,7 @@ tr2059:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -55947,7 +55947,7 @@ tr3451:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56110,7 +56110,7 @@ tr3463:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56152,7 +56152,7 @@ tr3465:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56277,7 +56277,7 @@ tr11:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56318,7 +56318,7 @@ tr3474:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56473,7 +56473,7 @@ tr3486:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
@@ -56514,7 +56514,7 @@ tr3488:
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (sc_list[c_sc].name.len > 7) {
+      if (p-mark > 7) {
         sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;

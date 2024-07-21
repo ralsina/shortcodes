@@ -5,4 +5,7 @@ binding:
 test:
 	crystal spec -v
 
-.PHONY: binding test
+clean:
+	rm src/*.o src/shortcodes.c
+
+.PHONY: binding test clean

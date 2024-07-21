@@ -270,11 +270,10 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{% raw %}}inner{{% /raw %}}"
   end
 
-  # BUG?
-  # it "should ignore escaped shortcodes" do
-  #   input = "foobar \\{{% shortcode %}}blah"
-  #   result = Shortcodes.parse(input)
-  #   result.shortcodes.size.should eq 0
-  #   result.errors.size.should eq 0
-  # end
+  pending "should ignore escaped shortcodes" do
+    input = "foobar x{{% shortcode %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+    result.errors.size.should eq 0
+  end
 end

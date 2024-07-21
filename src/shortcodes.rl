@@ -74,6 +74,7 @@
   end_p = '%}}'
   @{sc_list[c_sc].markdown = 1;};
 
+
   # A shortcode with verbatim content
   start_b = ('{{<');
   end_b = '>}}' 

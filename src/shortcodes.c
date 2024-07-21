@@ -5,7 +5,7 @@
 #include "shortcodes.h"
 
 
-#line 154 "shortcodes.rl"
+#line 155 "shortcodes.rl"
 
 
 
@@ -20,7 +20,7 @@ static const int shortcode_error = -1;
 static const int shortcode_en_main = 513;
 
 
-#line 160 "shortcodes.rl"
+#line 161 "shortcodes.rl"
   char *eof = input + len;
   char *ts, *te = 0;
   int cs, act = 0;
@@ -44,7 +44,7 @@ static const int shortcode_en_main = 513;
 	cs = shortcode_start;
 	}
 
-#line 178 "shortcodes.rl"
+#line 179 "shortcodes.rl"
   
 #line 50 "shortcodes.c"
 	{
@@ -53,9 +53,9 @@ static const int shortcode_en_main = 513;
 	switch ( cs )
 	{
 tr635:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -68,7 +68,7 @@ tr635:
 tr728:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -94,7 +94,7 @@ case 0:
 		goto tr1;
 	goto st0;
 tr1:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -108,7 +108,7 @@ case 1:
 		goto tr2;
 	goto st0;
 tr2:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -322,7 +322,7 @@ case 9:
 tr24:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -332,7 +332,7 @@ tr24:
 tr41:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -370,9 +370,9 @@ tr41:
 }
 	goto st514;
 tr43:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -410,9 +410,9 @@ tr43:
 }
 	goto st514;
 tr63:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -425,7 +425,7 @@ tr63:
 tr185:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -436,9 +436,9 @@ tr185:
   }
 	goto st514;
 tr603:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -461,11 +461,11 @@ case 10:
 		goto tr26;
 	goto st10;
 tr26:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st11;
 st11:
@@ -477,11 +477,11 @@ case 11:
 		goto tr27;
 	goto st10;
 tr27:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st12;
 st12:
@@ -884,11 +884,11 @@ case 28:
 	}
 	goto st10;
 tr57:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st29;
 st29:
@@ -902,11 +902,11 @@ case 29:
 	}
 	goto st23;
 tr64:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st30;
 st30:
@@ -1051,7 +1051,7 @@ case 36:
 tr96:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1061,7 +1061,7 @@ tr96:
 tr78:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1099,9 +1099,9 @@ tr78:
 }
 	goto st515;
 tr80:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1139,9 +1139,9 @@ tr80:
 }
 	goto st515;
 tr98:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1154,7 +1154,7 @@ tr98:
 tr237:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1165,9 +1165,9 @@ tr237:
   }
 	goto st515;
 tr243:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1506,11 +1506,11 @@ case 48:
 	}
 	goto st48;
 tr107:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st49;
 st49:
@@ -1524,11 +1524,11 @@ case 49:
 	}
 	goto st48;
 tr108:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st50;
 st50:
@@ -1673,7 +1673,7 @@ case 56:
 tr136:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1683,7 +1683,7 @@ tr136:
 tr122:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1721,9 +1721,9 @@ tr122:
 }
 	goto st516;
 tr124:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1761,9 +1761,9 @@ tr124:
 }
 	goto st516;
 tr142:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1776,7 +1776,7 @@ tr142:
 tr165:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1787,9 +1787,9 @@ tr165:
   }
 	goto st516;
 tr167:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2594,11 +2594,11 @@ case 83:
 	}
 	goto st83;
 tr187:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st84;
 st84:
@@ -2612,11 +2612,11 @@ case 84:
 	}
 	goto st83;
 tr188:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st85;
 st85:
@@ -2761,7 +2761,7 @@ case 91:
 tr224:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2771,7 +2771,7 @@ tr224:
 tr202:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2809,9 +2809,9 @@ tr202:
 }
 	goto st517;
 tr204:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2849,9 +2849,9 @@ tr204:
 }
 	goto st517;
 tr226:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -2864,7 +2864,7 @@ tr226:
 tr359:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -2875,9 +2875,9 @@ tr359:
   }
 	goto st517;
 tr365:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3468,11 +3468,11 @@ case 110:
 		goto tr233;
 	goto st23;
 tr219:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st111;
 st111:
@@ -3487,11 +3487,11 @@ case 111:
 	}
 	goto st96;
 tr246:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st112;
 st112:
@@ -3643,7 +3643,7 @@ case 118:
 tr278:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3653,7 +3653,7 @@ tr278:
 tr260:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -3691,9 +3691,9 @@ tr260:
 }
 	goto st518;
 tr262:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -3731,9 +3731,9 @@ tr262:
 }
 	goto st518;
 tr280:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -3746,7 +3746,7 @@ tr280:
 tr465:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -3757,9 +3757,9 @@ tr465:
   }
 	goto st518;
 tr471:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4273,11 +4273,11 @@ case 132:
 	}
 	goto st71;
 tr160:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st133;
 st133:
@@ -4292,11 +4292,11 @@ case 133:
 	}
 	goto st71;
 tr299:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st134;
 st134:
@@ -4448,7 +4448,7 @@ case 140:
 tr514:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4458,7 +4458,7 @@ tr514:
 tr313:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4496,9 +4496,9 @@ tr313:
 }
 	goto st519;
 tr315:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4536,9 +4536,9 @@ tr315:
 }
 	goto st519;
 tr321:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -4551,7 +4551,7 @@ tr321:
 tr338:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -4562,9 +4562,9 @@ tr338:
   }
 	goto st519;
 tr340:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -5431,11 +5431,11 @@ case 167:
 	}
 	goto st78;
 tr173:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st168;
 st168:
@@ -5449,11 +5449,11 @@ case 168:
 	}
 	goto st78;
 tr378:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st169;
 st169:
@@ -5598,7 +5598,7 @@ case 175:
 tr406:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -5608,7 +5608,7 @@ tr406:
 tr392:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -5646,9 +5646,9 @@ tr392:
 }
 	goto st520;
 tr394:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -5686,9 +5686,9 @@ tr394:
 }
 	goto st520;
 tr412:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -5701,7 +5701,7 @@ tr412:
 tr422:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -5712,9 +5712,9 @@ tr422:
   }
 	goto st520;
 tr421:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6270,11 +6270,11 @@ case 194:
 		goto tr374;
 	goto st78;
 tr347:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st195;
 st195:
@@ -6289,11 +6289,11 @@ case 195:
 	}
 	goto st155;
 tr429:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st196;
 st196:
@@ -6445,7 +6445,7 @@ case 202:
 tr475:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6455,7 +6455,7 @@ tr475:
 tr443:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -6493,9 +6493,9 @@ tr443:
 }
 	goto st521;
 tr445:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -6533,9 +6533,9 @@ tr445:
 }
 	goto st521;
 tr481:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -6548,7 +6548,7 @@ tr481:
 tr499:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -6559,9 +6559,9 @@ tr499:
   }
 	goto st521;
 tr501:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7804,11 +7804,11 @@ case 241:
 	}
 	goto st46;
 tr102:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st242;
 st242:
@@ -7823,11 +7823,11 @@ case 242:
 	}
 	goto st46;
 tr522:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 113 "shortcodes.rl"
+#line 114 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st243;
 st243:
@@ -7979,7 +7979,7 @@ case 249:
 tr553:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7989,7 +7989,7 @@ tr553:
 tr536:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -8027,9 +8027,9 @@ tr536:
 }
 	goto st522;
 tr538:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 117 "shortcodes.rl"
+#line 118 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -8067,9 +8067,9 @@ tr538:
 }
 	goto st522;
 tr555:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -8082,7 +8082,7 @@ tr555:
 tr569:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -8093,9 +8093,9 @@ tr569:
   }
 	goto st522;
 tr568:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 105 "shortcodes.rl"
+#line 106 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9520,7 +9520,7 @@ case 299:
 	}
 	goto st0;
 tr19:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -9536,7 +9536,7 @@ case 300:
 	}
 	goto st6;
 tr636:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -9804,9 +9804,9 @@ case 309:
 	}
 	goto st6;
 tr656:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -9819,7 +9819,7 @@ tr656:
 tr766:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -9894,7 +9894,7 @@ case 312:
 	}
 	goto st312;
 tr665:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -9910,7 +9910,7 @@ case 313:
 	}
 	goto st312;
 tr666:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -10187,9 +10187,9 @@ case 322:
 	}
 	goto st312;
 tr686:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -10202,7 +10202,7 @@ tr686:
 tr709:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -10733,7 +10733,7 @@ case 340:
 	}
 	goto st340;
 tr730:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -10749,7 +10749,7 @@ case 341:
 	}
 	goto st340;
 tr731:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -11034,9 +11034,9 @@ case 351:
 	}
 	goto st340;
 tr755:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -11049,7 +11049,7 @@ tr755:
 tr859:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -11359,7 +11359,7 @@ case 360:
 		goto tr762;
 	goto st6;
 tr749:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -11376,7 +11376,7 @@ case 361:
 	}
 	goto st346;
 tr774:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -11652,9 +11652,9 @@ case 370:
 	}
 	goto st346;
 tr794:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -11667,7 +11667,7 @@ tr794:
 tr936:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -11909,7 +11909,7 @@ case 375:
 	}
 	goto st328;
 tr704:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -11926,7 +11926,7 @@ case 376:
 	}
 	goto st328;
 tr813:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -12056,9 +12056,9 @@ case 381:
 	}
 	goto st328;
 tr822:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -12071,7 +12071,7 @@ tr822:
 tr839:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -12811,7 +12811,7 @@ case 403:
 	}
 	goto st335;
 tr716:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -12827,7 +12827,7 @@ case 404:
 	}
 	goto st335;
 tr877:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -13104,9 +13104,9 @@ case 413:
 	}
 	goto st335;
 tr897:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -13119,7 +13119,7 @@ tr897:
 tr906:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -13401,7 +13401,7 @@ case 423:
 		goto tr873;
 	goto st335;
 tr847:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -13418,7 +13418,7 @@ case 424:
 	}
 	goto st391;
 tr913:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -13999,9 +13999,9 @@ case 442:
 	}
 	goto st391;
 tr950:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -14014,7 +14014,7 @@ tr950:
 tr968:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -14679,7 +14679,7 @@ case 463:
 	}
 	goto st310;
 tr660:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -14696,7 +14696,7 @@ case 464:
 	}
 	goto st310;
 tr989:
-#line 102 "shortcodes.rl"
+#line 103 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -14972,9 +14972,9 @@ case 473:
 	}
 	goto st310;
 tr1008:
-#line 80 "shortcodes.rl"
+#line 81 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -14987,7 +14987,7 @@ tr1008:
 tr1021:
 #line 75 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -16613,7 +16613,7 @@ case 512:
 	_test_eof: {}
 	}
 
-#line 179 "shortcodes.rl"
+#line 180 "shortcodes.rl"
 
   result.sccount = c_sc;
   return result;

@@ -5,7 +5,7 @@
 This is a parser for the shortcode spec as explained in the Hugo docs
 and used in Hugo and Nikola. Approximately.
 
-I am implementing this for Nicolino.
+I am implementing this for [Nicolino.](https://nicolino.ralsina.me)
 
 It probably won't be 100% identical, but I'll try to make it
 as close as practical.
@@ -19,9 +19,13 @@ as close as practical.
 * Detect shortcodes with names
 * Standalone and matched shortcodes
 * Capture data between tags in matched shortcodes
+* Self-closing shortcodes
+* Inline shortcodes
 * Capture arguments with and without names
-* Capture values with and without quotes (with details, see [TODO](TODO.md))
+* Capture values with and without single/double quotes (no support for quote escaping)
 * UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)
+
+Nested shortcodes should be handled in a higher layer.
 
 ## Building
 
@@ -33,7 +37,7 @@ As a convenience there is a generated `shortcodes.c` in the repo,
 Then:
 
 ```shell
-  cd src && make
+  make
 ```
 
 To run tests:

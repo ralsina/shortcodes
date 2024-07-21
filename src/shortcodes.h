@@ -21,12 +21,15 @@ typedef struct sc_error sc_error;
 // Describes a parsed shortcode
 struct shortcode
 {
+    char escaped;
+    char self_closing;
     chunk whole;
     chunk name;
     chunk data;
     char matching;
     char markdown;
     char closed;
+    char is_inline;
     chunk argnames[100];
     chunk argvals[100];
     unsigned int argcount;

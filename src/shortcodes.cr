@@ -11,11 +11,14 @@ lib LibShortcodes
   end
 
   struct Shortcode
+    escaped : LibC::Char
+    self_closing : LibC::Char
     whole : Chunk
     name : Chunk
     data : Chunk
     matching : LibC::Char
     markdown : LibC::Char
+    is_inline : LibC::Char
     argnames : Chunk[100]
     argvals : Chunk[100]
     argcount : UInt32
@@ -53,6 +56,9 @@ module Shortcodes
     property data : String = ""
     property? matching : Bool = false
     property? markdown : Bool = false
+    property? is_inline : Bool = false
+    property? self_closing : Bool = false
+    property? escaped : Bool = false
     property args : Array(Arg) = [] of Arg
     property whole : String = ""
     property position : UInt32 = 0
@@ -63,6 +69,9 @@ module Shortcodes
       @data,
       @matching,
       @markdown,
+      @is_inline,
+      @self_closing,
+      @escaped,
       @args,
       @whole,
       @position,
@@ -116,6 +125,9 @@ module Shortcodes
         sc.matching == 1 ? extract(sc.data, input) : "",
         sc.matching == 1,
         sc.markdown == 1,
+        sc.is_inline == 1,
+        sc.self_closing == 1,
+        sc.escaped == 1,
         args,
         extract(sc.whole, input),
         sc.whole.start,

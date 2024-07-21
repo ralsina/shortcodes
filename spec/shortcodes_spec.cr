@@ -121,6 +121,18 @@ describe "Shortcodes" do
     result.shortcodes[0].args[0].value.should eq "bar"
   end
 
+  pending "should parse quoted arg with escaped quote" do
+    input = "foobar {{% shortcode \"ba\\\"r\" %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "shortcode"
+    result.shortcodes[0].matching?.should be_false
+    result.shortcodes[0].args.size.should eq 1
+    result.shortcodes[0].args[0].name.should eq ""
+    result.shortcodes[0].args[0].value.should eq "bar"
+  end
+
   it "should parse single-quoted arg" do
     input = "foobar {{% shortcode 'bar' %}}blah"
     result = Shortcodes.parse(input)
@@ -271,9 +283,26 @@ describe "Shortcodes" do
   end
 
   pending "should ignore escaped shortcodes" do
-    input = "foobar x{{% shortcode %}}blah"
+    input = "foobar \\{{% shortcode %}}blah"
     result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 0
     result.errors.size.should eq 0
+  end
+
+  pending "should mark shortcodes as inline" do
+    input = "{{< time.inline >}}{{ now }}{{< /time.inline >}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 0
+    result.shortcodes.size.should eq 1
+    result.shortcodes[0].is_inline?.should be_true
+    result.shortcodes[0].data.should eq "{{ now }}"
+  end
+
+  it "should mark shortcodes as escaped" do
+    input = "{{</* foobar */>}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 0
+    result.shortcodes.size.should eq 1
+    result.shortcodes[0].escaped?.should be_true
   end
 end

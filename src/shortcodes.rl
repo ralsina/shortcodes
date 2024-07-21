@@ -80,6 +80,11 @@
   end_b = '>}}' 
   @{sc_list[c_sc].markdown = 0;};
 
+  # An escaped shortcode
+  start_e = ('{{</*' | '{{%/*');
+  end_e = ('*/>}}' | '*/%}}')
+  @{sc_list[c_sc].escaped = 1;};
+
   # Inside a shortcode is content: name, zero or more arguments
   content = spc name (sep arg)* spc;
 
@@ -99,7 +104,7 @@
   };
 
   # A full shortcode
-  shortcode = ((start_p content end_p) | (start_b content end_b))
+  shortcode = ((start_p content end_p) | (start_b content end_b) | (start_e content end_e))
   > {
       sc_list[c_sc].whole.start = p-start-1;
     }

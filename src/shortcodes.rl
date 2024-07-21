@@ -77,12 +77,20 @@
   start_p = ('{{%');
   end_p = '%}}'
   @{sc_list[c_sc].markdown = 1;};
+  end_p_sc = '/%}}'
+  @{sc_list[c_sc].markdown = 1;
+    sc_list[c_sc].self_closing = 1;
+  };
 
 
   # A shortcode with verbatim content
   start_b = ('{{<');
   end_b = '>}}' 
   @{sc_list[c_sc].markdown = 0;};
+  end_b_sc = '/>}}'
+  @{sc_list[c_sc].markdown = 1;
+    sc_list[c_sc].self_closing = 1;
+  };
 
   # An escaped shortcode
   start_e = ('{{</*' | '{{%/*');
@@ -94,7 +102,7 @@
 
   # Both possible starts or ends
   start = start_p | start_b ;
-  end = end_p | end_b ;
+  end = end_p | end_b | end_p_sc | end_b_sc;
 
   # Mismatched start and end, remove it
   mismatched = ((start_p content end_b) | (start_b content end_p)) 
@@ -108,7 +116,7 @@
   };
 
   # A full shortcode
-  shortcode = ((start_p content end_p) | (start_b content end_b) | (start_e content end_e))
+  shortcode = ((start_p content (end_p | end_p_sc)) | (start_b content (end_b | end_b_sc)) | (start_e content end_e))
   > {
       sc_list[c_sc].whole.start = p-start-1;
     }

@@ -282,13 +282,6 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{% raw %}}inner{{% /raw %}}"
   end
 
-  pending "should ignore escaped shortcodes" do
-    input = "foobar \\{{% shortcode %}}blah"
-    result = Shortcodes.parse(input)
-    result.shortcodes.size.should eq 0
-    result.errors.size.should eq 0
-  end
-
   it "should mark shortcodes as inline" do
     input = "{{< time.inline >}}{{ now }}{{< /time.inline >}}"
     result = Shortcodes.parse(input)
@@ -298,7 +291,7 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{ now }}"
   end
 
-  pending "should mark shortcodes as self-closing" do
+  it "should mark shortcodes as self-closing" do
     input = "{{< innershortcode />}}"
     result = Shortcodes.parse(input)
     result.errors.size.should eq 0

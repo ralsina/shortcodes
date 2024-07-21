@@ -6,7 +6,7 @@
 #include "shortcodes.h"
 
 
-#line 172 "shortcodes.rl"
+#line 176 "shortcodes.rl"
 
 
 
@@ -21,7 +21,7 @@ static const int shortcode_error = -1;
 static const int shortcode_en_main = 1904;
 
 
-#line 178 "shortcodes.rl"
+#line 182 "shortcodes.rl"
   char *eof = input + len;
   char *ts, *te = 0;
   int cs, act = 0;
@@ -45,7 +45,7 @@ static const int shortcode_en_main = 1904;
 	cs = shortcode_start;
 	}
 
-#line 196 "shortcodes.rl"
+#line 200 "shortcodes.rl"
   
 #line 51 "shortcodes.c"
 	{
@@ -365,12 +365,16 @@ tr50:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -407,12 +411,16 @@ tr54:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -449,12 +457,16 @@ tr56:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -489,12 +501,16 @@ tr58:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -533,12 +549,16 @@ tr62:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -577,12 +597,16 @@ tr64:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -711,7 +735,7 @@ st1905:
 	if ( ++p == pe )
 		goto _test_eof1905;
 case 1905:
-#line 715 "shortcodes.c"
+#line 739 "shortcodes.c"
 	if ( (*p) == 123 )
 		goto tr31;
 	goto st11;
@@ -734,7 +758,7 @@ st12:
 	if ( ++p == pe )
 		goto _test_eof12;
 case 12:
-#line 738 "shortcodes.c"
+#line 762 "shortcodes.c"
 	if ( (*p) == 123 )
 		goto tr32;
 	goto st11;
@@ -750,7 +774,7 @@ st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 754 "shortcodes.c"
+#line 778 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st14;
 		case 60: goto st1093;
@@ -815,7 +839,7 @@ st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 819 "shortcodes.c"
+#line 843 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr41;
@@ -856,7 +880,7 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 860 "shortcodes.c"
+#line 884 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st18;
 		case 37: goto st19;
@@ -888,7 +912,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 892 "shortcodes.c"
+#line 916 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st20;
@@ -970,7 +994,7 @@ st26:
 	if ( ++p == pe )
 		goto _test_eof26;
 case 26:
-#line 974 "shortcodes.c"
+#line 998 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st27;
@@ -1006,7 +1030,7 @@ st28:
 	if ( ++p == pe )
 		goto _test_eof28;
 case 28:
-#line 1010 "shortcodes.c"
+#line 1034 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr59;
@@ -1047,7 +1071,7 @@ st29:
 	if ( ++p == pe )
 		goto _test_eof29;
 case 29:
-#line 1051 "shortcodes.c"
+#line 1075 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st30;
@@ -1083,7 +1107,7 @@ st31:
 	if ( ++p == pe )
 		goto _test_eof31;
 case 31:
-#line 1087 "shortcodes.c"
+#line 1111 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st32;
@@ -1108,7 +1132,7 @@ st33:
 	if ( ++p == pe )
 		goto _test_eof33;
 case 33:
-#line 1112 "shortcodes.c"
+#line 1136 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr65;
 		case 37: goto tr66;
@@ -1173,7 +1197,7 @@ st34:
 	if ( ++p == pe )
 		goto _test_eof34;
 case 34:
-#line 1177 "shortcodes.c"
+#line 1201 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st34;
 		case 34: goto tr71;
@@ -1205,7 +1229,7 @@ st35:
 	if ( ++p == pe )
 		goto _test_eof35;
 case 35:
-#line 1209 "shortcodes.c"
+#line 1233 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -1270,7 +1294,7 @@ st37:
 	if ( ++p == pe )
 		goto _test_eof37;
 case 37:
-#line 1274 "shortcodes.c"
+#line 1298 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st38;
@@ -1313,7 +1337,7 @@ st39:
 	if ( ++p == pe )
 		goto _test_eof39;
 case 39:
-#line 1317 "shortcodes.c"
+#line 1341 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st40;
 		case 123: goto tr31;
@@ -1382,7 +1406,7 @@ st42:
 	if ( ++p == pe )
 		goto _test_eof42;
 case 42:
-#line 1386 "shortcodes.c"
+#line 1410 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st43;
@@ -1409,7 +1433,7 @@ st44:
 	if ( ++p == pe )
 		goto _test_eof44;
 case 44:
-#line 1413 "shortcodes.c"
+#line 1437 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr91;
@@ -1427,7 +1451,7 @@ st45:
 	if ( ++p == pe )
 		goto _test_eof45;
 case 45:
-#line 1431 "shortcodes.c"
+#line 1455 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 37: goto st46;
@@ -1497,7 +1521,7 @@ st49:
 	if ( ++p == pe )
 		goto _test_eof49;
 case 49:
-#line 1501 "shortcodes.c"
+#line 1525 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr99;
 		case 34: goto st36;
@@ -1539,7 +1563,7 @@ st50:
 	if ( ++p == pe )
 		goto _test_eof50;
 case 50:
-#line 1543 "shortcodes.c"
+#line 1567 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st50;
 		case 34: goto st36;
@@ -1572,7 +1596,7 @@ st51:
 	if ( ++p == pe )
 		goto _test_eof51;
 case 51:
-#line 1576 "shortcodes.c"
+#line 1600 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -1607,12 +1631,16 @@ tr109:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1649,12 +1677,16 @@ tr113:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1691,12 +1723,16 @@ tr115:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1731,12 +1767,16 @@ tr117:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1775,12 +1815,16 @@ tr121:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1819,12 +1863,16 @@ tr123:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -1953,7 +2001,7 @@ st1906:
 	if ( ++p == pe )
 		goto _test_eof1906;
 case 1906:
-#line 1957 "shortcodes.c"
+#line 2005 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2031,7 +2079,7 @@ st58:
 	if ( ++p == pe )
 		goto _test_eof58;
 case 58:
-#line 2035 "shortcodes.c"
+#line 2083 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2069,7 +2117,7 @@ st60:
 	if ( ++p == pe )
 		goto _test_eof60;
 case 60:
-#line 2073 "shortcodes.c"
+#line 2121 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr99;
 		case 34: goto st36;
@@ -2111,7 +2159,7 @@ st61:
 	if ( ++p == pe )
 		goto _test_eof61;
 case 61:
-#line 2115 "shortcodes.c"
+#line 2163 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2149,7 +2197,7 @@ st63:
 	if ( ++p == pe )
 		goto _test_eof63;
 case 63:
-#line 2153 "shortcodes.c"
+#line 2201 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2176,7 +2224,7 @@ st65:
 	if ( ++p == pe )
 		goto _test_eof65;
 case 65:
-#line 2180 "shortcodes.c"
+#line 2228 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr124;
 		case 34: goto st36;
@@ -2242,7 +2290,7 @@ st66:
 	if ( ++p == pe )
 		goto _test_eof66;
 case 66:
-#line 2246 "shortcodes.c"
+#line 2294 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st66;
 		case 34: goto tr130;
@@ -2274,7 +2322,7 @@ st67:
 	if ( ++p == pe )
 		goto _test_eof67;
 case 67:
-#line 2278 "shortcodes.c"
+#line 2326 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr137;
 		case 34: goto st36;
@@ -2331,7 +2379,7 @@ st68:
 	if ( ++p == pe )
 		goto _test_eof68;
 case 68:
-#line 2335 "shortcodes.c"
+#line 2383 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2376,7 +2424,7 @@ st70:
 	if ( ++p == pe )
 		goto _test_eof70;
 case 70:
-#line 2380 "shortcodes.c"
+#line 2428 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 37: goto st71;
@@ -2448,7 +2496,7 @@ st73:
 	if ( ++p == pe )
 		goto _test_eof73;
 case 73:
-#line 2452 "shortcodes.c"
+#line 2500 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2475,7 +2523,7 @@ st75:
 	if ( ++p == pe )
 		goto _test_eof75;
 case 75:
-#line 2479 "shortcodes.c"
+#line 2527 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -2492,7 +2540,7 @@ st76:
 	if ( ++p == pe )
 		goto _test_eof76;
 case 76:
-#line 2496 "shortcodes.c"
+#line 2544 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr153;
 		case 37: goto tr154;
@@ -2514,7 +2562,7 @@ st77:
 	if ( ++p == pe )
 		goto _test_eof77;
 case 77:
-#line 2518 "shortcodes.c"
+#line 2566 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -2532,7 +2580,7 @@ st78:
 	if ( ++p == pe )
 		goto _test_eof78;
 case 78:
-#line 2536 "shortcodes.c"
+#line 2584 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr158;
@@ -2550,7 +2598,7 @@ st79:
 	if ( ++p == pe )
 		goto _test_eof79;
 case 79:
-#line 2554 "shortcodes.c"
+#line 2602 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st80;
 		case 39: goto st36;
@@ -2620,7 +2668,7 @@ st83:
 	if ( ++p == pe )
 		goto _test_eof83;
 case 83:
-#line 2624 "shortcodes.c"
+#line 2672 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr166;
 		case 37: goto tr167;
@@ -2662,7 +2710,7 @@ st84:
 	if ( ++p == pe )
 		goto _test_eof84;
 case 84:
-#line 2666 "shortcodes.c"
+#line 2714 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st84;
 		case 37: goto st85;
@@ -2695,7 +2743,7 @@ st85:
 	if ( ++p == pe )
 		goto _test_eof85;
 case 85:
-#line 2699 "shortcodes.c"
+#line 2747 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -2730,12 +2778,16 @@ tr176:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -2772,12 +2824,16 @@ tr180:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -2814,12 +2870,16 @@ tr182:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -2854,12 +2914,16 @@ tr184:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -2898,12 +2962,16 @@ tr188:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -2942,12 +3010,16 @@ tr190:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -3076,7 +3148,7 @@ st1907:
 	if ( ++p == pe )
 		goto _test_eof1907;
 case 1907:
-#line 3080 "shortcodes.c"
+#line 3152 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3154,7 +3226,7 @@ st92:
 	if ( ++p == pe )
 		goto _test_eof92;
 case 92:
-#line 3158 "shortcodes.c"
+#line 3230 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3192,7 +3264,7 @@ st94:
 	if ( ++p == pe )
 		goto _test_eof94;
 case 94:
-#line 3196 "shortcodes.c"
+#line 3268 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr166;
 		case 37: goto tr185;
@@ -3234,7 +3306,7 @@ st95:
 	if ( ++p == pe )
 		goto _test_eof95;
 case 95:
-#line 3238 "shortcodes.c"
+#line 3310 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3272,7 +3344,7 @@ st97:
 	if ( ++p == pe )
 		goto _test_eof97;
 case 97:
-#line 3276 "shortcodes.c"
+#line 3348 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3299,7 +3371,7 @@ st99:
 	if ( ++p == pe )
 		goto _test_eof99;
 case 99:
-#line 3303 "shortcodes.c"
+#line 3375 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr191;
 		case 37: goto tr192;
@@ -3365,7 +3437,7 @@ st100:
 	if ( ++p == pe )
 		goto _test_eof100;
 case 100:
-#line 3369 "shortcodes.c"
+#line 3441 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st100;
 		case 34: goto tr132;
@@ -3432,7 +3504,7 @@ st101:
 	if ( ++p == pe )
 		goto _test_eof101;
 case 101:
-#line 3436 "shortcodes.c"
+#line 3508 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3477,7 +3549,7 @@ st103:
 	if ( ++p == pe )
 		goto _test_eof103;
 case 103:
-#line 3481 "shortcodes.c"
+#line 3553 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st104;
 		case 39: goto st36;
@@ -3514,7 +3586,7 @@ st106:
 	if ( ++p == pe )
 		goto _test_eof106;
 case 106:
-#line 3518 "shortcodes.c"
+#line 3590 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr208;
 		case 37: goto tr209;
@@ -3580,7 +3652,7 @@ st107:
 	if ( ++p == pe )
 		goto _test_eof107;
 case 107:
-#line 3584 "shortcodes.c"
+#line 3656 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3607,7 +3679,7 @@ st109:
 	if ( ++p == pe )
 		goto _test_eof109;
 case 109:
-#line 3611 "shortcodes.c"
+#line 3683 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr208;
 		case 37: goto tr209;
@@ -3640,7 +3712,7 @@ st110:
 	if ( ++p == pe )
 		goto _test_eof110;
 case 110:
-#line 3644 "shortcodes.c"
+#line 3716 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr132;
 		case 39: goto tr198;
@@ -3676,7 +3748,7 @@ st111:
 	if ( ++p == pe )
 		goto _test_eof111;
 case 111:
-#line 3680 "shortcodes.c"
+#line 3752 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr191;
 		case 37: goto tr217;
@@ -3718,7 +3790,7 @@ st112:
 	if ( ++p == pe )
 		goto _test_eof112;
 case 112:
-#line 3722 "shortcodes.c"
+#line 3794 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3778,7 +3850,7 @@ st116:
 	if ( ++p == pe )
 		goto _test_eof116;
 case 116:
-#line 3782 "shortcodes.c"
+#line 3854 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr222;
 		case 39: goto st36;
@@ -3842,7 +3914,7 @@ st117:
 	if ( ++p == pe )
 		goto _test_eof117;
 case 117:
-#line 3846 "shortcodes.c"
+#line 3918 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st117;
 		case 34: goto tr226;
@@ -3872,7 +3944,7 @@ st118:
 	if ( ++p == pe )
 		goto _test_eof118;
 case 118:
-#line 3876 "shortcodes.c"
+#line 3948 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -3889,7 +3961,7 @@ st119:
 	if ( ++p == pe )
 		goto _test_eof119;
 case 119:
-#line 3893 "shortcodes.c"
+#line 3965 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr235;
 		case 39: goto st36;
@@ -3944,7 +4016,7 @@ st120:
 	if ( ++p == pe )
 		goto _test_eof120;
 case 120:
-#line 3948 "shortcodes.c"
+#line 4020 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 47: goto st121;
@@ -3992,7 +4064,7 @@ st124:
 	if ( ++p == pe )
 		goto _test_eof124;
 case 124:
-#line 3996 "shortcodes.c"
+#line 4068 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr242;
 		case 34: goto st126;
@@ -4014,7 +4086,7 @@ st125:
 	if ( ++p == pe )
 		goto _test_eof125;
 case 125:
-#line 4018 "shortcodes.c"
+#line 4090 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -4077,7 +4149,7 @@ st127:
 	if ( ++p == pe )
 		goto _test_eof127;
 case 127:
-#line 4081 "shortcodes.c"
+#line 4153 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st127;
 		case 34: goto tr251;
@@ -4107,7 +4179,7 @@ st128:
 	if ( ++p == pe )
 		goto _test_eof128;
 case 128:
-#line 4111 "shortcodes.c"
+#line 4183 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4125,7 +4197,7 @@ st129:
 	if ( ++p == pe )
 		goto _test_eof129;
 case 129:
-#line 4129 "shortcodes.c"
+#line 4201 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr258;
@@ -4143,7 +4215,7 @@ st130:
 	if ( ++p == pe )
 		goto _test_eof130;
 case 130:
-#line 4147 "shortcodes.c"
+#line 4219 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st131;
 		case 39: goto st126;
@@ -4213,7 +4285,7 @@ st134:
 	if ( ++p == pe )
 		goto _test_eof134;
 case 134:
-#line 4217 "shortcodes.c"
+#line 4289 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr266;
 		case 37: goto tr267;
@@ -4255,7 +4327,7 @@ st135:
 	if ( ++p == pe )
 		goto _test_eof135;
 case 135:
-#line 4259 "shortcodes.c"
+#line 4331 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st135;
 		case 37: goto st136;
@@ -4288,7 +4360,7 @@ st136:
 	if ( ++p == pe )
 		goto _test_eof136;
 case 136:
-#line 4292 "shortcodes.c"
+#line 4364 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4323,12 +4395,16 @@ tr276:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4365,12 +4441,16 @@ tr280:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4407,12 +4487,16 @@ tr282:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4447,12 +4531,16 @@ tr284:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4491,12 +4579,16 @@ tr288:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4535,12 +4627,16 @@ tr290:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -4669,7 +4765,7 @@ st1908:
 	if ( ++p == pe )
 		goto _test_eof1908;
 case 1908:
-#line 4673 "shortcodes.c"
+#line 4769 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4747,7 +4843,7 @@ st143:
 	if ( ++p == pe )
 		goto _test_eof143;
 case 143:
-#line 4751 "shortcodes.c"
+#line 4847 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4785,7 +4881,7 @@ st145:
 	if ( ++p == pe )
 		goto _test_eof145;
 case 145:
-#line 4789 "shortcodes.c"
+#line 4885 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr266;
 		case 37: goto tr285;
@@ -4827,7 +4923,7 @@ st146:
 	if ( ++p == pe )
 		goto _test_eof146;
 case 146:
-#line 4831 "shortcodes.c"
+#line 4927 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4865,7 +4961,7 @@ st148:
 	if ( ++p == pe )
 		goto _test_eof148;
 case 148:
-#line 4869 "shortcodes.c"
+#line 4965 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4892,7 +4988,7 @@ st150:
 	if ( ++p == pe )
 		goto _test_eof150;
 case 150:
-#line 4896 "shortcodes.c"
+#line 4992 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr291;
 		case 37: goto tr292;
@@ -4958,7 +5054,7 @@ st151:
 	if ( ++p == pe )
 		goto _test_eof151;
 case 151:
-#line 4962 "shortcodes.c"
+#line 5058 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st151;
 		case 34: goto tr297;
@@ -4990,7 +5086,7 @@ st152:
 	if ( ++p == pe )
 		goto _test_eof152;
 case 152:
-#line 4994 "shortcodes.c"
+#line 5090 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5007,7 +5103,7 @@ st153:
 	if ( ++p == pe )
 		goto _test_eof153;
 case 153:
-#line 5011 "shortcodes.c"
+#line 5107 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr308;
 		case 37: goto tr309;
@@ -5064,7 +5160,7 @@ st154:
 	if ( ++p == pe )
 		goto _test_eof154;
 case 154:
-#line 5068 "shortcodes.c"
+#line 5164 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5109,7 +5205,7 @@ st156:
 	if ( ++p == pe )
 		goto _test_eof156;
 case 156:
-#line 5113 "shortcodes.c"
+#line 5209 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st157;
 		case 39: goto st126;
@@ -5181,7 +5277,7 @@ st159:
 	if ( ++p == pe )
 		goto _test_eof159;
 case 159:
-#line 5185 "shortcodes.c"
+#line 5281 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5208,7 +5304,7 @@ st161:
 	if ( ++p == pe )
 		goto _test_eof161;
 case 161:
-#line 5212 "shortcodes.c"
+#line 5308 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr319;
 		case 34: goto st36;
@@ -5263,7 +5359,7 @@ st162:
 	if ( ++p == pe )
 		goto _test_eof162;
 case 162:
-#line 5267 "shortcodes.c"
+#line 5363 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st162;
 		case 34: goto tr322;
@@ -5328,7 +5424,7 @@ st163:
 	if ( ++p == pe )
 		goto _test_eof163;
 case 163:
-#line 5332 "shortcodes.c"
+#line 5428 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 47: goto st164;
@@ -5376,7 +5472,7 @@ st167:
 	if ( ++p == pe )
 		goto _test_eof167;
 case 167:
-#line 5380 "shortcodes.c"
+#line 5476 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr330;
 		case 34: goto st36;
@@ -5405,7 +5501,7 @@ st168:
 	if ( ++p == pe )
 		goto _test_eof168;
 case 168:
-#line 5409 "shortcodes.c"
+#line 5505 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr330;
 		case 34: goto st36;
@@ -5436,7 +5532,7 @@ st169:
 	if ( ++p == pe )
 		goto _test_eof169;
 case 169:
-#line 5440 "shortcodes.c"
+#line 5536 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr322;
 		case 39: goto tr297;
@@ -5463,7 +5559,7 @@ st170:
 	if ( ++p == pe )
 		goto _test_eof170;
 case 170:
-#line 5467 "shortcodes.c"
+#line 5563 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5482,7 +5578,7 @@ st171:
 	if ( ++p == pe )
 		goto _test_eof171;
 case 171:
-#line 5486 "shortcodes.c"
+#line 5582 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 37: goto st172;
@@ -5556,7 +5652,7 @@ st175:
 	if ( ++p == pe )
 		goto _test_eof175;
 case 175:
-#line 5560 "shortcodes.c"
+#line 5656 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr343;
 		case 34: goto st153;
@@ -5599,7 +5695,7 @@ st176:
 	if ( ++p == pe )
 		goto _test_eof176;
 case 176:
-#line 5603 "shortcodes.c"
+#line 5699 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st176;
 		case 34: goto st153;
@@ -5633,7 +5729,7 @@ st177:
 	if ( ++p == pe )
 		goto _test_eof177;
 case 177:
-#line 5637 "shortcodes.c"
+#line 5733 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5670,12 +5766,16 @@ tr353:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -5712,12 +5812,16 @@ tr357:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -5754,12 +5858,16 @@ tr359:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -5794,12 +5902,16 @@ tr361:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -5838,12 +5950,16 @@ tr365:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -5882,12 +5998,16 @@ tr367:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -6016,7 +6136,7 @@ st1909:
 	if ( ++p == pe )
 		goto _test_eof1909;
 case 1909:
-#line 6020 "shortcodes.c"
+#line 6140 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6100,7 +6220,7 @@ st184:
 	if ( ++p == pe )
 		goto _test_eof184;
 case 184:
-#line 6104 "shortcodes.c"
+#line 6224 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6140,7 +6260,7 @@ st186:
 	if ( ++p == pe )
 		goto _test_eof186;
 case 186:
-#line 6144 "shortcodes.c"
+#line 6264 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr343;
 		case 34: goto st153;
@@ -6183,7 +6303,7 @@ st187:
 	if ( ++p == pe )
 		goto _test_eof187;
 case 187:
-#line 6187 "shortcodes.c"
+#line 6307 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6223,7 +6343,7 @@ st189:
 	if ( ++p == pe )
 		goto _test_eof189;
 case 189:
-#line 6227 "shortcodes.c"
+#line 6347 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6252,7 +6372,7 @@ st191:
 	if ( ++p == pe )
 		goto _test_eof191;
 case 191:
-#line 6256 "shortcodes.c"
+#line 6376 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr368;
 		case 34: goto st153;
@@ -6319,7 +6439,7 @@ st192:
 	if ( ++p == pe )
 		goto _test_eof192;
 case 192:
-#line 6323 "shortcodes.c"
+#line 6443 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st192;
 		case 34: goto tr374;
@@ -6351,7 +6471,7 @@ st193:
 	if ( ++p == pe )
 		goto _test_eof193;
 case 193:
-#line 6355 "shortcodes.c"
+#line 6475 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr381;
 		case 34: goto st153;
@@ -6409,7 +6529,7 @@ st194:
 	if ( ++p == pe )
 		goto _test_eof194;
 case 194:
-#line 6413 "shortcodes.c"
+#line 6533 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6456,7 +6576,7 @@ st196:
 	if ( ++p == pe )
 		goto _test_eof196;
 case 196:
-#line 6460 "shortcodes.c"
+#line 6580 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 37: goto st197;
@@ -6531,7 +6651,7 @@ st199:
 	if ( ++p == pe )
 		goto _test_eof199;
 case 199:
-#line 6535 "shortcodes.c"
+#line 6655 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6560,7 +6680,7 @@ st201:
 	if ( ++p == pe )
 		goto _test_eof201;
 case 201:
-#line 6564 "shortcodes.c"
+#line 6684 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr392;
 		case 34: goto st76;
@@ -6616,7 +6736,7 @@ st202:
 	if ( ++p == pe )
 		goto _test_eof202;
 case 202:
-#line 6620 "shortcodes.c"
+#line 6740 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st202;
 		case 34: goto tr395;
@@ -6646,7 +6766,7 @@ st203:
 	if ( ++p == pe )
 		goto _test_eof203;
 case 203:
-#line 6650 "shortcodes.c"
+#line 6770 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr399;
 		case 34: goto st119;
@@ -6704,7 +6824,7 @@ st204:
 	if ( ++p == pe )
 		goto _test_eof204;
 case 204:
-#line 6708 "shortcodes.c"
+#line 6828 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st204;
 		case 34: goto tr376;
@@ -6771,7 +6891,7 @@ st205:
 	if ( ++p == pe )
 		goto _test_eof205;
 case 205:
-#line 6775 "shortcodes.c"
+#line 6895 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -6791,7 +6911,7 @@ st206:
 	if ( ++p == pe )
 		goto _test_eof206;
 case 206:
-#line 6795 "shortcodes.c"
+#line 6915 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -6810,7 +6930,7 @@ st207:
 	if ( ++p == pe )
 		goto _test_eof207;
 case 207:
-#line 6814 "shortcodes.c"
+#line 6934 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 37: goto st208;
@@ -6884,7 +7004,7 @@ st211:
 	if ( ++p == pe )
 		goto _test_eof211;
 case 211:
-#line 6888 "shortcodes.c"
+#line 7008 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr418;
 		case 34: goto st119;
@@ -6927,7 +7047,7 @@ st212:
 	if ( ++p == pe )
 		goto _test_eof212;
 case 212:
-#line 6931 "shortcodes.c"
+#line 7051 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st212;
 		case 34: goto st119;
@@ -6961,7 +7081,7 @@ st213:
 	if ( ++p == pe )
 		goto _test_eof213;
 case 213:
-#line 6965 "shortcodes.c"
+#line 7085 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -6998,12 +7118,16 @@ tr428:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7040,12 +7164,16 @@ tr432:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7082,12 +7210,16 @@ tr434:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7122,12 +7254,16 @@ tr436:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7166,12 +7302,16 @@ tr440:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7210,12 +7350,16 @@ tr442:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -7344,7 +7488,7 @@ st1910:
 	if ( ++p == pe )
 		goto _test_eof1910;
 case 1910:
-#line 7348 "shortcodes.c"
+#line 7492 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7428,7 +7572,7 @@ st220:
 	if ( ++p == pe )
 		goto _test_eof220;
 case 220:
-#line 7432 "shortcodes.c"
+#line 7576 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7468,7 +7612,7 @@ st222:
 	if ( ++p == pe )
 		goto _test_eof222;
 case 222:
-#line 7472 "shortcodes.c"
+#line 7616 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr418;
 		case 34: goto st119;
@@ -7511,7 +7655,7 @@ st223:
 	if ( ++p == pe )
 		goto _test_eof223;
 case 223:
-#line 7515 "shortcodes.c"
+#line 7659 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7551,7 +7695,7 @@ st225:
 	if ( ++p == pe )
 		goto _test_eof225;
 case 225:
-#line 7555 "shortcodes.c"
+#line 7699 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7580,7 +7724,7 @@ st227:
 	if ( ++p == pe )
 		goto _test_eof227;
 case 227:
-#line 7584 "shortcodes.c"
+#line 7728 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr443;
 		case 34: goto st119;
@@ -7623,7 +7767,7 @@ st228:
 	if ( ++p == pe )
 		goto _test_eof228;
 case 228:
-#line 7627 "shortcodes.c"
+#line 7771 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr443;
 		case 34: goto st119;
@@ -7666,7 +7810,7 @@ st229:
 	if ( ++p == pe )
 		goto _test_eof229;
 case 229:
-#line 7670 "shortcodes.c"
+#line 7814 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7730,7 +7874,7 @@ st231:
 	if ( ++p == pe )
 		goto _test_eof231;
 case 231:
-#line 7734 "shortcodes.c"
+#line 7878 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7794,7 +7938,7 @@ st235:
 	if ( ++p == pe )
 		goto _test_eof235;
 case 235:
-#line 7798 "shortcodes.c"
+#line 7942 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr455;
 		case 34: goto st119;
@@ -7859,7 +8003,7 @@ st236:
 	if ( ++p == pe )
 		goto _test_eof236;
 case 236:
-#line 7863 "shortcodes.c"
+#line 8007 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st236;
 		case 34: goto tr459;
@@ -7889,7 +8033,7 @@ st237:
 	if ( ++p == pe )
 		goto _test_eof237;
 case 237:
-#line 7893 "shortcodes.c"
+#line 8037 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr464;
 		case 34: goto st119;
@@ -7945,7 +8089,7 @@ st238:
 	if ( ++p == pe )
 		goto _test_eof238;
 case 238:
-#line 7949 "shortcodes.c"
+#line 8093 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7997,7 +8141,7 @@ st242:
 	if ( ++p == pe )
 		goto _test_eof242;
 case 242:
-#line 8001 "shortcodes.c"
+#line 8145 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr471;
 		case 34: goto st244;
@@ -8020,7 +8164,7 @@ st243:
 	if ( ++p == pe )
 		goto _test_eof243;
 case 243:
-#line 8024 "shortcodes.c"
+#line 8168 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -8037,7 +8181,7 @@ st244:
 	if ( ++p == pe )
 		goto _test_eof244;
 case 244:
-#line 8041 "shortcodes.c"
+#line 8185 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr478;
 		case 39: goto st126;
@@ -8092,7 +8236,7 @@ st245:
 	if ( ++p == pe )
 		goto _test_eof245;
 case 245:
-#line 8096 "shortcodes.c"
+#line 8240 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st245;
 		case 34: goto tr481;
@@ -8157,7 +8301,7 @@ st246:
 	if ( ++p == pe )
 		goto _test_eof246;
 case 246:
-#line 8161 "shortcodes.c"
+#line 8305 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 47: goto st247;
@@ -8205,7 +8349,7 @@ st250:
 	if ( ++p == pe )
 		goto _test_eof250;
 case 250:
-#line 8209 "shortcodes.c"
+#line 8353 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr490;
 		case 39: goto st126;
@@ -8234,7 +8378,7 @@ st251:
 	if ( ++p == pe )
 		goto _test_eof251;
 case 251:
-#line 8238 "shortcodes.c"
+#line 8382 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr490;
 		case 39: goto st126;
@@ -8265,7 +8409,7 @@ st252:
 	if ( ++p == pe )
 		goto _test_eof252;
 case 252:
-#line 8269 "shortcodes.c"
+#line 8413 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr481;
 		case 39: goto tr482;
@@ -8290,7 +8434,7 @@ st253:
 	if ( ++p == pe )
 		goto _test_eof253;
 case 253:
-#line 8294 "shortcodes.c"
+#line 8438 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr495;
 		case 34: goto st126;
@@ -8345,7 +8489,7 @@ st254:
 	if ( ++p == pe )
 		goto _test_eof254;
 case 254:
-#line 8349 "shortcodes.c"
+#line 8493 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st254;
 		case 34: goto tr498;
@@ -8410,7 +8554,7 @@ st255:
 	if ( ++p == pe )
 		goto _test_eof255;
 case 255:
-#line 8414 "shortcodes.c"
+#line 8558 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 47: goto st256;
@@ -8450,7 +8594,7 @@ st258:
 	if ( ++p == pe )
 		goto _test_eof258;
 case 258:
-#line 8454 "shortcodes.c"
+#line 8598 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr505;
@@ -8468,7 +8612,7 @@ st259:
 	if ( ++p == pe )
 		goto _test_eof259;
 case 259:
-#line 8472 "shortcodes.c"
+#line 8616 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 37: goto st260;
@@ -8538,7 +8682,7 @@ st263:
 	if ( ++p == pe )
 		goto _test_eof263;
 case 263:
-#line 8542 "shortcodes.c"
+#line 8686 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr513;
 		case 34: goto st126;
@@ -8580,7 +8724,7 @@ st264:
 	if ( ++p == pe )
 		goto _test_eof264;
 case 264:
-#line 8584 "shortcodes.c"
+#line 8728 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st264;
 		case 34: goto st126;
@@ -8613,7 +8757,7 @@ st265:
 	if ( ++p == pe )
 		goto _test_eof265;
 case 265:
-#line 8617 "shortcodes.c"
+#line 8761 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -8648,12 +8792,16 @@ tr523:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8690,12 +8838,16 @@ tr527:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8732,12 +8884,16 @@ tr529:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8772,12 +8928,16 @@ tr531:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8816,12 +8976,16 @@ tr535:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8860,12 +9024,16 @@ tr537:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -8994,7 +9162,7 @@ st1911:
 	if ( ++p == pe )
 		goto _test_eof1911;
 case 1911:
-#line 8998 "shortcodes.c"
+#line 9166 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9072,7 +9240,7 @@ st272:
 	if ( ++p == pe )
 		goto _test_eof272;
 case 272:
-#line 9076 "shortcodes.c"
+#line 9244 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9110,7 +9278,7 @@ st274:
 	if ( ++p == pe )
 		goto _test_eof274;
 case 274:
-#line 9114 "shortcodes.c"
+#line 9282 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr513;
 		case 34: goto st126;
@@ -9152,7 +9320,7 @@ st275:
 	if ( ++p == pe )
 		goto _test_eof275;
 case 275:
-#line 9156 "shortcodes.c"
+#line 9324 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9190,7 +9358,7 @@ st277:
 	if ( ++p == pe )
 		goto _test_eof277;
 case 277:
-#line 9194 "shortcodes.c"
+#line 9362 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9217,7 +9385,7 @@ st279:
 	if ( ++p == pe )
 		goto _test_eof279;
 case 279:
-#line 9221 "shortcodes.c"
+#line 9389 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr538;
 		case 34: goto st126;
@@ -9283,7 +9451,7 @@ st280:
 	if ( ++p == pe )
 		goto _test_eof280;
 case 280:
-#line 9287 "shortcodes.c"
+#line 9455 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st280;
 		case 34: goto tr544;
@@ -9350,7 +9518,7 @@ st281:
 	if ( ++p == pe )
 		goto _test_eof281;
 case 281:
-#line 9354 "shortcodes.c"
+#line 9522 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9395,7 +9563,7 @@ st283:
 	if ( ++p == pe )
 		goto _test_eof283;
 case 283:
-#line 9399 "shortcodes.c"
+#line 9567 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 37: goto st284;
@@ -9432,7 +9600,7 @@ st286:
 	if ( ++p == pe )
 		goto _test_eof286;
 case 286:
-#line 9436 "shortcodes.c"
+#line 9604 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr555;
 		case 34: goto st126;
@@ -9498,7 +9666,7 @@ st287:
 	if ( ++p == pe )
 		goto _test_eof287;
 case 287:
-#line 9502 "shortcodes.c"
+#line 9670 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9525,7 +9693,7 @@ st289:
 	if ( ++p == pe )
 		goto _test_eof289;
 case 289:
-#line 9529 "shortcodes.c"
+#line 9697 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr555;
 		case 34: goto st126;
@@ -9558,7 +9726,7 @@ st290:
 	if ( ++p == pe )
 		goto _test_eof290;
 case 290:
-#line 9562 "shortcodes.c"
+#line 9730 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr544;
 		case 39: goto tr226;
@@ -9594,7 +9762,7 @@ st291:
 	if ( ++p == pe )
 		goto _test_eof291;
 case 291:
-#line 9598 "shortcodes.c"
+#line 9766 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr538;
 		case 34: goto st126;
@@ -9636,7 +9804,7 @@ st292:
 	if ( ++p == pe )
 		goto _test_eof292;
 case 292:
-#line 9640 "shortcodes.c"
+#line 9808 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9696,7 +9864,7 @@ st296:
 	if ( ++p == pe )
 		goto _test_eof296;
 case 296:
-#line 9700 "shortcodes.c"
+#line 9868 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr569;
 		case 34: goto st126;
@@ -9763,7 +9931,7 @@ st299:
 	if ( ++p == pe )
 		goto _test_eof299;
 case 299:
-#line 9767 "shortcodes.c"
+#line 9935 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr574;
 		case 34: goto st126;
@@ -9829,7 +9997,7 @@ st300:
 	if ( ++p == pe )
 		goto _test_eof300;
 case 300:
-#line 9833 "shortcodes.c"
+#line 10001 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st300;
 		case 34: goto tr580;
@@ -9861,7 +10029,7 @@ st301:
 	if ( ++p == pe )
 		goto _test_eof301;
 case 301:
-#line 9865 "shortcodes.c"
+#line 10033 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr588;
 		case 34: goto st303;
@@ -9881,7 +10049,7 @@ st302:
 	if ( ++p == pe )
 		goto _test_eof302;
 case 302:
-#line 9885 "shortcodes.c"
+#line 10053 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -9946,7 +10114,7 @@ st304:
 	if ( ++p == pe )
 		goto _test_eof304;
 case 304:
-#line 9950 "shortcodes.c"
+#line 10118 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st304;
 		case 34: goto tr597;
@@ -10013,7 +10181,7 @@ st305:
 	if ( ++p == pe )
 		goto _test_eof305;
 case 305:
-#line 10017 "shortcodes.c"
+#line 10185 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st306;
@@ -10038,7 +10206,7 @@ st307:
 	if ( ++p == pe )
 		goto _test_eof307;
 case 307:
-#line 10042 "shortcodes.c"
+#line 10210 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10056,7 +10224,7 @@ st308:
 	if ( ++p == pe )
 		goto _test_eof308;
 case 308:
-#line 10060 "shortcodes.c"
+#line 10228 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr608;
@@ -10074,7 +10242,7 @@ st309:
 	if ( ++p == pe )
 		goto _test_eof309;
 case 309:
-#line 10078 "shortcodes.c"
+#line 10246 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st310;
 		case 39: goto st303;
@@ -10144,7 +10312,7 @@ st313:
 	if ( ++p == pe )
 		goto _test_eof313;
 case 313:
-#line 10148 "shortcodes.c"
+#line 10316 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr616;
 		case 37: goto tr617;
@@ -10186,7 +10354,7 @@ st314:
 	if ( ++p == pe )
 		goto _test_eof314;
 case 314:
-#line 10190 "shortcodes.c"
+#line 10358 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st314;
 		case 37: goto st315;
@@ -10219,7 +10387,7 @@ st315:
 	if ( ++p == pe )
 		goto _test_eof315;
 case 315:
-#line 10223 "shortcodes.c"
+#line 10391 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10254,12 +10422,16 @@ tr626:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10296,12 +10468,16 @@ tr630:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10338,12 +10514,16 @@ tr632:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10378,12 +10558,16 @@ tr634:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10422,12 +10606,16 @@ tr638:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10466,12 +10654,16 @@ tr640:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -10600,7 +10792,7 @@ st1912:
 	if ( ++p == pe )
 		goto _test_eof1912;
 case 1912:
-#line 10604 "shortcodes.c"
+#line 10796 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10678,7 +10870,7 @@ st322:
 	if ( ++p == pe )
 		goto _test_eof322;
 case 322:
-#line 10682 "shortcodes.c"
+#line 10874 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10716,7 +10908,7 @@ st324:
 	if ( ++p == pe )
 		goto _test_eof324;
 case 324:
-#line 10720 "shortcodes.c"
+#line 10912 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr616;
 		case 37: goto tr635;
@@ -10758,7 +10950,7 @@ st325:
 	if ( ++p == pe )
 		goto _test_eof325;
 case 325:
-#line 10762 "shortcodes.c"
+#line 10954 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10796,7 +10988,7 @@ st327:
 	if ( ++p == pe )
 		goto _test_eof327;
 case 327:
-#line 10800 "shortcodes.c"
+#line 10992 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10823,7 +11015,7 @@ st329:
 	if ( ++p == pe )
 		goto _test_eof329;
 case 329:
-#line 10827 "shortcodes.c"
+#line 11019 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr641;
 		case 37: goto tr642;
@@ -10889,7 +11081,7 @@ st330:
 	if ( ++p == pe )
 		goto _test_eof330;
 case 330:
-#line 10893 "shortcodes.c"
+#line 11085 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st330;
 		case 34: goto tr647;
@@ -10921,7 +11113,7 @@ st331:
 	if ( ++p == pe )
 		goto _test_eof331;
 case 331:
-#line 10925 "shortcodes.c"
+#line 11117 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -10938,7 +11130,7 @@ st332:
 	if ( ++p == pe )
 		goto _test_eof332;
 case 332:
-#line 10942 "shortcodes.c"
+#line 11134 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr658;
 		case 37: goto tr659;
@@ -10995,7 +11187,7 @@ st333:
 	if ( ++p == pe )
 		goto _test_eof333;
 case 333:
-#line 10999 "shortcodes.c"
+#line 11191 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11040,7 +11232,7 @@ st335:
 	if ( ++p == pe )
 		goto _test_eof335;
 case 335:
-#line 11044 "shortcodes.c"
+#line 11236 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st336;
 		case 39: goto st303;
@@ -11112,7 +11304,7 @@ st338:
 	if ( ++p == pe )
 		goto _test_eof338;
 case 338:
-#line 11116 "shortcodes.c"
+#line 11308 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11139,7 +11331,7 @@ st340:
 	if ( ++p == pe )
 		goto _test_eof340;
 case 340:
-#line 11143 "shortcodes.c"
+#line 11335 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr669;
 		case 34: goto st36;
@@ -11196,7 +11388,7 @@ st341:
 	if ( ++p == pe )
 		goto _test_eof341;
 case 341:
-#line 11200 "shortcodes.c"
+#line 11392 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st341;
 		case 34: goto tr674;
@@ -11228,7 +11420,7 @@ st342:
 	if ( ++p == pe )
 		goto _test_eof342;
 case 342:
-#line 11232 "shortcodes.c"
+#line 11424 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr680;
 		case 34: goto st303;
@@ -11285,7 +11477,7 @@ st343:
 	if ( ++p == pe )
 		goto _test_eof343;
 case 343:
-#line 11289 "shortcodes.c"
+#line 11481 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st343;
 		case 34: goto tr685;
@@ -11352,7 +11544,7 @@ st344:
 	if ( ++p == pe )
 		goto _test_eof344;
 case 344:
-#line 11356 "shortcodes.c"
+#line 11548 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -11371,7 +11563,7 @@ st345:
 	if ( ++p == pe )
 		goto _test_eof345;
 case 345:
-#line 11375 "shortcodes.c"
+#line 11567 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr693;
@@ -11389,7 +11581,7 @@ st346:
 	if ( ++p == pe )
 		goto _test_eof346;
 case 346:
-#line 11393 "shortcodes.c"
+#line 11585 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 37: goto st347;
@@ -11459,7 +11651,7 @@ st350:
 	if ( ++p == pe )
 		goto _test_eof350;
 case 350:
-#line 11463 "shortcodes.c"
+#line 11655 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr701;
 		case 34: goto st303;
@@ -11501,7 +11693,7 @@ st351:
 	if ( ++p == pe )
 		goto _test_eof351;
 case 351:
-#line 11505 "shortcodes.c"
+#line 11697 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st351;
 		case 34: goto st303;
@@ -11534,7 +11726,7 @@ st352:
 	if ( ++p == pe )
 		goto _test_eof352;
 case 352:
-#line 11538 "shortcodes.c"
+#line 11730 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -11569,12 +11761,16 @@ tr711:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11611,12 +11807,16 @@ tr715:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11653,12 +11853,16 @@ tr717:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11693,12 +11897,16 @@ tr719:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11737,12 +11945,16 @@ tr723:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11781,12 +11993,16 @@ tr725:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -11915,7 +12131,7 @@ st1913:
 	if ( ++p == pe )
 		goto _test_eof1913;
 case 1913:
-#line 11919 "shortcodes.c"
+#line 12135 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -11993,7 +12209,7 @@ st359:
 	if ( ++p == pe )
 		goto _test_eof359;
 case 359:
-#line 11997 "shortcodes.c"
+#line 12213 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12031,7 +12247,7 @@ st361:
 	if ( ++p == pe )
 		goto _test_eof361;
 case 361:
-#line 12035 "shortcodes.c"
+#line 12251 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr701;
 		case 34: goto st303;
@@ -12073,7 +12289,7 @@ st362:
 	if ( ++p == pe )
 		goto _test_eof362;
 case 362:
-#line 12077 "shortcodes.c"
+#line 12293 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12111,7 +12327,7 @@ st364:
 	if ( ++p == pe )
 		goto _test_eof364;
 case 364:
-#line 12115 "shortcodes.c"
+#line 12331 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12138,7 +12354,7 @@ st366:
 	if ( ++p == pe )
 		goto _test_eof366;
 case 366:
-#line 12142 "shortcodes.c"
+#line 12358 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr726;
 		case 34: goto st303;
@@ -12180,7 +12396,7 @@ st367:
 	if ( ++p == pe )
 		goto _test_eof367;
 case 367:
-#line 12184 "shortcodes.c"
+#line 12400 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr726;
 		case 34: goto st303;
@@ -12222,7 +12438,7 @@ st368:
 	if ( ++p == pe )
 		goto _test_eof368;
 case 368:
-#line 12226 "shortcodes.c"
+#line 12442 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12284,7 +12500,7 @@ st370:
 	if ( ++p == pe )
 		goto _test_eof370;
 case 370:
-#line 12288 "shortcodes.c"
+#line 12504 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12344,7 +12560,7 @@ st374:
 	if ( ++p == pe )
 		goto _test_eof374;
 case 374:
-#line 12348 "shortcodes.c"
+#line 12564 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr738;
 		case 34: goto st303;
@@ -12408,7 +12624,7 @@ st375:
 	if ( ++p == pe )
 		goto _test_eof375;
 case 375:
-#line 12412 "shortcodes.c"
+#line 12628 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st375;
 		case 34: goto tr742;
@@ -12438,7 +12654,7 @@ st376:
 	if ( ++p == pe )
 		goto _test_eof376;
 case 376:
-#line 12442 "shortcodes.c"
+#line 12658 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr747;
 		case 34: goto st126;
@@ -12495,7 +12711,7 @@ st377:
 	if ( ++p == pe )
 		goto _test_eof377;
 case 377:
-#line 12499 "shortcodes.c"
+#line 12715 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -12540,7 +12756,7 @@ st379:
 	if ( ++p == pe )
 		goto _test_eof379;
 case 379:
-#line 12544 "shortcodes.c"
+#line 12760 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 62: goto st380;
@@ -12612,7 +12828,7 @@ st382:
 	if ( ++p == pe )
 		goto _test_eof382;
 case 382:
-#line 12616 "shortcodes.c"
+#line 12832 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -12639,7 +12855,7 @@ st384:
 	if ( ++p == pe )
 		goto _test_eof384;
 case 384:
-#line 12643 "shortcodes.c"
+#line 12859 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -12656,7 +12872,7 @@ st385:
 	if ( ++p == pe )
 		goto _test_eof385;
 case 385:
-#line 12660 "shortcodes.c"
+#line 12876 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr762;
 		case 37: goto tr763;
@@ -12713,7 +12929,7 @@ st386:
 	if ( ++p == pe )
 		goto _test_eof386;
 case 386:
-#line 12717 "shortcodes.c"
+#line 12933 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st386;
 		case 34: goto tr743;
@@ -12780,7 +12996,7 @@ st387:
 	if ( ++p == pe )
 		goto _test_eof387;
 case 387:
-#line 12784 "shortcodes.c"
+#line 13000 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -12807,7 +13023,7 @@ st389:
 	if ( ++p == pe )
 		goto _test_eof389;
 case 389:
-#line 12811 "shortcodes.c"
+#line 13027 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr775;
 		case 39: goto st303;
@@ -12862,7 +13078,7 @@ st390:
 	if ( ++p == pe )
 		goto _test_eof390;
 case 390:
-#line 12866 "shortcodes.c"
+#line 13082 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st390;
 		case 34: goto tr582;
@@ -12892,7 +13108,7 @@ st391:
 	if ( ++p == pe )
 		goto _test_eof391;
 case 391:
-#line 12896 "shortcodes.c"
+#line 13112 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -12911,7 +13127,7 @@ st392:
 	if ( ++p == pe )
 		goto _test_eof392;
 case 392:
-#line 12915 "shortcodes.c"
+#line 13131 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -12930,7 +13146,7 @@ st393:
 	if ( ++p == pe )
 		goto _test_eof393;
 case 393:
-#line 12934 "shortcodes.c"
+#line 13150 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 37: goto st394;
@@ -13004,7 +13220,7 @@ st397:
 	if ( ++p == pe )
 		goto _test_eof397;
 case 397:
-#line 13008 "shortcodes.c"
+#line 13224 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr794;
 		case 34: goto st389;
@@ -13047,7 +13263,7 @@ st398:
 	if ( ++p == pe )
 		goto _test_eof398;
 case 398:
-#line 13051 "shortcodes.c"
+#line 13267 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st398;
 		case 34: goto st389;
@@ -13081,7 +13297,7 @@ st399:
 	if ( ++p == pe )
 		goto _test_eof399;
 case 399:
-#line 13085 "shortcodes.c"
+#line 13301 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13118,12 +13334,16 @@ tr804:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13160,12 +13380,16 @@ tr808:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13202,12 +13426,16 @@ tr810:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13242,12 +13470,16 @@ tr812:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13286,12 +13518,16 @@ tr816:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13330,12 +13566,16 @@ tr818:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -13464,7 +13704,7 @@ st1914:
 	if ( ++p == pe )
 		goto _test_eof1914;
 case 1914:
-#line 13468 "shortcodes.c"
+#line 13708 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13548,7 +13788,7 @@ st406:
 	if ( ++p == pe )
 		goto _test_eof406;
 case 406:
-#line 13552 "shortcodes.c"
+#line 13792 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13588,7 +13828,7 @@ st408:
 	if ( ++p == pe )
 		goto _test_eof408;
 case 408:
-#line 13592 "shortcodes.c"
+#line 13832 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr794;
 		case 34: goto st389;
@@ -13631,7 +13871,7 @@ st409:
 	if ( ++p == pe )
 		goto _test_eof409;
 case 409:
-#line 13635 "shortcodes.c"
+#line 13875 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13671,7 +13911,7 @@ st411:
 	if ( ++p == pe )
 		goto _test_eof411;
 case 411:
-#line 13675 "shortcodes.c"
+#line 13915 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13700,7 +13940,7 @@ st413:
 	if ( ++p == pe )
 		goto _test_eof413;
 case 413:
-#line 13704 "shortcodes.c"
+#line 13944 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr819;
 		case 34: goto st389;
@@ -13767,7 +14007,7 @@ st414:
 	if ( ++p == pe )
 		goto _test_eof414;
 case 414:
-#line 13771 "shortcodes.c"
+#line 14011 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st414;
 		case 34: goto tr825;
@@ -13799,7 +14039,7 @@ st415:
 	if ( ++p == pe )
 		goto _test_eof415;
 case 415:
-#line 13803 "shortcodes.c"
+#line 14043 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr832;
 		case 34: goto st332;
@@ -13855,7 +14095,7 @@ st416:
 	if ( ++p == pe )
 		goto _test_eof416;
 case 416:
-#line 13859 "shortcodes.c"
+#line 14099 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st416;
 		case 34: goto tr835;
@@ -13885,7 +14125,7 @@ st417:
 	if ( ++p == pe )
 		goto _test_eof417;
 case 417:
-#line 13889 "shortcodes.c"
+#line 14129 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr840;
 		case 34: goto st389;
@@ -13943,7 +14183,7 @@ st418:
 	if ( ++p == pe )
 		goto _test_eof418;
 case 418:
-#line 13947 "shortcodes.c"
+#line 14187 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13990,7 +14230,7 @@ st420:
 	if ( ++p == pe )
 		goto _test_eof420;
 case 420:
-#line 13994 "shortcodes.c"
+#line 14234 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 37: goto st421;
@@ -14065,7 +14305,7 @@ st423:
 	if ( ++p == pe )
 		goto _test_eof423;
 case 423:
-#line 14069 "shortcodes.c"
+#line 14309 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14094,7 +14334,7 @@ st425:
 	if ( ++p == pe )
 		goto _test_eof425;
 case 425:
-#line 14098 "shortcodes.c"
+#line 14338 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr851;
 		case 34: goto st153;
@@ -14152,7 +14392,7 @@ st426:
 	if ( ++p == pe )
 		goto _test_eof426;
 case 426:
-#line 14156 "shortcodes.c"
+#line 14396 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st426;
 		case 34: goto tr856;
@@ -14184,7 +14424,7 @@ st427:
 	if ( ++p == pe )
 		goto _test_eof427;
 case 427:
-#line 14188 "shortcodes.c"
+#line 14428 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr862;
 		case 34: goto st385;
@@ -14242,7 +14482,7 @@ st428:
 	if ( ++p == pe )
 		goto _test_eof428;
 case 428:
-#line 14246 "shortcodes.c"
+#line 14486 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st428;
 		case 34: goto tr836;
@@ -14309,7 +14549,7 @@ st429:
 	if ( ++p == pe )
 		goto _test_eof429;
 case 429:
-#line 14313 "shortcodes.c"
+#line 14553 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14329,7 +14569,7 @@ st430:
 	if ( ++p == pe )
 		goto _test_eof430;
 case 430:
-#line 14333 "shortcodes.c"
+#line 14573 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14348,7 +14588,7 @@ st431:
 	if ( ++p == pe )
 		goto _test_eof431;
 case 431:
-#line 14352 "shortcodes.c"
+#line 14592 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 37: goto st432;
@@ -14422,7 +14662,7 @@ st435:
 	if ( ++p == pe )
 		goto _test_eof435;
 case 435:
-#line 14426 "shortcodes.c"
+#line 14666 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr882;
 		case 34: goto st385;
@@ -14465,7 +14705,7 @@ st436:
 	if ( ++p == pe )
 		goto _test_eof436;
 case 436:
-#line 14469 "shortcodes.c"
+#line 14709 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st436;
 		case 34: goto st385;
@@ -14499,7 +14739,7 @@ st437:
 	if ( ++p == pe )
 		goto _test_eof437;
 case 437:
-#line 14503 "shortcodes.c"
+#line 14743 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14536,12 +14776,16 @@ tr892:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14578,12 +14822,16 @@ tr896:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14620,12 +14868,16 @@ tr898:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14660,12 +14912,16 @@ tr900:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14704,12 +14960,16 @@ tr904:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14748,12 +15008,16 @@ tr906:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -14882,7 +15146,7 @@ st1915:
 	if ( ++p == pe )
 		goto _test_eof1915;
 case 1915:
-#line 14886 "shortcodes.c"
+#line 15150 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14966,7 +15230,7 @@ st444:
 	if ( ++p == pe )
 		goto _test_eof444;
 case 444:
-#line 14970 "shortcodes.c"
+#line 15234 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15006,7 +15270,7 @@ st446:
 	if ( ++p == pe )
 		goto _test_eof446;
 case 446:
-#line 15010 "shortcodes.c"
+#line 15274 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr882;
 		case 34: goto st385;
@@ -15049,7 +15313,7 @@ st447:
 	if ( ++p == pe )
 		goto _test_eof447;
 case 447:
-#line 15053 "shortcodes.c"
+#line 15317 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15089,7 +15353,7 @@ st449:
 	if ( ++p == pe )
 		goto _test_eof449;
 case 449:
-#line 15093 "shortcodes.c"
+#line 15357 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15118,7 +15382,7 @@ st451:
 	if ( ++p == pe )
 		goto _test_eof451;
 case 451:
-#line 15122 "shortcodes.c"
+#line 15386 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr907;
 		case 34: goto st385;
@@ -15161,7 +15425,7 @@ st452:
 	if ( ++p == pe )
 		goto _test_eof452;
 case 452:
-#line 15165 "shortcodes.c"
+#line 15429 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr907;
 		case 34: goto st385;
@@ -15204,7 +15468,7 @@ st453:
 	if ( ++p == pe )
 		goto _test_eof453;
 case 453:
-#line 15208 "shortcodes.c"
+#line 15472 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15268,7 +15532,7 @@ st455:
 	if ( ++p == pe )
 		goto _test_eof455;
 case 455:
-#line 15272 "shortcodes.c"
+#line 15536 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15332,7 +15596,7 @@ st459:
 	if ( ++p == pe )
 		goto _test_eof459;
 case 459:
-#line 15336 "shortcodes.c"
+#line 15600 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr919;
 		case 34: goto st385;
@@ -15397,7 +15661,7 @@ st460:
 	if ( ++p == pe )
 		goto _test_eof460;
 case 460:
-#line 15401 "shortcodes.c"
+#line 15665 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st460;
 		case 34: goto tr923;
@@ -15427,7 +15691,7 @@ st461:
 	if ( ++p == pe )
 		goto _test_eof461;
 case 461:
-#line 15431 "shortcodes.c"
+#line 15695 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr928;
 		case 34: goto st244;
@@ -15485,7 +15749,7 @@ st462:
 	if ( ++p == pe )
 		goto _test_eof462;
 case 462:
-#line 15489 "shortcodes.c"
+#line 15753 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st462;
 		case 34: goto tr924;
@@ -15517,7 +15781,7 @@ st463:
 	if ( ++p == pe )
 		goto _test_eof463;
 case 463:
-#line 15521 "shortcodes.c"
+#line 15785 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr939;
 		case 34: goto st385;
@@ -15573,7 +15837,7 @@ st464:
 	if ( ++p == pe )
 		goto _test_eof464;
 case 464:
-#line 15577 "shortcodes.c"
+#line 15841 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15660,7 +15924,7 @@ st468:
 	if ( ++p == pe )
 		goto _test_eof468;
 case 468:
-#line 15664 "shortcodes.c"
+#line 15928 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -15680,7 +15944,7 @@ st469:
 	if ( ++p == pe )
 		goto _test_eof469;
 case 469:
-#line 15684 "shortcodes.c"
+#line 15948 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -15699,7 +15963,7 @@ st470:
 	if ( ++p == pe )
 		goto _test_eof470;
 case 470:
-#line 15703 "shortcodes.c"
+#line 15967 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 37: goto st471;
@@ -15773,7 +16037,7 @@ st474:
 	if ( ++p == pe )
 		goto _test_eof474;
 case 474:
-#line 15777 "shortcodes.c"
+#line 16041 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr954;
 		case 34: goto st244;
@@ -15816,7 +16080,7 @@ st475:
 	if ( ++p == pe )
 		goto _test_eof475;
 case 475:
-#line 15820 "shortcodes.c"
+#line 16084 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st475;
 		case 34: goto st244;
@@ -15850,7 +16114,7 @@ st476:
 	if ( ++p == pe )
 		goto _test_eof476;
 case 476:
-#line 15854 "shortcodes.c"
+#line 16118 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -15887,12 +16151,16 @@ tr964:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -15929,12 +16197,16 @@ tr968:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -15971,12 +16243,16 @@ tr970:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -16011,12 +16287,16 @@ tr972:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -16055,12 +16335,16 @@ tr976:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -16099,12 +16383,16 @@ tr978:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -16233,7 +16521,7 @@ st1916:
 	if ( ++p == pe )
 		goto _test_eof1916;
 case 1916:
-#line 16237 "shortcodes.c"
+#line 16525 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16317,7 +16605,7 @@ st483:
 	if ( ++p == pe )
 		goto _test_eof483;
 case 483:
-#line 16321 "shortcodes.c"
+#line 16609 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16357,7 +16645,7 @@ st485:
 	if ( ++p == pe )
 		goto _test_eof485;
 case 485:
-#line 16361 "shortcodes.c"
+#line 16649 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr954;
 		case 34: goto st244;
@@ -16400,7 +16688,7 @@ st486:
 	if ( ++p == pe )
 		goto _test_eof486;
 case 486:
-#line 16404 "shortcodes.c"
+#line 16692 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16440,7 +16728,7 @@ st488:
 	if ( ++p == pe )
 		goto _test_eof488;
 case 488:
-#line 16444 "shortcodes.c"
+#line 16732 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16469,7 +16757,7 @@ st490:
 	if ( ++p == pe )
 		goto _test_eof490;
 case 490:
-#line 16473 "shortcodes.c"
+#line 16761 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr979;
 		case 34: goto st244;
@@ -16536,7 +16824,7 @@ st491:
 	if ( ++p == pe )
 		goto _test_eof491;
 case 491:
-#line 16540 "shortcodes.c"
+#line 16828 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st491;
 		case 34: goto tr985;
@@ -16568,7 +16856,7 @@ st492:
 	if ( ++p == pe )
 		goto _test_eof492;
 case 492:
-#line 16572 "shortcodes.c"
+#line 16860 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr991;
 		case 34: goto st153;
@@ -16624,7 +16912,7 @@ st493:
 	if ( ++p == pe )
 		goto _test_eof493;
 case 493:
-#line 16628 "shortcodes.c"
+#line 16916 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st493;
 		case 34: goto tr460;
@@ -16689,7 +16977,7 @@ st494:
 	if ( ++p == pe )
 		goto _test_eof494;
 case 494:
-#line 16693 "shortcodes.c"
+#line 16981 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -16741,7 +17029,7 @@ st498:
 	if ( ++p == pe )
 		goto _test_eof498;
 case 498:
-#line 16745 "shortcodes.c"
+#line 17033 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1001;
 		case 34: goto st153;
@@ -16771,7 +17059,7 @@ st499:
 	if ( ++p == pe )
 		goto _test_eof499;
 case 499:
-#line 16775 "shortcodes.c"
+#line 17063 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1001;
 		case 34: goto st153;
@@ -16803,7 +17091,7 @@ st500:
 	if ( ++p == pe )
 		goto _test_eof500;
 case 500:
-#line 16807 "shortcodes.c"
+#line 17095 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr460;
 		case 39: goto tr985;
@@ -16863,7 +17151,7 @@ st501:
 	if ( ++p == pe )
 		goto _test_eof501;
 case 501:
-#line 16867 "shortcodes.c"
+#line 17155 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16910,7 +17198,7 @@ st503:
 	if ( ++p == pe )
 		goto _test_eof503;
 case 503:
-#line 16914 "shortcodes.c"
+#line 17202 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 37: goto st504;
@@ -16950,7 +17238,7 @@ st506:
 	if ( ++p == pe )
 		goto _test_eof506;
 case 506:
-#line 16954 "shortcodes.c"
+#line 17242 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1011;
 		case 34: goto st244;
@@ -17017,7 +17305,7 @@ st507:
 	if ( ++p == pe )
 		goto _test_eof507;
 case 507:
-#line 17021 "shortcodes.c"
+#line 17309 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17046,7 +17334,7 @@ st509:
 	if ( ++p == pe )
 		goto _test_eof509;
 case 509:
-#line 17050 "shortcodes.c"
+#line 17338 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1011;
 		case 34: goto st244;
@@ -17080,7 +17368,7 @@ st510:
 	if ( ++p == pe )
 		goto _test_eof510;
 case 510:
-#line 17084 "shortcodes.c"
+#line 17372 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr985;
 		case 39: goto tr459;
@@ -17116,7 +17404,7 @@ st511:
 	if ( ++p == pe )
 		goto _test_eof511;
 case 511:
-#line 17120 "shortcodes.c"
+#line 17408 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr979;
 		case 34: goto st244;
@@ -17159,7 +17447,7 @@ st512:
 	if ( ++p == pe )
 		goto _test_eof512;
 case 512:
-#line 17163 "shortcodes.c"
+#line 17451 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17223,7 +17511,7 @@ st516:
 	if ( ++p == pe )
 		goto _test_eof516;
 case 516:
-#line 17227 "shortcodes.c"
+#line 17515 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1025;
 		case 34: goto st244;
@@ -17288,7 +17576,7 @@ st517:
 	if ( ++p == pe )
 		goto _test_eof517;
 case 517:
-#line 17292 "shortcodes.c"
+#line 17580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st517;
 		case 34: goto tr1029;
@@ -17318,7 +17606,7 @@ st518:
 	if ( ++p == pe )
 		goto _test_eof518;
 case 518:
-#line 17322 "shortcodes.c"
+#line 17610 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1033;
 		case 34: goto st244;
@@ -17374,7 +17662,7 @@ st519:
 	if ( ++p == pe )
 		goto _test_eof519;
 case 519:
-#line 17378 "shortcodes.c"
+#line 17666 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17426,7 +17714,7 @@ st523:
 	if ( ++p == pe )
 		goto _test_eof523;
 case 523:
-#line 17430 "shortcodes.c"
+#line 17718 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1039;
 		case 34: goto st244;
@@ -17456,7 +17744,7 @@ st524:
 	if ( ++p == pe )
 		goto _test_eof524;
 case 524:
-#line 17460 "shortcodes.c"
+#line 17748 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1039;
 		case 34: goto st244;
@@ -17488,7 +17776,7 @@ st525:
 	if ( ++p == pe )
 		goto _test_eof525;
 case 525:
-#line 17492 "shortcodes.c"
+#line 17780 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1029;
 		case 39: goto tr1029;
@@ -17553,7 +17841,7 @@ st528:
 	if ( ++p == pe )
 		goto _test_eof528;
 case 528:
-#line 17557 "shortcodes.c"
+#line 17845 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1046;
 		case 34: goto st244;
@@ -17596,7 +17884,7 @@ st529:
 	if ( ++p == pe )
 		goto _test_eof529;
 case 529:
-#line 17600 "shortcodes.c"
+#line 17888 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1046;
 		case 34: goto st244;
@@ -17639,7 +17927,7 @@ st530:
 	if ( ++p == pe )
 		goto _test_eof530;
 case 530:
-#line 17643 "shortcodes.c"
+#line 17931 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17703,7 +17991,7 @@ st532:
 	if ( ++p == pe )
 		goto _test_eof532;
 case 532:
-#line 17707 "shortcodes.c"
+#line 17995 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17743,7 +18031,7 @@ st535:
 	if ( ++p == pe )
 		goto _test_eof535;
 case 535:
-#line 17747 "shortcodes.c"
+#line 18035 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1057;
 		case 34: goto st389;
@@ -17799,7 +18087,7 @@ st536:
 	if ( ++p == pe )
 		goto _test_eof536;
 case 536:
-#line 17803 "shortcodes.c"
+#line 18091 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st536;
 		case 34: goto tr934;
@@ -17864,7 +18152,7 @@ st537:
 	if ( ++p == pe )
 		goto _test_eof537;
 case 537:
-#line 17868 "shortcodes.c"
+#line 18156 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -17916,7 +18204,7 @@ st541:
 	if ( ++p == pe )
 		goto _test_eof541;
 case 541:
-#line 17920 "shortcodes.c"
+#line 18208 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1067;
 		case 34: goto st389;
@@ -17946,7 +18234,7 @@ st542:
 	if ( ++p == pe )
 		goto _test_eof542;
 case 542:
-#line 17950 "shortcodes.c"
+#line 18238 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1067;
 		case 34: goto st389;
@@ -17978,7 +18266,7 @@ st543:
 	if ( ++p == pe )
 		goto _test_eof543;
 case 543:
-#line 17982 "shortcodes.c"
+#line 18270 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr934;
 		case 39: goto tr923;
@@ -18021,7 +18309,7 @@ st544:
 	if ( ++p == pe )
 		goto _test_eof544;
 case 544:
-#line 18025 "shortcodes.c"
+#line 18313 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -18061,7 +18349,7 @@ st547:
 	if ( ++p == pe )
 		goto _test_eof547;
 case 547:
-#line 18065 "shortcodes.c"
+#line 18353 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1075;
 		case 34: goto st244;
@@ -18093,7 +18381,7 @@ st548:
 	if ( ++p == pe )
 		goto _test_eof548;
 case 548:
-#line 18097 "shortcodes.c"
+#line 18385 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1075;
 		case 34: goto st244;
@@ -18127,7 +18415,7 @@ st549:
 	if ( ++p == pe )
 		goto _test_eof549;
 case 549:
-#line 18131 "shortcodes.c"
+#line 18419 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr924;
 		case 39: goto tr934;
@@ -18152,7 +18440,7 @@ st550:
 	if ( ++p == pe )
 		goto _test_eof550;
 case 550:
-#line 18156 "shortcodes.c"
+#line 18444 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1082;
 		case 34: goto st385;
@@ -18182,7 +18470,7 @@ st551:
 	if ( ++p == pe )
 		goto _test_eof551;
 case 551:
-#line 18186 "shortcodes.c"
+#line 18474 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1082;
 		case 34: goto st385;
@@ -18214,7 +18502,7 @@ st552:
 	if ( ++p == pe )
 		goto _test_eof552;
 case 552:
-#line 18218 "shortcodes.c"
+#line 18506 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr923;
 		case 39: goto tr924;
@@ -18279,7 +18567,7 @@ st555:
 	if ( ++p == pe )
 		goto _test_eof555;
 case 555:
-#line 18283 "shortcodes.c"
+#line 18571 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1089;
 		case 34: goto st385;
@@ -18346,7 +18634,7 @@ st556:
 	if ( ++p == pe )
 		goto _test_eof556;
 case 556:
-#line 18350 "shortcodes.c"
+#line 18638 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st556;
 		case 34: goto tr1095;
@@ -18378,7 +18666,7 @@ st557:
 	if ( ++p == pe )
 		goto _test_eof557;
 case 557:
-#line 18382 "shortcodes.c"
+#line 18670 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1102;
 		case 34: goto st385;
@@ -18436,7 +18724,7 @@ st558:
 	if ( ++p == pe )
 		goto _test_eof558;
 case 558:
-#line 18440 "shortcodes.c"
+#line 18728 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -18483,7 +18771,7 @@ st560:
 	if ( ++p == pe )
 		goto _test_eof560;
 case 560:
-#line 18487 "shortcodes.c"
+#line 18775 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -18558,7 +18846,7 @@ st563:
 	if ( ++p == pe )
 		goto _test_eof563;
 case 563:
-#line 18562 "shortcodes.c"
+#line 18850 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -18587,7 +18875,7 @@ st565:
 	if ( ++p == pe )
 		goto _test_eof565;
 case 565:
-#line 18591 "shortcodes.c"
+#line 18879 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1114;
 		case 34: goto st567;
@@ -18608,7 +18896,7 @@ st566:
 	if ( ++p == pe )
 		goto _test_eof566;
 case 566:
-#line 18612 "shortcodes.c"
+#line 18900 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -18625,7 +18913,7 @@ st567:
 	if ( ++p == pe )
 		goto _test_eof567;
 case 567:
-#line 18629 "shortcodes.c"
+#line 18917 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1119;
 		case 37: goto tr1120;
@@ -18682,7 +18970,7 @@ st568:
 	if ( ++p == pe )
 		goto _test_eof568;
 case 568:
-#line 18686 "shortcodes.c"
+#line 18974 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st568;
 		case 34: goto tr1124;
@@ -18749,7 +19037,7 @@ st569:
 	if ( ++p == pe )
 		goto _test_eof569;
 case 569:
-#line 18753 "shortcodes.c"
+#line 19041 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -18794,7 +19082,7 @@ st571:
 	if ( ++p == pe )
 		goto _test_eof571;
 case 571:
-#line 18798 "shortcodes.c"
+#line 19086 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 62: goto st572;
@@ -18831,7 +19119,7 @@ st574:
 	if ( ++p == pe )
 		goto _test_eof574;
 case 574:
-#line 18835 "shortcodes.c"
+#line 19123 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1136;
 		case 37: goto tr1137;
@@ -18897,7 +19185,7 @@ st575:
 	if ( ++p == pe )
 		goto _test_eof575;
 case 575:
-#line 18901 "shortcodes.c"
+#line 19189 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -18924,7 +19212,7 @@ st577:
 	if ( ++p == pe )
 		goto _test_eof577;
 case 577:
-#line 18928 "shortcodes.c"
+#line 19216 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1136;
 		case 37: goto tr1137;
@@ -18957,7 +19245,7 @@ st578:
 	if ( ++p == pe )
 		goto _test_eof578;
 case 578:
-#line 18961 "shortcodes.c"
+#line 19249 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1124;
 		case 39: goto tr1126;
@@ -18982,7 +19270,7 @@ st579:
 	if ( ++p == pe )
 		goto _test_eof579;
 case 579:
-#line 18986 "shortcodes.c"
+#line 19274 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1145;
 		case 34: goto st303;
@@ -19039,7 +19327,7 @@ st580:
 	if ( ++p == pe )
 		goto _test_eof580;
 case 580:
-#line 19043 "shortcodes.c"
+#line 19331 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st580;
 		case 34: goto tr1150;
@@ -19106,7 +19394,7 @@ st581:
 	if ( ++p == pe )
 		goto _test_eof581;
 case 581:
-#line 19110 "shortcodes.c"
+#line 19398 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -19151,7 +19439,7 @@ st583:
 	if ( ++p == pe )
 		goto _test_eof583;
 case 583:
-#line 19155 "shortcodes.c"
+#line 19443 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 62: goto st584;
@@ -19188,7 +19476,7 @@ st586:
 	if ( ++p == pe )
 		goto _test_eof586;
 case 586:
-#line 19192 "shortcodes.c"
+#line 19480 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1161;
 		case 34: goto st303;
@@ -19254,7 +19542,7 @@ st587:
 	if ( ++p == pe )
 		goto _test_eof587;
 case 587:
-#line 19258 "shortcodes.c"
+#line 19546 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -19281,7 +19569,7 @@ st589:
 	if ( ++p == pe )
 		goto _test_eof589;
 case 589:
-#line 19285 "shortcodes.c"
+#line 19573 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1161;
 		case 34: goto st303;
@@ -19314,7 +19602,7 @@ st590:
 	if ( ++p == pe )
 		goto _test_eof590;
 case 590:
-#line 19318 "shortcodes.c"
+#line 19606 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1150;
 		case 39: goto tr1124;
@@ -19341,7 +19629,7 @@ st591:
 	if ( ++p == pe )
 		goto _test_eof591;
 case 591:
-#line 19345 "shortcodes.c"
+#line 19633 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -19360,7 +19648,7 @@ st592:
 	if ( ++p == pe )
 		goto _test_eof592;
 case 592:
-#line 19364 "shortcodes.c"
+#line 19652 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 37: goto st593;
@@ -19434,7 +19722,7 @@ st596:
 	if ( ++p == pe )
 		goto _test_eof596;
 case 596:
-#line 19438 "shortcodes.c"
+#line 19726 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1178;
 		case 34: goto st567;
@@ -19477,7 +19765,7 @@ st597:
 	if ( ++p == pe )
 		goto _test_eof597;
 case 597:
-#line 19481 "shortcodes.c"
+#line 19769 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st597;
 		case 34: goto st567;
@@ -19511,7 +19799,7 @@ st598:
 	if ( ++p == pe )
 		goto _test_eof598;
 case 598:
-#line 19515 "shortcodes.c"
+#line 19803 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -19548,12 +19836,16 @@ tr1188:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19590,12 +19882,16 @@ tr1192:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19632,12 +19928,16 @@ tr1194:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19672,12 +19972,16 @@ tr1196:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19716,12 +20020,16 @@ tr1200:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19760,12 +20068,16 @@ tr1202:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -19894,7 +20206,7 @@ st1917:
 	if ( ++p == pe )
 		goto _test_eof1917;
 case 1917:
-#line 19898 "shortcodes.c"
+#line 20210 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -19978,7 +20290,7 @@ st605:
 	if ( ++p == pe )
 		goto _test_eof605;
 case 605:
-#line 19982 "shortcodes.c"
+#line 20294 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20018,7 +20330,7 @@ st607:
 	if ( ++p == pe )
 		goto _test_eof607;
 case 607:
-#line 20022 "shortcodes.c"
+#line 20334 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1178;
 		case 34: goto st567;
@@ -20061,7 +20373,7 @@ st608:
 	if ( ++p == pe )
 		goto _test_eof608;
 case 608:
-#line 20065 "shortcodes.c"
+#line 20377 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20101,7 +20413,7 @@ st610:
 	if ( ++p == pe )
 		goto _test_eof610;
 case 610:
-#line 20105 "shortcodes.c"
+#line 20417 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20130,7 +20442,7 @@ st612:
 	if ( ++p == pe )
 		goto _test_eof612;
 case 612:
-#line 20134 "shortcodes.c"
+#line 20446 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1203;
 		case 34: goto st567;
@@ -20197,7 +20509,7 @@ st613:
 	if ( ++p == pe )
 		goto _test_eof613;
 case 613:
-#line 20201 "shortcodes.c"
+#line 20513 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st613;
 		case 34: goto tr1209;
@@ -20229,7 +20541,7 @@ st614:
 	if ( ++p == pe )
 		goto _test_eof614;
 case 614:
-#line 20233 "shortcodes.c"
+#line 20545 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1216;
 		case 34: goto st332;
@@ -20287,7 +20599,7 @@ st615:
 	if ( ++p == pe )
 		goto _test_eof615;
 case 615:
-#line 20291 "shortcodes.c"
+#line 20603 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st615;
 		case 34: goto tr1221;
@@ -20319,7 +20631,7 @@ st616:
 	if ( ++p == pe )
 		goto _test_eof616;
 case 616:
-#line 20323 "shortcodes.c"
+#line 20635 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1227;
 		case 34: goto st567;
@@ -20377,7 +20689,7 @@ st617:
 	if ( ++p == pe )
 		goto _test_eof617;
 case 617:
-#line 20381 "shortcodes.c"
+#line 20693 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20424,7 +20736,7 @@ st619:
 	if ( ++p == pe )
 		goto _test_eof619;
 case 619:
-#line 20428 "shortcodes.c"
+#line 20740 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 37: goto st620;
@@ -20499,7 +20811,7 @@ st622:
 	if ( ++p == pe )
 		goto _test_eof622;
 case 622:
-#line 20503 "shortcodes.c"
+#line 20815 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20563,7 +20875,7 @@ st624:
 	if ( ++p == pe )
 		goto _test_eof624;
 case 624:
-#line 20567 "shortcodes.c"
+#line 20879 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -20583,7 +20895,7 @@ st625:
 	if ( ++p == pe )
 		goto _test_eof625;
 case 625:
-#line 20587 "shortcodes.c"
+#line 20899 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -20602,7 +20914,7 @@ st626:
 	if ( ++p == pe )
 		goto _test_eof626;
 case 626:
-#line 20606 "shortcodes.c"
+#line 20918 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 37: goto st627;
@@ -20676,7 +20988,7 @@ st630:
 	if ( ++p == pe )
 		goto _test_eof630;
 case 630:
-#line 20680 "shortcodes.c"
+#line 20992 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1247;
 		case 34: goto st332;
@@ -20719,7 +21031,7 @@ st631:
 	if ( ++p == pe )
 		goto _test_eof631;
 case 631:
-#line 20723 "shortcodes.c"
+#line 21035 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st631;
 		case 34: goto st332;
@@ -20753,7 +21065,7 @@ st632:
 	if ( ++p == pe )
 		goto _test_eof632;
 case 632:
-#line 20757 "shortcodes.c"
+#line 21069 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -20790,12 +21102,16 @@ tr1257:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -20832,12 +21148,16 @@ tr1261:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -20874,12 +21194,16 @@ tr1263:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -20914,12 +21238,16 @@ tr1265:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -20958,12 +21286,16 @@ tr1269:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -21002,12 +21334,16 @@ tr1271:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -21136,7 +21472,7 @@ st1918:
 	if ( ++p == pe )
 		goto _test_eof1918;
 case 1918:
-#line 21140 "shortcodes.c"
+#line 21476 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21220,7 +21556,7 @@ st639:
 	if ( ++p == pe )
 		goto _test_eof639;
 case 639:
-#line 21224 "shortcodes.c"
+#line 21560 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21260,7 +21596,7 @@ st641:
 	if ( ++p == pe )
 		goto _test_eof641;
 case 641:
-#line 21264 "shortcodes.c"
+#line 21600 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1247;
 		case 34: goto st332;
@@ -21303,7 +21639,7 @@ st642:
 	if ( ++p == pe )
 		goto _test_eof642;
 case 642:
-#line 21307 "shortcodes.c"
+#line 21643 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21343,7 +21679,7 @@ st644:
 	if ( ++p == pe )
 		goto _test_eof644;
 case 644:
-#line 21347 "shortcodes.c"
+#line 21683 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21372,7 +21708,7 @@ st646:
 	if ( ++p == pe )
 		goto _test_eof646;
 case 646:
-#line 21376 "shortcodes.c"
+#line 21712 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1272;
 		case 34: goto st332;
@@ -21439,7 +21775,7 @@ st647:
 	if ( ++p == pe )
 		goto _test_eof647;
 case 647:
-#line 21443 "shortcodes.c"
+#line 21779 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st647;
 		case 34: goto tr1278;
@@ -21471,7 +21807,7 @@ st648:
 	if ( ++p == pe )
 		goto _test_eof648;
 case 648:
-#line 21475 "shortcodes.c"
+#line 21811 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1285;
 		case 34: goto st332;
@@ -21529,7 +21865,7 @@ st649:
 	if ( ++p == pe )
 		goto _test_eof649;
 case 649:
-#line 21533 "shortcodes.c"
+#line 21869 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21576,7 +21912,7 @@ st651:
 	if ( ++p == pe )
 		goto _test_eof651;
 case 651:
-#line 21580 "shortcodes.c"
+#line 21916 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 37: goto st652;
@@ -21651,7 +21987,7 @@ st654:
 	if ( ++p == pe )
 		goto _test_eof654;
 case 654:
-#line 21655 "shortcodes.c"
+#line 21991 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21680,7 +22016,7 @@ st656:
 	if ( ++p == pe )
 		goto _test_eof656;
 case 656:
-#line 21684 "shortcodes.c"
+#line 22020 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1296;
 		case 34: goto st76;
@@ -21738,7 +22074,7 @@ st657:
 	if ( ++p == pe )
 		goto _test_eof657;
 case 657:
-#line 21742 "shortcodes.c"
+#line 22078 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st657;
 		case 34: goto tr1301;
@@ -21770,7 +22106,7 @@ st658:
 	if ( ++p == pe )
 		goto _test_eof658;
 case 658:
-#line 21774 "shortcodes.c"
+#line 22110 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1308;
 		case 34: goto st660;
@@ -21793,7 +22129,7 @@ st659:
 	if ( ++p == pe )
 		goto _test_eof659;
 case 659:
-#line 21797 "shortcodes.c"
+#line 22133 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -21810,7 +22146,7 @@ st660:
 	if ( ++p == pe )
 		goto _test_eof660;
 case 660:
-#line 21814 "shortcodes.c"
+#line 22150 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1315;
 		case 37: goto tr1316;
@@ -21867,7 +22203,7 @@ st661:
 	if ( ++p == pe )
 		goto _test_eof661;
 case 661:
-#line 21871 "shortcodes.c"
+#line 22207 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st661;
 		case 34: goto tr687;
@@ -21934,7 +22270,7 @@ st662:
 	if ( ++p == pe )
 		goto _test_eof662;
 case 662:
-#line 21938 "shortcodes.c"
+#line 22274 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -21979,7 +22315,7 @@ st664:
 	if ( ++p == pe )
 		goto _test_eof664;
 case 664:
-#line 21983 "shortcodes.c"
+#line 22319 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 62: goto st665;
@@ -22016,7 +22352,7 @@ st667:
 	if ( ++p == pe )
 		goto _test_eof667;
 case 667:
-#line 22020 "shortcodes.c"
+#line 22356 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1331;
 		case 37: goto tr1332;
@@ -22082,7 +22418,7 @@ st668:
 	if ( ++p == pe )
 		goto _test_eof668;
 case 668:
-#line 22086 "shortcodes.c"
+#line 22422 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -22109,7 +22445,7 @@ st670:
 	if ( ++p == pe )
 		goto _test_eof670;
 case 670:
-#line 22113 "shortcodes.c"
+#line 22449 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1331;
 		case 37: goto tr1332;
@@ -22142,7 +22478,7 @@ st671:
 	if ( ++p == pe )
 		goto _test_eof671;
 case 671:
-#line 22146 "shortcodes.c"
+#line 22482 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr687;
 		case 39: goto tr1321;
@@ -22169,7 +22505,7 @@ st672:
 	if ( ++p == pe )
 		goto _test_eof672;
 case 672:
-#line 22173 "shortcodes.c"
+#line 22509 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22188,7 +22524,7 @@ st673:
 	if ( ++p == pe )
 		goto _test_eof673;
 case 673:
-#line 22192 "shortcodes.c"
+#line 22528 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 37: goto st674;
@@ -22262,7 +22598,7 @@ st677:
 	if ( ++p == pe )
 		goto _test_eof677;
 case 677:
-#line 22266 "shortcodes.c"
+#line 22602 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1348;
 		case 34: goto st660;
@@ -22305,7 +22641,7 @@ st678:
 	if ( ++p == pe )
 		goto _test_eof678;
 case 678:
-#line 22309 "shortcodes.c"
+#line 22645 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st678;
 		case 34: goto st660;
@@ -22339,7 +22675,7 @@ st679:
 	if ( ++p == pe )
 		goto _test_eof679;
 case 679:
-#line 22343 "shortcodes.c"
+#line 22679 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22376,12 +22712,16 @@ tr1358:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22418,12 +22758,16 @@ tr1362:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22460,12 +22804,16 @@ tr1364:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22500,12 +22848,16 @@ tr1366:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22544,12 +22896,16 @@ tr1370:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22588,12 +22944,16 @@ tr1372:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -22722,7 +23082,7 @@ st1919:
 	if ( ++p == pe )
 		goto _test_eof1919;
 case 1919:
-#line 22726 "shortcodes.c"
+#line 23086 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22806,7 +23166,7 @@ st686:
 	if ( ++p == pe )
 		goto _test_eof686;
 case 686:
-#line 22810 "shortcodes.c"
+#line 23170 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22846,7 +23206,7 @@ st688:
 	if ( ++p == pe )
 		goto _test_eof688;
 case 688:
-#line 22850 "shortcodes.c"
+#line 23210 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1348;
 		case 34: goto st660;
@@ -22889,7 +23249,7 @@ st689:
 	if ( ++p == pe )
 		goto _test_eof689;
 case 689:
-#line 22893 "shortcodes.c"
+#line 23253 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22929,7 +23289,7 @@ st691:
 	if ( ++p == pe )
 		goto _test_eof691;
 case 691:
-#line 22933 "shortcodes.c"
+#line 23293 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22958,7 +23318,7 @@ st693:
 	if ( ++p == pe )
 		goto _test_eof693;
 case 693:
-#line 22962 "shortcodes.c"
+#line 23322 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1373;
 		case 34: goto st660;
@@ -23025,7 +23385,7 @@ st694:
 	if ( ++p == pe )
 		goto _test_eof694;
 case 694:
-#line 23029 "shortcodes.c"
+#line 23389 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st694;
 		case 34: goto tr1280;
@@ -23092,7 +23452,7 @@ st695:
 	if ( ++p == pe )
 		goto _test_eof695;
 case 695:
-#line 23096 "shortcodes.c"
+#line 23456 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23139,7 +23499,7 @@ st697:
 	if ( ++p == pe )
 		goto _test_eof697;
 case 697:
-#line 23143 "shortcodes.c"
+#line 23503 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 37: goto st698;
@@ -23179,7 +23539,7 @@ st700:
 	if ( ++p == pe )
 		goto _test_eof700;
 case 700:
-#line 23183 "shortcodes.c"
+#line 23543 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1389;
 		case 34: goto st660;
@@ -23246,7 +23606,7 @@ st701:
 	if ( ++p == pe )
 		goto _test_eof701;
 case 701:
-#line 23250 "shortcodes.c"
+#line 23610 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23275,7 +23635,7 @@ st703:
 	if ( ++p == pe )
 		goto _test_eof703;
 case 703:
-#line 23279 "shortcodes.c"
+#line 23639 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1389;
 		case 34: goto st660;
@@ -23309,7 +23669,7 @@ st704:
 	if ( ++p == pe )
 		goto _test_eof704;
 case 704:
-#line 23313 "shortcodes.c"
+#line 23673 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1280;
 		case 39: goto tr1301;
@@ -23345,7 +23705,7 @@ st705:
 	if ( ++p == pe )
 		goto _test_eof705;
 case 705:
-#line 23349 "shortcodes.c"
+#line 23709 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1373;
 		case 34: goto st660;
@@ -23388,7 +23748,7 @@ st706:
 	if ( ++p == pe )
 		goto _test_eof706;
 case 706:
-#line 23392 "shortcodes.c"
+#line 23752 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23452,7 +23812,7 @@ st710:
 	if ( ++p == pe )
 		goto _test_eof710;
 case 710:
-#line 23456 "shortcodes.c"
+#line 23816 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1403;
 		case 34: goto st660;
@@ -23517,7 +23877,7 @@ st711:
 	if ( ++p == pe )
 		goto _test_eof711;
 case 711:
-#line 23521 "shortcodes.c"
+#line 23881 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st711;
 		case 34: goto tr827;
@@ -23547,7 +23907,7 @@ st712:
 	if ( ++p == pe )
 		goto _test_eof712;
 case 712:
-#line 23551 "shortcodes.c"
+#line 23911 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1410;
 		case 34: goto st119;
@@ -23605,7 +23965,7 @@ st713:
 	if ( ++p == pe )
 		goto _test_eof713;
 case 713:
-#line 23609 "shortcodes.c"
+#line 23969 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st713;
 		case 34: goto tr868;
@@ -23637,7 +23997,7 @@ st714:
 	if ( ++p == pe )
 		goto _test_eof714;
 case 714:
-#line 23641 "shortcodes.c"
+#line 24001 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1420;
 		case 34: goto st660;
@@ -23693,7 +24053,7 @@ st715:
 	if ( ++p == pe )
 		goto _test_eof715;
 case 715:
-#line 23697 "shortcodes.c"
+#line 24057 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23780,7 +24140,7 @@ st719:
 	if ( ++p == pe )
 		goto _test_eof719;
 case 719:
-#line 23784 "shortcodes.c"
+#line 24144 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -23827,7 +24187,7 @@ st721:
 	if ( ++p == pe )
 		goto _test_eof721;
 case 721:
-#line 23831 "shortcodes.c"
+#line 24191 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -23867,7 +24227,7 @@ st724:
 	if ( ++p == pe )
 		goto _test_eof724;
 case 724:
-#line 23871 "shortcodes.c"
+#line 24231 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1431;
 		case 34: goto st119;
@@ -23934,7 +24294,7 @@ st725:
 	if ( ++p == pe )
 		goto _test_eof725;
 case 725:
-#line 23938 "shortcodes.c"
+#line 24298 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -23963,7 +24323,7 @@ st727:
 	if ( ++p == pe )
 		goto _test_eof727;
 case 727:
-#line 23967 "shortcodes.c"
+#line 24327 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1431;
 		case 34: goto st119;
@@ -23997,7 +24357,7 @@ st728:
 	if ( ++p == pe )
 		goto _test_eof728;
 case 728:
-#line 24001 "shortcodes.c"
+#line 24361 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr868;
 		case 39: goto tr835;
@@ -24022,7 +24382,7 @@ st729:
 	if ( ++p == pe )
 		goto _test_eof729;
 case 729:
-#line 24026 "shortcodes.c"
+#line 24386 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1440;
 		case 34: goto st660;
@@ -24052,7 +24412,7 @@ st730:
 	if ( ++p == pe )
 		goto _test_eof730;
 case 730:
-#line 24056 "shortcodes.c"
+#line 24416 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1440;
 		case 34: goto st660;
@@ -24084,7 +24444,7 @@ st731:
 	if ( ++p == pe )
 		goto _test_eof731;
 case 731:
-#line 24088 "shortcodes.c"
+#line 24448 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr827;
 		case 39: goto tr856;
@@ -24149,7 +24509,7 @@ st734:
 	if ( ++p == pe )
 		goto _test_eof734;
 case 734:
-#line 24153 "shortcodes.c"
+#line 24513 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1447;
 		case 34: goto st660;
@@ -24216,7 +24576,7 @@ st735:
 	if ( ++p == pe )
 		goto _test_eof735;
 case 735:
-#line 24220 "shortcodes.c"
+#line 24580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st735;
 		case 34: goto tr1211;
@@ -24248,7 +24608,7 @@ st736:
 	if ( ++p == pe )
 		goto _test_eof736;
 case 736:
-#line 24252 "shortcodes.c"
+#line 24612 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1458;
 		case 34: goto st660;
@@ -24306,7 +24666,7 @@ st737:
 	if ( ++p == pe )
 		goto _test_eof737;
 case 737:
-#line 24310 "shortcodes.c"
+#line 24670 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24353,7 +24713,7 @@ st739:
 	if ( ++p == pe )
 		goto _test_eof739;
 case 739:
-#line 24357 "shortcodes.c"
+#line 24717 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24428,7 +24788,7 @@ st742:
 	if ( ++p == pe )
 		goto _test_eof742;
 case 742:
-#line 24432 "shortcodes.c"
+#line 24792 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24457,7 +24817,7 @@ st744:
 	if ( ++p == pe )
 		goto _test_eof744;
 case 744:
-#line 24461 "shortcodes.c"
+#line 24821 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1469;
 		case 34: goto st660;
@@ -24489,7 +24849,7 @@ st745:
 	if ( ++p == pe )
 		goto _test_eof745;
 case 745:
-#line 24493 "shortcodes.c"
+#line 24853 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1469;
 		case 34: goto st660;
@@ -24523,7 +24883,7 @@ st746:
 	if ( ++p == pe )
 		goto _test_eof746;
 case 746:
-#line 24527 "shortcodes.c"
+#line 24887 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1211;
 		case 39: goto tr1221;
@@ -24559,7 +24919,7 @@ st747:
 	if ( ++p == pe )
 		goto _test_eof747;
 case 747:
-#line 24563 "shortcodes.c"
+#line 24923 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1447;
 		case 34: goto st660;
@@ -24602,7 +24962,7 @@ st748:
 	if ( ++p == pe )
 		goto _test_eof748;
 case 748:
-#line 24606 "shortcodes.c"
+#line 24966 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24666,7 +25026,7 @@ st750:
 	if ( ++p == pe )
 		goto _test_eof750;
 case 750:
-#line 24670 "shortcodes.c"
+#line 25030 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -24686,7 +25046,7 @@ st751:
 	if ( ++p == pe )
 		goto _test_eof751;
 case 751:
-#line 24690 "shortcodes.c"
+#line 25050 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -24705,7 +25065,7 @@ st752:
 	if ( ++p == pe )
 		goto _test_eof752;
 case 752:
-#line 24709 "shortcodes.c"
+#line 25069 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 37: goto st753;
@@ -24779,7 +25139,7 @@ st756:
 	if ( ++p == pe )
 		goto _test_eof756;
 case 756:
-#line 24783 "shortcodes.c"
+#line 25143 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1488;
 		case 34: goto st76;
@@ -24822,7 +25182,7 @@ st757:
 	if ( ++p == pe )
 		goto _test_eof757;
 case 757:
-#line 24826 "shortcodes.c"
+#line 25186 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st757;
 		case 34: goto st76;
@@ -24856,7 +25216,7 @@ st758:
 	if ( ++p == pe )
 		goto _test_eof758;
 case 758:
-#line 24860 "shortcodes.c"
+#line 25220 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -24893,12 +25253,16 @@ tr1498:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -24935,12 +25299,16 @@ tr1502:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -24977,12 +25345,16 @@ tr1504:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -25017,12 +25389,16 @@ tr1506:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -25061,12 +25437,16 @@ tr1510:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -25105,12 +25485,16 @@ tr1512:
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;
@@ -25239,7 +25623,7 @@ st1920:
 	if ( ++p == pe )
 		goto _test_eof1920;
 case 1920:
-#line 25243 "shortcodes.c"
+#line 25627 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25323,7 +25707,7 @@ st765:
 	if ( ++p == pe )
 		goto _test_eof765;
 case 765:
-#line 25327 "shortcodes.c"
+#line 25711 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25363,7 +25747,7 @@ st767:
 	if ( ++p == pe )
 		goto _test_eof767;
 case 767:
-#line 25367 "shortcodes.c"
+#line 25751 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1488;
 		case 34: goto st76;
@@ -25406,7 +25790,7 @@ st768:
 	if ( ++p == pe )
 		goto _test_eof768;
 case 768:
-#line 25410 "shortcodes.c"
+#line 25794 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25446,7 +25830,7 @@ st770:
 	if ( ++p == pe )
 		goto _test_eof770;
 case 770:
-#line 25450 "shortcodes.c"
+#line 25834 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25475,7 +25859,7 @@ st772:
 	if ( ++p == pe )
 		goto _test_eof772;
 case 772:
-#line 25479 "shortcodes.c"
+#line 25863 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1513;
 		case 34: goto st76;
@@ -25542,7 +25926,7 @@ st773:
 	if ( ++p == pe )
 		goto _test_eof773;
 case 773:
-#line 25546 "shortcodes.c"
+#line 25930 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st773;
 		case 34: goto tr1519;
@@ -25574,7 +25958,7 @@ st774:
 	if ( ++p == pe )
 		goto _test_eof774;
 case 774:
-#line 25578 "shortcodes.c"
+#line 25962 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1525;
 		case 34: goto st76;
@@ -25632,7 +26016,7 @@ st775:
 	if ( ++p == pe )
 		goto _test_eof775;
 case 775:
-#line 25636 "shortcodes.c"
+#line 26020 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25679,7 +26063,7 @@ st777:
 	if ( ++p == pe )
 		goto _test_eof777;
 case 777:
-#line 25683 "shortcodes.c"
+#line 26067 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 37: goto st778;
@@ -25754,7 +26138,7 @@ st780:
 	if ( ++p == pe )
 		goto _test_eof780;
 case 780:
-#line 25758 "shortcodes.c"
+#line 26142 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25783,7 +26167,7 @@ st782:
 	if ( ++p == pe )
 		goto _test_eof782;
 case 782:
-#line 25787 "shortcodes.c"
+#line 26171 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1536;
 		case 34: goto st76;
@@ -25815,7 +26199,7 @@ st783:
 	if ( ++p == pe )
 		goto _test_eof783;
 case 783:
-#line 25819 "shortcodes.c"
+#line 26203 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1536;
 		case 34: goto st76;
@@ -25849,7 +26233,7 @@ st784:
 	if ( ++p == pe )
 		goto _test_eof784;
 case 784:
-#line 25853 "shortcodes.c"
+#line 26237 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1519;
 		case 39: goto tr1519;
@@ -25885,7 +26269,7 @@ st785:
 	if ( ++p == pe )
 		goto _test_eof785;
 case 785:
-#line 25889 "shortcodes.c"
+#line 26273 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1513;
 		case 34: goto st76;
@@ -25928,7 +26312,7 @@ st786:
 	if ( ++p == pe )
 		goto _test_eof786;
 case 786:
-#line 25932 "shortcodes.c"
+#line 26316 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25992,7 +26376,7 @@ st790:
 	if ( ++p == pe )
 		goto _test_eof790;
 case 790:
-#line 25996 "shortcodes.c"
+#line 26380 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1548;
 		case 34: goto st76;
@@ -26057,7 +26441,7 @@ st791:
 	if ( ++p == pe )
 		goto _test_eof791;
 case 791:
-#line 26061 "shortcodes.c"
+#line 26445 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26149,7 +26533,7 @@ st797:
 	if ( ++p == pe )
 		goto _test_eof797;
 case 797:
-#line 26153 "shortcodes.c"
+#line 26537 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1557;
 		case 34: goto st76;
@@ -26192,7 +26576,7 @@ st798:
 	if ( ++p == pe )
 		goto _test_eof798;
 case 798:
-#line 26196 "shortcodes.c"
+#line 26580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1557;
 		case 34: goto st76;
@@ -26235,7 +26619,7 @@ st799:
 	if ( ++p == pe )
 		goto _test_eof799;
 case 799:
-#line 26239 "shortcodes.c"
+#line 26623 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26299,7 +26683,7 @@ st801:
 	if ( ++p == pe )
 		goto _test_eof801;
 case 801:
-#line 26303 "shortcodes.c"
+#line 26687 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26357,7 +26741,7 @@ st804:
 	if ( ++p == pe )
 		goto _test_eof804;
 case 804:
-#line 26361 "shortcodes.c"
+#line 26745 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26397,7 +26781,7 @@ st807:
 	if ( ++p == pe )
 		goto _test_eof807;
 case 807:
-#line 26401 "shortcodes.c"
+#line 26785 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1571;
 		case 34: goto st76;
@@ -26429,7 +26813,7 @@ st808:
 	if ( ++p == pe )
 		goto _test_eof808;
 case 808:
-#line 26433 "shortcodes.c"
+#line 26817 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1571;
 		case 34: goto st76;
@@ -26463,7 +26847,7 @@ st809:
 	if ( ++p == pe )
 		goto _test_eof809;
 case 809:
-#line 26467 "shortcodes.c"
+#line 26851 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1301;
 		case 39: goto tr1278;
@@ -26488,7 +26872,7 @@ st810:
 	if ( ++p == pe )
 		goto _test_eof810;
 case 810:
-#line 26492 "shortcodes.c"
+#line 26876 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1578;
 		case 34: goto st332;
@@ -26520,7 +26904,7 @@ st811:
 	if ( ++p == pe )
 		goto _test_eof811;
 case 811:
-#line 26524 "shortcodes.c"
+#line 26908 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1578;
 		case 34: goto st332;
@@ -26554,7 +26938,7 @@ st812:
 	if ( ++p == pe )
 		goto _test_eof812;
 case 812:
-#line 26558 "shortcodes.c"
+#line 26942 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1278;
 		case 39: goto tr1280;
@@ -26590,7 +26974,7 @@ st813:
 	if ( ++p == pe )
 		goto _test_eof813;
 case 813:
-#line 26594 "shortcodes.c"
+#line 26978 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1272;
 		case 34: goto st332;
@@ -26633,7 +27017,7 @@ st814:
 	if ( ++p == pe )
 		goto _test_eof814;
 case 814:
-#line 26637 "shortcodes.c"
+#line 27021 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -26697,7 +27081,7 @@ st818:
 	if ( ++p == pe )
 		goto _test_eof818;
 case 818:
-#line 26701 "shortcodes.c"
+#line 27085 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1590;
 		case 34: goto st332;
@@ -26762,7 +27146,7 @@ st819:
 	if ( ++p == pe )
 		goto _test_eof819;
 case 819:
-#line 26766 "shortcodes.c"
+#line 27150 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -26854,7 +27238,7 @@ st825:
 	if ( ++p == pe )
 		goto _test_eof825;
 case 825:
-#line 26858 "shortcodes.c"
+#line 27242 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1599;
 		case 34: goto st332;
@@ -26897,7 +27281,7 @@ st826:
 	if ( ++p == pe )
 		goto _test_eof826;
 case 826:
-#line 26901 "shortcodes.c"
+#line 27285 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1599;
 		case 34: goto st332;
@@ -26940,7 +27324,7 @@ st827:
 	if ( ++p == pe )
 		goto _test_eof827;
 case 827:
-#line 26944 "shortcodes.c"
+#line 27328 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27004,7 +27388,7 @@ st829:
 	if ( ++p == pe )
 		goto _test_eof829;
 case 829:
-#line 27008 "shortcodes.c"
+#line 27392 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27062,7 +27446,7 @@ st832:
 	if ( ++p == pe )
 		goto _test_eof832;
 case 832:
-#line 27066 "shortcodes.c"
+#line 27450 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27102,7 +27486,7 @@ st835:
 	if ( ++p == pe )
 		goto _test_eof835;
 case 835:
-#line 27106 "shortcodes.c"
+#line 27490 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1613;
 		case 34: goto st332;
@@ -27134,7 +27518,7 @@ st836:
 	if ( ++p == pe )
 		goto _test_eof836;
 case 836:
-#line 27138 "shortcodes.c"
+#line 27522 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1613;
 		case 34: goto st332;
@@ -27168,7 +27552,7 @@ st837:
 	if ( ++p == pe )
 		goto _test_eof837;
 case 837:
-#line 27172 "shortcodes.c"
+#line 27556 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1221;
 		case 39: goto tr1209;
@@ -27193,7 +27577,7 @@ st838:
 	if ( ++p == pe )
 		goto _test_eof838;
 case 838:
-#line 27197 "shortcodes.c"
+#line 27581 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1620;
 		case 34: goto st567;
@@ -27225,7 +27609,7 @@ st839:
 	if ( ++p == pe )
 		goto _test_eof839;
 case 839:
-#line 27229 "shortcodes.c"
+#line 27613 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1620;
 		case 34: goto st567;
@@ -27259,7 +27643,7 @@ st840:
 	if ( ++p == pe )
 		goto _test_eof840;
 case 840:
-#line 27263 "shortcodes.c"
+#line 27647 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1209;
 		case 39: goto tr1211;
@@ -27295,7 +27679,7 @@ st841:
 	if ( ++p == pe )
 		goto _test_eof841;
 case 841:
-#line 27299 "shortcodes.c"
+#line 27683 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1203;
 		case 34: goto st567;
@@ -27338,7 +27722,7 @@ st842:
 	if ( ++p == pe )
 		goto _test_eof842;
 case 842:
-#line 27342 "shortcodes.c"
+#line 27726 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -27402,7 +27786,7 @@ st846:
 	if ( ++p == pe )
 		goto _test_eof846;
 case 846:
-#line 27406 "shortcodes.c"
+#line 27790 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1632;
 		case 34: goto st567;
@@ -27467,7 +27851,7 @@ st847:
 	if ( ++p == pe )
 		goto _test_eof847;
 case 847:
-#line 27471 "shortcodes.c"
+#line 27855 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st847;
 		case 34: goto tr1636;
@@ -27497,7 +27881,7 @@ st848:
 	if ( ++p == pe )
 		goto _test_eof848;
 case 848:
-#line 27501 "shortcodes.c"
+#line 27885 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1640;
 		case 34: goto st389;
@@ -27555,7 +27939,7 @@ st849:
 	if ( ++p == pe )
 		goto _test_eof849;
 case 849:
-#line 27559 "shortcodes.c"
+#line 27943 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st849;
 		case 34: goto tr1097;
@@ -27622,7 +28006,7 @@ st850:
 	if ( ++p == pe )
 		goto _test_eof850;
 case 850:
-#line 27626 "shortcodes.c"
+#line 28010 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -27669,7 +28053,7 @@ st852:
 	if ( ++p == pe )
 		goto _test_eof852;
 case 852:
-#line 27673 "shortcodes.c"
+#line 28057 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -27709,7 +28093,7 @@ st855:
 	if ( ++p == pe )
 		goto _test_eof855;
 case 855:
-#line 27713 "shortcodes.c"
+#line 28097 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1655;
 		case 34: goto st389;
@@ -27776,7 +28160,7 @@ st856:
 	if ( ++p == pe )
 		goto _test_eof856;
 case 856:
-#line 27780 "shortcodes.c"
+#line 28164 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -27805,7 +28189,7 @@ st858:
 	if ( ++p == pe )
 		goto _test_eof858;
 case 858:
-#line 27809 "shortcodes.c"
+#line 28193 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1655;
 		case 34: goto st389;
@@ -27839,7 +28223,7 @@ st859:
 	if ( ++p == pe )
 		goto _test_eof859;
 case 859:
-#line 27843 "shortcodes.c"
+#line 28227 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1097;
 		case 39: goto tr1636;
@@ -27899,7 +28283,7 @@ st860:
 	if ( ++p == pe )
 		goto _test_eof860;
 case 860:
-#line 27903 "shortcodes.c"
+#line 28287 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -27951,7 +28335,7 @@ st864:
 	if ( ++p == pe )
 		goto _test_eof864;
 case 864:
-#line 27955 "shortcodes.c"
+#line 28339 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1668;
 		case 34: goto st567;
@@ -27981,7 +28365,7 @@ st865:
 	if ( ++p == pe )
 		goto _test_eof865;
 case 865:
-#line 27985 "shortcodes.c"
+#line 28369 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1668;
 		case 34: goto st567;
@@ -28013,7 +28397,7 @@ st866:
 	if ( ++p == pe )
 		goto _test_eof866;
 case 866:
-#line 28017 "shortcodes.c"
+#line 28401 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1636;
 		case 39: goto tr1095;
@@ -28078,7 +28462,7 @@ st869:
 	if ( ++p == pe )
 		goto _test_eof869;
 case 869:
-#line 28082 "shortcodes.c"
+#line 28466 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1675;
 		case 34: goto st567;
@@ -28145,7 +28529,7 @@ st870:
 	if ( ++p == pe )
 		goto _test_eof870;
 case 870:
-#line 28149 "shortcodes.c"
+#line 28533 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st870;
 		case 34: goto tr1681;
@@ -28177,7 +28561,7 @@ st871:
 	if ( ++p == pe )
 		goto _test_eof871;
 case 871:
-#line 28181 "shortcodes.c"
+#line 28565 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1687;
 		case 34: goto st567;
@@ -28235,7 +28619,7 @@ st872:
 	if ( ++p == pe )
 		goto _test_eof872;
 case 872:
-#line 28239 "shortcodes.c"
+#line 28623 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28282,7 +28666,7 @@ st874:
 	if ( ++p == pe )
 		goto _test_eof874;
 case 874:
-#line 28286 "shortcodes.c"
+#line 28670 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28357,7 +28741,7 @@ st877:
 	if ( ++p == pe )
 		goto _test_eof877;
 case 877:
-#line 28361 "shortcodes.c"
+#line 28745 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28386,7 +28770,7 @@ st879:
 	if ( ++p == pe )
 		goto _test_eof879;
 case 879:
-#line 28390 "shortcodes.c"
+#line 28774 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1698;
 		case 34: goto st567;
@@ -28418,7 +28802,7 @@ st880:
 	if ( ++p == pe )
 		goto _test_eof880;
 case 880:
-#line 28422 "shortcodes.c"
+#line 28806 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1698;
 		case 34: goto st567;
@@ -28452,7 +28836,7 @@ st881:
 	if ( ++p == pe )
 		goto _test_eof881;
 case 881:
-#line 28456 "shortcodes.c"
+#line 28840 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1681;
 		case 39: goto tr1681;
@@ -28488,7 +28872,7 @@ st882:
 	if ( ++p == pe )
 		goto _test_eof882;
 case 882:
-#line 28492 "shortcodes.c"
+#line 28876 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1675;
 		case 34: goto st567;
@@ -28531,7 +28915,7 @@ st883:
 	if ( ++p == pe )
 		goto _test_eof883;
 case 883:
-#line 28535 "shortcodes.c"
+#line 28919 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28560,7 +28944,7 @@ st885:
 	if ( ++p == pe )
 		goto _test_eof885;
 case 885:
-#line 28564 "shortcodes.c"
+#line 28948 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1708;
 		case 34: goto st385;
@@ -28592,7 +28976,7 @@ st886:
 	if ( ++p == pe )
 		goto _test_eof886;
 case 886:
-#line 28596 "shortcodes.c"
+#line 28980 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1708;
 		case 34: goto st385;
@@ -28626,7 +29010,7 @@ st887:
 	if ( ++p == pe )
 		goto _test_eof887;
 case 887:
-#line 28630 "shortcodes.c"
+#line 29014 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1095;
 		case 39: goto tr1097;
@@ -28662,7 +29046,7 @@ st888:
 	if ( ++p == pe )
 		goto _test_eof888;
 case 888:
-#line 28666 "shortcodes.c"
+#line 29050 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1089;
 		case 34: goto st385;
@@ -28705,7 +29089,7 @@ st889:
 	if ( ++p == pe )
 		goto _test_eof889;
 case 889:
-#line 28709 "shortcodes.c"
+#line 29093 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -28763,7 +29147,7 @@ st892:
 	if ( ++p == pe )
 		goto _test_eof892;
 case 892:
-#line 28767 "shortcodes.c"
+#line 29151 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 37: goto st893;
@@ -28803,7 +29187,7 @@ st895:
 	if ( ++p == pe )
 		goto _test_eof895;
 case 895:
-#line 28807 "shortcodes.c"
+#line 29191 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1722;
 		case 34: goto st385;
@@ -28835,7 +29219,7 @@ st896:
 	if ( ++p == pe )
 		goto _test_eof896;
 case 896:
-#line 28839 "shortcodes.c"
+#line 29223 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1722;
 		case 34: goto st385;
@@ -28869,7 +29253,7 @@ st897:
 	if ( ++p == pe )
 		goto _test_eof897;
 case 897:
-#line 28873 "shortcodes.c"
+#line 29257 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr836;
 		case 39: goto tr868;
@@ -28929,7 +29313,7 @@ st898:
 	if ( ++p == pe )
 		goto _test_eof898;
 case 898:
-#line 28933 "shortcodes.c"
+#line 29317 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -28976,7 +29360,7 @@ st900:
 	if ( ++p == pe )
 		goto _test_eof900;
 case 900:
-#line 28980 "shortcodes.c"
+#line 29364 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -29016,7 +29400,7 @@ st903:
 	if ( ++p == pe )
 		goto _test_eof903;
 case 903:
-#line 29020 "shortcodes.c"
+#line 29404 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1734;
 		case 34: goto st153;
@@ -29083,7 +29467,7 @@ st904:
 	if ( ++p == pe )
 		goto _test_eof904;
 case 904:
-#line 29087 "shortcodes.c"
+#line 29471 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -29112,7 +29496,7 @@ st906:
 	if ( ++p == pe )
 		goto _test_eof906;
 case 906:
-#line 29116 "shortcodes.c"
+#line 29500 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1734;
 		case 34: goto st153;
@@ -29146,7 +29530,7 @@ st907:
 	if ( ++p == pe )
 		goto _test_eof907;
 case 907:
-#line 29150 "shortcodes.c"
+#line 29534 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr856;
 		case 39: goto tr825;
@@ -29171,7 +29555,7 @@ st908:
 	if ( ++p == pe )
 		goto _test_eof908;
 case 908:
-#line 29175 "shortcodes.c"
+#line 29559 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1743;
 		case 34: goto st332;
@@ -29201,7 +29585,7 @@ st909:
 	if ( ++p == pe )
 		goto _test_eof909;
 case 909:
-#line 29205 "shortcodes.c"
+#line 29589 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1743;
 		case 34: goto st332;
@@ -29233,7 +29617,7 @@ st910:
 	if ( ++p == pe )
 		goto _test_eof910;
 case 910:
-#line 29237 "shortcodes.c"
+#line 29621 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr835;
 		case 39: goto tr836;
@@ -29258,7 +29642,7 @@ st911:
 	if ( ++p == pe )
 		goto _test_eof911;
 case 911:
-#line 29262 "shortcodes.c"
+#line 29646 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1748;
 		case 34: goto st389;
@@ -29290,7 +29674,7 @@ st912:
 	if ( ++p == pe )
 		goto _test_eof912;
 case 912:
-#line 29294 "shortcodes.c"
+#line 29678 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1748;
 		case 34: goto st389;
@@ -29324,7 +29708,7 @@ st913:
 	if ( ++p == pe )
 		goto _test_eof913;
 case 913:
-#line 29328 "shortcodes.c"
+#line 29712 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr825;
 		case 39: goto tr827;
@@ -29360,7 +29744,7 @@ st914:
 	if ( ++p == pe )
 		goto _test_eof914;
 case 914:
-#line 29364 "shortcodes.c"
+#line 29748 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr819;
 		case 34: goto st389;
@@ -29403,7 +29787,7 @@ st915:
 	if ( ++p == pe )
 		goto _test_eof915;
 case 915:
-#line 29407 "shortcodes.c"
+#line 29791 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -29467,7 +29851,7 @@ st919:
 	if ( ++p == pe )
 		goto _test_eof919;
 case 919:
-#line 29471 "shortcodes.c"
+#line 29855 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1760;
 		case 34: goto st389;
@@ -29537,7 +29921,7 @@ st922:
 	if ( ++p == pe )
 		goto _test_eof922;
 case 922:
-#line 29541 "shortcodes.c"
+#line 29925 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1765;
 		case 34: goto st389;
@@ -29580,7 +29964,7 @@ st923:
 	if ( ++p == pe )
 		goto _test_eof923;
 case 923:
-#line 29584 "shortcodes.c"
+#line 29968 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1765;
 		case 34: goto st389;
@@ -29623,7 +30007,7 @@ st924:
 	if ( ++p == pe )
 		goto _test_eof924;
 case 924:
-#line 29627 "shortcodes.c"
+#line 30011 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -29687,7 +30071,7 @@ st926:
 	if ( ++p == pe )
 		goto _test_eof926;
 case 926:
-#line 29691 "shortcodes.c"
+#line 30075 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 47: goto st927;
@@ -29735,7 +30119,7 @@ st930:
 	if ( ++p == pe )
 		goto _test_eof930;
 case 930:
-#line 29739 "shortcodes.c"
+#line 30123 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1777;
 		case 39: goto st303;
@@ -29764,7 +30148,7 @@ st931:
 	if ( ++p == pe )
 		goto _test_eof931;
 case 931:
-#line 29768 "shortcodes.c"
+#line 30152 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1777;
 		case 39: goto st303;
@@ -29795,7 +30179,7 @@ st932:
 	if ( ++p == pe )
 		goto _test_eof932;
 case 932:
-#line 29799 "shortcodes.c"
+#line 30183 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr582;
 		case 39: goto tr778;
@@ -29838,7 +30222,7 @@ st933:
 	if ( ++p == pe )
 		goto _test_eof933;
 case 933:
-#line 29842 "shortcodes.c"
+#line 30226 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 62: goto st934;
@@ -29875,7 +30259,7 @@ st936:
 	if ( ++p == pe )
 		goto _test_eof936;
 case 936:
-#line 29879 "shortcodes.c"
+#line 30263 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1785;
 		case 37: goto tr1786;
@@ -29941,7 +30325,7 @@ st937:
 	if ( ++p == pe )
 		goto _test_eof937;
 case 937:
-#line 29945 "shortcodes.c"
+#line 30329 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -29968,7 +30352,7 @@ st939:
 	if ( ++p == pe )
 		goto _test_eof939;
 case 939:
-#line 29972 "shortcodes.c"
+#line 30356 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1785;
 		case 37: goto tr1786;
@@ -30001,7 +30385,7 @@ st940:
 	if ( ++p == pe )
 		goto _test_eof940;
 case 940:
-#line 30005 "shortcodes.c"
+#line 30389 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr743;
 		case 39: goto tr768;
@@ -30061,7 +30445,7 @@ st941:
 	if ( ++p == pe )
 		goto _test_eof941;
 case 941:
-#line 30065 "shortcodes.c"
+#line 30449 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 47: goto st942;
@@ -30109,7 +30493,7 @@ st945:
 	if ( ++p == pe )
 		goto _test_eof945;
 case 945:
-#line 30113 "shortcodes.c"
+#line 30497 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1798;
 		case 34: goto st303;
@@ -30138,7 +30522,7 @@ st946:
 	if ( ++p == pe )
 		goto _test_eof946;
 case 946:
-#line 30142 "shortcodes.c"
+#line 30526 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1798;
 		case 34: goto st303;
@@ -30169,7 +30553,7 @@ st947:
 	if ( ++p == pe )
 		goto _test_eof947;
 case 947:
-#line 30173 "shortcodes.c"
+#line 30557 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr742;
 		case 39: goto tr743;
@@ -30232,7 +30616,7 @@ st950:
 	if ( ++p == pe )
 		goto _test_eof950;
 case 950:
-#line 30236 "shortcodes.c"
+#line 30620 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1805;
 		case 34: goto st303;
@@ -30274,7 +30658,7 @@ st951:
 	if ( ++p == pe )
 		goto _test_eof951;
 case 951:
-#line 30278 "shortcodes.c"
+#line 30662 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1805;
 		case 34: goto st303;
@@ -30316,7 +30700,7 @@ st952:
 	if ( ++p == pe )
 		goto _test_eof952;
 case 952:
-#line 30320 "shortcodes.c"
+#line 30704 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -30371,7 +30755,7 @@ st955:
 	if ( ++p == pe )
 		goto _test_eof955;
 case 955:
-#line 30375 "shortcodes.c"
+#line 30759 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 37: goto st956;
@@ -30408,7 +30792,7 @@ st958:
 	if ( ++p == pe )
 		goto _test_eof958;
 case 958:
-#line 30412 "shortcodes.c"
+#line 30796 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1817;
 		case 34: goto st303;
@@ -30439,7 +30823,7 @@ st959:
 	if ( ++p == pe )
 		goto _test_eof959;
 case 959:
-#line 30443 "shortcodes.c"
+#line 30827 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1817;
 		case 34: goto st303;
@@ -30472,7 +30856,7 @@ st960:
 	if ( ++p == pe )
 		goto _test_eof960;
 case 960:
-#line 30476 "shortcodes.c"
+#line 30860 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr685;
 		case 39: goto tr687;
@@ -30532,7 +30916,7 @@ st961:
 	if ( ++p == pe )
 		goto _test_eof961;
 case 961:
-#line 30536 "shortcodes.c"
+#line 30920 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -30577,7 +30961,7 @@ st963:
 	if ( ++p == pe )
 		goto _test_eof963;
 case 963:
-#line 30581 "shortcodes.c"
+#line 30965 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 62: goto st964;
@@ -30614,7 +30998,7 @@ st966:
 	if ( ++p == pe )
 		goto _test_eof966;
 case 966:
-#line 30618 "shortcodes.c"
+#line 31002 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1829;
 		case 34: goto st36;
@@ -30680,7 +31064,7 @@ st967:
 	if ( ++p == pe )
 		goto _test_eof967;
 case 967:
-#line 30684 "shortcodes.c"
+#line 31068 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -30707,7 +31091,7 @@ st969:
 	if ( ++p == pe )
 		goto _test_eof969;
 case 969:
-#line 30711 "shortcodes.c"
+#line 31095 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1829;
 		case 34: goto st36;
@@ -30740,7 +31124,7 @@ st970:
 	if ( ++p == pe )
 		goto _test_eof970;
 case 970:
-#line 30744 "shortcodes.c"
+#line 31128 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr674;
 		case 39: goto tr647;
@@ -30765,7 +31149,7 @@ st971:
 	if ( ++p == pe )
 		goto _test_eof971;
 case 971:
-#line 30769 "shortcodes.c"
+#line 31153 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1838;
 		case 37: goto tr1839;
@@ -30796,7 +31180,7 @@ st972:
 	if ( ++p == pe )
 		goto _test_eof972;
 case 972:
-#line 30800 "shortcodes.c"
+#line 31184 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1838;
 		case 37: goto tr1839;
@@ -30829,7 +31213,7 @@ st973:
 	if ( ++p == pe )
 		goto _test_eof973;
 case 973:
-#line 30833 "shortcodes.c"
+#line 31217 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr647;
 		case 39: goto tr649;
@@ -30865,7 +31249,7 @@ st974:
 	if ( ++p == pe )
 		goto _test_eof974;
 case 974:
-#line 30869 "shortcodes.c"
+#line 31253 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr641;
 		case 37: goto tr1845;
@@ -30907,7 +31291,7 @@ st975:
 	if ( ++p == pe )
 		goto _test_eof975;
 case 975:
-#line 30911 "shortcodes.c"
+#line 31295 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -30967,7 +31351,7 @@ st979:
 	if ( ++p == pe )
 		goto _test_eof979;
 case 979:
-#line 30971 "shortcodes.c"
+#line 31355 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1850;
 		case 39: goto st303;
@@ -31034,7 +31418,7 @@ st982:
 	if ( ++p == pe )
 		goto _test_eof982;
 case 982:
-#line 31038 "shortcodes.c"
+#line 31422 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1855;
 		case 37: goto tr1856;
@@ -31076,7 +31460,7 @@ st983:
 	if ( ++p == pe )
 		goto _test_eof983;
 case 983:
-#line 31080 "shortcodes.c"
+#line 31464 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1855;
 		case 37: goto tr1856;
@@ -31118,7 +31502,7 @@ st984:
 	if ( ++p == pe )
 		goto _test_eof984;
 case 984:
-#line 31122 "shortcodes.c"
+#line 31506 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -31163,7 +31547,7 @@ st986:
 	if ( ++p == pe )
 		goto _test_eof986;
 case 986:
-#line 31167 "shortcodes.c"
+#line 31551 "shortcodes.c"
 	switch( (*p) ) {
 		case 62: goto st987;
 		case 123: goto tr31;
@@ -31197,7 +31581,7 @@ st989:
 	if ( ++p == pe )
 		goto _test_eof989;
 case 989:
-#line 31201 "shortcodes.c"
+#line 31585 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1866;
 		case 37: goto tr1867;
@@ -31262,7 +31646,7 @@ st990:
 	if ( ++p == pe )
 		goto _test_eof990;
 case 990:
-#line 31266 "shortcodes.c"
+#line 31650 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st991;
@@ -31287,7 +31671,7 @@ st992:
 	if ( ++p == pe )
 		goto _test_eof992;
 case 992:
-#line 31291 "shortcodes.c"
+#line 31675 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1866;
 		case 37: goto tr1867;
@@ -31319,7 +31703,7 @@ st993:
 	if ( ++p == pe )
 		goto _test_eof993;
 case 993:
-#line 31323 "shortcodes.c"
+#line 31707 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr597;
 		case 39: goto tr599;
@@ -31344,7 +31728,7 @@ st994:
 	if ( ++p == pe )
 		goto _test_eof994;
 case 994:
-#line 31348 "shortcodes.c"
+#line 31732 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1875;
 		case 34: goto st126;
@@ -31375,7 +31759,7 @@ st995:
 	if ( ++p == pe )
 		goto _test_eof995;
 case 995:
-#line 31379 "shortcodes.c"
+#line 31763 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1875;
 		case 34: goto st126;
@@ -31408,7 +31792,7 @@ st996:
 	if ( ++p == pe )
 		goto _test_eof996;
 case 996:
-#line 31412 "shortcodes.c"
+#line 31796 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr580;
 		case 39: goto tr582;
@@ -31444,7 +31828,7 @@ st997:
 	if ( ++p == pe )
 		goto _test_eof997;
 case 997:
-#line 31448 "shortcodes.c"
+#line 31832 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr574;
 		case 34: goto st126;
@@ -31486,7 +31870,7 @@ st998:
 	if ( ++p == pe )
 		goto _test_eof998;
 case 998:
-#line 31490 "shortcodes.c"
+#line 31874 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -31523,7 +31907,7 @@ st1001:
 	if ( ++p == pe )
 		goto _test_eof1001;
 case 1001:
-#line 31527 "shortcodes.c"
+#line 31911 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1886;
 		case 34: goto st126;
@@ -31552,7 +31936,7 @@ st1002:
 	if ( ++p == pe )
 		goto _test_eof1002;
 case 1002:
-#line 31556 "shortcodes.c"
+#line 31940 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1886;
 		case 34: goto st126;
@@ -31583,7 +31967,7 @@ st1003:
 	if ( ++p == pe )
 		goto _test_eof1003;
 case 1003:
-#line 31587 "shortcodes.c"
+#line 31971 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr498;
 		case 39: goto tr481;
@@ -31608,7 +31992,7 @@ st1004:
 	if ( ++p == pe )
 		goto _test_eof1004;
 case 1004:
-#line 31612 "shortcodes.c"
+#line 31996 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1891;
 		case 34: goto st119;
@@ -31638,7 +32022,7 @@ st1005:
 	if ( ++p == pe )
 		goto _test_eof1005;
 case 1005:
-#line 31642 "shortcodes.c"
+#line 32026 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1891;
 		case 34: goto st119;
@@ -31670,7 +32054,7 @@ st1006:
 	if ( ++p == pe )
 		goto _test_eof1006;
 case 1006:
-#line 31674 "shortcodes.c"
+#line 32058 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr459;
 		case 39: goto tr460;
@@ -31735,7 +32119,7 @@ st1009:
 	if ( ++p == pe )
 		goto _test_eof1009;
 case 1009:
-#line 31739 "shortcodes.c"
+#line 32123 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1898;
 		case 34: goto st119;
@@ -31778,7 +32162,7 @@ st1010:
 	if ( ++p == pe )
 		goto _test_eof1010;
 case 1010:
-#line 31782 "shortcodes.c"
+#line 32166 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1898;
 		case 34: goto st119;
@@ -31821,7 +32205,7 @@ st1011:
 	if ( ++p == pe )
 		goto _test_eof1011;
 case 1011:
-#line 31825 "shortcodes.c"
+#line 32209 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -31879,7 +32263,7 @@ st1014:
 	if ( ++p == pe )
 		goto _test_eof1014;
 case 1014:
-#line 31883 "shortcodes.c"
+#line 32267 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 37: goto st1015;
@@ -31919,7 +32303,7 @@ st1017:
 	if ( ++p == pe )
 		goto _test_eof1017;
 case 1017:
-#line 31923 "shortcodes.c"
+#line 32307 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1910;
 		case 34: goto st119;
@@ -31951,7 +32335,7 @@ st1018:
 	if ( ++p == pe )
 		goto _test_eof1018;
 case 1018:
-#line 31955 "shortcodes.c"
+#line 32339 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1910;
 		case 34: goto st119;
@@ -31985,7 +32369,7 @@ st1019:
 	if ( ++p == pe )
 		goto _test_eof1019;
 case 1019:
-#line 31989 "shortcodes.c"
+#line 32373 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr376;
 		case 39: goto tr395;
@@ -32010,7 +32394,7 @@ st1020:
 	if ( ++p == pe )
 		goto _test_eof1020;
 case 1020:
-#line 32014 "shortcodes.c"
+#line 32398 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1917;
 		case 34: goto st76;
@@ -32040,7 +32424,7 @@ st1021:
 	if ( ++p == pe )
 		goto _test_eof1021;
 case 1021:
-#line 32044 "shortcodes.c"
+#line 32428 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1917;
 		case 34: goto st76;
@@ -32072,7 +32456,7 @@ st1022:
 	if ( ++p == pe )
 		goto _test_eof1022;
 case 1022:
-#line 32076 "shortcodes.c"
+#line 32460 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr395;
 		case 39: goto tr374;
@@ -32097,7 +32481,7 @@ st1023:
 	if ( ++p == pe )
 		goto _test_eof1023;
 case 1023:
-#line 32101 "shortcodes.c"
+#line 32485 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1922;
 		case 34: goto st153;
@@ -32129,7 +32513,7 @@ st1024:
 	if ( ++p == pe )
 		goto _test_eof1024;
 case 1024:
-#line 32133 "shortcodes.c"
+#line 32517 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1922;
 		case 34: goto st153;
@@ -32163,7 +32547,7 @@ st1025:
 	if ( ++p == pe )
 		goto _test_eof1025;
 case 1025:
-#line 32167 "shortcodes.c"
+#line 32551 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr374;
 		case 39: goto tr376;
@@ -32199,7 +32583,7 @@ st1026:
 	if ( ++p == pe )
 		goto _test_eof1026;
 case 1026:
-#line 32203 "shortcodes.c"
+#line 32587 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr368;
 		case 34: goto st153;
@@ -32242,7 +32626,7 @@ st1027:
 	if ( ++p == pe )
 		goto _test_eof1027;
 case 1027:
-#line 32246 "shortcodes.c"
+#line 32630 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -32306,7 +32690,7 @@ st1031:
 	if ( ++p == pe )
 		goto _test_eof1031;
 case 1031:
-#line 32310 "shortcodes.c"
+#line 32694 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1934;
 		case 34: goto st153;
@@ -32376,7 +32760,7 @@ st1034:
 	if ( ++p == pe )
 		goto _test_eof1034;
 case 1034:
-#line 32380 "shortcodes.c"
+#line 32764 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1939;
 		case 34: goto st153;
@@ -32419,7 +32803,7 @@ st1035:
 	if ( ++p == pe )
 		goto _test_eof1035;
 case 1035:
-#line 32423 "shortcodes.c"
+#line 32807 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1939;
 		case 34: goto st153;
@@ -32462,7 +32846,7 @@ st1036:
 	if ( ++p == pe )
 		goto _test_eof1036;
 case 1036:
-#line 32466 "shortcodes.c"
+#line 32850 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -32491,7 +32875,7 @@ st1038:
 	if ( ++p == pe )
 		goto _test_eof1038;
 case 1038:
-#line 32495 "shortcodes.c"
+#line 32879 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1947;
 		case 37: goto tr1948;
@@ -32522,7 +32906,7 @@ st1039:
 	if ( ++p == pe )
 		goto _test_eof1039;
 case 1039:
-#line 32526 "shortcodes.c"
+#line 32910 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1947;
 		case 37: goto tr1948;
@@ -32555,7 +32939,7 @@ st1040:
 	if ( ++p == pe )
 		goto _test_eof1040;
 case 1040:
-#line 32559 "shortcodes.c"
+#line 32943 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr297;
 		case 39: goto tr299;
@@ -32591,7 +32975,7 @@ st1041:
 	if ( ++p == pe )
 		goto _test_eof1041;
 case 1041:
-#line 32595 "shortcodes.c"
+#line 32979 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr291;
 		case 37: goto tr1954;
@@ -32633,7 +33017,7 @@ st1042:
 	if ( ++p == pe )
 		goto _test_eof1042;
 case 1042:
-#line 32637 "shortcodes.c"
+#line 33021 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -32693,7 +33077,7 @@ st1046:
 	if ( ++p == pe )
 		goto _test_eof1046;
 case 1046:
-#line 32697 "shortcodes.c"
+#line 33081 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1959;
 		case 39: goto st126;
@@ -32760,7 +33144,7 @@ st1049:
 	if ( ++p == pe )
 		goto _test_eof1049;
 case 1049:
-#line 32764 "shortcodes.c"
+#line 33148 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1964;
 		case 37: goto tr1965;
@@ -32802,7 +33186,7 @@ st1050:
 	if ( ++p == pe )
 		goto _test_eof1050;
 case 1050:
-#line 32806 "shortcodes.c"
+#line 33190 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1964;
 		case 37: goto tr1965;
@@ -32844,7 +33228,7 @@ st1051:
 	if ( ++p == pe )
 		goto _test_eof1051;
 case 1051:
-#line 32848 "shortcodes.c"
+#line 33232 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -32906,7 +33290,7 @@ st1053:
 	if ( ++p == pe )
 		goto _test_eof1053;
 case 1053:
-#line 32910 "shortcodes.c"
+#line 33294 "shortcodes.c"
 	switch( (*p) ) {
 		case 47: goto st1054;
 		case 123: goto tr31;
@@ -32950,7 +33334,7 @@ st1057:
 	if ( ++p == pe )
 		goto _test_eof1057;
 case 1057:
-#line 32954 "shortcodes.c"
+#line 33338 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1976;
 		case 42: goto tr1977;
@@ -32978,7 +33362,7 @@ st1058:
 	if ( ++p == pe )
 		goto _test_eof1058;
 case 1058:
-#line 32982 "shortcodes.c"
+#line 33366 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1976;
 		case 42: goto tr1977;
@@ -33008,7 +33392,7 @@ st1059:
 	if ( ++p == pe )
 		goto _test_eof1059;
 case 1059:
-#line 33012 "shortcodes.c"
+#line 33396 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr251;
 		case 39: goto tr252;
@@ -33033,7 +33417,7 @@ st1060:
 	if ( ++p == pe )
 		goto _test_eof1060;
 case 1060:
-#line 33037 "shortcodes.c"
+#line 33421 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1981;
 		case 39: goto st36;
@@ -33062,7 +33446,7 @@ st1061:
 	if ( ++p == pe )
 		goto _test_eof1061;
 case 1061:
-#line 33066 "shortcodes.c"
+#line 33450 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1981;
 		case 39: goto st36;
@@ -33093,7 +33477,7 @@ st1062:
 	if ( ++p == pe )
 		goto _test_eof1062;
 case 1062:
-#line 33097 "shortcodes.c"
+#line 33481 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr226;
 		case 39: goto tr227;
@@ -33156,7 +33540,7 @@ st1065:
 	if ( ++p == pe )
 		goto _test_eof1065;
 case 1065:
-#line 33160 "shortcodes.c"
+#line 33544 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1988;
 		case 37: goto tr1989;
@@ -33198,7 +33582,7 @@ st1066:
 	if ( ++p == pe )
 		goto _test_eof1066;
 case 1066:
-#line 33202 "shortcodes.c"
+#line 33586 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1988;
 		case 37: goto tr1989;
@@ -33240,7 +33624,7 @@ st1067:
 	if ( ++p == pe )
 		goto _test_eof1067;
 case 1067:
-#line 33244 "shortcodes.c"
+#line 33628 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -33267,7 +33651,7 @@ st1069:
 	if ( ++p == pe )
 		goto _test_eof1069;
 case 1069:
-#line 33271 "shortcodes.c"
+#line 33655 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1996;
 		case 34: goto st36;
@@ -33298,7 +33682,7 @@ st1070:
 	if ( ++p == pe )
 		goto _test_eof1070;
 case 1070:
-#line 33302 "shortcodes.c"
+#line 33686 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1996;
 		case 34: goto st36;
@@ -33331,7 +33715,7 @@ st1071:
 	if ( ++p == pe )
 		goto _test_eof1071;
 case 1071:
-#line 33335 "shortcodes.c"
+#line 33719 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr130;
 		case 39: goto tr132;
@@ -33367,7 +33751,7 @@ st1072:
 	if ( ++p == pe )
 		goto _test_eof1072;
 case 1072:
-#line 33371 "shortcodes.c"
+#line 33755 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr124;
 		case 34: goto st36;
@@ -33409,7 +33793,7 @@ st1073:
 	if ( ++p == pe )
 		goto _test_eof1073;
 case 1073:
-#line 33413 "shortcodes.c"
+#line 33797 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -33469,7 +33853,7 @@ st1077:
 	if ( ++p == pe )
 		goto _test_eof1077;
 case 1077:
-#line 33473 "shortcodes.c"
+#line 33857 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2008;
 		case 34: goto st36;
@@ -33536,7 +33920,7 @@ st1080:
 	if ( ++p == pe )
 		goto _test_eof1080;
 case 1080:
-#line 33540 "shortcodes.c"
+#line 33924 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2013;
 		case 34: goto st36;
@@ -33578,7 +33962,7 @@ st1081:
 	if ( ++p == pe )
 		goto _test_eof1081;
 case 1081:
-#line 33582 "shortcodes.c"
+#line 33966 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2013;
 		case 34: goto st36;
@@ -33620,7 +34004,7 @@ st1082:
 	if ( ++p == pe )
 		goto _test_eof1082;
 case 1082:
-#line 33624 "shortcodes.c"
+#line 34008 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -33647,7 +34031,7 @@ st1084:
 	if ( ++p == pe )
 		goto _test_eof1084;
 case 1084:
-#line 33651 "shortcodes.c"
+#line 34035 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2021;
 		case 37: goto tr2022;
@@ -33677,7 +34061,7 @@ st1085:
 	if ( ++p == pe )
 		goto _test_eof1085;
 case 1085:
-#line 33681 "shortcodes.c"
+#line 34065 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2021;
 		case 37: goto tr2022;
@@ -33709,7 +34093,7 @@ st1086:
 	if ( ++p == pe )
 		goto _test_eof1086;
 case 1086:
-#line 33713 "shortcodes.c"
+#line 34097 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr71;
 		case 39: goto tr73;
@@ -33745,7 +34129,7 @@ st1087:
 	if ( ++p == pe )
 		goto _test_eof1087;
 case 1087:
-#line 33749 "shortcodes.c"
+#line 34133 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr65;
 		case 37: goto tr2028;
@@ -33786,7 +34170,7 @@ st1088:
 	if ( ++p == pe )
 		goto _test_eof1088;
 case 1088:
-#line 33790 "shortcodes.c"
+#line 34174 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st1089;
@@ -33842,7 +34226,7 @@ st1092:
 	if ( ++p == pe )
 		goto _test_eof1092;
 case 1092:
-#line 33846 "shortcodes.c"
+#line 34230 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2033;
 		case 42: goto tr2034;
@@ -33906,7 +34290,7 @@ st1095:
 	if ( ++p == pe )
 		goto _test_eof1095;
 case 1095:
-#line 33910 "shortcodes.c"
+#line 34294 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2038;
 		case 37: goto tr2039;
@@ -33947,7 +34331,7 @@ st1096:
 	if ( ++p == pe )
 		goto _test_eof1096;
 case 1096:
-#line 33951 "shortcodes.c"
+#line 34335 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2038;
 		case 37: goto tr2039;
@@ -33988,7 +34372,7 @@ st1097:
 	if ( ++p == pe )
 		goto _test_eof1097;
 case 1097:
-#line 33992 "shortcodes.c"
+#line 34376 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st1098;
@@ -34031,7 +34415,7 @@ st1099:
 	if ( ++p == pe )
 		goto _test_eof1099;
 case 1099:
-#line 34035 "shortcodes.c"
+#line 34419 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1100;
 		case 123: goto tr1;
@@ -34100,7 +34484,7 @@ st1102:
 	if ( ++p == pe )
 		goto _test_eof1102;
 case 1102:
-#line 34104 "shortcodes.c"
+#line 34488 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1103;
@@ -34125,7 +34509,7 @@ st1104:
 	if ( ++p == pe )
 		goto _test_eof1104;
 case 1104:
-#line 34129 "shortcodes.c"
+#line 34513 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr2050;
@@ -34141,7 +34525,7 @@ st1105:
 	if ( ++p == pe )
 		goto _test_eof1105;
 case 1105:
-#line 34145 "shortcodes.c"
+#line 34529 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 37: goto st1106;
@@ -34196,7 +34580,7 @@ st1108:
 	if ( ++p == pe )
 		goto _test_eof1108;
 case 1108:
-#line 34200 "shortcodes.c"
+#line 34584 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2056;
 		case 34: goto st8;
@@ -34262,7 +34646,7 @@ st1109:
 	if ( ++p == pe )
 		goto _test_eof1109;
 case 1109:
-#line 34266 "shortcodes.c"
+#line 34650 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1109;
 		case 34: goto tr2062;
@@ -34294,7 +34678,7 @@ st1110:
 	if ( ++p == pe )
 		goto _test_eof1110;
 case 1110:
-#line 34298 "shortcodes.c"
+#line 34682 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2069;
 		case 34: goto st8;
@@ -34351,7 +34735,7 @@ st1111:
 	if ( ++p == pe )
 		goto _test_eof1111;
 case 1111:
-#line 34355 "shortcodes.c"
+#line 34739 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -34396,7 +34780,7 @@ st1113:
 	if ( ++p == pe )
 		goto _test_eof1113;
 case 1113:
-#line 34400 "shortcodes.c"
+#line 34784 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 37: goto st1114;
@@ -34468,7 +34852,7 @@ st1116:
 	if ( ++p == pe )
 		goto _test_eof1116;
 case 1116:
-#line 34472 "shortcodes.c"
+#line 34856 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -34515,7 +34899,7 @@ st1921:
 	if ( ++p == pe )
 		goto _test_eof1921;
 case 1921:
-#line 34519 "shortcodes.c"
+#line 34903 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -34531,7 +34915,7 @@ st1118:
 	if ( ++p == pe )
 		goto _test_eof1118;
 case 1118:
-#line 34535 "shortcodes.c"
+#line 34919 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -34548,7 +34932,7 @@ st1119:
 	if ( ++p == pe )
 		goto _test_eof1119;
 case 1119:
-#line 34552 "shortcodes.c"
+#line 34936 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2083;
 		case 37: goto tr2084;
@@ -34570,7 +34954,7 @@ st1120:
 	if ( ++p == pe )
 		goto _test_eof1120;
 case 1120:
-#line 34574 "shortcodes.c"
+#line 34958 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -34586,7 +34970,7 @@ st1121:
 	if ( ++p == pe )
 		goto _test_eof1121;
 case 1121:
-#line 34590 "shortcodes.c"
+#line 34974 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2088;
@@ -34602,7 +34986,7 @@ st1122:
 	if ( ++p == pe )
 		goto _test_eof1122;
 case 1122:
-#line 34606 "shortcodes.c"
+#line 34990 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1123;
 		case 39: goto st8;
@@ -34657,7 +35041,7 @@ st1125:
 	if ( ++p == pe )
 		goto _test_eof1125;
 case 1125:
-#line 34661 "shortcodes.c"
+#line 35045 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2094;
 		case 37: goto tr2095;
@@ -34723,7 +35107,7 @@ st1126:
 	if ( ++p == pe )
 		goto _test_eof1126;
 case 1126:
-#line 34727 "shortcodes.c"
+#line 35111 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1126;
 		case 34: goto tr2064;
@@ -34790,7 +35174,7 @@ st1127:
 	if ( ++p == pe )
 		goto _test_eof1127;
 case 1127:
-#line 34794 "shortcodes.c"
+#line 35178 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -34835,7 +35219,7 @@ st1129:
 	if ( ++p == pe )
 		goto _test_eof1129;
 case 1129:
-#line 34839 "shortcodes.c"
+#line 35223 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1130;
 		case 39: goto st8;
@@ -34872,7 +35256,7 @@ st1132:
 	if ( ++p == pe )
 		goto _test_eof1132;
 case 1132:
-#line 34876 "shortcodes.c"
+#line 35260 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2109;
 		case 37: goto tr2110;
@@ -34938,7 +35322,7 @@ st1133:
 	if ( ++p == pe )
 		goto _test_eof1133;
 case 1133:
-#line 34942 "shortcodes.c"
+#line 35326 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -34985,7 +35369,7 @@ st1922:
 	if ( ++p == pe )
 		goto _test_eof1922;
 case 1922:
-#line 34989 "shortcodes.c"
+#line 35373 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -35001,7 +35385,7 @@ st1135:
 	if ( ++p == pe )
 		goto _test_eof1135;
 case 1135:
-#line 35005 "shortcodes.c"
+#line 35389 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2109;
 		case 37: goto tr2110;
@@ -35034,7 +35418,7 @@ st1136:
 	if ( ++p == pe )
 		goto _test_eof1136;
 case 1136:
-#line 35038 "shortcodes.c"
+#line 35422 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2064;
 		case 39: goto tr2101;
@@ -35070,7 +35454,7 @@ st1137:
 	if ( ++p == pe )
 		goto _test_eof1137;
 case 1137:
-#line 35074 "shortcodes.c"
+#line 35458 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2094;
 		case 37: goto tr2118;
@@ -35112,7 +35496,7 @@ st1138:
 	if ( ++p == pe )
 		goto _test_eof1138;
 case 1138:
-#line 35116 "shortcodes.c"
+#line 35500 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -35167,7 +35551,7 @@ st1142:
 	if ( ++p == pe )
 		goto _test_eof1142;
 case 1142:
-#line 35171 "shortcodes.c"
+#line 35555 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2122;
 		case 39: goto st8;
@@ -35231,7 +35615,7 @@ st1143:
 	if ( ++p == pe )
 		goto _test_eof1143;
 case 1143:
-#line 35235 "shortcodes.c"
+#line 35619 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1143;
 		case 34: goto tr2126;
@@ -35261,7 +35645,7 @@ st1144:
 	if ( ++p == pe )
 		goto _test_eof1144;
 case 1144:
-#line 35265 "shortcodes.c"
+#line 35649 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -35278,7 +35662,7 @@ st1145:
 	if ( ++p == pe )
 		goto _test_eof1145;
 case 1145:
-#line 35282 "shortcodes.c"
+#line 35666 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2135;
 		case 39: goto st8;
@@ -35333,7 +35717,7 @@ st1146:
 	if ( ++p == pe )
 		goto _test_eof1146;
 case 1146:
-#line 35337 "shortcodes.c"
+#line 35721 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 47: goto st1147;
@@ -35381,7 +35765,7 @@ st1150:
 	if ( ++p == pe )
 		goto _test_eof1150;
 case 1150:
-#line 35385 "shortcodes.c"
+#line 35769 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2141;
 		case 34: goto st1152;
@@ -35403,7 +35787,7 @@ st1151:
 	if ( ++p == pe )
 		goto _test_eof1151;
 case 1151:
-#line 35407 "shortcodes.c"
+#line 35791 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -35466,7 +35850,7 @@ st1153:
 	if ( ++p == pe )
 		goto _test_eof1153;
 case 1153:
-#line 35470 "shortcodes.c"
+#line 35854 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1153;
 		case 34: goto tr2150;
@@ -35496,7 +35880,7 @@ st1154:
 	if ( ++p == pe )
 		goto _test_eof1154;
 case 1154:
-#line 35500 "shortcodes.c"
+#line 35884 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -35512,7 +35896,7 @@ st1155:
 	if ( ++p == pe )
 		goto _test_eof1155;
 case 1155:
-#line 35516 "shortcodes.c"
+#line 35900 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2157;
@@ -35528,7 +35912,7 @@ st1156:
 	if ( ++p == pe )
 		goto _test_eof1156;
 case 1156:
-#line 35532 "shortcodes.c"
+#line 35916 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1157;
 		case 39: goto st1152;
@@ -35583,7 +35967,7 @@ st1159:
 	if ( ++p == pe )
 		goto _test_eof1159;
 case 1159:
-#line 35587 "shortcodes.c"
+#line 35971 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2163;
 		case 37: goto tr2164;
@@ -35649,7 +36033,7 @@ st1160:
 	if ( ++p == pe )
 		goto _test_eof1160;
 case 1160:
-#line 35653 "shortcodes.c"
+#line 36037 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1160;
 		case 34: goto tr2169;
@@ -35681,7 +36065,7 @@ st1161:
 	if ( ++p == pe )
 		goto _test_eof1161;
 case 1161:
-#line 35685 "shortcodes.c"
+#line 36069 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -35698,7 +36082,7 @@ st1162:
 	if ( ++p == pe )
 		goto _test_eof1162;
 case 1162:
-#line 35702 "shortcodes.c"
+#line 36086 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2180;
 		case 37: goto tr2181;
@@ -35755,7 +36139,7 @@ st1163:
 	if ( ++p == pe )
 		goto _test_eof1163;
 case 1163:
-#line 35759 "shortcodes.c"
+#line 36143 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -35800,7 +36184,7 @@ st1165:
 	if ( ++p == pe )
 		goto _test_eof1165;
 case 1165:
-#line 35804 "shortcodes.c"
+#line 36188 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1166;
 		case 39: goto st1152;
@@ -35872,7 +36256,7 @@ st1168:
 	if ( ++p == pe )
 		goto _test_eof1168;
 case 1168:
-#line 35876 "shortcodes.c"
+#line 36260 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -35919,7 +36303,7 @@ st1923:
 	if ( ++p == pe )
 		goto _test_eof1923;
 case 1923:
-#line 35923 "shortcodes.c"
+#line 36307 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -35935,7 +36319,7 @@ st1170:
 	if ( ++p == pe )
 		goto _test_eof1170;
 case 1170:
-#line 35939 "shortcodes.c"
+#line 36323 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2189;
 		case 34: goto st8;
@@ -35990,7 +36374,7 @@ st1171:
 	if ( ++p == pe )
 		goto _test_eof1171;
 case 1171:
-#line 35994 "shortcodes.c"
+#line 36378 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1171;
 		case 34: goto tr2192;
@@ -36055,7 +36439,7 @@ st1172:
 	if ( ++p == pe )
 		goto _test_eof1172;
 case 1172:
-#line 36059 "shortcodes.c"
+#line 36443 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 47: goto st1173;
@@ -36103,7 +36487,7 @@ st1176:
 	if ( ++p == pe )
 		goto _test_eof1176;
 case 1176:
-#line 36107 "shortcodes.c"
+#line 36491 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2199;
 		case 34: goto st8;
@@ -36132,7 +36516,7 @@ st1177:
 	if ( ++p == pe )
 		goto _test_eof1177;
 case 1177:
-#line 36136 "shortcodes.c"
+#line 36520 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2199;
 		case 34: goto st8;
@@ -36163,7 +36547,7 @@ st1178:
 	if ( ++p == pe )
 		goto _test_eof1178;
 case 1178:
-#line 36167 "shortcodes.c"
+#line 36551 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2192;
 		case 39: goto tr2169;
@@ -36188,7 +36572,7 @@ st1179:
 	if ( ++p == pe )
 		goto _test_eof1179;
 case 1179:
-#line 36192 "shortcodes.c"
+#line 36576 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -36205,7 +36589,7 @@ st1180:
 	if ( ++p == pe )
 		goto _test_eof1180;
 case 1180:
-#line 36209 "shortcodes.c"
+#line 36593 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 37: goto st1181;
@@ -36263,7 +36647,7 @@ st1183:
 	if ( ++p == pe )
 		goto _test_eof1183;
 case 1183:
-#line 36267 "shortcodes.c"
+#line 36651 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2210;
 		case 34: goto st1162;
@@ -36330,7 +36714,7 @@ st1184:
 	if ( ++p == pe )
 		goto _test_eof1184;
 case 1184:
-#line 36334 "shortcodes.c"
+#line 36718 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1184;
 		case 34: goto tr2216;
@@ -36362,7 +36746,7 @@ st1185:
 	if ( ++p == pe )
 		goto _test_eof1185;
 case 1185:
-#line 36366 "shortcodes.c"
+#line 36750 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2223;
 		case 34: goto st1162;
@@ -36420,7 +36804,7 @@ st1186:
 	if ( ++p == pe )
 		goto _test_eof1186;
 case 1186:
-#line 36424 "shortcodes.c"
+#line 36808 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -36467,7 +36851,7 @@ st1188:
 	if ( ++p == pe )
 		goto _test_eof1188;
 case 1188:
-#line 36471 "shortcodes.c"
+#line 36855 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 37: goto st1189;
@@ -36542,7 +36926,7 @@ st1191:
 	if ( ++p == pe )
 		goto _test_eof1191;
 case 1191:
-#line 36546 "shortcodes.c"
+#line 36930 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -36591,7 +36975,7 @@ st1924:
 	if ( ++p == pe )
 		goto _test_eof1924;
 case 1924:
-#line 36595 "shortcodes.c"
+#line 36979 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -36608,7 +36992,7 @@ st1193:
 	if ( ++p == pe )
 		goto _test_eof1193;
 case 1193:
-#line 36612 "shortcodes.c"
+#line 36996 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2232;
 		case 34: goto st1119;
@@ -36664,7 +37048,7 @@ st1194:
 	if ( ++p == pe )
 		goto _test_eof1194;
 case 1194:
-#line 36668 "shortcodes.c"
+#line 37052 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1194;
 		case 34: goto tr2235;
@@ -36694,7 +37078,7 @@ st1195:
 	if ( ++p == pe )
 		goto _test_eof1195;
 case 1195:
-#line 36698 "shortcodes.c"
+#line 37082 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2239;
 		case 34: goto st1145;
@@ -36752,7 +37136,7 @@ st1196:
 	if ( ++p == pe )
 		goto _test_eof1196;
 case 1196:
-#line 36756 "shortcodes.c"
+#line 37140 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1196;
 		case 34: goto tr2218;
@@ -36819,7 +37203,7 @@ st1197:
 	if ( ++p == pe )
 		goto _test_eof1197;
 case 1197:
-#line 36823 "shortcodes.c"
+#line 37207 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -36837,7 +37221,7 @@ st1198:
 	if ( ++p == pe )
 		goto _test_eof1198;
 case 1198:
-#line 36841 "shortcodes.c"
+#line 37225 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -36854,7 +37238,7 @@ st1199:
 	if ( ++p == pe )
 		goto _test_eof1199;
 case 1199:
-#line 36858 "shortcodes.c"
+#line 37242 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 37: goto st1200;
@@ -36912,7 +37296,7 @@ st1202:
 	if ( ++p == pe )
 		goto _test_eof1202;
 case 1202:
-#line 36916 "shortcodes.c"
+#line 37300 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2256;
 		case 34: goto st1145;
@@ -36955,7 +37339,7 @@ st1203:
 	if ( ++p == pe )
 		goto _test_eof1203;
 case 1203:
-#line 36959 "shortcodes.c"
+#line 37343 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2256;
 		case 34: goto st1145;
@@ -36998,7 +37382,7 @@ st1204:
 	if ( ++p == pe )
 		goto _test_eof1204;
 case 1204:
-#line 37002 "shortcodes.c"
+#line 37386 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37062,7 +37446,7 @@ st1206:
 	if ( ++p == pe )
 		goto _test_eof1206;
 case 1206:
-#line 37066 "shortcodes.c"
+#line 37450 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37111,7 +37495,7 @@ st1925:
 	if ( ++p == pe )
 		goto _test_eof1925;
 case 1925:
-#line 37115 "shortcodes.c"
+#line 37499 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37158,7 +37542,7 @@ st1210:
 	if ( ++p == pe )
 		goto _test_eof1210;
 case 1210:
-#line 37162 "shortcodes.c"
+#line 37546 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2267;
 		case 34: goto st1145;
@@ -37223,7 +37607,7 @@ st1211:
 	if ( ++p == pe )
 		goto _test_eof1211;
 case 1211:
-#line 37227 "shortcodes.c"
+#line 37611 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1211;
 		case 34: goto tr2271;
@@ -37253,7 +37637,7 @@ st1212:
 	if ( ++p == pe )
 		goto _test_eof1212;
 case 1212:
-#line 37257 "shortcodes.c"
+#line 37641 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2276;
 		case 34: goto st1145;
@@ -37309,7 +37693,7 @@ st1213:
 	if ( ++p == pe )
 		goto _test_eof1213;
 case 1213:
-#line 37313 "shortcodes.c"
+#line 37697 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37361,7 +37745,7 @@ st1217:
 	if ( ++p == pe )
 		goto _test_eof1217;
 case 1217:
-#line 37365 "shortcodes.c"
+#line 37749 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2282;
 		case 34: goto st1219;
@@ -37384,7 +37768,7 @@ st1218:
 	if ( ++p == pe )
 		goto _test_eof1218;
 case 1218:
-#line 37388 "shortcodes.c"
+#line 37772 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -37401,7 +37785,7 @@ st1219:
 	if ( ++p == pe )
 		goto _test_eof1219;
 case 1219:
-#line 37405 "shortcodes.c"
+#line 37789 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2289;
 		case 39: goto st1152;
@@ -37456,7 +37840,7 @@ st1220:
 	if ( ++p == pe )
 		goto _test_eof1220;
 case 1220:
-#line 37460 "shortcodes.c"
+#line 37844 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1220;
 		case 34: goto tr2292;
@@ -37521,7 +37905,7 @@ st1221:
 	if ( ++p == pe )
 		goto _test_eof1221;
 case 1221:
-#line 37525 "shortcodes.c"
+#line 37909 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 47: goto st1222;
@@ -37569,7 +37953,7 @@ st1225:
 	if ( ++p == pe )
 		goto _test_eof1225;
 case 1225:
-#line 37573 "shortcodes.c"
+#line 37957 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2300;
 		case 39: goto st1152;
@@ -37598,7 +37982,7 @@ st1226:
 	if ( ++p == pe )
 		goto _test_eof1226;
 case 1226:
-#line 37602 "shortcodes.c"
+#line 37986 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2300;
 		case 39: goto st1152;
@@ -37629,7 +38013,7 @@ st1227:
 	if ( ++p == pe )
 		goto _test_eof1227;
 case 1227:
-#line 37633 "shortcodes.c"
+#line 38017 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2292;
 		case 39: goto tr2293;
@@ -37654,7 +38038,7 @@ st1228:
 	if ( ++p == pe )
 		goto _test_eof1228;
 case 1228:
-#line 37658 "shortcodes.c"
+#line 38042 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2305;
 		case 34: goto st1152;
@@ -37709,7 +38093,7 @@ st1229:
 	if ( ++p == pe )
 		goto _test_eof1229;
 case 1229:
-#line 37713 "shortcodes.c"
+#line 38097 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1229;
 		case 34: goto tr2308;
@@ -37774,7 +38158,7 @@ st1230:
 	if ( ++p == pe )
 		goto _test_eof1230;
 case 1230:
-#line 37778 "shortcodes.c"
+#line 38162 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 47: goto st1231;
@@ -37812,7 +38196,7 @@ st1233:
 	if ( ++p == pe )
 		goto _test_eof1233;
 case 1233:
-#line 37816 "shortcodes.c"
+#line 38200 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2315;
@@ -37828,7 +38212,7 @@ st1234:
 	if ( ++p == pe )
 		goto _test_eof1234;
 case 1234:
-#line 37832 "shortcodes.c"
+#line 38216 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 37: goto st1235;
@@ -37883,7 +38267,7 @@ st1237:
 	if ( ++p == pe )
 		goto _test_eof1237;
 case 1237:
-#line 37887 "shortcodes.c"
+#line 38271 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2321;
 		case 34: goto st1152;
@@ -37949,7 +38333,7 @@ st1238:
 	if ( ++p == pe )
 		goto _test_eof1238;
 case 1238:
-#line 37953 "shortcodes.c"
+#line 38337 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1238;
 		case 34: goto tr2327;
@@ -38016,7 +38400,7 @@ st1239:
 	if ( ++p == pe )
 		goto _test_eof1239;
 case 1239:
-#line 38020 "shortcodes.c"
+#line 38404 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -38061,7 +38445,7 @@ st1241:
 	if ( ++p == pe )
 		goto _test_eof1241;
 case 1241:
-#line 38065 "shortcodes.c"
+#line 38449 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 37: goto st1242;
@@ -38098,7 +38482,7 @@ st1244:
 	if ( ++p == pe )
 		goto _test_eof1244;
 case 1244:
-#line 38102 "shortcodes.c"
+#line 38486 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2336;
 		case 34: goto st1152;
@@ -38164,7 +38548,7 @@ st1245:
 	if ( ++p == pe )
 		goto _test_eof1245;
 case 1245:
-#line 38168 "shortcodes.c"
+#line 38552 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -38211,7 +38595,7 @@ st1926:
 	if ( ++p == pe )
 		goto _test_eof1926;
 case 1926:
-#line 38215 "shortcodes.c"
+#line 38599 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -38227,7 +38611,7 @@ st1247:
 	if ( ++p == pe )
 		goto _test_eof1247;
 case 1247:
-#line 38231 "shortcodes.c"
+#line 38615 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2336;
 		case 34: goto st1152;
@@ -38260,7 +38644,7 @@ st1248:
 	if ( ++p == pe )
 		goto _test_eof1248;
 case 1248:
-#line 38264 "shortcodes.c"
+#line 38648 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2327;
 		case 39: goto tr2126;
@@ -38296,7 +38680,7 @@ st1249:
 	if ( ++p == pe )
 		goto _test_eof1249;
 case 1249:
-#line 38300 "shortcodes.c"
+#line 38684 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2321;
 		case 34: goto st1152;
@@ -38338,7 +38722,7 @@ st1250:
 	if ( ++p == pe )
 		goto _test_eof1250;
 case 1250:
-#line 38342 "shortcodes.c"
+#line 38726 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -38393,7 +38777,7 @@ st1254:
 	if ( ++p == pe )
 		goto _test_eof1254;
 case 1254:
-#line 38397 "shortcodes.c"
+#line 38781 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2349;
 		case 34: goto st1152;
@@ -38459,7 +38843,7 @@ st1257:
 	if ( ++p == pe )
 		goto _test_eof1257;
 case 1257:
-#line 38463 "shortcodes.c"
+#line 38847 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2354;
 		case 34: goto st1152;
@@ -38525,7 +38909,7 @@ st1258:
 	if ( ++p == pe )
 		goto _test_eof1258;
 case 1258:
-#line 38529 "shortcodes.c"
+#line 38913 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1258;
 		case 34: goto tr2360;
@@ -38557,7 +38941,7 @@ st1259:
 	if ( ++p == pe )
 		goto _test_eof1259;
 case 1259:
-#line 38561 "shortcodes.c"
+#line 38945 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2368;
 		case 34: goto st1261;
@@ -38577,7 +38961,7 @@ st1260:
 	if ( ++p == pe )
 		goto _test_eof1260;
 case 1260:
-#line 38581 "shortcodes.c"
+#line 38965 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -38642,7 +39026,7 @@ st1262:
 	if ( ++p == pe )
 		goto _test_eof1262;
 case 1262:
-#line 38646 "shortcodes.c"
+#line 39030 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1262;
 		case 34: goto tr2377;
@@ -38709,7 +39093,7 @@ st1263:
 	if ( ++p == pe )
 		goto _test_eof1263;
 case 1263:
-#line 38713 "shortcodes.c"
+#line 39097 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1264;
@@ -38734,7 +39118,7 @@ st1265:
 	if ( ++p == pe )
 		goto _test_eof1265;
 case 1265:
-#line 38738 "shortcodes.c"
+#line 39122 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -38750,7 +39134,7 @@ st1266:
 	if ( ++p == pe )
 		goto _test_eof1266;
 case 1266:
-#line 38754 "shortcodes.c"
+#line 39138 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2388;
@@ -38766,7 +39150,7 @@ st1267:
 	if ( ++p == pe )
 		goto _test_eof1267;
 case 1267:
-#line 38770 "shortcodes.c"
+#line 39154 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1268;
 		case 39: goto st1261;
@@ -38821,7 +39205,7 @@ st1270:
 	if ( ++p == pe )
 		goto _test_eof1270;
 case 1270:
-#line 38825 "shortcodes.c"
+#line 39209 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2394;
 		case 37: goto tr2395;
@@ -38887,7 +39271,7 @@ st1271:
 	if ( ++p == pe )
 		goto _test_eof1271;
 case 1271:
-#line 38891 "shortcodes.c"
+#line 39275 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1271;
 		case 34: goto tr2400;
@@ -38919,7 +39303,7 @@ st1272:
 	if ( ++p == pe )
 		goto _test_eof1272;
 case 1272:
-#line 38923 "shortcodes.c"
+#line 39307 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -38936,7 +39320,7 @@ st1273:
 	if ( ++p == pe )
 		goto _test_eof1273;
 case 1273:
-#line 38940 "shortcodes.c"
+#line 39324 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2411;
 		case 37: goto tr2412;
@@ -38993,7 +39377,7 @@ st1274:
 	if ( ++p == pe )
 		goto _test_eof1274;
 case 1274:
-#line 38997 "shortcodes.c"
+#line 39381 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -39038,7 +39422,7 @@ st1276:
 	if ( ++p == pe )
 		goto _test_eof1276;
 case 1276:
-#line 39042 "shortcodes.c"
+#line 39426 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1277;
 		case 39: goto st1261;
@@ -39110,7 +39494,7 @@ st1279:
 	if ( ++p == pe )
 		goto _test_eof1279;
 case 1279:
-#line 39114 "shortcodes.c"
+#line 39498 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -39157,7 +39541,7 @@ st1927:
 	if ( ++p == pe )
 		goto _test_eof1927;
 case 1927:
-#line 39161 "shortcodes.c"
+#line 39545 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -39173,7 +39557,7 @@ st1281:
 	if ( ++p == pe )
 		goto _test_eof1281;
 case 1281:
-#line 39177 "shortcodes.c"
+#line 39561 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2420;
 		case 34: goto st8;
@@ -39230,7 +39614,7 @@ st1282:
 	if ( ++p == pe )
 		goto _test_eof1282;
 case 1282:
-#line 39234 "shortcodes.c"
+#line 39618 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1282;
 		case 34: goto tr2425;
@@ -39262,7 +39646,7 @@ st1283:
 	if ( ++p == pe )
 		goto _test_eof1283;
 case 1283:
-#line 39266 "shortcodes.c"
+#line 39650 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2431;
 		case 34: goto st1261;
@@ -39319,7 +39703,7 @@ st1284:
 	if ( ++p == pe )
 		goto _test_eof1284;
 case 1284:
-#line 39323 "shortcodes.c"
+#line 39707 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1284;
 		case 34: goto tr2436;
@@ -39386,7 +39770,7 @@ st1285:
 	if ( ++p == pe )
 		goto _test_eof1285;
 case 1285:
-#line 39390 "shortcodes.c"
+#line 39774 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -39403,7 +39787,7 @@ st1286:
 	if ( ++p == pe )
 		goto _test_eof1286;
 case 1286:
-#line 39407 "shortcodes.c"
+#line 39791 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2444;
@@ -39419,7 +39803,7 @@ st1287:
 	if ( ++p == pe )
 		goto _test_eof1287;
 case 1287:
-#line 39423 "shortcodes.c"
+#line 39807 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 37: goto st1288;
@@ -39474,7 +39858,7 @@ st1290:
 	if ( ++p == pe )
 		goto _test_eof1290;
 case 1290:
-#line 39478 "shortcodes.c"
+#line 39862 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2450;
 		case 34: goto st1261;
@@ -39516,7 +39900,7 @@ st1291:
 	if ( ++p == pe )
 		goto _test_eof1291;
 case 1291:
-#line 39520 "shortcodes.c"
+#line 39904 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2450;
 		case 34: goto st1261;
@@ -39558,7 +39942,7 @@ st1292:
 	if ( ++p == pe )
 		goto _test_eof1292;
 case 1292:
-#line 39562 "shortcodes.c"
+#line 39946 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -39620,7 +40004,7 @@ st1294:
 	if ( ++p == pe )
 		goto _test_eof1294;
 case 1294:
-#line 39624 "shortcodes.c"
+#line 40008 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -39667,7 +40051,7 @@ st1928:
 	if ( ++p == pe )
 		goto _test_eof1928;
 case 1928:
-#line 39671 "shortcodes.c"
+#line 40055 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -39711,7 +40095,7 @@ st1298:
 	if ( ++p == pe )
 		goto _test_eof1298;
 case 1298:
-#line 39715 "shortcodes.c"
+#line 40099 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2461;
 		case 34: goto st1261;
@@ -39775,7 +40159,7 @@ st1299:
 	if ( ++p == pe )
 		goto _test_eof1299;
 case 1299:
-#line 39779 "shortcodes.c"
+#line 40163 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1299;
 		case 34: goto tr2465;
@@ -39805,7 +40189,7 @@ st1300:
 	if ( ++p == pe )
 		goto _test_eof1300;
 case 1300:
-#line 39809 "shortcodes.c"
+#line 40193 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2470;
 		case 34: goto st1152;
@@ -39862,7 +40246,7 @@ st1301:
 	if ( ++p == pe )
 		goto _test_eof1301;
 case 1301:
-#line 39866 "shortcodes.c"
+#line 40250 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -39907,7 +40291,7 @@ st1303:
 	if ( ++p == pe )
 		goto _test_eof1303;
 case 1303:
-#line 39911 "shortcodes.c"
+#line 40295 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 62: goto st1304;
@@ -39979,7 +40363,7 @@ st1306:
 	if ( ++p == pe )
 		goto _test_eof1306;
 case 1306:
-#line 39983 "shortcodes.c"
+#line 40367 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -40006,7 +40390,7 @@ st1308:
 	if ( ++p == pe )
 		goto _test_eof1308;
 case 1308:
-#line 40010 "shortcodes.c"
+#line 40394 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -40023,7 +40407,7 @@ st1309:
 	if ( ++p == pe )
 		goto _test_eof1309;
 case 1309:
-#line 40027 "shortcodes.c"
+#line 40411 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2483;
 		case 37: goto tr2484;
@@ -40080,7 +40464,7 @@ st1310:
 	if ( ++p == pe )
 		goto _test_eof1310;
 case 1310:
-#line 40084 "shortcodes.c"
+#line 40468 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1310;
 		case 34: goto tr2466;
@@ -40147,7 +40531,7 @@ st1311:
 	if ( ++p == pe )
 		goto _test_eof1311;
 case 1311:
-#line 40151 "shortcodes.c"
+#line 40535 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -40174,7 +40558,7 @@ st1313:
 	if ( ++p == pe )
 		goto _test_eof1313;
 case 1313:
-#line 40178 "shortcodes.c"
+#line 40562 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2496;
 		case 39: goto st1261;
@@ -40229,7 +40613,7 @@ st1314:
 	if ( ++p == pe )
 		goto _test_eof1314;
 case 1314:
-#line 40233 "shortcodes.c"
+#line 40617 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1314;
 		case 34: goto tr2362;
@@ -40259,7 +40643,7 @@ st1315:
 	if ( ++p == pe )
 		goto _test_eof1315;
 case 1315:
-#line 40263 "shortcodes.c"
+#line 40647 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -40276,7 +40660,7 @@ st1316:
 	if ( ++p == pe )
 		goto _test_eof1316;
 case 1316:
-#line 40280 "shortcodes.c"
+#line 40664 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -40293,7 +40677,7 @@ st1317:
 	if ( ++p == pe )
 		goto _test_eof1317;
 case 1317:
-#line 40297 "shortcodes.c"
+#line 40681 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 37: goto st1318;
@@ -40351,7 +40735,7 @@ st1320:
 	if ( ++p == pe )
 		goto _test_eof1320;
 case 1320:
-#line 40355 "shortcodes.c"
+#line 40739 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2513;
 		case 34: goto st1313;
@@ -40418,7 +40802,7 @@ st1321:
 	if ( ++p == pe )
 		goto _test_eof1321;
 case 1321:
-#line 40422 "shortcodes.c"
+#line 40806 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1321;
 		case 34: goto tr2519;
@@ -40450,7 +40834,7 @@ st1322:
 	if ( ++p == pe )
 		goto _test_eof1322;
 case 1322:
-#line 40454 "shortcodes.c"
+#line 40838 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2526;
 		case 34: goto st1273;
@@ -40506,7 +40890,7 @@ st1323:
 	if ( ++p == pe )
 		goto _test_eof1323;
 case 1323:
-#line 40510 "shortcodes.c"
+#line 40894 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1323;
 		case 34: goto tr2529;
@@ -40536,7 +40920,7 @@ st1324:
 	if ( ++p == pe )
 		goto _test_eof1324;
 case 1324:
-#line 40540 "shortcodes.c"
+#line 40924 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2534;
 		case 34: goto st1313;
@@ -40594,7 +40978,7 @@ st1325:
 	if ( ++p == pe )
 		goto _test_eof1325;
 case 1325:
-#line 40598 "shortcodes.c"
+#line 40982 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -40641,7 +41025,7 @@ st1327:
 	if ( ++p == pe )
 		goto _test_eof1327;
 case 1327:
-#line 40645 "shortcodes.c"
+#line 41029 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 37: goto st1328;
@@ -40716,7 +41100,7 @@ st1330:
 	if ( ++p == pe )
 		goto _test_eof1330;
 case 1330:
-#line 40720 "shortcodes.c"
+#line 41104 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -40765,7 +41149,7 @@ st1929:
 	if ( ++p == pe )
 		goto _test_eof1929;
 case 1929:
-#line 40769 "shortcodes.c"
+#line 41153 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -40782,7 +41166,7 @@ st1332:
 	if ( ++p == pe )
 		goto _test_eof1332;
 case 1332:
-#line 40786 "shortcodes.c"
+#line 41170 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2543;
 		case 34: goto st1162;
@@ -40840,7 +41224,7 @@ st1333:
 	if ( ++p == pe )
 		goto _test_eof1333;
 case 1333:
-#line 40844 "shortcodes.c"
+#line 41228 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1333;
 		case 34: goto tr2548;
@@ -40872,7 +41256,7 @@ st1334:
 	if ( ++p == pe )
 		goto _test_eof1334;
 case 1334:
-#line 40876 "shortcodes.c"
+#line 41260 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2554;
 		case 34: goto st1309;
@@ -40930,7 +41314,7 @@ st1335:
 	if ( ++p == pe )
 		goto _test_eof1335;
 case 1335:
-#line 40934 "shortcodes.c"
+#line 41318 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1335;
 		case 34: goto tr2530;
@@ -40997,7 +41381,7 @@ st1336:
 	if ( ++p == pe )
 		goto _test_eof1336;
 case 1336:
-#line 41001 "shortcodes.c"
+#line 41385 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41015,7 +41399,7 @@ st1337:
 	if ( ++p == pe )
 		goto _test_eof1337;
 case 1337:
-#line 41019 "shortcodes.c"
+#line 41403 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41032,7 +41416,7 @@ st1338:
 	if ( ++p == pe )
 		goto _test_eof1338;
 case 1338:
-#line 41036 "shortcodes.c"
+#line 41420 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 37: goto st1339;
@@ -41090,7 +41474,7 @@ st1341:
 	if ( ++p == pe )
 		goto _test_eof1341;
 case 1341:
-#line 41094 "shortcodes.c"
+#line 41478 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2572;
 		case 34: goto st1309;
@@ -41133,7 +41517,7 @@ st1342:
 	if ( ++p == pe )
 		goto _test_eof1342;
 case 1342:
-#line 41137 "shortcodes.c"
+#line 41521 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2572;
 		case 34: goto st1309;
@@ -41176,7 +41560,7 @@ st1343:
 	if ( ++p == pe )
 		goto _test_eof1343;
 case 1343:
-#line 41180 "shortcodes.c"
+#line 41564 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41240,7 +41624,7 @@ st1345:
 	if ( ++p == pe )
 		goto _test_eof1345;
 case 1345:
-#line 41244 "shortcodes.c"
+#line 41628 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41289,7 +41673,7 @@ st1930:
 	if ( ++p == pe )
 		goto _test_eof1930;
 case 1930:
-#line 41293 "shortcodes.c"
+#line 41677 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41336,7 +41720,7 @@ st1349:
 	if ( ++p == pe )
 		goto _test_eof1349;
 case 1349:
-#line 41340 "shortcodes.c"
+#line 41724 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2583;
 		case 34: goto st1309;
@@ -41401,7 +41785,7 @@ st1350:
 	if ( ++p == pe )
 		goto _test_eof1350;
 case 1350:
-#line 41405 "shortcodes.c"
+#line 41789 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1350;
 		case 34: goto tr2587;
@@ -41431,7 +41815,7 @@ st1351:
 	if ( ++p == pe )
 		goto _test_eof1351;
 case 1351:
-#line 41435 "shortcodes.c"
+#line 41819 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2592;
 		case 34: goto st1219;
@@ -41489,7 +41873,7 @@ st1352:
 	if ( ++p == pe )
 		goto _test_eof1352;
 case 1352:
-#line 41493 "shortcodes.c"
+#line 41877 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1352;
 		case 34: goto tr2588;
@@ -41521,7 +41905,7 @@ st1353:
 	if ( ++p == pe )
 		goto _test_eof1353;
 case 1353:
-#line 41525 "shortcodes.c"
+#line 41909 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2603;
 		case 34: goto st1309;
@@ -41577,7 +41961,7 @@ st1354:
 	if ( ++p == pe )
 		goto _test_eof1354;
 case 1354:
-#line 41581 "shortcodes.c"
+#line 41965 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41664,7 +42048,7 @@ st1358:
 	if ( ++p == pe )
 		goto _test_eof1358;
 case 1358:
-#line 41668 "shortcodes.c"
+#line 42052 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -41682,7 +42066,7 @@ st1359:
 	if ( ++p == pe )
 		goto _test_eof1359;
 case 1359:
-#line 41686 "shortcodes.c"
+#line 42070 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -41699,7 +42083,7 @@ st1360:
 	if ( ++p == pe )
 		goto _test_eof1360;
 case 1360:
-#line 41703 "shortcodes.c"
+#line 42087 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 37: goto st1361;
@@ -41757,7 +42141,7 @@ st1363:
 	if ( ++p == pe )
 		goto _test_eof1363;
 case 1363:
-#line 41761 "shortcodes.c"
+#line 42145 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2615;
 		case 34: goto st1219;
@@ -41824,7 +42208,7 @@ st1364:
 	if ( ++p == pe )
 		goto _test_eof1364;
 case 1364:
-#line 41828 "shortcodes.c"
+#line 42212 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1364;
 		case 34: goto tr2621;
@@ -41856,7 +42240,7 @@ st1365:
 	if ( ++p == pe )
 		goto _test_eof1365;
 case 1365:
-#line 41860 "shortcodes.c"
+#line 42244 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2627;
 		case 34: goto st1162;
@@ -41912,7 +42296,7 @@ st1366:
 	if ( ++p == pe )
 		goto _test_eof1366;
 case 1366:
-#line 41916 "shortcodes.c"
+#line 42300 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1366;
 		case 34: goto tr2272;
@@ -41977,7 +42361,7 @@ st1367:
 	if ( ++p == pe )
 		goto _test_eof1367;
 case 1367:
-#line 41981 "shortcodes.c"
+#line 42365 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -42029,7 +42413,7 @@ st1371:
 	if ( ++p == pe )
 		goto _test_eof1371;
 case 1371:
-#line 42033 "shortcodes.c"
+#line 42417 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2636;
 		case 34: goto st1162;
@@ -42059,7 +42443,7 @@ st1372:
 	if ( ++p == pe )
 		goto _test_eof1372;
 case 1372:
-#line 42063 "shortcodes.c"
+#line 42447 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2636;
 		case 34: goto st1162;
@@ -42091,7 +42475,7 @@ st1373:
 	if ( ++p == pe )
 		goto _test_eof1373;
 case 1373:
-#line 42095 "shortcodes.c"
+#line 42479 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2272;
 		case 39: goto tr2621;
@@ -42151,7 +42535,7 @@ st1374:
 	if ( ++p == pe )
 		goto _test_eof1374;
 case 1374:
-#line 42155 "shortcodes.c"
+#line 42539 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42198,7 +42582,7 @@ st1376:
 	if ( ++p == pe )
 		goto _test_eof1376;
 case 1376:
-#line 42202 "shortcodes.c"
+#line 42586 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 37: goto st1377;
@@ -42238,7 +42622,7 @@ st1379:
 	if ( ++p == pe )
 		goto _test_eof1379;
 case 1379:
-#line 42242 "shortcodes.c"
+#line 42626 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2644;
 		case 34: goto st1219;
@@ -42305,7 +42689,7 @@ st1380:
 	if ( ++p == pe )
 		goto _test_eof1380;
 case 1380:
-#line 42309 "shortcodes.c"
+#line 42693 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42354,7 +42738,7 @@ st1931:
 	if ( ++p == pe )
 		goto _test_eof1931;
 case 1931:
-#line 42358 "shortcodes.c"
+#line 42742 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42371,7 +42755,7 @@ st1382:
 	if ( ++p == pe )
 		goto _test_eof1382;
 case 1382:
-#line 42375 "shortcodes.c"
+#line 42759 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2644;
 		case 34: goto st1219;
@@ -42405,7 +42789,7 @@ st1383:
 	if ( ++p == pe )
 		goto _test_eof1383;
 case 1383:
-#line 42409 "shortcodes.c"
+#line 42793 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2621;
 		case 39: goto tr2271;
@@ -42441,7 +42825,7 @@ st1384:
 	if ( ++p == pe )
 		goto _test_eof1384;
 case 1384:
-#line 42445 "shortcodes.c"
+#line 42829 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2615;
 		case 34: goto st1219;
@@ -42484,7 +42868,7 @@ st1385:
 	if ( ++p == pe )
 		goto _test_eof1385;
 case 1385:
-#line 42488 "shortcodes.c"
+#line 42872 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42543,7 +42927,7 @@ st1389:
 	if ( ++p == pe )
 		goto _test_eof1389;
 case 1389:
-#line 42547 "shortcodes.c"
+#line 42931 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2657;
 		case 34: goto st1219;
@@ -42608,7 +42992,7 @@ st1390:
 	if ( ++p == pe )
 		goto _test_eof1390;
 case 1390:
-#line 42612 "shortcodes.c"
+#line 42996 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1390;
 		case 34: goto tr2661;
@@ -42638,7 +43022,7 @@ st1391:
 	if ( ++p == pe )
 		goto _test_eof1391;
 case 1391:
-#line 42642 "shortcodes.c"
+#line 43026 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2665;
 		case 34: goto st1219;
@@ -42694,7 +43078,7 @@ st1392:
 	if ( ++p == pe )
 		goto _test_eof1392;
 case 1392:
-#line 42698 "shortcodes.c"
+#line 43082 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42746,7 +43130,7 @@ st1396:
 	if ( ++p == pe )
 		goto _test_eof1396;
 case 1396:
-#line 42750 "shortcodes.c"
+#line 43134 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2670;
 		case 34: goto st1219;
@@ -42776,7 +43160,7 @@ st1397:
 	if ( ++p == pe )
 		goto _test_eof1397;
 case 1397:
-#line 42780 "shortcodes.c"
+#line 43164 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2670;
 		case 34: goto st1219;
@@ -42808,7 +43192,7 @@ st1398:
 	if ( ++p == pe )
 		goto _test_eof1398;
 case 1398:
-#line 42812 "shortcodes.c"
+#line 43196 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2661;
 		case 39: goto tr2661;
@@ -42872,7 +43256,7 @@ st1401:
 	if ( ++p == pe )
 		goto _test_eof1401;
 case 1401:
-#line 42876 "shortcodes.c"
+#line 43260 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2677;
 		case 34: goto st1219;
@@ -42915,7 +43299,7 @@ st1402:
 	if ( ++p == pe )
 		goto _test_eof1402;
 case 1402:
-#line 42919 "shortcodes.c"
+#line 43303 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2677;
 		case 34: goto st1219;
@@ -42958,7 +43342,7 @@ st1403:
 	if ( ++p == pe )
 		goto _test_eof1403;
 case 1403:
-#line 42962 "shortcodes.c"
+#line 43346 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43022,7 +43406,7 @@ st1405:
 	if ( ++p == pe )
 		goto _test_eof1405;
 case 1405:
-#line 43026 "shortcodes.c"
+#line 43410 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43062,7 +43446,7 @@ st1408:
 	if ( ++p == pe )
 		goto _test_eof1408;
 case 1408:
-#line 43066 "shortcodes.c"
+#line 43450 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2686;
 		case 34: goto st1313;
@@ -43118,7 +43502,7 @@ st1409:
 	if ( ++p == pe )
 		goto _test_eof1409;
 case 1409:
-#line 43122 "shortcodes.c"
+#line 43506 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1409;
 		case 34: goto tr2598;
@@ -43183,7 +43567,7 @@ st1410:
 	if ( ++p == pe )
 		goto _test_eof1410;
 case 1410:
-#line 43187 "shortcodes.c"
+#line 43571 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -43235,7 +43619,7 @@ st1414:
 	if ( ++p == pe )
 		goto _test_eof1414;
 case 1414:
-#line 43239 "shortcodes.c"
+#line 43623 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2695;
 		case 34: goto st1313;
@@ -43265,7 +43649,7 @@ st1415:
 	if ( ++p == pe )
 		goto _test_eof1415;
 case 1415:
-#line 43269 "shortcodes.c"
+#line 43653 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2695;
 		case 34: goto st1313;
@@ -43297,7 +43681,7 @@ st1416:
 	if ( ++p == pe )
 		goto _test_eof1416;
 case 1416:
-#line 43301 "shortcodes.c"
+#line 43685 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2598;
 		case 39: goto tr2587;
@@ -43340,7 +43724,7 @@ st1417:
 	if ( ++p == pe )
 		goto _test_eof1417;
 case 1417:
-#line 43344 "shortcodes.c"
+#line 43728 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43380,7 +43764,7 @@ st1420:
 	if ( ++p == pe )
 		goto _test_eof1420;
 case 1420:
-#line 43384 "shortcodes.c"
+#line 43768 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2702;
 		case 34: goto st1219;
@@ -43412,7 +43796,7 @@ st1421:
 	if ( ++p == pe )
 		goto _test_eof1421;
 case 1421:
-#line 43416 "shortcodes.c"
+#line 43800 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2702;
 		case 34: goto st1219;
@@ -43446,7 +43830,7 @@ st1422:
 	if ( ++p == pe )
 		goto _test_eof1422;
 case 1422:
-#line 43450 "shortcodes.c"
+#line 43834 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2588;
 		case 39: goto tr2598;
@@ -43471,7 +43855,7 @@ st1423:
 	if ( ++p == pe )
 		goto _test_eof1423;
 case 1423:
-#line 43475 "shortcodes.c"
+#line 43859 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2709;
 		case 34: goto st1309;
@@ -43501,7 +43885,7 @@ st1424:
 	if ( ++p == pe )
 		goto _test_eof1424;
 case 1424:
-#line 43505 "shortcodes.c"
+#line 43889 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2709;
 		case 34: goto st1309;
@@ -43533,7 +43917,7 @@ st1425:
 	if ( ++p == pe )
 		goto _test_eof1425;
 case 1425:
-#line 43537 "shortcodes.c"
+#line 43921 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2587;
 		case 39: goto tr2588;
@@ -43597,7 +43981,7 @@ st1428:
 	if ( ++p == pe )
 		goto _test_eof1428;
 case 1428:
-#line 43601 "shortcodes.c"
+#line 43985 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2716;
 		case 34: goto st1309;
@@ -43664,7 +44048,7 @@ st1429:
 	if ( ++p == pe )
 		goto _test_eof1429;
 case 1429:
-#line 43668 "shortcodes.c"
+#line 44052 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1429;
 		case 34: goto tr2722;
@@ -43696,7 +44080,7 @@ st1430:
 	if ( ++p == pe )
 		goto _test_eof1430;
 case 1430:
-#line 43700 "shortcodes.c"
+#line 44084 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2729;
 		case 34: goto st1309;
@@ -43754,7 +44138,7 @@ st1431:
 	if ( ++p == pe )
 		goto _test_eof1431;
 case 1431:
-#line 43758 "shortcodes.c"
+#line 44142 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -43801,7 +44185,7 @@ st1433:
 	if ( ++p == pe )
 		goto _test_eof1433;
 case 1433:
-#line 43805 "shortcodes.c"
+#line 44189 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -43876,7 +44260,7 @@ st1436:
 	if ( ++p == pe )
 		goto _test_eof1436;
 case 1436:
-#line 43880 "shortcodes.c"
+#line 44264 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -43905,7 +44289,7 @@ st1438:
 	if ( ++p == pe )
 		goto _test_eof1438;
 case 1438:
-#line 43909 "shortcodes.c"
+#line 44293 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2739;
 		case 34: goto st1440;
@@ -43926,7 +44310,7 @@ st1439:
 	if ( ++p == pe )
 		goto _test_eof1439;
 case 1439:
-#line 43930 "shortcodes.c"
+#line 44314 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -43943,7 +44327,7 @@ st1440:
 	if ( ++p == pe )
 		goto _test_eof1440;
 case 1440:
-#line 43947 "shortcodes.c"
+#line 44331 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2744;
 		case 37: goto tr2745;
@@ -44000,7 +44384,7 @@ st1441:
 	if ( ++p == pe )
 		goto _test_eof1441;
 case 1441:
-#line 44004 "shortcodes.c"
+#line 44388 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1441;
 		case 34: goto tr2749;
@@ -44067,7 +44451,7 @@ st1442:
 	if ( ++p == pe )
 		goto _test_eof1442;
 case 1442:
-#line 44071 "shortcodes.c"
+#line 44455 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -44112,7 +44496,7 @@ st1444:
 	if ( ++p == pe )
 		goto _test_eof1444;
 case 1444:
-#line 44116 "shortcodes.c"
+#line 44500 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 62: goto st1445;
@@ -44149,7 +44533,7 @@ st1447:
 	if ( ++p == pe )
 		goto _test_eof1447;
 case 1447:
-#line 44153 "shortcodes.c"
+#line 44537 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2760;
 		case 37: goto tr2761;
@@ -44215,7 +44599,7 @@ st1448:
 	if ( ++p == pe )
 		goto _test_eof1448;
 case 1448:
-#line 44219 "shortcodes.c"
+#line 44603 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -44242,7 +44626,7 @@ st1450:
 	if ( ++p == pe )
 		goto _test_eof1450;
 case 1450:
-#line 44246 "shortcodes.c"
+#line 44630 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2760;
 		case 37: goto tr2761;
@@ -44275,7 +44659,7 @@ st1451:
 	if ( ++p == pe )
 		goto _test_eof1451;
 case 1451:
-#line 44279 "shortcodes.c"
+#line 44663 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2749;
 		case 39: goto tr2751;
@@ -44300,7 +44684,7 @@ st1452:
 	if ( ++p == pe )
 		goto _test_eof1452;
 case 1452:
-#line 44304 "shortcodes.c"
+#line 44688 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2768;
 		case 34: goto st1261;
@@ -44357,7 +44741,7 @@ st1453:
 	if ( ++p == pe )
 		goto _test_eof1453;
 case 1453:
-#line 44361 "shortcodes.c"
+#line 44745 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1453;
 		case 34: goto tr2773;
@@ -44424,7 +44808,7 @@ st1454:
 	if ( ++p == pe )
 		goto _test_eof1454;
 case 1454:
-#line 44428 "shortcodes.c"
+#line 44812 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -44469,7 +44853,7 @@ st1456:
 	if ( ++p == pe )
 		goto _test_eof1456;
 case 1456:
-#line 44473 "shortcodes.c"
+#line 44857 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 62: goto st1457;
@@ -44506,7 +44890,7 @@ st1459:
 	if ( ++p == pe )
 		goto _test_eof1459;
 case 1459:
-#line 44510 "shortcodes.c"
+#line 44894 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2783;
 		case 34: goto st1261;
@@ -44572,7 +44956,7 @@ st1460:
 	if ( ++p == pe )
 		goto _test_eof1460;
 case 1460:
-#line 44576 "shortcodes.c"
+#line 44960 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -44599,7 +44983,7 @@ st1462:
 	if ( ++p == pe )
 		goto _test_eof1462;
 case 1462:
-#line 44603 "shortcodes.c"
+#line 44987 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2783;
 		case 34: goto st1261;
@@ -44632,7 +45016,7 @@ st1463:
 	if ( ++p == pe )
 		goto _test_eof1463;
 case 1463:
-#line 44636 "shortcodes.c"
+#line 45020 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2773;
 		case 39: goto tr2749;
@@ -44657,7 +45041,7 @@ st1464:
 	if ( ++p == pe )
 		goto _test_eof1464;
 case 1464:
-#line 44661 "shortcodes.c"
+#line 45045 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -44674,7 +45058,7 @@ st1465:
 	if ( ++p == pe )
 		goto _test_eof1465;
 case 1465:
-#line 44678 "shortcodes.c"
+#line 45062 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 37: goto st1466;
@@ -44732,7 +45116,7 @@ st1468:
 	if ( ++p == pe )
 		goto _test_eof1468;
 case 1468:
-#line 44736 "shortcodes.c"
+#line 45120 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2797;
 		case 34: goto st1440;
@@ -44799,7 +45183,7 @@ st1469:
 	if ( ++p == pe )
 		goto _test_eof1469;
 case 1469:
-#line 44803 "shortcodes.c"
+#line 45187 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1469;
 		case 34: goto tr2803;
@@ -44831,7 +45215,7 @@ st1470:
 	if ( ++p == pe )
 		goto _test_eof1470;
 case 1470:
-#line 44835 "shortcodes.c"
+#line 45219 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2810;
 		case 34: goto st1273;
@@ -44889,7 +45273,7 @@ st1471:
 	if ( ++p == pe )
 		goto _test_eof1471;
 case 1471:
-#line 44893 "shortcodes.c"
+#line 45277 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1471;
 		case 34: goto tr2815;
@@ -44921,7 +45305,7 @@ st1472:
 	if ( ++p == pe )
 		goto _test_eof1472;
 case 1472:
-#line 44925 "shortcodes.c"
+#line 45309 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2821;
 		case 34: goto st1440;
@@ -44979,7 +45363,7 @@ st1473:
 	if ( ++p == pe )
 		goto _test_eof1473;
 case 1473:
-#line 44983 "shortcodes.c"
+#line 45367 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -45026,7 +45410,7 @@ st1475:
 	if ( ++p == pe )
 		goto _test_eof1475;
 case 1475:
-#line 45030 "shortcodes.c"
+#line 45414 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 37: goto st1476;
@@ -45101,7 +45485,7 @@ st1478:
 	if ( ++p == pe )
 		goto _test_eof1478;
 case 1478:
-#line 45105 "shortcodes.c"
+#line 45489 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -45150,7 +45534,7 @@ st1932:
 	if ( ++p == pe )
 		goto _test_eof1932;
 case 1932:
-#line 45154 "shortcodes.c"
+#line 45538 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -45202,7 +45586,7 @@ st1480:
 	if ( ++p == pe )
 		goto _test_eof1480;
 case 1480:
-#line 45206 "shortcodes.c"
+#line 45590 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -45220,7 +45604,7 @@ st1481:
 	if ( ++p == pe )
 		goto _test_eof1481;
 case 1481:
-#line 45224 "shortcodes.c"
+#line 45608 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -45237,7 +45621,7 @@ st1482:
 	if ( ++p == pe )
 		goto _test_eof1482;
 case 1482:
-#line 45241 "shortcodes.c"
+#line 45625 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 37: goto st1483;
@@ -45295,7 +45679,7 @@ st1485:
 	if ( ++p == pe )
 		goto _test_eof1485;
 case 1485:
-#line 45299 "shortcodes.c"
+#line 45683 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2837;
 		case 34: goto st1273;
@@ -45362,7 +45746,7 @@ st1486:
 	if ( ++p == pe )
 		goto _test_eof1486;
 case 1486:
-#line 45366 "shortcodes.c"
+#line 45750 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1486;
 		case 34: goto tr2843;
@@ -45394,7 +45778,7 @@ st1487:
 	if ( ++p == pe )
 		goto _test_eof1487;
 case 1487:
-#line 45398 "shortcodes.c"
+#line 45782 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2850;
 		case 34: goto st1273;
@@ -45452,7 +45836,7 @@ st1488:
 	if ( ++p == pe )
 		goto _test_eof1488;
 case 1488:
-#line 45456 "shortcodes.c"
+#line 45840 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -45499,7 +45883,7 @@ st1490:
 	if ( ++p == pe )
 		goto _test_eof1490;
 case 1490:
-#line 45503 "shortcodes.c"
+#line 45887 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 37: goto st1491;
@@ -45574,7 +45958,7 @@ st1493:
 	if ( ++p == pe )
 		goto _test_eof1493;
 case 1493:
-#line 45578 "shortcodes.c"
+#line 45962 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -45623,7 +46007,7 @@ st1933:
 	if ( ++p == pe )
 		goto _test_eof1933;
 case 1933:
-#line 45627 "shortcodes.c"
+#line 46011 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -45640,7 +46024,7 @@ st1495:
 	if ( ++p == pe )
 		goto _test_eof1495;
 case 1495:
-#line 45644 "shortcodes.c"
+#line 46028 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2859;
 		case 34: goto st1119;
@@ -45698,7 +46082,7 @@ st1496:
 	if ( ++p == pe )
 		goto _test_eof1496;
 case 1496:
-#line 45702 "shortcodes.c"
+#line 46086 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1496;
 		case 34: goto tr2864;
@@ -45730,7 +46114,7 @@ st1497:
 	if ( ++p == pe )
 		goto _test_eof1497;
 case 1497:
-#line 45734 "shortcodes.c"
+#line 46118 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2871;
 		case 34: goto st1499;
@@ -45753,7 +46137,7 @@ st1498:
 	if ( ++p == pe )
 		goto _test_eof1498;
 case 1498:
-#line 45757 "shortcodes.c"
+#line 46141 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -45770,7 +46154,7 @@ st1499:
 	if ( ++p == pe )
 		goto _test_eof1499;
 case 1499:
-#line 45774 "shortcodes.c"
+#line 46158 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2878;
 		case 37: goto tr2879;
@@ -45827,7 +46211,7 @@ st1500:
 	if ( ++p == pe )
 		goto _test_eof1500;
 case 1500:
-#line 45831 "shortcodes.c"
+#line 46215 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1500;
 		case 34: goto tr2438;
@@ -45894,7 +46278,7 @@ st1501:
 	if ( ++p == pe )
 		goto _test_eof1501;
 case 1501:
-#line 45898 "shortcodes.c"
+#line 46282 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -45939,7 +46323,7 @@ st1503:
 	if ( ++p == pe )
 		goto _test_eof1503;
 case 1503:
-#line 45943 "shortcodes.c"
+#line 46327 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 62: goto st1504;
@@ -45976,7 +46360,7 @@ st1506:
 	if ( ++p == pe )
 		goto _test_eof1506;
 case 1506:
-#line 45980 "shortcodes.c"
+#line 46364 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2893;
 		case 37: goto tr2894;
@@ -46042,7 +46426,7 @@ st1507:
 	if ( ++p == pe )
 		goto _test_eof1507;
 case 1507:
-#line 46046 "shortcodes.c"
+#line 46430 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -46069,7 +46453,7 @@ st1509:
 	if ( ++p == pe )
 		goto _test_eof1509;
 case 1509:
-#line 46073 "shortcodes.c"
+#line 46457 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2893;
 		case 37: goto tr2894;
@@ -46102,7 +46486,7 @@ st1510:
 	if ( ++p == pe )
 		goto _test_eof1510;
 case 1510:
-#line 46106 "shortcodes.c"
+#line 46490 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2438;
 		case 39: goto tr2884;
@@ -46127,7 +46511,7 @@ st1511:
 	if ( ++p == pe )
 		goto _test_eof1511;
 case 1511:
-#line 46131 "shortcodes.c"
+#line 46515 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46144,7 +46528,7 @@ st1512:
 	if ( ++p == pe )
 		goto _test_eof1512;
 case 1512:
-#line 46148 "shortcodes.c"
+#line 46532 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 37: goto st1513;
@@ -46202,7 +46586,7 @@ st1515:
 	if ( ++p == pe )
 		goto _test_eof1515;
 case 1515:
-#line 46206 "shortcodes.c"
+#line 46590 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2907;
 		case 34: goto st1499;
@@ -46269,7 +46653,7 @@ st1516:
 	if ( ++p == pe )
 		goto _test_eof1516;
 case 1516:
-#line 46273 "shortcodes.c"
+#line 46657 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1516;
 		case 34: goto tr2845;
@@ -46336,7 +46720,7 @@ st1517:
 	if ( ++p == pe )
 		goto _test_eof1517;
 case 1517:
-#line 46340 "shortcodes.c"
+#line 46724 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46383,7 +46767,7 @@ st1519:
 	if ( ++p == pe )
 		goto _test_eof1519;
 case 1519:
-#line 46387 "shortcodes.c"
+#line 46771 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 37: goto st1520;
@@ -46423,7 +46807,7 @@ st1522:
 	if ( ++p == pe )
 		goto _test_eof1522;
 case 1522:
-#line 46427 "shortcodes.c"
+#line 46811 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2921;
 		case 34: goto st1499;
@@ -46490,7 +46874,7 @@ st1523:
 	if ( ++p == pe )
 		goto _test_eof1523;
 case 1523:
-#line 46494 "shortcodes.c"
+#line 46878 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46539,7 +46923,7 @@ st1934:
 	if ( ++p == pe )
 		goto _test_eof1934;
 case 1934:
-#line 46543 "shortcodes.c"
+#line 46927 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46556,7 +46940,7 @@ st1525:
 	if ( ++p == pe )
 		goto _test_eof1525;
 case 1525:
-#line 46560 "shortcodes.c"
+#line 46944 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2921;
 		case 34: goto st1499;
@@ -46590,7 +46974,7 @@ st1526:
 	if ( ++p == pe )
 		goto _test_eof1526;
 case 1526:
-#line 46594 "shortcodes.c"
+#line 46978 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2845;
 		case 39: goto tr2864;
@@ -46626,7 +47010,7 @@ st1527:
 	if ( ++p == pe )
 		goto _test_eof1527;
 case 1527:
-#line 46630 "shortcodes.c"
+#line 47014 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2907;
 		case 34: goto st1499;
@@ -46669,7 +47053,7 @@ st1528:
 	if ( ++p == pe )
 		goto _test_eof1528;
 case 1528:
-#line 46673 "shortcodes.c"
+#line 47057 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46728,7 +47112,7 @@ st1532:
 	if ( ++p == pe )
 		goto _test_eof1532;
 case 1532:
-#line 46732 "shortcodes.c"
+#line 47116 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2934;
 		case 34: goto st1499;
@@ -46793,7 +47177,7 @@ st1533:
 	if ( ++p == pe )
 		goto _test_eof1533;
 case 1533:
-#line 46797 "shortcodes.c"
+#line 47181 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1533;
 		case 34: goto tr2521;
@@ -46823,7 +47207,7 @@ st1534:
 	if ( ++p == pe )
 		goto _test_eof1534;
 case 1534:
-#line 46827 "shortcodes.c"
+#line 47211 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2941;
 		case 34: goto st1145;
@@ -46881,7 +47265,7 @@ st1535:
 	if ( ++p == pe )
 		goto _test_eof1535;
 case 1535:
-#line 46885 "shortcodes.c"
+#line 47269 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1535;
 		case 34: goto tr2560;
@@ -46913,7 +47297,7 @@ st1536:
 	if ( ++p == pe )
 		goto _test_eof1536;
 case 1536:
-#line 46917 "shortcodes.c"
+#line 47301 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2951;
 		case 34: goto st1499;
@@ -46969,7 +47353,7 @@ st1537:
 	if ( ++p == pe )
 		goto _test_eof1537;
 case 1537:
-#line 46973 "shortcodes.c"
+#line 47357 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47056,7 +47440,7 @@ st1541:
 	if ( ++p == pe )
 		goto _test_eof1541;
 case 1541:
-#line 47060 "shortcodes.c"
+#line 47444 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -47103,7 +47487,7 @@ st1543:
 	if ( ++p == pe )
 		goto _test_eof1543;
 case 1543:
-#line 47107 "shortcodes.c"
+#line 47491 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -47143,7 +47527,7 @@ st1546:
 	if ( ++p == pe )
 		goto _test_eof1546;
 case 1546:
-#line 47147 "shortcodes.c"
+#line 47531 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2960;
 		case 34: goto st1145;
@@ -47210,7 +47594,7 @@ st1547:
 	if ( ++p == pe )
 		goto _test_eof1547;
 case 1547:
-#line 47214 "shortcodes.c"
+#line 47598 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -47239,7 +47623,7 @@ st1549:
 	if ( ++p == pe )
 		goto _test_eof1549;
 case 1549:
-#line 47243 "shortcodes.c"
+#line 47627 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2960;
 		case 34: goto st1145;
@@ -47273,7 +47657,7 @@ st1550:
 	if ( ++p == pe )
 		goto _test_eof1550;
 case 1550:
-#line 47277 "shortcodes.c"
+#line 47661 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2560;
 		case 39: goto tr2529;
@@ -47298,7 +47682,7 @@ st1551:
 	if ( ++p == pe )
 		goto _test_eof1551;
 case 1551:
-#line 47302 "shortcodes.c"
+#line 47686 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2968;
 		case 34: goto st1499;
@@ -47328,7 +47712,7 @@ st1552:
 	if ( ++p == pe )
 		goto _test_eof1552;
 case 1552:
-#line 47332 "shortcodes.c"
+#line 47716 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2968;
 		case 34: goto st1499;
@@ -47360,7 +47744,7 @@ st1553:
 	if ( ++p == pe )
 		goto _test_eof1553;
 case 1553:
-#line 47364 "shortcodes.c"
+#line 47748 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2521;
 		case 39: goto tr2548;
@@ -47424,7 +47808,7 @@ st1556:
 	if ( ++p == pe )
 		goto _test_eof1556;
 case 1556:
-#line 47428 "shortcodes.c"
+#line 47812 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2975;
 		case 34: goto st1499;
@@ -47491,7 +47875,7 @@ st1557:
 	if ( ++p == pe )
 		goto _test_eof1557;
 case 1557:
-#line 47495 "shortcodes.c"
+#line 47879 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1557;
 		case 34: goto tr2805;
@@ -47523,7 +47907,7 @@ st1558:
 	if ( ++p == pe )
 		goto _test_eof1558;
 case 1558:
-#line 47527 "shortcodes.c"
+#line 47911 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2986;
 		case 34: goto st1499;
@@ -47581,7 +47965,7 @@ st1559:
 	if ( ++p == pe )
 		goto _test_eof1559;
 case 1559:
-#line 47585 "shortcodes.c"
+#line 47969 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47628,7 +48012,7 @@ st1561:
 	if ( ++p == pe )
 		goto _test_eof1561;
 case 1561:
-#line 47632 "shortcodes.c"
+#line 48016 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47703,7 +48087,7 @@ st1564:
 	if ( ++p == pe )
 		goto _test_eof1564;
 case 1564:
-#line 47707 "shortcodes.c"
+#line 48091 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47732,7 +48116,7 @@ st1566:
 	if ( ++p == pe )
 		goto _test_eof1566;
 case 1566:
-#line 47736 "shortcodes.c"
+#line 48120 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2995;
 		case 34: goto st1499;
@@ -47764,7 +48148,7 @@ st1567:
 	if ( ++p == pe )
 		goto _test_eof1567;
 case 1567:
-#line 47768 "shortcodes.c"
+#line 48152 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2995;
 		case 34: goto st1499;
@@ -47798,7 +48182,7 @@ st1568:
 	if ( ++p == pe )
 		goto _test_eof1568;
 case 1568:
-#line 47802 "shortcodes.c"
+#line 48186 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2805;
 		case 39: goto tr2815;
@@ -47834,7 +48218,7 @@ st1569:
 	if ( ++p == pe )
 		goto _test_eof1569;
 case 1569:
-#line 47838 "shortcodes.c"
+#line 48222 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2975;
 		case 34: goto st1499;
@@ -47877,7 +48261,7 @@ st1570:
 	if ( ++p == pe )
 		goto _test_eof1570;
 case 1570:
-#line 47881 "shortcodes.c"
+#line 48265 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47941,7 +48325,7 @@ st1572:
 	if ( ++p == pe )
 		goto _test_eof1572;
 case 1572:
-#line 47945 "shortcodes.c"
+#line 48329 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -47959,7 +48343,7 @@ st1573:
 	if ( ++p == pe )
 		goto _test_eof1573;
 case 1573:
-#line 47963 "shortcodes.c"
+#line 48347 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -47976,7 +48360,7 @@ st1574:
 	if ( ++p == pe )
 		goto _test_eof1574;
 case 1574:
-#line 47980 "shortcodes.c"
+#line 48364 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 37: goto st1575;
@@ -48034,7 +48418,7 @@ st1577:
 	if ( ++p == pe )
 		goto _test_eof1577;
 case 1577:
-#line 48038 "shortcodes.c"
+#line 48422 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3011;
 		case 34: goto st1119;
@@ -48101,7 +48485,7 @@ st1578:
 	if ( ++p == pe )
 		goto _test_eof1578;
 case 1578:
-#line 48105 "shortcodes.c"
+#line 48489 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1578;
 		case 34: goto tr3017;
@@ -48133,7 +48517,7 @@ st1579:
 	if ( ++p == pe )
 		goto _test_eof1579;
 case 1579:
-#line 48137 "shortcodes.c"
+#line 48521 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3023;
 		case 34: goto st1119;
@@ -48191,7 +48575,7 @@ st1580:
 	if ( ++p == pe )
 		goto _test_eof1580;
 case 1580:
-#line 48195 "shortcodes.c"
+#line 48579 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48238,7 +48622,7 @@ st1582:
 	if ( ++p == pe )
 		goto _test_eof1582;
 case 1582:
-#line 48242 "shortcodes.c"
+#line 48626 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 37: goto st1583;
@@ -48313,7 +48697,7 @@ st1585:
 	if ( ++p == pe )
 		goto _test_eof1585;
 case 1585:
-#line 48317 "shortcodes.c"
+#line 48701 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48362,7 +48746,7 @@ st1935:
 	if ( ++p == pe )
 		goto _test_eof1935;
 case 1935:
-#line 48366 "shortcodes.c"
+#line 48750 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48379,7 +48763,7 @@ st1587:
 	if ( ++p == pe )
 		goto _test_eof1587;
 case 1587:
-#line 48383 "shortcodes.c"
+#line 48767 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3032;
 		case 34: goto st1119;
@@ -48411,7 +48795,7 @@ st1588:
 	if ( ++p == pe )
 		goto _test_eof1588;
 case 1588:
-#line 48415 "shortcodes.c"
+#line 48799 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3032;
 		case 34: goto st1119;
@@ -48445,7 +48829,7 @@ st1589:
 	if ( ++p == pe )
 		goto _test_eof1589;
 case 1589:
-#line 48449 "shortcodes.c"
+#line 48833 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3017;
 		case 39: goto tr3017;
@@ -48481,7 +48865,7 @@ st1590:
 	if ( ++p == pe )
 		goto _test_eof1590;
 case 1590:
-#line 48485 "shortcodes.c"
+#line 48869 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3011;
 		case 34: goto st1119;
@@ -48524,7 +48908,7 @@ st1591:
 	if ( ++p == pe )
 		goto _test_eof1591;
 case 1591:
-#line 48528 "shortcodes.c"
+#line 48912 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48583,7 +48967,7 @@ st1595:
 	if ( ++p == pe )
 		goto _test_eof1595;
 case 1595:
-#line 48587 "shortcodes.c"
+#line 48971 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3043;
 		case 34: goto st1119;
@@ -48648,7 +49032,7 @@ st1596:
 	if ( ++p == pe )
 		goto _test_eof1596;
 case 1596:
-#line 48652 "shortcodes.c"
+#line 49036 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48739,7 +49123,7 @@ st1602:
 	if ( ++p == pe )
 		goto _test_eof1602;
 case 1602:
-#line 48743 "shortcodes.c"
+#line 49127 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3051;
 		case 34: goto st1119;
@@ -48782,7 +49166,7 @@ st1603:
 	if ( ++p == pe )
 		goto _test_eof1603;
 case 1603:
-#line 48786 "shortcodes.c"
+#line 49170 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3051;
 		case 34: goto st1119;
@@ -48825,7 +49209,7 @@ st1604:
 	if ( ++p == pe )
 		goto _test_eof1604;
 case 1604:
-#line 48829 "shortcodes.c"
+#line 49213 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48889,7 +49273,7 @@ st1606:
 	if ( ++p == pe )
 		goto _test_eof1606;
 case 1606:
-#line 48893 "shortcodes.c"
+#line 49277 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48947,7 +49331,7 @@ st1609:
 	if ( ++p == pe )
 		goto _test_eof1609;
 case 1609:
-#line 48951 "shortcodes.c"
+#line 49335 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -48987,7 +49371,7 @@ st1612:
 	if ( ++p == pe )
 		goto _test_eof1612;
 case 1612:
-#line 48991 "shortcodes.c"
+#line 49375 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3062;
 		case 34: goto st1119;
@@ -49019,7 +49403,7 @@ st1613:
 	if ( ++p == pe )
 		goto _test_eof1613;
 case 1613:
-#line 49023 "shortcodes.c"
+#line 49407 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3062;
 		case 34: goto st1119;
@@ -49053,7 +49437,7 @@ st1614:
 	if ( ++p == pe )
 		goto _test_eof1614;
 case 1614:
-#line 49057 "shortcodes.c"
+#line 49441 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2864;
 		case 39: goto tr2843;
@@ -49078,7 +49462,7 @@ st1615:
 	if ( ++p == pe )
 		goto _test_eof1615;
 case 1615:
-#line 49082 "shortcodes.c"
+#line 49466 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3069;
 		case 34: goto st1273;
@@ -49110,7 +49494,7 @@ st1616:
 	if ( ++p == pe )
 		goto _test_eof1616;
 case 1616:
-#line 49114 "shortcodes.c"
+#line 49498 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3069;
 		case 34: goto st1273;
@@ -49144,7 +49528,7 @@ st1617:
 	if ( ++p == pe )
 		goto _test_eof1617;
 case 1617:
-#line 49148 "shortcodes.c"
+#line 49532 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2843;
 		case 39: goto tr2845;
@@ -49180,7 +49564,7 @@ st1618:
 	if ( ++p == pe )
 		goto _test_eof1618;
 case 1618:
-#line 49184 "shortcodes.c"
+#line 49568 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2837;
 		case 34: goto st1273;
@@ -49223,7 +49607,7 @@ st1619:
 	if ( ++p == pe )
 		goto _test_eof1619;
 case 1619:
-#line 49227 "shortcodes.c"
+#line 49611 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -49282,7 +49666,7 @@ st1623:
 	if ( ++p == pe )
 		goto _test_eof1623;
 case 1623:
-#line 49286 "shortcodes.c"
+#line 49670 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3080;
 		case 34: goto st1273;
@@ -49347,7 +49731,7 @@ st1624:
 	if ( ++p == pe )
 		goto _test_eof1624;
 case 1624:
-#line 49351 "shortcodes.c"
+#line 49735 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -49438,7 +49822,7 @@ st1630:
 	if ( ++p == pe )
 		goto _test_eof1630;
 case 1630:
-#line 49442 "shortcodes.c"
+#line 49826 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3088;
 		case 34: goto st1273;
@@ -49481,7 +49865,7 @@ st1631:
 	if ( ++p == pe )
 		goto _test_eof1631;
 case 1631:
-#line 49485 "shortcodes.c"
+#line 49869 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3088;
 		case 34: goto st1273;
@@ -49524,7 +49908,7 @@ st1632:
 	if ( ++p == pe )
 		goto _test_eof1632;
 case 1632:
-#line 49528 "shortcodes.c"
+#line 49912 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -49588,7 +49972,7 @@ st1634:
 	if ( ++p == pe )
 		goto _test_eof1634;
 case 1634:
-#line 49592 "shortcodes.c"
+#line 49976 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -49646,7 +50030,7 @@ st1637:
 	if ( ++p == pe )
 		goto _test_eof1637;
 case 1637:
-#line 49650 "shortcodes.c"
+#line 50034 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -49686,7 +50070,7 @@ st1640:
 	if ( ++p == pe )
 		goto _test_eof1640;
 case 1640:
-#line 49690 "shortcodes.c"
+#line 50074 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3099;
 		case 34: goto st1273;
@@ -49718,7 +50102,7 @@ st1641:
 	if ( ++p == pe )
 		goto _test_eof1641;
 case 1641:
-#line 49722 "shortcodes.c"
+#line 50106 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3099;
 		case 34: goto st1273;
@@ -49752,7 +50136,7 @@ st1642:
 	if ( ++p == pe )
 		goto _test_eof1642;
 case 1642:
-#line 49756 "shortcodes.c"
+#line 50140 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2815;
 		case 39: goto tr2803;
@@ -49777,7 +50161,7 @@ st1643:
 	if ( ++p == pe )
 		goto _test_eof1643;
 case 1643:
-#line 49781 "shortcodes.c"
+#line 50165 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3106;
 		case 34: goto st1440;
@@ -49809,7 +50193,7 @@ st1644:
 	if ( ++p == pe )
 		goto _test_eof1644;
 case 1644:
-#line 49813 "shortcodes.c"
+#line 50197 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3106;
 		case 34: goto st1440;
@@ -49843,7 +50227,7 @@ st1645:
 	if ( ++p == pe )
 		goto _test_eof1645;
 case 1645:
-#line 49847 "shortcodes.c"
+#line 50231 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2803;
 		case 39: goto tr2805;
@@ -49879,7 +50263,7 @@ st1646:
 	if ( ++p == pe )
 		goto _test_eof1646;
 case 1646:
-#line 49883 "shortcodes.c"
+#line 50267 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2797;
 		case 34: goto st1440;
@@ -49922,7 +50306,7 @@ st1647:
 	if ( ++p == pe )
 		goto _test_eof1647;
 case 1647:
-#line 49926 "shortcodes.c"
+#line 50310 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -49981,7 +50365,7 @@ st1651:
 	if ( ++p == pe )
 		goto _test_eof1651;
 case 1651:
-#line 49985 "shortcodes.c"
+#line 50369 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3117;
 		case 34: goto st1440;
@@ -50046,7 +50430,7 @@ st1652:
 	if ( ++p == pe )
 		goto _test_eof1652;
 case 1652:
-#line 50050 "shortcodes.c"
+#line 50434 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1652;
 		case 34: goto tr3121;
@@ -50076,7 +50460,7 @@ st1653:
 	if ( ++p == pe )
 		goto _test_eof1653;
 case 1653:
-#line 50080 "shortcodes.c"
+#line 50464 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3125;
 		case 34: goto st1313;
@@ -50134,7 +50518,7 @@ st1654:
 	if ( ++p == pe )
 		goto _test_eof1654;
 case 1654:
-#line 50138 "shortcodes.c"
+#line 50522 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1654;
 		case 34: goto tr2724;
@@ -50201,7 +50585,7 @@ st1655:
 	if ( ++p == pe )
 		goto _test_eof1655;
 case 1655:
-#line 50205 "shortcodes.c"
+#line 50589 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -50248,7 +50632,7 @@ st1657:
 	if ( ++p == pe )
 		goto _test_eof1657;
 case 1657:
-#line 50252 "shortcodes.c"
+#line 50636 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -50288,7 +50672,7 @@ st1660:
 	if ( ++p == pe )
 		goto _test_eof1660;
 case 1660:
-#line 50292 "shortcodes.c"
+#line 50676 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3139;
 		case 34: goto st1313;
@@ -50355,7 +50739,7 @@ st1661:
 	if ( ++p == pe )
 		goto _test_eof1661;
 case 1661:
-#line 50359 "shortcodes.c"
+#line 50743 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -50384,7 +50768,7 @@ st1663:
 	if ( ++p == pe )
 		goto _test_eof1663;
 case 1663:
-#line 50388 "shortcodes.c"
+#line 50772 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3139;
 		case 34: goto st1313;
@@ -50418,7 +50802,7 @@ st1664:
 	if ( ++p == pe )
 		goto _test_eof1664;
 case 1664:
-#line 50422 "shortcodes.c"
+#line 50806 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2724;
 		case 39: goto tr3121;
@@ -50478,7 +50862,7 @@ st1665:
 	if ( ++p == pe )
 		goto _test_eof1665;
 case 1665:
-#line 50482 "shortcodes.c"
+#line 50866 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -50530,7 +50914,7 @@ st1669:
 	if ( ++p == pe )
 		goto _test_eof1669;
 case 1669:
-#line 50534 "shortcodes.c"
+#line 50918 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3150;
 		case 34: goto st1440;
@@ -50560,7 +50944,7 @@ st1670:
 	if ( ++p == pe )
 		goto _test_eof1670;
 case 1670:
-#line 50564 "shortcodes.c"
+#line 50948 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3150;
 		case 34: goto st1440;
@@ -50592,7 +50976,7 @@ st1671:
 	if ( ++p == pe )
 		goto _test_eof1671;
 case 1671:
-#line 50596 "shortcodes.c"
+#line 50980 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3121;
 		case 39: goto tr2722;
@@ -50656,7 +51040,7 @@ st1674:
 	if ( ++p == pe )
 		goto _test_eof1674;
 case 1674:
-#line 50660 "shortcodes.c"
+#line 51044 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3157;
 		case 34: goto st1440;
@@ -50723,7 +51107,7 @@ st1675:
 	if ( ++p == pe )
 		goto _test_eof1675;
 case 1675:
-#line 50727 "shortcodes.c"
+#line 51111 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1675;
 		case 34: goto tr3163;
@@ -50755,7 +51139,7 @@ st1676:
 	if ( ++p == pe )
 		goto _test_eof1676;
 case 1676:
-#line 50759 "shortcodes.c"
+#line 51143 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3169;
 		case 34: goto st1440;
@@ -50813,7 +51197,7 @@ st1677:
 	if ( ++p == pe )
 		goto _test_eof1677;
 case 1677:
-#line 50817 "shortcodes.c"
+#line 51201 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -50860,7 +51244,7 @@ st1679:
 	if ( ++p == pe )
 		goto _test_eof1679;
 case 1679:
-#line 50864 "shortcodes.c"
+#line 51248 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -50935,7 +51319,7 @@ st1682:
 	if ( ++p == pe )
 		goto _test_eof1682;
 case 1682:
-#line 50939 "shortcodes.c"
+#line 51323 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -50964,7 +51348,7 @@ st1684:
 	if ( ++p == pe )
 		goto _test_eof1684;
 case 1684:
-#line 50968 "shortcodes.c"
+#line 51352 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3178;
 		case 34: goto st1440;
@@ -50996,7 +51380,7 @@ st1685:
 	if ( ++p == pe )
 		goto _test_eof1685;
 case 1685:
-#line 51000 "shortcodes.c"
+#line 51384 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3178;
 		case 34: goto st1440;
@@ -51030,7 +51414,7 @@ st1686:
 	if ( ++p == pe )
 		goto _test_eof1686;
 case 1686:
-#line 51034 "shortcodes.c"
+#line 51418 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3163;
 		case 39: goto tr3163;
@@ -51066,7 +51450,7 @@ st1687:
 	if ( ++p == pe )
 		goto _test_eof1687;
 case 1687:
-#line 51070 "shortcodes.c"
+#line 51454 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3157;
 		case 34: goto st1440;
@@ -51109,7 +51493,7 @@ st1688:
 	if ( ++p == pe )
 		goto _test_eof1688;
 case 1688:
-#line 51113 "shortcodes.c"
+#line 51497 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -51138,7 +51522,7 @@ st1690:
 	if ( ++p == pe )
 		goto _test_eof1690;
 case 1690:
-#line 51142 "shortcodes.c"
+#line 51526 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3187;
 		case 34: goto st1309;
@@ -51170,7 +51554,7 @@ st1691:
 	if ( ++p == pe )
 		goto _test_eof1691;
 case 1691:
-#line 51174 "shortcodes.c"
+#line 51558 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3187;
 		case 34: goto st1309;
@@ -51204,7 +51588,7 @@ st1692:
 	if ( ++p == pe )
 		goto _test_eof1692;
 case 1692:
-#line 51208 "shortcodes.c"
+#line 51592 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2722;
 		case 39: goto tr2724;
@@ -51240,7 +51624,7 @@ st1693:
 	if ( ++p == pe )
 		goto _test_eof1693;
 case 1693:
-#line 51244 "shortcodes.c"
+#line 51628 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2716;
 		case 34: goto st1309;
@@ -51283,7 +51667,7 @@ st1694:
 	if ( ++p == pe )
 		goto _test_eof1694;
 case 1694:
-#line 51287 "shortcodes.c"
+#line 51671 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -51341,7 +51725,7 @@ st1697:
 	if ( ++p == pe )
 		goto _test_eof1697;
 case 1697:
-#line 51345 "shortcodes.c"
+#line 51729 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 37: goto st1698;
@@ -51381,7 +51765,7 @@ st1700:
 	if ( ++p == pe )
 		goto _test_eof1700;
 case 1700:
-#line 51385 "shortcodes.c"
+#line 51769 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3198;
 		case 34: goto st1309;
@@ -51413,7 +51797,7 @@ st1701:
 	if ( ++p == pe )
 		goto _test_eof1701;
 case 1701:
-#line 51417 "shortcodes.c"
+#line 51801 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3198;
 		case 34: goto st1309;
@@ -51447,7 +51831,7 @@ st1702:
 	if ( ++p == pe )
 		goto _test_eof1702;
 case 1702:
-#line 51451 "shortcodes.c"
+#line 51835 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2530;
 		case 39: goto tr2560;
@@ -51507,7 +51891,7 @@ st1703:
 	if ( ++p == pe )
 		goto _test_eof1703;
 case 1703:
-#line 51511 "shortcodes.c"
+#line 51895 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -51554,7 +51938,7 @@ st1705:
 	if ( ++p == pe )
 		goto _test_eof1705;
 case 1705:
-#line 51558 "shortcodes.c"
+#line 51942 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -51594,7 +51978,7 @@ st1708:
 	if ( ++p == pe )
 		goto _test_eof1708;
 case 1708:
-#line 51598 "shortcodes.c"
+#line 51982 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3209;
 		case 34: goto st1162;
@@ -51661,7 +52045,7 @@ st1709:
 	if ( ++p == pe )
 		goto _test_eof1709;
 case 1709:
-#line 51665 "shortcodes.c"
+#line 52049 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -51690,7 +52074,7 @@ st1711:
 	if ( ++p == pe )
 		goto _test_eof1711;
 case 1711:
-#line 51694 "shortcodes.c"
+#line 52078 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3209;
 		case 34: goto st1162;
@@ -51724,7 +52108,7 @@ st1712:
 	if ( ++p == pe )
 		goto _test_eof1712;
 case 1712:
-#line 51728 "shortcodes.c"
+#line 52112 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2548;
 		case 39: goto tr2519;
@@ -51749,7 +52133,7 @@ st1713:
 	if ( ++p == pe )
 		goto _test_eof1713;
 case 1713:
-#line 51753 "shortcodes.c"
+#line 52137 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3217;
 		case 34: goto st1273;
@@ -51779,7 +52163,7 @@ st1714:
 	if ( ++p == pe )
 		goto _test_eof1714;
 case 1714:
-#line 51783 "shortcodes.c"
+#line 52167 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3217;
 		case 34: goto st1273;
@@ -51811,7 +52195,7 @@ st1715:
 	if ( ++p == pe )
 		goto _test_eof1715;
 case 1715:
-#line 51815 "shortcodes.c"
+#line 52199 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2529;
 		case 39: goto tr2530;
@@ -51836,7 +52220,7 @@ st1716:
 	if ( ++p == pe )
 		goto _test_eof1716;
 case 1716:
-#line 51840 "shortcodes.c"
+#line 52224 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3222;
 		case 34: goto st1313;
@@ -51868,7 +52252,7 @@ st1717:
 	if ( ++p == pe )
 		goto _test_eof1717;
 case 1717:
-#line 51872 "shortcodes.c"
+#line 52256 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3222;
 		case 34: goto st1313;
@@ -51902,7 +52286,7 @@ st1718:
 	if ( ++p == pe )
 		goto _test_eof1718;
 case 1718:
-#line 51906 "shortcodes.c"
+#line 52290 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2519;
 		case 39: goto tr2521;
@@ -51938,7 +52322,7 @@ st1719:
 	if ( ++p == pe )
 		goto _test_eof1719;
 case 1719:
-#line 51942 "shortcodes.c"
+#line 52326 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2513;
 		case 34: goto st1313;
@@ -51981,7 +52365,7 @@ st1720:
 	if ( ++p == pe )
 		goto _test_eof1720;
 case 1720:
-#line 51985 "shortcodes.c"
+#line 52369 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -52040,7 +52424,7 @@ st1724:
 	if ( ++p == pe )
 		goto _test_eof1724;
 case 1724:
-#line 52044 "shortcodes.c"
+#line 52428 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3233;
 		case 34: goto st1313;
@@ -52109,7 +52493,7 @@ st1727:
 	if ( ++p == pe )
 		goto _test_eof1727;
 case 1727:
-#line 52113 "shortcodes.c"
+#line 52497 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3238;
 		case 34: goto st1313;
@@ -52152,7 +52536,7 @@ st1728:
 	if ( ++p == pe )
 		goto _test_eof1728;
 case 1728:
-#line 52156 "shortcodes.c"
+#line 52540 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3238;
 		case 34: goto st1313;
@@ -52195,7 +52579,7 @@ st1729:
 	if ( ++p == pe )
 		goto _test_eof1729;
 case 1729:
-#line 52199 "shortcodes.c"
+#line 52583 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -52259,7 +52643,7 @@ st1731:
 	if ( ++p == pe )
 		goto _test_eof1731;
 case 1731:
-#line 52263 "shortcodes.c"
+#line 52647 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 47: goto st1732;
@@ -52307,7 +52691,7 @@ st1735:
 	if ( ++p == pe )
 		goto _test_eof1735;
 case 1735:
-#line 52311 "shortcodes.c"
+#line 52695 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3248;
 		case 39: goto st1261;
@@ -52336,7 +52720,7 @@ st1736:
 	if ( ++p == pe )
 		goto _test_eof1736;
 case 1736:
-#line 52340 "shortcodes.c"
+#line 52724 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3248;
 		case 39: goto st1261;
@@ -52367,7 +52751,7 @@ st1737:
 	if ( ++p == pe )
 		goto _test_eof1737;
 case 1737:
-#line 52371 "shortcodes.c"
+#line 52755 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2362;
 		case 39: goto tr2499;
@@ -52410,7 +52794,7 @@ st1738:
 	if ( ++p == pe )
 		goto _test_eof1738;
 case 1738:
-#line 52414 "shortcodes.c"
+#line 52798 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 62: goto st1739;
@@ -52447,7 +52831,7 @@ st1741:
 	if ( ++p == pe )
 		goto _test_eof1741;
 case 1741:
-#line 52451 "shortcodes.c"
+#line 52835 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3255;
 		case 37: goto tr3256;
@@ -52513,7 +52897,7 @@ st1742:
 	if ( ++p == pe )
 		goto _test_eof1742;
 case 1742:
-#line 52517 "shortcodes.c"
+#line 52901 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -52540,7 +52924,7 @@ st1744:
 	if ( ++p == pe )
 		goto _test_eof1744;
 case 1744:
-#line 52544 "shortcodes.c"
+#line 52928 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3255;
 		case 37: goto tr3256;
@@ -52573,7 +52957,7 @@ st1745:
 	if ( ++p == pe )
 		goto _test_eof1745;
 case 1745:
-#line 52577 "shortcodes.c"
+#line 52961 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2466;
 		case 39: goto tr2489;
@@ -52633,7 +53017,7 @@ st1746:
 	if ( ++p == pe )
 		goto _test_eof1746;
 case 1746:
-#line 52637 "shortcodes.c"
+#line 53021 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 47: goto st1747;
@@ -52681,7 +53065,7 @@ st1750:
 	if ( ++p == pe )
 		goto _test_eof1750;
 case 1750:
-#line 52685 "shortcodes.c"
+#line 53069 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3266;
 		case 34: goto st1261;
@@ -52710,7 +53094,7 @@ st1751:
 	if ( ++p == pe )
 		goto _test_eof1751;
 case 1751:
-#line 52714 "shortcodes.c"
+#line 53098 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3266;
 		case 34: goto st1261;
@@ -52741,7 +53125,7 @@ st1752:
 	if ( ++p == pe )
 		goto _test_eof1752;
 case 1752:
-#line 52745 "shortcodes.c"
+#line 53129 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2465;
 		case 39: goto tr2466;
@@ -52803,7 +53187,7 @@ st1755:
 	if ( ++p == pe )
 		goto _test_eof1755;
 case 1755:
-#line 52807 "shortcodes.c"
+#line 53191 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3273;
 		case 34: goto st1261;
@@ -52845,7 +53229,7 @@ st1756:
 	if ( ++p == pe )
 		goto _test_eof1756;
 case 1756:
-#line 52849 "shortcodes.c"
+#line 53233 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3273;
 		case 34: goto st1261;
@@ -52887,7 +53271,7 @@ st1757:
 	if ( ++p == pe )
 		goto _test_eof1757;
 case 1757:
-#line 52891 "shortcodes.c"
+#line 53275 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -52942,7 +53326,7 @@ st1760:
 	if ( ++p == pe )
 		goto _test_eof1760;
 case 1760:
-#line 52946 "shortcodes.c"
+#line 53330 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 37: goto st1761;
@@ -52979,7 +53363,7 @@ st1763:
 	if ( ++p == pe )
 		goto _test_eof1763;
 case 1763:
-#line 52983 "shortcodes.c"
+#line 53367 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3282;
 		case 34: goto st1261;
@@ -53010,7 +53394,7 @@ st1764:
 	if ( ++p == pe )
 		goto _test_eof1764;
 case 1764:
-#line 53014 "shortcodes.c"
+#line 53398 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3282;
 		case 34: goto st1261;
@@ -53043,7 +53427,7 @@ st1765:
 	if ( ++p == pe )
 		goto _test_eof1765;
 case 1765:
-#line 53047 "shortcodes.c"
+#line 53431 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2436;
 		case 39: goto tr2438;
@@ -53103,7 +53487,7 @@ st1766:
 	if ( ++p == pe )
 		goto _test_eof1766;
 case 1766:
-#line 53107 "shortcodes.c"
+#line 53491 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -53148,7 +53532,7 @@ st1768:
 	if ( ++p == pe )
 		goto _test_eof1768;
 case 1768:
-#line 53152 "shortcodes.c"
+#line 53536 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 62: goto st1769;
@@ -53185,7 +53569,7 @@ st1771:
 	if ( ++p == pe )
 		goto _test_eof1771;
 case 1771:
-#line 53189 "shortcodes.c"
+#line 53573 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3293;
 		case 34: goto st8;
@@ -53251,7 +53635,7 @@ st1772:
 	if ( ++p == pe )
 		goto _test_eof1772;
 case 1772:
-#line 53255 "shortcodes.c"
+#line 53639 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -53278,7 +53662,7 @@ st1774:
 	if ( ++p == pe )
 		goto _test_eof1774;
 case 1774:
-#line 53282 "shortcodes.c"
+#line 53666 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3293;
 		case 34: goto st8;
@@ -53311,7 +53695,7 @@ st1775:
 	if ( ++p == pe )
 		goto _test_eof1775;
 case 1775:
-#line 53315 "shortcodes.c"
+#line 53699 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2425;
 		case 39: goto tr2400;
@@ -53336,7 +53720,7 @@ st1776:
 	if ( ++p == pe )
 		goto _test_eof1776;
 case 1776:
-#line 53340 "shortcodes.c"
+#line 53724 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3301;
 		case 37: goto tr3302;
@@ -53367,7 +53751,7 @@ st1777:
 	if ( ++p == pe )
 		goto _test_eof1777;
 case 1777:
-#line 53371 "shortcodes.c"
+#line 53755 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3301;
 		case 37: goto tr3302;
@@ -53400,7 +53784,7 @@ st1778:
 	if ( ++p == pe )
 		goto _test_eof1778;
 case 1778:
-#line 53404 "shortcodes.c"
+#line 53788 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2400;
 		case 39: goto tr2402;
@@ -53436,7 +53820,7 @@ st1779:
 	if ( ++p == pe )
 		goto _test_eof1779;
 case 1779:
-#line 53440 "shortcodes.c"
+#line 53824 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2394;
 		case 37: goto tr3308;
@@ -53478,7 +53862,7 @@ st1780:
 	if ( ++p == pe )
 		goto _test_eof1780;
 case 1780:
-#line 53482 "shortcodes.c"
+#line 53866 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -53533,7 +53917,7 @@ st1784:
 	if ( ++p == pe )
 		goto _test_eof1784;
 case 1784:
-#line 53537 "shortcodes.c"
+#line 53921 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3312;
 		case 39: goto st1261;
@@ -53599,7 +53983,7 @@ st1787:
 	if ( ++p == pe )
 		goto _test_eof1787;
 case 1787:
-#line 53603 "shortcodes.c"
+#line 53987 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3317;
 		case 37: goto tr3318;
@@ -53641,7 +54025,7 @@ st1788:
 	if ( ++p == pe )
 		goto _test_eof1788;
 case 1788:
-#line 53645 "shortcodes.c"
+#line 54029 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3317;
 		case 37: goto tr3318;
@@ -53683,7 +54067,7 @@ st1789:
 	if ( ++p == pe )
 		goto _test_eof1789;
 case 1789:
-#line 53687 "shortcodes.c"
+#line 54071 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -53728,7 +54112,7 @@ st1791:
 	if ( ++p == pe )
 		goto _test_eof1791;
 case 1791:
-#line 53732 "shortcodes.c"
+#line 54116 "shortcodes.c"
 	switch( (*p) ) {
 		case 62: goto st1792;
 		case 123: goto tr1;
@@ -53762,7 +54146,7 @@ st1794:
 	if ( ++p == pe )
 		goto _test_eof1794;
 case 1794:
-#line 53766 "shortcodes.c"
+#line 54150 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3326;
 		case 37: goto tr3327;
@@ -53827,7 +54211,7 @@ st1795:
 	if ( ++p == pe )
 		goto _test_eof1795;
 case 1795:
-#line 53831 "shortcodes.c"
+#line 54215 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1796;
@@ -53852,7 +54236,7 @@ st1797:
 	if ( ++p == pe )
 		goto _test_eof1797;
 case 1797:
-#line 53856 "shortcodes.c"
+#line 54240 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3326;
 		case 37: goto tr3327;
@@ -53884,7 +54268,7 @@ st1798:
 	if ( ++p == pe )
 		goto _test_eof1798;
 case 1798:
-#line 53888 "shortcodes.c"
+#line 54272 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2377;
 		case 39: goto tr2379;
@@ -53909,7 +54293,7 @@ st1799:
 	if ( ++p == pe )
 		goto _test_eof1799;
 case 1799:
-#line 53913 "shortcodes.c"
+#line 54297 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3334;
 		case 34: goto st1152;
@@ -53940,7 +54324,7 @@ st1800:
 	if ( ++p == pe )
 		goto _test_eof1800;
 case 1800:
-#line 53944 "shortcodes.c"
+#line 54328 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3334;
 		case 34: goto st1152;
@@ -53973,7 +54357,7 @@ st1801:
 	if ( ++p == pe )
 		goto _test_eof1801;
 case 1801:
-#line 53977 "shortcodes.c"
+#line 54361 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2360;
 		case 39: goto tr2362;
@@ -54009,7 +54393,7 @@ st1802:
 	if ( ++p == pe )
 		goto _test_eof1802;
 case 1802:
-#line 54013 "shortcodes.c"
+#line 54397 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2354;
 		case 34: goto st1152;
@@ -54051,7 +54435,7 @@ st1803:
 	if ( ++p == pe )
 		goto _test_eof1803;
 case 1803:
-#line 54055 "shortcodes.c"
+#line 54439 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -54088,7 +54472,7 @@ st1806:
 	if ( ++p == pe )
 		goto _test_eof1806;
 case 1806:
-#line 54092 "shortcodes.c"
+#line 54476 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3343;
 		case 34: goto st1152;
@@ -54117,7 +54501,7 @@ st1807:
 	if ( ++p == pe )
 		goto _test_eof1807;
 case 1807:
-#line 54121 "shortcodes.c"
+#line 54505 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3343;
 		case 34: goto st1152;
@@ -54148,7 +54532,7 @@ st1808:
 	if ( ++p == pe )
 		goto _test_eof1808;
 case 1808:
-#line 54152 "shortcodes.c"
+#line 54536 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2308;
 		case 39: goto tr2292;
@@ -54173,7 +54557,7 @@ st1809:
 	if ( ++p == pe )
 		goto _test_eof1809;
 case 1809:
-#line 54177 "shortcodes.c"
+#line 54561 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3348;
 		case 34: goto st1145;
@@ -54203,7 +54587,7 @@ st1810:
 	if ( ++p == pe )
 		goto _test_eof1810;
 case 1810:
-#line 54207 "shortcodes.c"
+#line 54591 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3348;
 		case 34: goto st1145;
@@ -54235,7 +54619,7 @@ st1811:
 	if ( ++p == pe )
 		goto _test_eof1811;
 case 1811:
-#line 54239 "shortcodes.c"
+#line 54623 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2271;
 		case 39: goto tr2272;
@@ -54299,7 +54683,7 @@ st1814:
 	if ( ++p == pe )
 		goto _test_eof1814;
 case 1814:
-#line 54303 "shortcodes.c"
+#line 54687 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3355;
 		case 34: goto st1145;
@@ -54342,7 +54726,7 @@ st1815:
 	if ( ++p == pe )
 		goto _test_eof1815;
 case 1815:
-#line 54346 "shortcodes.c"
+#line 54730 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3355;
 		case 34: goto st1145;
@@ -54385,7 +54769,7 @@ st1816:
 	if ( ++p == pe )
 		goto _test_eof1816;
 case 1816:
-#line 54389 "shortcodes.c"
+#line 54773 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -54443,7 +54827,7 @@ st1819:
 	if ( ++p == pe )
 		goto _test_eof1819;
 case 1819:
-#line 54447 "shortcodes.c"
+#line 54831 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 37: goto st1820;
@@ -54483,7 +54867,7 @@ st1822:
 	if ( ++p == pe )
 		goto _test_eof1822;
 case 1822:
-#line 54487 "shortcodes.c"
+#line 54871 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3364;
 		case 34: goto st1145;
@@ -54515,7 +54899,7 @@ st1823:
 	if ( ++p == pe )
 		goto _test_eof1823;
 case 1823:
-#line 54519 "shortcodes.c"
+#line 54903 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3364;
 		case 34: goto st1145;
@@ -54549,7 +54933,7 @@ st1824:
 	if ( ++p == pe )
 		goto _test_eof1824;
 case 1824:
-#line 54553 "shortcodes.c"
+#line 54937 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2218;
 		case 39: goto tr2235;
@@ -54574,7 +54958,7 @@ st1825:
 	if ( ++p == pe )
 		goto _test_eof1825;
 case 1825:
-#line 54578 "shortcodes.c"
+#line 54962 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3371;
 		case 34: goto st1119;
@@ -54604,7 +54988,7 @@ st1826:
 	if ( ++p == pe )
 		goto _test_eof1826;
 case 1826:
-#line 54608 "shortcodes.c"
+#line 54992 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3371;
 		case 34: goto st1119;
@@ -54636,7 +55020,7 @@ st1827:
 	if ( ++p == pe )
 		goto _test_eof1827;
 case 1827:
-#line 54640 "shortcodes.c"
+#line 55024 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2235;
 		case 39: goto tr2216;
@@ -54661,7 +55045,7 @@ st1828:
 	if ( ++p == pe )
 		goto _test_eof1828;
 case 1828:
-#line 54665 "shortcodes.c"
+#line 55049 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3376;
 		case 34: goto st1162;
@@ -54693,7 +55077,7 @@ st1829:
 	if ( ++p == pe )
 		goto _test_eof1829;
 case 1829:
-#line 54697 "shortcodes.c"
+#line 55081 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3376;
 		case 34: goto st1162;
@@ -54727,7 +55111,7 @@ st1830:
 	if ( ++p == pe )
 		goto _test_eof1830;
 case 1830:
-#line 54731 "shortcodes.c"
+#line 55115 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2216;
 		case 39: goto tr2218;
@@ -54763,7 +55147,7 @@ st1831:
 	if ( ++p == pe )
 		goto _test_eof1831;
 case 1831:
-#line 54767 "shortcodes.c"
+#line 55151 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2210;
 		case 34: goto st1162;
@@ -54806,7 +55190,7 @@ st1832:
 	if ( ++p == pe )
 		goto _test_eof1832;
 case 1832:
-#line 54810 "shortcodes.c"
+#line 55194 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -54865,7 +55249,7 @@ st1836:
 	if ( ++p == pe )
 		goto _test_eof1836;
 case 1836:
-#line 54869 "shortcodes.c"
+#line 55253 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3387;
 		case 34: goto st1162;
@@ -54934,7 +55318,7 @@ st1839:
 	if ( ++p == pe )
 		goto _test_eof1839;
 case 1839:
-#line 54938 "shortcodes.c"
+#line 55322 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3392;
 		case 34: goto st1162;
@@ -54977,7 +55361,7 @@ st1840:
 	if ( ++p == pe )
 		goto _test_eof1840;
 case 1840:
-#line 54981 "shortcodes.c"
+#line 55365 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3392;
 		case 34: goto st1162;
@@ -55020,7 +55404,7 @@ st1841:
 	if ( ++p == pe )
 		goto _test_eof1841;
 case 1841:
-#line 55024 "shortcodes.c"
+#line 55408 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -55049,7 +55433,7 @@ st1843:
 	if ( ++p == pe )
 		goto _test_eof1843;
 case 1843:
-#line 55053 "shortcodes.c"
+#line 55437 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3399;
 		case 37: goto tr3400;
@@ -55080,7 +55464,7 @@ st1844:
 	if ( ++p == pe )
 		goto _test_eof1844;
 case 1844:
-#line 55084 "shortcodes.c"
+#line 55468 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3399;
 		case 37: goto tr3400;
@@ -55113,7 +55497,7 @@ st1845:
 	if ( ++p == pe )
 		goto _test_eof1845;
 case 1845:
-#line 55117 "shortcodes.c"
+#line 55501 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2169;
 		case 39: goto tr2171;
@@ -55149,7 +55533,7 @@ st1846:
 	if ( ++p == pe )
 		goto _test_eof1846;
 case 1846:
-#line 55153 "shortcodes.c"
+#line 55537 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2163;
 		case 37: goto tr3406;
@@ -55191,7 +55575,7 @@ st1847:
 	if ( ++p == pe )
 		goto _test_eof1847;
 case 1847:
-#line 55195 "shortcodes.c"
+#line 55579 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -55246,7 +55630,7 @@ st1851:
 	if ( ++p == pe )
 		goto _test_eof1851;
 case 1851:
-#line 55250 "shortcodes.c"
+#line 55634 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3410;
 		case 39: goto st1152;
@@ -55312,7 +55696,7 @@ st1854:
 	if ( ++p == pe )
 		goto _test_eof1854;
 case 1854:
-#line 55316 "shortcodes.c"
+#line 55700 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3415;
 		case 37: goto tr3416;
@@ -55354,7 +55738,7 @@ st1855:
 	if ( ++p == pe )
 		goto _test_eof1855;
 case 1855:
-#line 55358 "shortcodes.c"
+#line 55742 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3415;
 		case 37: goto tr3416;
@@ -55396,7 +55780,7 @@ st1856:
 	if ( ++p == pe )
 		goto _test_eof1856;
 case 1856:
-#line 55400 "shortcodes.c"
+#line 55784 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -55458,7 +55842,7 @@ st1858:
 	if ( ++p == pe )
 		goto _test_eof1858;
 case 1858:
-#line 55462 "shortcodes.c"
+#line 55846 "shortcodes.c"
 	switch( (*p) ) {
 		case 47: goto st1859;
 		case 123: goto tr1;
@@ -55502,7 +55886,7 @@ st1862:
 	if ( ++p == pe )
 		goto _test_eof1862;
 case 1862:
-#line 55506 "shortcodes.c"
+#line 55890 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3425;
 		case 42: goto tr3426;
@@ -55530,7 +55914,7 @@ st1863:
 	if ( ++p == pe )
 		goto _test_eof1863;
 case 1863:
-#line 55534 "shortcodes.c"
+#line 55918 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3425;
 		case 42: goto tr3426;
@@ -55560,7 +55944,7 @@ st1864:
 	if ( ++p == pe )
 		goto _test_eof1864;
 case 1864:
-#line 55564 "shortcodes.c"
+#line 55948 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2150;
 		case 39: goto tr2151;
@@ -55585,7 +55969,7 @@ st1865:
 	if ( ++p == pe )
 		goto _test_eof1865;
 case 1865:
-#line 55589 "shortcodes.c"
+#line 55973 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3430;
 		case 39: goto st8;
@@ -55614,7 +55998,7 @@ st1866:
 	if ( ++p == pe )
 		goto _test_eof1866;
 case 1866:
-#line 55618 "shortcodes.c"
+#line 56002 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3430;
 		case 39: goto st8;
@@ -55645,7 +56029,7 @@ st1867:
 	if ( ++p == pe )
 		goto _test_eof1867;
 case 1867:
-#line 55649 "shortcodes.c"
+#line 56033 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2126;
 		case 39: goto tr2127;
@@ -55707,7 +56091,7 @@ st1870:
 	if ( ++p == pe )
 		goto _test_eof1870;
 case 1870:
-#line 55711 "shortcodes.c"
+#line 56095 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3437;
 		case 37: goto tr3438;
@@ -55749,7 +56133,7 @@ st1871:
 	if ( ++p == pe )
 		goto _test_eof1871;
 case 1871:
-#line 55753 "shortcodes.c"
+#line 56137 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3437;
 		case 37: goto tr3438;
@@ -55791,7 +56175,7 @@ st1872:
 	if ( ++p == pe )
 		goto _test_eof1872;
 case 1872:
-#line 55795 "shortcodes.c"
+#line 56179 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -55818,7 +56202,7 @@ st1874:
 	if ( ++p == pe )
 		goto _test_eof1874;
 case 1874:
-#line 55822 "shortcodes.c"
+#line 56206 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3444;
 		case 34: goto st8;
@@ -55849,7 +56233,7 @@ st1875:
 	if ( ++p == pe )
 		goto _test_eof1875;
 case 1875:
-#line 55853 "shortcodes.c"
+#line 56237 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3444;
 		case 34: goto st8;
@@ -55882,7 +56266,7 @@ st1876:
 	if ( ++p == pe )
 		goto _test_eof1876;
 case 1876:
-#line 55886 "shortcodes.c"
+#line 56270 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2062;
 		case 39: goto tr2064;
@@ -55918,7 +56302,7 @@ st1877:
 	if ( ++p == pe )
 		goto _test_eof1877;
 case 1877:
-#line 55922 "shortcodes.c"
+#line 56306 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2056;
 		case 34: goto st8;
@@ -55960,7 +56344,7 @@ st1878:
 	if ( ++p == pe )
 		goto _test_eof1878;
 case 1878:
-#line 55964 "shortcodes.c"
+#line 56348 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -56015,7 +56399,7 @@ st1882:
 	if ( ++p == pe )
 		goto _test_eof1882;
 case 1882:
-#line 56019 "shortcodes.c"
+#line 56403 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3455;
 		case 34: goto st8;
@@ -56081,7 +56465,7 @@ st1885:
 	if ( ++p == pe )
 		goto _test_eof1885;
 case 1885:
-#line 56085 "shortcodes.c"
+#line 56469 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3460;
 		case 34: goto st8;
@@ -56123,7 +56507,7 @@ st1886:
 	if ( ++p == pe )
 		goto _test_eof1886;
 case 1886:
-#line 56127 "shortcodes.c"
+#line 56511 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3460;
 		case 34: goto st8;
@@ -56165,7 +56549,7 @@ st1887:
 	if ( ++p == pe )
 		goto _test_eof1887;
 case 1887:
-#line 56169 "shortcodes.c"
+#line 56553 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -56192,7 +56576,7 @@ st1889:
 	if ( ++p == pe )
 		goto _test_eof1889;
 case 1889:
-#line 56196 "shortcodes.c"
+#line 56580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3467;
 		case 37: goto tr3468;
@@ -56222,7 +56606,7 @@ st1890:
 	if ( ++p == pe )
 		goto _test_eof1890;
 case 1890:
-#line 56226 "shortcodes.c"
+#line 56610 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3467;
 		case 37: goto tr3468;
@@ -56254,7 +56638,7 @@ st1891:
 	if ( ++p == pe )
 		goto _test_eof1891;
 case 1891:
-#line 56258 "shortcodes.c"
+#line 56642 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr14;
 		case 39: goto tr16;
@@ -56290,7 +56674,7 @@ st1892:
 	if ( ++p == pe )
 		goto _test_eof1892;
 case 1892:
-#line 56294 "shortcodes.c"
+#line 56678 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr8;
 		case 37: goto tr3474;
@@ -56331,7 +56715,7 @@ st1893:
 	if ( ++p == pe )
 		goto _test_eof1893;
 case 1893:
-#line 56335 "shortcodes.c"
+#line 56719 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1894;
@@ -56382,7 +56766,7 @@ st1897:
 	if ( ++p == pe )
 		goto _test_eof1897;
 case 1897:
-#line 56386 "shortcodes.c"
+#line 56770 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3478;
 		case 42: goto tr3479;
@@ -56445,7 +56829,7 @@ st1900:
 	if ( ++p == pe )
 		goto _test_eof1900;
 case 1900:
-#line 56449 "shortcodes.c"
+#line 56833 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3483;
 		case 37: goto tr3484;
@@ -56486,7 +56870,7 @@ st1901:
 	if ( ++p == pe )
 		goto _test_eof1901;
 case 1901:
-#line 56490 "shortcodes.c"
+#line 56874 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3483;
 		case 37: goto tr3484;
@@ -56527,7 +56911,7 @@ st1902:
 	if ( ++p == pe )
 		goto _test_eof1902;
 case 1902:
-#line 56531 "shortcodes.c"
+#line 56915 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1903;
@@ -58483,7 +58867,7 @@ case 1903:
 	_test_eof: {}
 	}
 
-#line 197 "shortcodes.rl"
+#line 201 "shortcodes.rl"
 
   result.sccount = c_sc;
   return result;

@@ -136,12 +136,16 @@
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
+    // Go back in the list of shortcodes from the previous one 
     for (int i=c_sc-1; i>=0; i--) {
-      if (!sc_list[i].closed && sc_list[i].name.len == sc_list[c_sc].name.len &&
+
+      if (!sc_list[i].closed  // If it's a not-closed 
+        && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
+        && // Same name
           strncmp(
             start + sc_list[i].name.start,
             start + sc_list[c_sc].name.start,
-            sc_list[c_sc-1].name.len) ==0) {
+            sc_list[c_sc].name.len) ==0) {
         // This is the one!
         // So, it's a matching shortcode
         sc_list[i].matching = 1;

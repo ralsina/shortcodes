@@ -224,29 +224,26 @@ describe "Shortcodes" do
   end
 
   it "should ignore nested shortcodes" do
-    # This only fails if the inner shortcode has a name
-    # 8 or more characters long, which is insane
-    input = %({{% raw %}}{{< foobarba >}}{{% /raw %}})
+    input = %({{% raw %}}{{< foobarbat >}}{{% /raw %}})
     result = Shortcodes.parse(input)
-    pp! result
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "raw"
     result.shortcodes[0].matching?.should be_true
-    result.shortcodes[0].data.should eq "{{% foobarba %}}"
+    result.shortcodes[0].data.should eq "{{< foobarbat >}}"
   end
 
-  # it "should ignore nested shortcodes with inner inline" do
-  #   input = %(
-  #     {{< raw >}}{{% abcdefgh %}}{{% /abcdefgh %}}{{< /raw >}}
-  #   )
-  #   result = Shortcodes.parse(input)
-  #   result.shortcodes.size.should eq 1
-  #   result.errors.size.should eq 0
-  #   result.shortcodes[0].name.should eq "raw"
-  #   result.shortcodes[0].matching?.should be_true
-  #   result.shortcodes[0].data.should eq "{{% foo.inline %}}{{% /foo.inline %}}"
-  # end
+  it "should ignore nested shortcodes with inner inline" do
+    input = %(
+      {{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}}
+    )
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "raw"
+    result.shortcodes[0].matching?.should be_true
+    result.shortcodes[0].data.should eq "{{% foo.inline %}}{{% /foo.inline %}}"
+  end
 
   it "should ignore nested matching shortcodes" do
     input = %({{< raw >}}{{%heading%}}inner{{%/heading%}}{{< /raw >}})

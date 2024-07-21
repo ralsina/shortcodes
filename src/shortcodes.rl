@@ -13,7 +13,14 @@
   sep = space+;
   path = (alnum | '/' )+;
 
-  name = (alpha+ path?)
+  /* 
+  * sc_list is a list of shortcodes
+  * c_sc is the current shortcode we are parsing
+  * argnames is the list of arguments for the shortcode
+  */
+
+  /* name is the first word in the sc can be a path */
+  name = (alpha+ path?) 
     > mark
     %{ 
       sc_list[c_sc].name.start = mark-start;
@@ -26,12 +33,15 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
       };
-  argname = alpha+
+  /* name for the arg, just a word */
+  argname = alpha+  
     > mark
     % {
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
     };
+
+  /* quoted string, between double quotes */
   qvalue = ('"' [^"]* '"')
     > mark
     % {
@@ -44,6 +54,7 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
     };
 
+  /* A value, letters or numbers */
   value = alnum+
     > mark
     % {
@@ -56,21 +67,28 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
     };
 
+  /* An argument is a name, an = and a value or quoted value */
+  /* Or, just a value or qvalue (positional argument) */
   arg = ((argname '=')? (value|qvalue));
 
+  /* A shortcode with markdown content */
   start_p = ('{{%');
   end_p = '%}}'
   @{sc_list[c_sc].markdown = 1;};
 
+  /* A shortcode with verbatim content */
   start_b = ('{{<');
   end_b = '>}}' 
   @{sc_list[c_sc].markdown = 0;};
 
+  /* Inside a shortcode is content: name, zero or more arguments */
   content = spc name (sep arg)* spc;
 
+  /* Both possible starts or ends */
   start = start_p | start_b ;
   end = end_p | end_b ;
 
+  /* Mismatched start and end, remove it */
   mismatched = ((start_p content end_b) | (start_b content end_p)) 
   @{
     // Since it's mismatched, remove the name
@@ -81,6 +99,7 @@
     result.errcount++;
   };
 
+  /* A full shortcode */
   shortcode = ((start_p content end_p) | (start_b content end_b))
   > {
       sc_list[c_sc].whole.start = p-start-1;
@@ -91,9 +110,11 @@
       c_sc++;
     };
 
+  /* A closing shortcode for matched "tags" */
   closing_shortcode = (start spc '/' name spc end)
   > {sc_mark = p;};
 
+  /* Only close matched shortcodes */
   matched_shortcode = (shortcode any* closing_shortcode)
   @ {
     // First find what opening shortcode we are closing

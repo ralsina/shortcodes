@@ -116,6 +116,7 @@ describe "Shortcodes" do
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
     result.shortcodes[0].matching?.should be_true
+    result.shortcodes[0].is_inline?.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}blah {{% /shortcode %}}"
     result.shortcodes[0].data.should eq "blah "

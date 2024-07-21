@@ -19,16 +19,18 @@
   # argnames is the list of arguments for the shortcode
 
   # name is the first word in the sc can be a path
-  name = (alpha+ path?) 
+  name = (alpha+ path?)
     > mark
-    %{ 
+    %{
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
-      if (p-mark > 7) {
-        sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
+      if (p-mark > 7 && !strncmp(p-7, ".inline", 7)) {
+        sc_list[c_sc].is_inline = 1;
+      } else {
+        sc_list[c_sc].is_inline = 0;
       }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
@@ -36,7 +38,7 @@
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
       };
   # name for the arg, just a word
-  argname = alpha+  
+  argname = alpha+
     > mark
     % {
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
@@ -85,7 +87,7 @@
 
   # A shortcode with verbatim content
   start_b = ('{{<');
-  end_b = '>}}' 
+  end_b = '>}}'
   @{sc_list[c_sc].markdown = 0;};
   end_b_sc = '/>}}'
   @{sc_list[c_sc].markdown = 1;
@@ -105,7 +107,7 @@
   end = end_p | end_b | end_p_sc | end_b_sc;
 
   # Mismatched start and end, remove it
-  mismatched = ((start_p content end_b) | (start_b content end_p)) 
+  mismatched = ((start_p content end_b) | (start_b content end_p))
   @{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -136,10 +138,10 @@
     // First find what opening shortcode we are closing
     // IF ANY!
     int found = 0;
-    // Go back in the list of shortcodes from the previous one 
+    // Go back in the list of shortcodes from the previous one
     for (int i=c_sc-1; i>=0; i--) {
 
-      if (!sc_list[i].closed  // If it's a not-closed 
+      if (!sc_list[i].closed  // If it's a not-closed
         && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
         && // Same name
           strncmp(
@@ -160,16 +162,16 @@
         c_sc = i+1;
         found = 1;
         break;
-      } 
+      }
     }
     if (!found) {
       // We are not closing any shortcode, error
-      result.errors[result.errcount].position = 
+      result.errors[result.errcount].position =
           sc_list[c_sc].whole.start;
       result.errors[result.errcount].code = ERR_MISMATCHED_CLOSING_TAG;
       result.errcount++;
       // Do NOT increase c_sc
-    } 
+    }
 };
 
   main := (any* (shortcode | matched_shortcode | mismatched))*;

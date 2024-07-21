@@ -11,14 +11,15 @@ lib LibShortcodes
   end
 
   struct Shortcode
+    closed : LibC::Char
     escaped : LibC::Char
+    is_inline : LibC::Char
+    markdown : LibC::Char
+    matching : LibC::Char
     self_closing : LibC::Char
     whole : Chunk
     name : Chunk
     data : Chunk
-    matching : LibC::Char
-    markdown : LibC::Char
-    is_inline : LibC::Char
     argnames : Chunk[100]
     argvals : Chunk[100]
     argcount : UInt32

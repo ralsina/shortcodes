@@ -2,14 +2,13 @@
 
 ## Things That May Get Done
 
-* Inform tag type (% or <) in result
+* ✅ Inform tag type (% or <) in result
 * Handle other kinds of quotes
 * Handle escaping quote characters
 * Handle escaping the shortcode itself like `\{{% foo %}}` (check with hugo docs)
-* Report errors on mismatched `{{% foo >}}`
-* Add self-closing shortcodes `{{< foo />}}` 
-  (also, how TF do they work?)
+* ✅ Report errors on mismatched `{{% foo >}}`
+* Add self-closing shortcodes `{{< foo />}}` (also, how TF do they work?)
 * Add inline shortcodes `{{< time.inline >}}{{ now }}{{< /time.inline >}}`
-* Start integrating with Crystal
-* ~~Produce decent error structures~~
-* ~~Detect mismatched start/end like {{% foo >}}~~ 
+* ✅ Start integrating with Crystal
+* ✅ Produce decent error structures
+* ✅ Detect mismatched start/end like {{% foo >}}

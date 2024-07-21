@@ -298,6 +298,14 @@ describe "Shortcodes" do
     result.shortcodes[0].data.should eq "{{ now }}"
   end
 
+  pending "should mark shortcodes as self-closing" do
+    input = "{{< innershortcode />}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 0
+    result.shortcodes.size.should eq 1
+    result.shortcodes[0].self_closing?.should be_true
+  end
+
   it "should mark shortcodes as escaped" do
     input = "{{</* foobar */>}}"
     result = Shortcodes.parse(input)

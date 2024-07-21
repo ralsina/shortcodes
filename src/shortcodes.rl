@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "shortcodes.h"
 
 %%{
@@ -11,7 +12,7 @@
 
   spc = space*;
   sep = space+;
-  path = (alnum | '/' )+;
+  path = (alnum | '/' | '.' )+;
 
   # sc_list is a list of shortcodes
   # c_sc is the current shortcode we are parsing
@@ -26,6 +27,9 @@
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
+      if (sc_list[c_sc].name.len > 7) {
+        sc_list[c_sc].is_inline = abs(strncmp(p-7, ".inline", 7));  
+      }
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;

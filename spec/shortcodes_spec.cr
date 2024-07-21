@@ -289,7 +289,7 @@ describe "Shortcodes" do
     result.errors.size.should eq 0
   end
 
-  pending "should mark shortcodes as inline" do
+  it "should mark shortcodes as inline" do
     input = "{{< time.inline >}}{{ now }}{{< /time.inline >}}"
     result = Shortcodes.parse(input)
     result.errors.size.should eq 0

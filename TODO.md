@@ -3,7 +3,7 @@
 ## Things That May Get Done
 
 * ✅ Inform tag type (% or <) in result
-* Handle other kinds of quotes
+* ✅ Handle other kinds of quotes
 * Handle escaping quote characters
 * Handle escaping the shortcode itself like `\{{% foo %}}` (check with hugo docs)
 * ✅ Report errors on mismatched `{{% foo >}}`

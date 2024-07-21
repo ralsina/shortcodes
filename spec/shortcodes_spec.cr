@@ -13,6 +13,7 @@ describe "Shortcodes" do
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode"
     result.shortcodes[0].matching?.should be_false
+    result.shortcodes[0].is_inline?.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}"
   end
@@ -23,6 +24,7 @@ describe "Shortcodes" do
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "shortcode.foo/bar"
     result.shortcodes[0].matching?.should be_false
+    result.shortcodes[0].is_inline?.should be_false
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode.foo/bar %}}"
   end

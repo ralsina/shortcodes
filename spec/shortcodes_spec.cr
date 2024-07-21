@@ -17,6 +17,16 @@ describe "Shortcodes" do
     result.shortcodes[0].whole.should eq "{{% shortcode %}}"
   end
 
+  it "should parse simeple shortcode with . and / in the name" do
+    result = Shortcodes.parse("foobar {{% shortcode.foo/bar %}}blah")
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "shortcode.foo/bar"
+    result.shortcodes[0].matching?.should be_false
+    result.shortcodes[0].args.size.should eq 0
+    result.shortcodes[0].whole.should eq "{{% shortcode.foo/bar %}}"
+  end
+
   it "should report mismatched tags" do
     input = "foobar {{% shortcode %}}blah{{% /foo %}}"
     result = Shortcodes.parse(input)
@@ -106,6 +116,17 @@ describe "Shortcodes" do
     result.shortcodes[0].matching?.should be_true
     result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].whole.should eq "{{% shortcode %}}blah {{% /shortcode %}}"
+    result.shortcodes[0].data.should eq "blah "
+  end
+
+  it "should parse matching shortcodes with names containing . and /" do
+    input = "foobar {{% shortcode.foo/bar %}}blah {{% /shortcode.foo/bar %}} blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].name.should eq "shortcode.foo/bar"
+    result.shortcodes[0].matching?.should be_true
+    result.shortcodes[0].args.size.should eq 0
     result.shortcodes[0].data.should eq "blah "
   end
 
@@ -223,13 +244,15 @@ describe "Shortcodes" do
   end
 
   it "should ignore nested shortcodes with inner inline" do
-    input = %({{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}})
+    input = %(
+      {{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}}
+    )
     result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
     result.shortcodes[0].name.should eq "raw"
     result.shortcodes[0].matching?.should be_true
-    result.shortcodes[0].data.should eq "{{% figure %}}"
+    result.shortcodes[0].data.should eq "{{% foo %}}{{% /foo %}}"
   end
 
   it "should ignore nested matching shortcodes" do

@@ -21,6 +21,7 @@ as close as practical.
 * Capture data between tags in matched shortcodes
 * Self-closing shortcodes
 * Inline shortcodes
+* Markdown and Verbatim shortcodes
 * Capture arguments with and without names
 * Capture values with and without single/double quotes (no support for quote escaping)
 * UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)

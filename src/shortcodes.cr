@@ -62,7 +62,7 @@ module Shortcodes
     property? escaped : Bool = false
     property args : Array(Arg) = [] of Arg
     property whole : String = ""
-    property position : UInt32 = 0
+    property position : Int32 = 0
     property len : UInt32 = 0
 
     def initialize(
@@ -131,7 +131,8 @@ module Shortcodes
         sc.escaped == 1,
         args,
         extract(sc.whole, input),
-        sc.whole.start,
+        # start is in BYTES, not chars
+        String.new(input.to_slice[0, sc.whole.start]).size,
         sc.whole.len,
       )
     end

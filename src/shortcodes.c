@@ -6,7 +6,7 @@
 #include "shortcodes.h"
 
 
-#line 178 "shortcodes.rl"
+#line 179 "shortcodes.rl"
 
 
 
@@ -21,7 +21,7 @@ static const int shortcode_error = -1;
 static const int shortcode_en_main = 1904;
 
 
-#line 184 "shortcodes.rl"
+#line 185 "shortcodes.rl"
   char *eof = input + len;
   char *ts, *te = 0;
   int cs, act = 0;
@@ -45,7 +45,7 @@ static const int shortcode_en_main = 1904;
 	cs = shortcode_start;
 	}
 
-#line 202 "shortcodes.rl"
+#line 203 "shortcodes.rl"
   
 #line 51 "shortcodes.c"
 	{
@@ -54,9 +54,9 @@ static const int shortcode_en_main = 1904;
 	switch ( cs )
 	{
 tr2049:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -67,9 +67,9 @@ tr2049:
   }
 	goto st1904;
 tr2385:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -95,7 +95,7 @@ case 0:
 		goto tr1;
 	goto st0;
 tr1:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -109,7 +109,7 @@ case 1:
 		goto tr2;
 	goto st0;
 tr2:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -193,6 +193,7 @@ case 5:
 tr8:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -210,7 +211,7 @@ tr8:
       }
 	goto st6;
 tr24:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -222,7 +223,7 @@ tr24:
     }
 	goto st6;
 tr3467:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -237,7 +238,7 @@ st6:
 	if ( ++p == pe )
 		goto _test_eof6;
 case 6:
-#line 241 "shortcodes.c"
+#line 242 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st6;
 		case 34: goto tr14;
@@ -269,7 +270,7 @@ st7:
 	if ( ++p == pe )
 		goto _test_eof7;
 case 7:
-#line 273 "shortcodes.c"
+#line 274 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -292,6 +293,7 @@ case 8:
 tr9:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -309,7 +311,7 @@ tr9:
       }
 	goto st9;
 tr25:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -321,7 +323,7 @@ tr25:
     }
 	goto st9;
 tr3468:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -336,7 +338,7 @@ st9:
 	if ( ++p == pe )
 		goto _test_eof9;
 case 9:
-#line 340 "shortcodes.c"
+#line 342 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st10;
@@ -352,9 +354,9 @@ case 10:
 	}
 	goto st0;
 tr29:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -362,9 +364,9 @@ tr29:
     }
 	goto st1905;
 tr50:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -406,11 +408,11 @@ tr50:
 }
 	goto st1905;
 tr54:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -452,11 +454,11 @@ tr54:
 }
 	goto st1905;
 tr56:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -498,9 +500,9 @@ tr56:
 }
 	goto st1905;
 tr58:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -542,13 +544,13 @@ tr58:
 }
 	goto st1905;
 tr62:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -590,13 +592,13 @@ tr62:
 }
 	goto st1905;
 tr64:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -638,11 +640,11 @@ tr64:
 }
 	goto st1905;
 tr88:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -650,9 +652,9 @@ tr88:
     }
 	goto st1905;
 tr90:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -663,13 +665,13 @@ tr90:
   }
 	goto st1905;
 tr2030:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -677,9 +679,9 @@ tr2030:
     }
 	goto st1905;
 tr1975:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -687,9 +689,9 @@ tr1975:
     }
 	goto st1905;
 tr605:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -700,11 +702,11 @@ tr605:
   }
 	goto st1905;
 tr1865:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -712,9 +714,9 @@ tr1865:
     }
 	goto st1905;
 tr1872:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -722,13 +724,13 @@ tr1872:
     }
 	goto st1905;
 tr2045:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -739,7 +741,7 @@ st1905:
 	if ( ++p == pe )
 		goto _test_eof1905;
 case 1905:
-#line 743 "shortcodes.c"
+#line 745 "shortcodes.c"
 	if ( (*p) == 123 )
 		goto tr31;
 	goto st11;
@@ -751,34 +753,34 @@ case 11:
 		goto tr31;
 	goto st11;
 tr31:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st12;
 st12:
 	if ( ++p == pe )
 		goto _test_eof12;
 case 12:
-#line 766 "shortcodes.c"
+#line 768 "shortcodes.c"
 	if ( (*p) == 123 )
 		goto tr32;
 	goto st11;
 tr32:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st13;
 st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 782 "shortcodes.c"
+#line 784 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st14;
 		case 60: goto st1093;
@@ -843,7 +845,7 @@ st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 847 "shortcodes.c"
+#line 849 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr41;
@@ -866,6 +868,7 @@ case 17:
 tr40:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -886,7 +889,7 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 890 "shortcodes.c"
+#line 893 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st18;
 		case 37: goto st19;
@@ -900,6 +903,7 @@ case 18:
 tr41:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -920,7 +924,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 924 "shortcodes.c"
+#line 928 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st20;
@@ -984,6 +988,7 @@ case 25:
 tr44:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1004,7 +1009,7 @@ st26:
 	if ( ++p == pe )
 		goto _test_eof26;
 case 26:
-#line 1008 "shortcodes.c"
+#line 1013 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st27;
@@ -1022,6 +1027,7 @@ case 27:
 tr43:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1042,7 +1048,7 @@ st28:
 	if ( ++p == pe )
 		goto _test_eof28;
 case 28:
-#line 1046 "shortcodes.c"
+#line 1052 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr40;
 		case 37: goto tr59;
@@ -1065,6 +1071,7 @@ case 28:
 tr59:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1085,7 +1092,7 @@ st29:
 	if ( ++p == pe )
 		goto _test_eof29;
 case 29:
-#line 1089 "shortcodes.c"
+#line 1096 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st30;
@@ -1103,6 +1110,7 @@ case 30:
 tr60:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1123,7 +1131,7 @@ st31:
 	if ( ++p == pe )
 		goto _test_eof31;
 case 31:
-#line 1127 "shortcodes.c"
+#line 1135 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st32;
@@ -1148,7 +1156,7 @@ st33:
 	if ( ++p == pe )
 		goto _test_eof33;
 case 33:
-#line 1152 "shortcodes.c"
+#line 1160 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr65;
 		case 37: goto tr66;
@@ -1171,6 +1179,7 @@ case 33:
 tr65:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1188,7 +1197,7 @@ tr65:
       }
 	goto st34;
 tr81:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -1200,7 +1209,7 @@ tr81:
     }
 	goto st34;
 tr2021:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -1215,7 +1224,7 @@ st34:
 	if ( ++p == pe )
 		goto _test_eof34;
 case 34:
-#line 1219 "shortcodes.c"
+#line 1228 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st34;
 		case 34: goto tr71;
@@ -1247,7 +1256,7 @@ st35:
 	if ( ++p == pe )
 		goto _test_eof35;
 case 35:
-#line 1251 "shortcodes.c"
+#line 1260 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -1270,6 +1279,7 @@ case 36:
 tr66:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1287,7 +1297,7 @@ tr66:
       }
 	goto st37;
 tr82:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -1299,7 +1309,7 @@ tr82:
     }
 	goto st37;
 tr2022:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -1314,7 +1324,7 @@ st37:
 	if ( ++p == pe )
 		goto _test_eof37;
 case 37:
-#line 1318 "shortcodes.c"
+#line 1328 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st38;
@@ -1330,7 +1340,7 @@ case 38:
 	}
 	goto st11;
 tr83:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -1342,7 +1352,7 @@ tr83:
     }
 	goto st39;
 tr2023:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -1357,7 +1367,7 @@ st39:
 	if ( ++p == pe )
 		goto _test_eof39;
 case 39:
-#line 1361 "shortcodes.c"
+#line 1371 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st40;
 		case 123: goto tr31;
@@ -1384,6 +1394,7 @@ case 41:
 tr69:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1401,7 +1412,7 @@ tr69:
       }
 	goto st42;
 tr84:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -1413,7 +1424,7 @@ tr84:
     }
 	goto st42;
 tr2025:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -1428,7 +1439,7 @@ st42:
 	if ( ++p == pe )
 		goto _test_eof42;
 case 42:
-#line 1432 "shortcodes.c"
+#line 1443 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st43;
@@ -1444,36 +1455,36 @@ case 43:
 	}
 	goto st11;
 tr80:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st44;
 st44:
 	if ( ++p == pe )
 		goto _test_eof44;
 case 44:
-#line 1459 "shortcodes.c"
+#line 1470 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr91;
 	}
 	goto st35;
 tr91:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st45;
 st45:
 	if ( ++p == pe )
 		goto _test_eof45;
 case 45:
-#line 1477 "shortcodes.c"
+#line 1488 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 37: goto st46;
@@ -1543,7 +1554,7 @@ st49:
 	if ( ++p == pe )
 		goto _test_eof49;
 case 49:
-#line 1547 "shortcodes.c"
+#line 1558 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr99;
 		case 34: goto st36;
@@ -1567,6 +1578,7 @@ case 49:
 tr99:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1587,7 +1599,7 @@ st50:
 	if ( ++p == pe )
 		goto _test_eof50;
 case 50:
-#line 1591 "shortcodes.c"
+#line 1603 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st50;
 		case 34: goto st36;
@@ -1602,6 +1614,7 @@ case 50:
 tr100:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -1622,7 +1635,7 @@ st51:
 	if ( ++p == pe )
 		goto _test_eof51;
 case 51:
-#line 1626 "shortcodes.c"
+#line 1639 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -1640,9 +1653,9 @@ case 52:
 	}
 	goto st35;
 tr142:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1650,9 +1663,9 @@ tr142:
     }
 	goto st1906;
 tr109:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1694,11 +1707,11 @@ tr109:
 }
 	goto st1906;
 tr113:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1740,11 +1753,11 @@ tr113:
 }
 	goto st1906;
 tr115:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1786,9 +1799,9 @@ tr115:
 }
 	goto st1906;
 tr117:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1830,13 +1843,13 @@ tr117:
 }
 	goto st1906;
 tr121:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1878,13 +1891,13 @@ tr121:
 }
 	goto st1906;
 tr123:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -1926,11 +1939,11 @@ tr123:
 }
 	goto st1906;
 tr145:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1938,9 +1951,9 @@ tr145:
     }
 	goto st1906;
 tr147:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1951,13 +1964,13 @@ tr147:
   }
 	goto st1906;
 tr2005:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1965,9 +1978,9 @@ tr2005:
     }
 	goto st1906;
 tr329:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -1975,9 +1988,9 @@ tr329:
     }
 	goto st1906;
 tr1825:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -1988,11 +2001,11 @@ tr1825:
   }
 	goto st1906;
 tr1828:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2000,9 +2013,9 @@ tr1828:
     }
 	goto st1906;
 tr1835:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2010,13 +2023,13 @@ tr1835:
     }
 	goto st1906;
 tr2020:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2027,7 +2040,7 @@ st1906:
 	if ( ++p == pe )
 		goto _test_eof1906;
 case 1906:
-#line 2031 "shortcodes.c"
+#line 2044 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2087,6 +2100,7 @@ case 57:
 tr103:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2107,7 +2121,7 @@ st58:
 	if ( ++p == pe )
 		goto _test_eof58;
 case 58:
-#line 2111 "shortcodes.c"
+#line 2125 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2127,6 +2141,7 @@ case 59:
 tr102:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2147,7 +2162,7 @@ st60:
 	if ( ++p == pe )
 		goto _test_eof60;
 case 60:
-#line 2151 "shortcodes.c"
+#line 2166 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr99;
 		case 34: goto st36;
@@ -2171,6 +2186,7 @@ case 60:
 tr118:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2191,7 +2207,7 @@ st61:
 	if ( ++p == pe )
 		goto _test_eof61;
 case 61:
-#line 2195 "shortcodes.c"
+#line 2211 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2211,6 +2227,7 @@ case 62:
 tr119:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2231,7 +2248,7 @@ st63:
 	if ( ++p == pe )
 		goto _test_eof63;
 case 63:
-#line 2235 "shortcodes.c"
+#line 2252 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2258,7 +2275,7 @@ st65:
 	if ( ++p == pe )
 		goto _test_eof65;
 case 65:
-#line 2262 "shortcodes.c"
+#line 2279 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr124;
 		case 34: goto st36;
@@ -2282,6 +2299,7 @@ case 65:
 tr124:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2299,7 +2317,7 @@ tr124:
       }
 	goto st66;
 tr137:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -2311,7 +2329,7 @@ tr137:
     }
 	goto st66;
 tr1996:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -2326,7 +2344,7 @@ st66:
 	if ( ++p == pe )
 		goto _test_eof66;
 case 66:
-#line 2330 "shortcodes.c"
+#line 2348 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st66;
 		case 34: goto tr130;
@@ -2358,7 +2376,7 @@ st67:
 	if ( ++p == pe )
 		goto _test_eof67;
 case 67:
-#line 2362 "shortcodes.c"
+#line 2380 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr137;
 		case 34: goto st36;
@@ -2373,6 +2391,7 @@ case 67:
 tr125:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2390,7 +2409,7 @@ tr125:
       }
 	goto st68;
 tr138:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -2402,7 +2421,7 @@ tr138:
     }
 	goto st68;
 tr1997:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -2417,7 +2436,7 @@ st68:
 	if ( ++p == pe )
 		goto _test_eof68;
 case 68:
-#line 2421 "shortcodes.c"
+#line 2440 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2435,7 +2454,7 @@ case 69:
 	}
 	goto st35;
 tr139:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -2447,7 +2466,7 @@ tr139:
     }
 	goto st70;
 tr1998:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -2462,7 +2481,7 @@ st70:
 	if ( ++p == pe )
 		goto _test_eof70;
 case 70:
-#line 2466 "shortcodes.c"
+#line 2485 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 37: goto st71;
@@ -2492,6 +2511,7 @@ case 72:
 tr128:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2509,7 +2529,7 @@ tr128:
       }
 	goto st73;
 tr140:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -2521,7 +2541,7 @@ tr140:
     }
 	goto st73;
 tr2000:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -2536,7 +2556,7 @@ st73:
 	if ( ++p == pe )
 		goto _test_eof73;
 case 73:
-#line 2540 "shortcodes.c"
+#line 2560 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -2563,7 +2583,7 @@ st75:
 	if ( ++p == pe )
 		goto _test_eof75;
 case 75:
-#line 2567 "shortcodes.c"
+#line 2587 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -2580,7 +2600,7 @@ st76:
 	if ( ++p == pe )
 		goto _test_eof76;
 case 76:
-#line 2584 "shortcodes.c"
+#line 2604 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr153;
 		case 37: goto tr154;
@@ -2602,43 +2622,43 @@ st77:
 	if ( ++p == pe )
 		goto _test_eof77;
 case 77:
-#line 2606 "shortcodes.c"
+#line 2626 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
 	}
 	goto st77;
 tr157:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st78;
 st78:
 	if ( ++p == pe )
 		goto _test_eof78;
 case 78:
-#line 2624 "shortcodes.c"
+#line 2644 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr158;
 	}
 	goto st77;
 tr158:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st79;
 st79:
 	if ( ++p == pe )
 		goto _test_eof79;
 case 79:
-#line 2642 "shortcodes.c"
+#line 2662 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st80;
 		case 39: goto st36;
@@ -2708,7 +2728,7 @@ st83:
 	if ( ++p == pe )
 		goto _test_eof83;
 case 83:
-#line 2712 "shortcodes.c"
+#line 2732 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr166;
 		case 37: goto tr167;
@@ -2732,6 +2752,7 @@ case 83:
 tr166:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2752,7 +2773,7 @@ st84:
 	if ( ++p == pe )
 		goto _test_eof84;
 case 84:
-#line 2756 "shortcodes.c"
+#line 2777 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st84;
 		case 37: goto st85;
@@ -2767,6 +2788,7 @@ case 84:
 tr167:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -2787,7 +2809,7 @@ st85:
 	if ( ++p == pe )
 		goto _test_eof85;
 case 85:
-#line 2791 "shortcodes.c"
+#line 2813 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -2805,9 +2827,9 @@ case 86:
 	}
 	goto st77;
 tr204:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -2815,9 +2837,9 @@ tr204:
     }
 	goto st1907;
 tr176:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2859,11 +2881,11 @@ tr176:
 }
 	goto st1907;
 tr180:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2905,11 +2927,11 @@ tr180:
 }
 	goto st1907;
 tr182:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2951,9 +2973,9 @@ tr182:
 }
 	goto st1907;
 tr184:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -2995,13 +3017,13 @@ tr184:
 }
 	goto st1907;
 tr188:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -3043,13 +3065,13 @@ tr188:
 }
 	goto st1907;
 tr190:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -3091,11 +3113,11 @@ tr190:
 }
 	goto st1907;
 tr207:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3103,9 +3125,9 @@ tr207:
     }
 	goto st1907;
 tr214:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -3116,13 +3138,13 @@ tr214:
   }
 	goto st1907;
 tr219:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3130,9 +3152,9 @@ tr219:
     }
 	goto st1907;
 tr240:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3140,9 +3162,9 @@ tr240:
     }
 	goto st1907;
 tr1327:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -3153,11 +3175,11 @@ tr1327:
   }
 	goto st1907;
 tr1330:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3165,9 +3187,9 @@ tr1330:
     }
 	goto st1907;
 tr1337:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3175,13 +3197,13 @@ tr1337:
     }
 	goto st1907;
 tr1995:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -3192,7 +3214,7 @@ st1907:
 	if ( ++p == pe )
 		goto _test_eof1907;
 case 1907:
-#line 3196 "shortcodes.c"
+#line 3218 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3252,6 +3274,7 @@ case 91:
 tr170:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3272,7 +3295,7 @@ st92:
 	if ( ++p == pe )
 		goto _test_eof92;
 case 92:
-#line 3276 "shortcodes.c"
+#line 3299 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3292,6 +3315,7 @@ case 93:
 tr169:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3312,7 +3336,7 @@ st94:
 	if ( ++p == pe )
 		goto _test_eof94;
 case 94:
-#line 3316 "shortcodes.c"
+#line 3340 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr166;
 		case 37: goto tr185;
@@ -3336,6 +3360,7 @@ case 94:
 tr185:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3356,7 +3381,7 @@ st95:
 	if ( ++p == pe )
 		goto _test_eof95;
 case 95:
-#line 3360 "shortcodes.c"
+#line 3385 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3376,6 +3401,7 @@ case 96:
 tr186:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3396,7 +3422,7 @@ st97:
 	if ( ++p == pe )
 		goto _test_eof97;
 case 97:
-#line 3400 "shortcodes.c"
+#line 3426 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3423,7 +3449,7 @@ st99:
 	if ( ++p == pe )
 		goto _test_eof99;
 case 99:
-#line 3427 "shortcodes.c"
+#line 3453 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr191;
 		case 37: goto tr192;
@@ -3447,6 +3473,7 @@ case 99:
 tr191:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3464,7 +3491,7 @@ tr191:
       }
 	goto st100;
 tr153:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -3476,7 +3503,7 @@ tr153:
     }
 	goto st100;
 tr208:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -3491,7 +3518,7 @@ st100:
 	if ( ++p == pe )
 		goto _test_eof100;
 case 100:
-#line 3495 "shortcodes.c"
+#line 3522 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st100;
 		case 34: goto tr132;
@@ -3516,6 +3543,7 @@ case 100:
 tr192:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3533,7 +3561,7 @@ tr192:
       }
 	goto st101;
 tr154:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -3545,7 +3573,7 @@ tr154:
     }
 	goto st101;
 tr209:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -3560,7 +3588,7 @@ st101:
 	if ( ++p == pe )
 		goto _test_eof101;
 case 101:
-#line 3564 "shortcodes.c"
+#line 3592 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3578,7 +3606,7 @@ case 102:
 	}
 	goto st77;
 tr155:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -3590,7 +3618,7 @@ tr155:
     }
 	goto st103;
 tr210:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -3605,7 +3633,7 @@ st103:
 	if ( ++p == pe )
 		goto _test_eof103;
 case 103:
-#line 3609 "shortcodes.c"
+#line 3637 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st104;
 		case 39: goto st36;
@@ -3642,7 +3670,7 @@ st106:
 	if ( ++p == pe )
 		goto _test_eof106;
 case 106:
-#line 3646 "shortcodes.c"
+#line 3674 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr208;
 		case 37: goto tr209;
@@ -3666,6 +3694,7 @@ case 106:
 tr195:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3683,7 +3712,7 @@ tr195:
       }
 	goto st107;
 tr156:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -3695,7 +3724,7 @@ tr156:
     }
 	goto st107;
 tr212:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -3710,7 +3739,7 @@ st107:
 	if ( ++p == pe )
 		goto _test_eof107;
 case 107:
-#line 3714 "shortcodes.c"
+#line 3743 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3737,7 +3766,7 @@ st109:
 	if ( ++p == pe )
 		goto _test_eof109;
 case 109:
-#line 3741 "shortcodes.c"
+#line 3770 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr208;
 		case 37: goto tr209;
@@ -3760,7 +3789,7 @@ case 109:
 		goto st106;
 	goto st77;
 tr215:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -3770,7 +3799,7 @@ st110:
 	if ( ++p == pe )
 		goto _test_eof110;
 case 110:
-#line 3774 "shortcodes.c"
+#line 3803 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr132;
 		case 39: goto tr198;
@@ -3788,6 +3817,7 @@ case 110:
 tr194:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3808,7 +3838,7 @@ st111:
 	if ( ++p == pe )
 		goto _test_eof111;
 case 111:
-#line 3812 "shortcodes.c"
+#line 3842 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr191;
 		case 37: goto tr217;
@@ -3832,6 +3862,7 @@ case 111:
 tr217:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3852,7 +3883,7 @@ st112:
 	if ( ++p == pe )
 		goto _test_eof112;
 case 112:
-#line 3856 "shortcodes.c"
+#line 3887 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -3912,7 +3943,7 @@ st116:
 	if ( ++p == pe )
 		goto _test_eof116;
 case 116:
-#line 3916 "shortcodes.c"
+#line 3947 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr222;
 		case 39: goto st36;
@@ -3934,6 +3965,7 @@ case 116:
 tr222:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -3951,7 +3983,7 @@ tr222:
       }
 	goto st117;
 tr235:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -3963,7 +3995,7 @@ tr235:
     }
 	goto st117;
 tr1981:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -3978,7 +4010,7 @@ st117:
 	if ( ++p == pe )
 		goto _test_eof117;
 case 117:
-#line 3982 "shortcodes.c"
+#line 4014 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st117;
 		case 34: goto tr226;
@@ -4008,7 +4040,7 @@ st118:
 	if ( ++p == pe )
 		goto _test_eof118;
 case 118:
-#line 4012 "shortcodes.c"
+#line 4044 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -4025,7 +4057,7 @@ st119:
 	if ( ++p == pe )
 		goto _test_eof119;
 case 119:
-#line 4029 "shortcodes.c"
+#line 4061 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr235;
 		case 39: goto st36;
@@ -4038,6 +4070,7 @@ case 119:
 tr223:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4055,7 +4088,7 @@ tr223:
       }
 	goto st120;
 tr236:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -4067,7 +4100,7 @@ tr236:
     }
 	goto st120;
 tr1982:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -4082,7 +4115,7 @@ st120:
 	if ( ++p == pe )
 		goto _test_eof120;
 case 120:
-#line 4086 "shortcodes.c"
+#line 4119 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 47: goto st121;
@@ -4130,7 +4163,7 @@ st124:
 	if ( ++p == pe )
 		goto _test_eof124;
 case 124:
-#line 4134 "shortcodes.c"
+#line 4167 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr242;
 		case 34: goto st126;
@@ -4152,7 +4185,7 @@ st125:
 	if ( ++p == pe )
 		goto _test_eof125;
 case 125:
-#line 4156 "shortcodes.c"
+#line 4189 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -4173,6 +4206,7 @@ case 126:
 tr2033:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4190,7 +4224,7 @@ tr2033:
       }
 	goto st127;
 tr248:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -4202,7 +4236,7 @@ tr248:
     }
 	goto st127;
 tr1976:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -4217,7 +4251,7 @@ st127:
 	if ( ++p == pe )
 		goto _test_eof127;
 case 127:
-#line 4221 "shortcodes.c"
+#line 4255 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st127;
 		case 34: goto tr251;
@@ -4247,43 +4281,43 @@ st128:
 	if ( ++p == pe )
 		goto _test_eof128;
 case 128:
-#line 4251 "shortcodes.c"
+#line 4285 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
 	}
 	goto st128;
 tr257:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st129;
 st129:
 	if ( ++p == pe )
 		goto _test_eof129;
 case 129:
-#line 4269 "shortcodes.c"
+#line 4303 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr258;
 	}
 	goto st128;
 tr258:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st130;
 st130:
 	if ( ++p == pe )
 		goto _test_eof130;
 case 130:
-#line 4287 "shortcodes.c"
+#line 4321 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st131;
 		case 39: goto st126;
@@ -4353,7 +4387,7 @@ st134:
 	if ( ++p == pe )
 		goto _test_eof134;
 case 134:
-#line 4357 "shortcodes.c"
+#line 4391 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr266;
 		case 37: goto tr267;
@@ -4377,6 +4411,7 @@ case 134:
 tr266:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4397,7 +4432,7 @@ st135:
 	if ( ++p == pe )
 		goto _test_eof135;
 case 135:
-#line 4401 "shortcodes.c"
+#line 4436 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st135;
 		case 37: goto st136;
@@ -4412,6 +4447,7 @@ case 135:
 tr267:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4432,7 +4468,7 @@ st136:
 	if ( ++p == pe )
 		goto _test_eof136;
 case 136:
-#line 4436 "shortcodes.c"
+#line 4472 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4450,9 +4486,9 @@ case 137:
 	}
 	goto st128;
 tr313:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4460,9 +4496,9 @@ tr313:
     }
 	goto st1908;
 tr276:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4504,11 +4540,11 @@ tr276:
 }
 	goto st1908;
 tr280:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4550,11 +4586,11 @@ tr280:
 }
 	goto st1908;
 tr282:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4596,9 +4632,9 @@ tr282:
 }
 	goto st1908;
 tr284:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4640,13 +4676,13 @@ tr284:
 }
 	goto st1908;
 tr288:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4688,13 +4724,13 @@ tr288:
 }
 	goto st1908;
 tr290:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -4736,11 +4772,11 @@ tr290:
 }
 	goto st1908;
 tr316:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4748,9 +4784,9 @@ tr316:
     }
 	goto st1908;
 tr318:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -4761,13 +4797,13 @@ tr318:
   }
 	goto st1908;
 tr1956:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4775,9 +4811,9 @@ tr1956:
     }
 	goto st1908;
 tr489:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4785,9 +4821,9 @@ tr489:
     }
 	goto st1908;
 tr774:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -4798,11 +4834,11 @@ tr774:
   }
 	goto st1908;
 tr1784:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4810,9 +4846,9 @@ tr1784:
     }
 	goto st1908;
 tr1791:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4820,13 +4856,13 @@ tr1791:
     }
 	goto st1908;
 tr1971:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -4837,7 +4873,7 @@ st1908:
 	if ( ++p == pe )
 		goto _test_eof1908;
 case 1908:
-#line 4841 "shortcodes.c"
+#line 4877 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4897,6 +4933,7 @@ case 142:
 tr270:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4917,7 +4954,7 @@ st143:
 	if ( ++p == pe )
 		goto _test_eof143;
 case 143:
-#line 4921 "shortcodes.c"
+#line 4958 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -4937,6 +4974,7 @@ case 144:
 tr269:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -4957,7 +4995,7 @@ st145:
 	if ( ++p == pe )
 		goto _test_eof145;
 case 145:
-#line 4961 "shortcodes.c"
+#line 4999 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr266;
 		case 37: goto tr285;
@@ -4981,6 +5019,7 @@ case 145:
 tr285:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5001,7 +5040,7 @@ st146:
 	if ( ++p == pe )
 		goto _test_eof146;
 case 146:
-#line 5005 "shortcodes.c"
+#line 5044 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5021,6 +5060,7 @@ case 147:
 tr286:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5041,7 +5081,7 @@ st148:
 	if ( ++p == pe )
 		goto _test_eof148;
 case 148:
-#line 5045 "shortcodes.c"
+#line 5085 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5068,7 +5108,7 @@ st150:
 	if ( ++p == pe )
 		goto _test_eof150;
 case 150:
-#line 5072 "shortcodes.c"
+#line 5112 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr291;
 		case 37: goto tr292;
@@ -5092,6 +5132,7 @@ case 150:
 tr291:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5109,7 +5150,7 @@ tr291:
       }
 	goto st151;
 tr308:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5121,7 +5162,7 @@ tr308:
     }
 	goto st151;
 tr1947:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5136,7 +5177,7 @@ st151:
 	if ( ++p == pe )
 		goto _test_eof151;
 case 151:
-#line 5140 "shortcodes.c"
+#line 5181 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st151;
 		case 34: goto tr297;
@@ -5168,7 +5209,7 @@ st152:
 	if ( ++p == pe )
 		goto _test_eof152;
 case 152:
-#line 5172 "shortcodes.c"
+#line 5213 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5185,7 +5226,7 @@ st153:
 	if ( ++p == pe )
 		goto _test_eof153;
 case 153:
-#line 5189 "shortcodes.c"
+#line 5230 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr308;
 		case 37: goto tr309;
@@ -5200,6 +5241,7 @@ case 153:
 tr292:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5217,7 +5259,7 @@ tr292:
       }
 	goto st154;
 tr309:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5229,7 +5271,7 @@ tr309:
     }
 	goto st154;
 tr1948:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5244,7 +5286,7 @@ st154:
 	if ( ++p == pe )
 		goto _test_eof154;
 case 154:
-#line 5248 "shortcodes.c"
+#line 5290 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5262,7 +5304,7 @@ case 155:
 	}
 	goto st128;
 tr310:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5274,7 +5316,7 @@ tr310:
     }
 	goto st156;
 tr1949:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5289,7 +5331,7 @@ st156:
 	if ( ++p == pe )
 		goto _test_eof156;
 case 156:
-#line 5293 "shortcodes.c"
+#line 5335 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st157;
 		case 39: goto st126;
@@ -5319,6 +5361,7 @@ case 158:
 tr295:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5336,7 +5379,7 @@ tr295:
       }
 	goto st159;
 tr311:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5348,7 +5391,7 @@ tr311:
     }
 	goto st159;
 tr1951:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5363,7 +5406,7 @@ st159:
 	if ( ++p == pe )
 		goto _test_eof159;
 case 159:
-#line 5367 "shortcodes.c"
+#line 5410 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -5390,7 +5433,7 @@ st161:
 	if ( ++p == pe )
 		goto _test_eof161;
 case 161:
-#line 5394 "shortcodes.c"
+#line 5437 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr319;
 		case 34: goto st36;
@@ -5403,6 +5446,7 @@ case 161:
 tr2008:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5420,7 +5464,7 @@ tr2008:
       }
 	goto st162;
 tr319:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5432,7 +5476,7 @@ tr319:
     }
 	goto st162;
 tr330:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5447,7 +5491,7 @@ st162:
 	if ( ++p == pe )
 		goto _test_eof162;
 case 162:
-#line 5451 "shortcodes.c"
+#line 5495 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st162;
 		case 34: goto tr322;
@@ -5470,6 +5514,7 @@ case 162:
 tr2009:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5487,7 +5532,7 @@ tr2009:
       }
 	goto st163;
 tr320:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -5499,7 +5544,7 @@ tr320:
     }
 	goto st163;
 tr331:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -5514,7 +5559,7 @@ st163:
 	if ( ++p == pe )
 		goto _test_eof163;
 case 163:
-#line 5518 "shortcodes.c"
+#line 5563 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 47: goto st164;
@@ -5562,7 +5607,7 @@ st167:
 	if ( ++p == pe )
 		goto _test_eof167;
 case 167:
-#line 5566 "shortcodes.c"
+#line 5611 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr330;
 		case 34: goto st36;
@@ -5591,7 +5636,7 @@ st168:
 	if ( ++p == pe )
 		goto _test_eof168;
 case 168:
-#line 5595 "shortcodes.c"
+#line 5640 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr330;
 		case 34: goto st36;
@@ -5612,7 +5657,7 @@ case 168:
 		goto st167;
 	goto st35;
 tr333:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -5622,7 +5667,7 @@ st169:
 	if ( ++p == pe )
 		goto _test_eof169;
 case 169:
-#line 5626 "shortcodes.c"
+#line 5671 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr322;
 		case 39: goto tr297;
@@ -5638,18 +5683,18 @@ case 169:
 		goto tr324;
 	goto st35;
 tr307:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st170;
 st170:
 	if ( ++p == pe )
 		goto _test_eof170;
 case 170:
-#line 5653 "shortcodes.c"
+#line 5698 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5657,18 +5702,18 @@ case 170:
 	}
 	goto st152;
 tr335:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st171;
 st171:
 	if ( ++p == pe )
 		goto _test_eof171;
 case 171:
-#line 5672 "shortcodes.c"
+#line 5717 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 37: goto st172;
@@ -5742,7 +5787,7 @@ st175:
 	if ( ++p == pe )
 		goto _test_eof175;
 case 175:
-#line 5746 "shortcodes.c"
+#line 5791 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr343;
 		case 34: goto st153;
@@ -5767,6 +5812,7 @@ case 175:
 tr343:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5787,7 +5833,7 @@ st176:
 	if ( ++p == pe )
 		goto _test_eof176;
 case 176:
-#line 5791 "shortcodes.c"
+#line 5837 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st176;
 		case 34: goto st153;
@@ -5803,6 +5849,7 @@ case 176:
 tr344:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -5823,7 +5870,7 @@ st177:
 	if ( ++p == pe )
 		goto _test_eof177;
 case 177:
-#line 5827 "shortcodes.c"
+#line 5874 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -5843,9 +5890,9 @@ case 178:
 	}
 	goto st152;
 tr386:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -5853,9 +5900,9 @@ tr386:
     }
 	goto st1909;
 tr353:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -5897,11 +5944,11 @@ tr353:
 }
 	goto st1909;
 tr357:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -5943,11 +5990,11 @@ tr357:
 }
 	goto st1909;
 tr359:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -5989,9 +6036,9 @@ tr359:
 }
 	goto st1909;
 tr361:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -6033,13 +6080,13 @@ tr361:
 }
 	goto st1909;
 tr365:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -6081,13 +6128,13 @@ tr365:
 }
 	goto st1909;
 tr367:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -6129,11 +6176,11 @@ tr367:
 }
 	goto st1909;
 tr389:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6141,9 +6188,9 @@ tr389:
     }
 	goto st1909;
 tr391:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -6154,13 +6201,13 @@ tr391:
   }
 	goto st1909;
 tr1931:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6168,9 +6215,9 @@ tr1931:
     }
 	goto st1909;
 tr1000:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6178,9 +6225,9 @@ tr1000:
     }
 	goto st1909;
 tr1730:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -6191,11 +6238,11 @@ tr1730:
   }
 	goto st1909;
 tr1733:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6203,9 +6250,9 @@ tr1733:
     }
 	goto st1909;
 tr1740:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6213,13 +6260,13 @@ tr1740:
     }
 	goto st1909;
 tr1946:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -6230,7 +6277,7 @@ st1909:
 	if ( ++p == pe )
 		goto _test_eof1909;
 case 1909:
-#line 6234 "shortcodes.c"
+#line 6281 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6296,6 +6343,7 @@ case 183:
 tr347:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6316,7 +6364,7 @@ st184:
 	if ( ++p == pe )
 		goto _test_eof184;
 case 184:
-#line 6320 "shortcodes.c"
+#line 6368 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6338,6 +6386,7 @@ case 185:
 tr346:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6358,7 +6407,7 @@ st186:
 	if ( ++p == pe )
 		goto _test_eof186;
 case 186:
-#line 6362 "shortcodes.c"
+#line 6411 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr343;
 		case 34: goto st153;
@@ -6383,6 +6432,7 @@ case 186:
 tr362:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6403,7 +6453,7 @@ st187:
 	if ( ++p == pe )
 		goto _test_eof187;
 case 187:
-#line 6407 "shortcodes.c"
+#line 6457 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6425,6 +6475,7 @@ case 188:
 tr363:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6445,7 +6496,7 @@ st189:
 	if ( ++p == pe )
 		goto _test_eof189;
 case 189:
-#line 6449 "shortcodes.c"
+#line 6500 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6474,7 +6525,7 @@ st191:
 	if ( ++p == pe )
 		goto _test_eof191;
 case 191:
-#line 6478 "shortcodes.c"
+#line 6529 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr368;
 		case 34: goto st153;
@@ -6499,6 +6550,7 @@ case 191:
 tr368:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6516,7 +6568,7 @@ tr368:
       }
 	goto st192;
 tr381:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6528,7 +6580,7 @@ tr381:
     }
 	goto st192;
 tr1922:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6543,7 +6595,7 @@ st192:
 	if ( ++p == pe )
 		goto _test_eof192;
 case 192:
-#line 6547 "shortcodes.c"
+#line 6599 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st192;
 		case 34: goto tr374;
@@ -6575,7 +6627,7 @@ st193:
 	if ( ++p == pe )
 		goto _test_eof193;
 case 193:
-#line 6579 "shortcodes.c"
+#line 6631 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr381;
 		case 34: goto st153;
@@ -6591,6 +6643,7 @@ case 193:
 tr369:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6608,7 +6661,7 @@ tr369:
       }
 	goto st194;
 tr382:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6620,7 +6673,7 @@ tr382:
     }
 	goto st194;
 tr1923:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6635,7 +6688,7 @@ st194:
 	if ( ++p == pe )
 		goto _test_eof194;
 case 194:
-#line 6639 "shortcodes.c"
+#line 6692 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6655,7 +6708,7 @@ case 195:
 	}
 	goto st152;
 tr383:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6667,7 +6720,7 @@ tr383:
     }
 	goto st196;
 tr1924:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6682,7 +6735,7 @@ st196:
 	if ( ++p == pe )
 		goto _test_eof196;
 case 196:
-#line 6686 "shortcodes.c"
+#line 6739 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 37: goto st197;
@@ -6715,6 +6768,7 @@ case 198:
 tr372:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6732,7 +6786,7 @@ tr372:
       }
 	goto st199;
 tr384:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6744,7 +6798,7 @@ tr384:
     }
 	goto st199;
 tr1926:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6759,7 +6813,7 @@ st199:
 	if ( ++p == pe )
 		goto _test_eof199;
 case 199:
-#line 6763 "shortcodes.c"
+#line 6817 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -6788,7 +6842,7 @@ st201:
 	if ( ++p == pe )
 		goto _test_eof201;
 case 201:
-#line 6792 "shortcodes.c"
+#line 6846 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr392;
 		case 34: goto st76;
@@ -6802,6 +6856,7 @@ case 201:
 tr1548:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6819,7 +6874,7 @@ tr1548:
       }
 	goto st202;
 tr392:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6831,7 +6886,7 @@ tr392:
     }
 	goto st202;
 tr1917:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6846,7 +6901,7 @@ st202:
 	if ( ++p == pe )
 		goto _test_eof202;
 case 202:
-#line 6850 "shortcodes.c"
+#line 6905 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st202;
 		case 34: goto tr395;
@@ -6876,7 +6931,7 @@ st203:
 	if ( ++p == pe )
 		goto _test_eof203;
 case 203:
-#line 6880 "shortcodes.c"
+#line 6935 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr399;
 		case 34: goto st119;
@@ -6892,6 +6947,7 @@ case 203:
 tr443:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6909,7 +6965,7 @@ tr443:
       }
 	goto st204;
 tr399:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6921,7 +6977,7 @@ tr399:
     }
 	goto st204;
 tr1910:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -6936,7 +6992,7 @@ st204:
 	if ( ++p == pe )
 		goto _test_eof204;
 case 204:
-#line 6940 "shortcodes.c"
+#line 6996 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st204;
 		case 34: goto tr376;
@@ -6961,6 +7017,7 @@ case 204:
 tr444:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -6978,7 +7035,7 @@ tr444:
       }
 	goto st205;
 tr400:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -6990,7 +7047,7 @@ tr400:
     }
 	goto st205;
 tr1911:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -7005,7 +7062,7 @@ st205:
 	if ( ++p == pe )
 		goto _test_eof205;
 case 205:
-#line 7009 "shortcodes.c"
+#line 7066 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7014,18 +7071,18 @@ case 205:
 	}
 	goto st118;
 tr234:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st206;
 st206:
 	if ( ++p == pe )
 		goto _test_eof206;
 case 206:
-#line 7029 "shortcodes.c"
+#line 7086 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7033,18 +7090,18 @@ case 206:
 	}
 	goto st118;
 tr410:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st207;
 st207:
 	if ( ++p == pe )
 		goto _test_eof207;
 case 207:
-#line 7048 "shortcodes.c"
+#line 7105 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 37: goto st208;
@@ -7118,7 +7175,7 @@ st211:
 	if ( ++p == pe )
 		goto _test_eof211;
 case 211:
-#line 7122 "shortcodes.c"
+#line 7179 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr418;
 		case 34: goto st119;
@@ -7143,6 +7200,7 @@ case 211:
 tr418:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7163,7 +7221,7 @@ st212:
 	if ( ++p == pe )
 		goto _test_eof212;
 case 212:
-#line 7167 "shortcodes.c"
+#line 7225 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st212;
 		case 34: goto st119;
@@ -7179,6 +7237,7 @@ case 212:
 tr419:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7199,7 +7258,7 @@ st213:
 	if ( ++p == pe )
 		goto _test_eof213;
 case 213:
-#line 7203 "shortcodes.c"
+#line 7262 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7219,9 +7278,9 @@ case 214:
 	}
 	goto st118;
 tr1906:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7229,9 +7288,9 @@ tr1906:
     }
 	goto st1910;
 tr428:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7273,11 +7332,11 @@ tr428:
 }
 	goto st1910;
 tr432:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7319,11 +7378,11 @@ tr432:
 }
 	goto st1910;
 tr434:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7365,9 +7424,9 @@ tr434:
 }
 	goto st1910;
 tr436:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7409,13 +7468,13 @@ tr436:
 }
 	goto st1910;
 tr440:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7457,13 +7516,13 @@ tr440:
 }
 	goto st1910;
 tr442:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -7505,11 +7564,11 @@ tr442:
 }
 	goto st1910;
 tr1909:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7517,9 +7576,9 @@ tr1909:
     }
 	goto st1910;
 tr452:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -7530,13 +7589,13 @@ tr452:
   }
 	goto st1910;
 tr450:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7544,9 +7603,9 @@ tr450:
     }
 	goto st1910;
 tr469:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7554,9 +7613,9 @@ tr469:
     }
 	goto st1910;
 tr1427:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -7567,11 +7626,11 @@ tr1427:
   }
 	goto st1910;
 tr1430:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7579,9 +7638,9 @@ tr1430:
     }
 	goto st1910;
 tr1437:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7589,13 +7648,13 @@ tr1437:
     }
 	goto st1910;
 tr1905:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -7606,7 +7665,7 @@ st1910:
 	if ( ++p == pe )
 		goto _test_eof1910;
 case 1910:
-#line 7610 "shortcodes.c"
+#line 7669 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7672,6 +7731,7 @@ case 219:
 tr422:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7692,7 +7752,7 @@ st220:
 	if ( ++p == pe )
 		goto _test_eof220;
 case 220:
-#line 7696 "shortcodes.c"
+#line 7756 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7714,6 +7774,7 @@ case 221:
 tr421:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7734,7 +7795,7 @@ st222:
 	if ( ++p == pe )
 		goto _test_eof222;
 case 222:
-#line 7738 "shortcodes.c"
+#line 7799 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr418;
 		case 34: goto st119;
@@ -7759,6 +7820,7 @@ case 222:
 tr437:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7779,7 +7841,7 @@ st223:
 	if ( ++p == pe )
 		goto _test_eof223;
 case 223:
-#line 7783 "shortcodes.c"
+#line 7845 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7801,6 +7863,7 @@ case 224:
 tr438:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7821,7 +7884,7 @@ st225:
 	if ( ++p == pe )
 		goto _test_eof225;
 case 225:
-#line 7825 "shortcodes.c"
+#line 7888 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7850,7 +7913,7 @@ st227:
 	if ( ++p == pe )
 		goto _test_eof227;
 case 227:
-#line 7854 "shortcodes.c"
+#line 7917 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr443;
 		case 34: goto st119;
@@ -7875,6 +7938,7 @@ case 227:
 tr446:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7895,7 +7959,7 @@ st228:
 	if ( ++p == pe )
 		goto _test_eof228;
 case 228:
-#line 7899 "shortcodes.c"
+#line 7963 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr443;
 		case 34: goto st119;
@@ -7920,6 +7984,7 @@ case 228:
 tr448:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7940,7 +8005,7 @@ st229:
 	if ( ++p == pe )
 		goto _test_eof229;
 case 229:
-#line 7944 "shortcodes.c"
+#line 8009 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -7962,6 +8027,7 @@ case 230:
 tr447:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -7979,7 +8045,7 @@ tr447:
       }
 	goto st231;
 tr402:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -7991,7 +8057,7 @@ tr402:
     }
 	goto st231;
 tr1914:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8006,7 +8072,7 @@ st231:
 	if ( ++p == pe )
 		goto _test_eof231;
 case 231:
-#line 8010 "shortcodes.c"
+#line 8076 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -8070,7 +8136,7 @@ st235:
 	if ( ++p == pe )
 		goto _test_eof235;
 case 235:
-#line 8074 "shortcodes.c"
+#line 8140 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr455;
 		case 34: goto st119;
@@ -8093,6 +8159,7 @@ case 235:
 tr455:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8110,7 +8177,7 @@ tr455:
       }
 	goto st236;
 tr464:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8122,7 +8189,7 @@ tr464:
     }
 	goto st236;
 tr1891:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8137,7 +8204,7 @@ st236:
 	if ( ++p == pe )
 		goto _test_eof236;
 case 236:
-#line 8141 "shortcodes.c"
+#line 8208 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st236;
 		case 34: goto tr459;
@@ -8167,7 +8234,7 @@ st237:
 	if ( ++p == pe )
 		goto _test_eof237;
 case 237:
-#line 8171 "shortcodes.c"
+#line 8238 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr464;
 		case 34: goto st119;
@@ -8181,6 +8248,7 @@ case 237:
 tr456:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8198,7 +8266,7 @@ tr456:
       }
 	goto st238;
 tr465:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8210,7 +8278,7 @@ tr465:
     }
 	goto st238;
 tr1892:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8225,7 +8293,7 @@ st238:
 	if ( ++p == pe )
 		goto _test_eof238;
 case 238:
-#line 8229 "shortcodes.c"
+#line 8297 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -8277,7 +8345,7 @@ st242:
 	if ( ++p == pe )
 		goto _test_eof242;
 case 242:
-#line 8281 "shortcodes.c"
+#line 8349 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr471;
 		case 34: goto st244;
@@ -8300,7 +8368,7 @@ st243:
 	if ( ++p == pe )
 		goto _test_eof243;
 case 243:
-#line 8304 "shortcodes.c"
+#line 8372 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -8317,7 +8385,7 @@ st244:
 	if ( ++p == pe )
 		goto _test_eof244;
 case 244:
-#line 8321 "shortcodes.c"
+#line 8389 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr478;
 		case 39: goto st126;
@@ -8330,6 +8398,7 @@ case 244:
 tr1959:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8347,7 +8416,7 @@ tr1959:
       }
 	goto st245;
 tr478:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8359,7 +8428,7 @@ tr478:
     }
 	goto st245;
 tr490:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8374,7 +8443,7 @@ st245:
 	if ( ++p == pe )
 		goto _test_eof245;
 case 245:
-#line 8378 "shortcodes.c"
+#line 8447 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st245;
 		case 34: goto tr481;
@@ -8397,6 +8466,7 @@ case 245:
 tr1960:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8414,7 +8484,7 @@ tr1960:
       }
 	goto st246;
 tr479:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8426,7 +8496,7 @@ tr479:
     }
 	goto st246;
 tr491:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8441,7 +8511,7 @@ st246:
 	if ( ++p == pe )
 		goto _test_eof246;
 case 246:
-#line 8445 "shortcodes.c"
+#line 8515 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 47: goto st247;
@@ -8489,7 +8559,7 @@ st250:
 	if ( ++p == pe )
 		goto _test_eof250;
 case 250:
-#line 8493 "shortcodes.c"
+#line 8563 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr490;
 		case 39: goto st126;
@@ -8518,7 +8588,7 @@ st251:
 	if ( ++p == pe )
 		goto _test_eof251;
 case 251:
-#line 8522 "shortcodes.c"
+#line 8592 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr490;
 		case 39: goto st126;
@@ -8539,7 +8609,7 @@ case 251:
 		goto st250;
 	goto st128;
 tr493:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -8549,7 +8619,7 @@ st252:
 	if ( ++p == pe )
 		goto _test_eof252;
 case 252:
-#line 8553 "shortcodes.c"
+#line 8623 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr481;
 		case 39: goto tr482;
@@ -8574,7 +8644,7 @@ st253:
 	if ( ++p == pe )
 		goto _test_eof253;
 case 253:
-#line 8578 "shortcodes.c"
+#line 8648 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr495;
 		case 34: goto st126;
@@ -8587,6 +8657,7 @@ case 253:
 tr569:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8604,7 +8675,7 @@ tr569:
       }
 	goto st254;
 tr495:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8616,7 +8687,7 @@ tr495:
     }
 	goto st254;
 tr1886:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8631,7 +8702,7 @@ st254:
 	if ( ++p == pe )
 		goto _test_eof254;
 case 254:
-#line 8635 "shortcodes.c"
+#line 8706 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st254;
 		case 34: goto tr498;
@@ -8654,6 +8725,7 @@ case 254:
 tr570:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8671,7 +8743,7 @@ tr570:
       }
 	goto st255;
 tr496:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -8683,7 +8755,7 @@ tr496:
     }
 	goto st255;
 tr1887:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -8698,7 +8770,7 @@ st255:
 	if ( ++p == pe )
 		goto _test_eof255;
 case 255:
-#line 8702 "shortcodes.c"
+#line 8774 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 47: goto st256;
@@ -8727,36 +8799,36 @@ case 257:
 	}
 	goto st125;
 tr247:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st258;
 st258:
 	if ( ++p == pe )
 		goto _test_eof258;
 case 258:
-#line 8742 "shortcodes.c"
+#line 8814 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr505;
 	}
 	goto st125;
 tr505:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st259;
 st259:
 	if ( ++p == pe )
 		goto _test_eof259;
 case 259:
-#line 8760 "shortcodes.c"
+#line 8832 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 37: goto st260;
@@ -8826,7 +8898,7 @@ st263:
 	if ( ++p == pe )
 		goto _test_eof263;
 case 263:
-#line 8830 "shortcodes.c"
+#line 8902 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr513;
 		case 34: goto st126;
@@ -8850,6 +8922,7 @@ case 263:
 tr513:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8870,7 +8943,7 @@ st264:
 	if ( ++p == pe )
 		goto _test_eof264;
 case 264:
-#line 8874 "shortcodes.c"
+#line 8947 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st264;
 		case 34: goto st126;
@@ -8885,6 +8958,7 @@ case 264:
 tr514:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -8905,7 +8979,7 @@ st265:
 	if ( ++p == pe )
 		goto _test_eof265;
 case 265:
-#line 8909 "shortcodes.c"
+#line 8983 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -8923,9 +8997,9 @@ case 266:
 	}
 	goto st125;
 tr551:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -8933,9 +9007,9 @@ tr551:
     }
 	goto st1911;
 tr523:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -8977,11 +9051,11 @@ tr523:
 }
 	goto st1911;
 tr527:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -9023,11 +9097,11 @@ tr527:
 }
 	goto st1911;
 tr529:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -9069,9 +9143,9 @@ tr529:
 }
 	goto st1911;
 tr531:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -9113,13 +9187,13 @@ tr531:
 }
 	goto st1911;
 tr535:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -9161,13 +9235,13 @@ tr535:
 }
 	goto st1911;
 tr537:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -9209,11 +9283,11 @@ tr537:
 }
 	goto st1911;
 tr554:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9221,9 +9295,9 @@ tr554:
     }
 	goto st1911;
 tr561:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -9234,13 +9308,13 @@ tr561:
   }
 	goto st1911;
 tr566:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9248,9 +9322,9 @@ tr566:
     }
 	goto st1911;
 tr1885:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9258,9 +9332,9 @@ tr1885:
     }
 	goto st1911;
 tr752:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -9271,11 +9345,11 @@ tr752:
   }
 	goto st1911;
 tr755:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9283,9 +9357,9 @@ tr755:
     }
 	goto st1911;
 tr757:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9293,13 +9367,13 @@ tr757:
     }
 	goto st1911;
 tr1884:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -9310,7 +9384,7 @@ st1911:
 	if ( ++p == pe )
 		goto _test_eof1911;
 case 1911:
-#line 9314 "shortcodes.c"
+#line 9388 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9370,6 +9444,7 @@ case 271:
 tr517:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9390,7 +9465,7 @@ st272:
 	if ( ++p == pe )
 		goto _test_eof272;
 case 272:
-#line 9394 "shortcodes.c"
+#line 9469 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9410,6 +9485,7 @@ case 273:
 tr516:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9430,7 +9506,7 @@ st274:
 	if ( ++p == pe )
 		goto _test_eof274;
 case 274:
-#line 9434 "shortcodes.c"
+#line 9510 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr513;
 		case 34: goto st126;
@@ -9454,6 +9530,7 @@ case 274:
 tr532:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9474,7 +9551,7 @@ st275:
 	if ( ++p == pe )
 		goto _test_eof275;
 case 275:
-#line 9478 "shortcodes.c"
+#line 9555 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9494,6 +9571,7 @@ case 276:
 tr533:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9514,7 +9592,7 @@ st277:
 	if ( ++p == pe )
 		goto _test_eof277;
 case 277:
-#line 9518 "shortcodes.c"
+#line 9596 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9541,7 +9619,7 @@ st279:
 	if ( ++p == pe )
 		goto _test_eof279;
 case 279:
-#line 9545 "shortcodes.c"
+#line 9623 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr538;
 		case 34: goto st126;
@@ -9565,6 +9643,7 @@ case 279:
 tr538:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9582,7 +9661,7 @@ tr538:
       }
 	goto st280;
 tr242:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -9594,7 +9673,7 @@ tr242:
     }
 	goto st280;
 tr555:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -9609,7 +9688,7 @@ st280:
 	if ( ++p == pe )
 		goto _test_eof280;
 case 280:
-#line 9613 "shortcodes.c"
+#line 9692 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st280;
 		case 34: goto tr544;
@@ -9634,6 +9713,7 @@ case 280:
 tr539:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9651,7 +9731,7 @@ tr539:
       }
 	goto st281;
 tr244:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -9663,7 +9743,7 @@ tr244:
     }
 	goto st281;
 tr556:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -9678,7 +9758,7 @@ st281:
 	if ( ++p == pe )
 		goto _test_eof281;
 case 281:
-#line 9682 "shortcodes.c"
+#line 9762 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9696,7 +9776,7 @@ case 282:
 	}
 	goto st125;
 tr245:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -9708,7 +9788,7 @@ tr245:
     }
 	goto st283;
 tr557:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -9723,7 +9803,7 @@ st283:
 	if ( ++p == pe )
 		goto _test_eof283;
 case 283:
-#line 9727 "shortcodes.c"
+#line 9807 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 37: goto st284;
@@ -9760,7 +9840,7 @@ st286:
 	if ( ++p == pe )
 		goto _test_eof286;
 case 286:
-#line 9764 "shortcodes.c"
+#line 9844 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr555;
 		case 34: goto st126;
@@ -9784,6 +9864,7 @@ case 286:
 tr542:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9801,7 +9882,7 @@ tr542:
       }
 	goto st287;
 tr246:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -9813,7 +9894,7 @@ tr246:
     }
 	goto st287;
 tr559:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -9828,7 +9909,7 @@ st287:
 	if ( ++p == pe )
 		goto _test_eof287;
 case 287:
-#line 9832 "shortcodes.c"
+#line 9913 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -9855,7 +9936,7 @@ st289:
 	if ( ++p == pe )
 		goto _test_eof289;
 case 289:
-#line 9859 "shortcodes.c"
+#line 9940 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr555;
 		case 34: goto st126;
@@ -9878,7 +9959,7 @@ case 289:
 		goto st286;
 	goto st125;
 tr562:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -9888,7 +9969,7 @@ st290:
 	if ( ++p == pe )
 		goto _test_eof290;
 case 290:
-#line 9892 "shortcodes.c"
+#line 9973 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr544;
 		case 39: goto tr226;
@@ -9906,6 +9987,7 @@ case 290:
 tr541:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9926,7 +10008,7 @@ st291:
 	if ( ++p == pe )
 		goto _test_eof291;
 case 291:
-#line 9930 "shortcodes.c"
+#line 10012 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr538;
 		case 34: goto st126;
@@ -9950,6 +10032,7 @@ case 291:
 tr564:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -9970,7 +10053,7 @@ st292:
 	if ( ++p == pe )
 		goto _test_eof292;
 case 292:
-#line 9974 "shortcodes.c"
+#line 10057 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -10030,7 +10113,7 @@ st296:
 	if ( ++p == pe )
 		goto _test_eof296;
 case 296:
-#line 10034 "shortcodes.c"
+#line 10117 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr569;
 		case 34: goto st126;
@@ -10097,7 +10180,7 @@ st299:
 	if ( ++p == pe )
 		goto _test_eof299;
 case 299:
-#line 10101 "shortcodes.c"
+#line 10184 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr574;
 		case 34: goto st126;
@@ -10121,6 +10204,7 @@ case 299:
 tr574:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -10138,7 +10222,7 @@ tr574:
       }
 	goto st300;
 tr747:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -10150,7 +10234,7 @@ tr747:
     }
 	goto st300;
 tr1875:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -10165,7 +10249,7 @@ st300:
 	if ( ++p == pe )
 		goto _test_eof300;
 case 300:
-#line 10169 "shortcodes.c"
+#line 10253 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st300;
 		case 34: goto tr580;
@@ -10197,7 +10281,7 @@ st301:
 	if ( ++p == pe )
 		goto _test_eof301;
 case 301:
-#line 10201 "shortcodes.c"
+#line 10285 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr588;
 		case 34: goto st303;
@@ -10217,7 +10301,7 @@ st302:
 	if ( ++p == pe )
 		goto _test_eof302;
 case 302:
-#line 10221 "shortcodes.c"
+#line 10305 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -10240,6 +10324,7 @@ case 303:
 tr2038:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -10257,7 +10342,7 @@ tr2038:
       }
 	goto st304;
 tr592:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -10269,7 +10354,7 @@ tr592:
     }
 	goto st304;
 tr1866:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -10284,7 +10369,7 @@ st304:
 	if ( ++p == pe )
 		goto _test_eof304;
 case 304:
-#line 10288 "shortcodes.c"
+#line 10373 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st304;
 		case 34: goto tr597;
@@ -10309,6 +10394,7 @@ case 304:
 tr2039:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -10326,7 +10412,7 @@ tr2039:
       }
 	goto st305;
 tr593:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -10338,7 +10424,7 @@ tr593:
     }
 	goto st305;
 tr1867:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -10353,7 +10439,7 @@ st305:
 	if ( ++p == pe )
 		goto _test_eof305;
 case 305:
-#line 10357 "shortcodes.c"
+#line 10443 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st306;
@@ -10378,43 +10464,43 @@ st307:
 	if ( ++p == pe )
 		goto _test_eof307;
 case 307:
-#line 10382 "shortcodes.c"
+#line 10468 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
 	}
 	goto st307;
 tr607:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st308;
 st308:
 	if ( ++p == pe )
 		goto _test_eof308;
 case 308:
-#line 10400 "shortcodes.c"
+#line 10486 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr608;
 	}
 	goto st307;
 tr608:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st309;
 st309:
 	if ( ++p == pe )
 		goto _test_eof309;
 case 309:
-#line 10418 "shortcodes.c"
+#line 10504 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st310;
 		case 39: goto st303;
@@ -10484,7 +10570,7 @@ st313:
 	if ( ++p == pe )
 		goto _test_eof313;
 case 313:
-#line 10488 "shortcodes.c"
+#line 10574 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr616;
 		case 37: goto tr617;
@@ -10508,6 +10594,7 @@ case 313:
 tr616:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -10528,7 +10615,7 @@ st314:
 	if ( ++p == pe )
 		goto _test_eof314;
 case 314:
-#line 10532 "shortcodes.c"
+#line 10619 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st314;
 		case 37: goto st315;
@@ -10543,6 +10630,7 @@ case 314:
 tr617:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -10563,7 +10651,7 @@ st315:
 	if ( ++p == pe )
 		goto _test_eof315;
 case 315:
-#line 10567 "shortcodes.c"
+#line 10655 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -10581,9 +10669,9 @@ case 316:
 	}
 	goto st307;
 tr663:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10591,9 +10679,9 @@ tr663:
     }
 	goto st1912;
 tr626:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10635,11 +10723,11 @@ tr626:
 }
 	goto st1912;
 tr630:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10681,11 +10769,11 @@ tr630:
 }
 	goto st1912;
 tr632:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10727,9 +10815,9 @@ tr632:
 }
 	goto st1912;
 tr634:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10771,13 +10859,13 @@ tr634:
 }
 	goto st1912;
 tr638:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10819,13 +10907,13 @@ tr638:
 }
 	goto st1912;
 tr640:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -10867,11 +10955,11 @@ tr640:
 }
 	goto st1912;
 tr666:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10879,9 +10967,9 @@ tr666:
     }
 	goto st1912;
 tr668:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -10892,13 +10980,13 @@ tr668:
   }
 	goto st1912;
 tr1847:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10906,9 +10994,9 @@ tr1847:
     }
 	goto st1912;
 tr1776:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10916,9 +11004,9 @@ tr1776:
     }
 	goto st1912;
 tr1132:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -10929,11 +11017,11 @@ tr1132:
   }
 	goto st1912;
 tr1135:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10941,9 +11029,9 @@ tr1135:
     }
 	goto st1912;
 tr1142:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10951,13 +11039,13 @@ tr1142:
     }
 	goto st1912;
 tr1862:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -10968,7 +11056,7 @@ st1912:
 	if ( ++p == pe )
 		goto _test_eof1912;
 case 1912:
-#line 10972 "shortcodes.c"
+#line 11060 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11028,6 +11116,7 @@ case 321:
 tr620:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11048,7 +11137,7 @@ st322:
 	if ( ++p == pe )
 		goto _test_eof322;
 case 322:
-#line 11052 "shortcodes.c"
+#line 11141 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11068,6 +11157,7 @@ case 323:
 tr619:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11088,7 +11178,7 @@ st324:
 	if ( ++p == pe )
 		goto _test_eof324;
 case 324:
-#line 11092 "shortcodes.c"
+#line 11182 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr616;
 		case 37: goto tr635;
@@ -11112,6 +11202,7 @@ case 324:
 tr635:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11132,7 +11223,7 @@ st325:
 	if ( ++p == pe )
 		goto _test_eof325;
 case 325:
-#line 11136 "shortcodes.c"
+#line 11227 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11152,6 +11243,7 @@ case 326:
 tr636:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11172,7 +11264,7 @@ st327:
 	if ( ++p == pe )
 		goto _test_eof327;
 case 327:
-#line 11176 "shortcodes.c"
+#line 11268 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11199,7 +11291,7 @@ st329:
 	if ( ++p == pe )
 		goto _test_eof329;
 case 329:
-#line 11203 "shortcodes.c"
+#line 11295 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr641;
 		case 37: goto tr642;
@@ -11223,6 +11315,7 @@ case 329:
 tr641:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11240,7 +11333,7 @@ tr641:
       }
 	goto st330;
 tr658:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11252,7 +11345,7 @@ tr658:
     }
 	goto st330;
 tr1838:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11267,7 +11360,7 @@ st330:
 	if ( ++p == pe )
 		goto _test_eof330;
 case 330:
-#line 11271 "shortcodes.c"
+#line 11364 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st330;
 		case 34: goto tr647;
@@ -11299,7 +11392,7 @@ st331:
 	if ( ++p == pe )
 		goto _test_eof331;
 case 331:
-#line 11303 "shortcodes.c"
+#line 11396 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -11316,7 +11409,7 @@ st332:
 	if ( ++p == pe )
 		goto _test_eof332;
 case 332:
-#line 11320 "shortcodes.c"
+#line 11413 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr658;
 		case 37: goto tr659;
@@ -11331,6 +11424,7 @@ case 332:
 tr642:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11348,7 +11442,7 @@ tr642:
       }
 	goto st333;
 tr659:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11360,7 +11454,7 @@ tr659:
     }
 	goto st333;
 tr1839:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11375,7 +11469,7 @@ st333:
 	if ( ++p == pe )
 		goto _test_eof333;
 case 333:
-#line 11379 "shortcodes.c"
+#line 11473 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11393,7 +11487,7 @@ case 334:
 	}
 	goto st307;
 tr660:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11405,7 +11499,7 @@ tr660:
     }
 	goto st335;
 tr1840:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11420,7 +11514,7 @@ st335:
 	if ( ++p == pe )
 		goto _test_eof335;
 case 335:
-#line 11424 "shortcodes.c"
+#line 11518 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st336;
 		case 39: goto st303;
@@ -11450,6 +11544,7 @@ case 337:
 tr645:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11467,7 +11562,7 @@ tr645:
       }
 	goto st338;
 tr661:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11479,7 +11574,7 @@ tr661:
     }
 	goto st338;
 tr1842:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11494,7 +11589,7 @@ st338:
 	if ( ++p == pe )
 		goto _test_eof338;
 case 338:
-#line 11498 "shortcodes.c"
+#line 11593 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -11521,7 +11616,7 @@ st340:
 	if ( ++p == pe )
 		goto _test_eof340;
 case 340:
-#line 11525 "shortcodes.c"
+#line 11620 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr669;
 		case 34: goto st36;
@@ -11536,6 +11631,7 @@ case 340:
 tr2013:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11553,7 +11649,7 @@ tr2013:
       }
 	goto st341;
 tr669:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11565,7 +11661,7 @@ tr669:
     }
 	goto st341;
 tr1829:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11580,7 +11676,7 @@ st341:
 	if ( ++p == pe )
 		goto _test_eof341;
 case 341:
-#line 11584 "shortcodes.c"
+#line 11680 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st341;
 		case 34: goto tr674;
@@ -11612,7 +11708,7 @@ st342:
 	if ( ++p == pe )
 		goto _test_eof342;
 case 342:
-#line 11616 "shortcodes.c"
+#line 11712 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr680;
 		case 34: goto st303;
@@ -11627,6 +11723,7 @@ case 342:
 tr726:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11644,7 +11741,7 @@ tr726:
       }
 	goto st343;
 tr680:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11656,7 +11753,7 @@ tr680:
     }
 	goto st343;
 tr1817:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11671,7 +11768,7 @@ st343:
 	if ( ++p == pe )
 		goto _test_eof343;
 case 343:
-#line 11675 "shortcodes.c"
+#line 11772 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st343;
 		case 34: goto tr685;
@@ -11696,6 +11793,7 @@ case 343:
 tr727:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11713,7 +11811,7 @@ tr727:
       }
 	goto st344;
 tr681:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -11725,7 +11823,7 @@ tr681:
     }
 	goto st344;
 tr1818:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -11740,7 +11838,7 @@ st344:
 	if ( ++p == pe )
 		goto _test_eof344;
 case 344:
-#line 11744 "shortcodes.c"
+#line 11842 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -11748,36 +11846,36 @@ case 344:
 	}
 	goto st302;
 tr591:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st345;
 st345:
 	if ( ++p == pe )
 		goto _test_eof345;
 case 345:
-#line 11763 "shortcodes.c"
+#line 11861 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr693;
 	}
 	goto st302;
 tr693:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st346;
 st346:
 	if ( ++p == pe )
 		goto _test_eof346;
 case 346:
-#line 11781 "shortcodes.c"
+#line 11879 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 37: goto st347;
@@ -11847,7 +11945,7 @@ st350:
 	if ( ++p == pe )
 		goto _test_eof350;
 case 350:
-#line 11851 "shortcodes.c"
+#line 11949 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr701;
 		case 34: goto st303;
@@ -11871,6 +11969,7 @@ case 350:
 tr701:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11891,7 +11990,7 @@ st351:
 	if ( ++p == pe )
 		goto _test_eof351;
 case 351:
-#line 11895 "shortcodes.c"
+#line 11994 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st351;
 		case 34: goto st303;
@@ -11906,6 +12005,7 @@ case 351:
 tr702:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -11926,7 +12026,7 @@ st352:
 	if ( ++p == pe )
 		goto _test_eof352;
 case 352:
-#line 11930 "shortcodes.c"
+#line 12030 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -11944,9 +12044,9 @@ case 353:
 	}
 	goto st302;
 tr1813:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -11954,9 +12054,9 @@ tr1813:
     }
 	goto st1913;
 tr711:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -11998,11 +12098,11 @@ tr711:
 }
 	goto st1913;
 tr715:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -12044,11 +12144,11 @@ tr715:
 }
 	goto st1913;
 tr717:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -12090,9 +12190,9 @@ tr717:
 }
 	goto st1913;
 tr719:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -12134,13 +12234,13 @@ tr719:
 }
 	goto st1913;
 tr723:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -12182,13 +12282,13 @@ tr723:
 }
 	goto st1913;
 tr725:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -12230,11 +12330,11 @@ tr725:
 }
 	goto st1913;
 tr1816:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12242,9 +12342,9 @@ tr1816:
     }
 	goto st1913;
 tr735:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -12255,13 +12355,13 @@ tr735:
   }
 	goto st1913;
 tr733:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12269,9 +12369,9 @@ tr733:
     }
 	goto st1913;
 tr1797:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12279,9 +12379,9 @@ tr1797:
     }
 	goto st1913;
 tr1157:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -12292,11 +12392,11 @@ tr1157:
   }
 	goto st1913;
 tr1160:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12304,9 +12404,9 @@ tr1160:
     }
 	goto st1913;
 tr1167:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12314,13 +12414,13 @@ tr1167:
     }
 	goto st1913;
 tr1812:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -12331,7 +12431,7 @@ st1913:
 	if ( ++p == pe )
 		goto _test_eof1913;
 case 1913:
-#line 12335 "shortcodes.c"
+#line 12435 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12391,6 +12491,7 @@ case 358:
 tr705:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12411,7 +12512,7 @@ st359:
 	if ( ++p == pe )
 		goto _test_eof359;
 case 359:
-#line 12415 "shortcodes.c"
+#line 12516 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12431,6 +12532,7 @@ case 360:
 tr704:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12451,7 +12553,7 @@ st361:
 	if ( ++p == pe )
 		goto _test_eof361;
 case 361:
-#line 12455 "shortcodes.c"
+#line 12557 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr701;
 		case 34: goto st303;
@@ -12475,6 +12577,7 @@ case 361:
 tr720:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12495,7 +12598,7 @@ st362:
 	if ( ++p == pe )
 		goto _test_eof362;
 case 362:
-#line 12499 "shortcodes.c"
+#line 12602 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12515,6 +12618,7 @@ case 363:
 tr721:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12535,7 +12639,7 @@ st364:
 	if ( ++p == pe )
 		goto _test_eof364;
 case 364:
-#line 12539 "shortcodes.c"
+#line 12643 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12562,7 +12666,7 @@ st366:
 	if ( ++p == pe )
 		goto _test_eof366;
 case 366:
-#line 12566 "shortcodes.c"
+#line 12670 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr726;
 		case 34: goto st303;
@@ -12586,6 +12690,7 @@ case 366:
 tr729:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12606,7 +12711,7 @@ st367:
 	if ( ++p == pe )
 		goto _test_eof367;
 case 367:
-#line 12610 "shortcodes.c"
+#line 12715 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr726;
 		case 34: goto st303;
@@ -12630,6 +12735,7 @@ case 367:
 tr731:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12650,7 +12756,7 @@ st368:
 	if ( ++p == pe )
 		goto _test_eof368;
 case 368:
-#line 12654 "shortcodes.c"
+#line 12760 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12670,6 +12776,7 @@ case 369:
 tr730:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12687,7 +12794,7 @@ tr730:
       }
 	goto st370;
 tr683:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -12699,7 +12806,7 @@ tr683:
     }
 	goto st370;
 tr1821:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -12714,7 +12821,7 @@ st370:
 	if ( ++p == pe )
 		goto _test_eof370;
 case 370:
-#line 12718 "shortcodes.c"
+#line 12825 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -12774,7 +12881,7 @@ st374:
 	if ( ++p == pe )
 		goto _test_eof374;
 case 374:
-#line 12778 "shortcodes.c"
+#line 12885 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr738;
 		case 34: goto st303;
@@ -12796,6 +12903,7 @@ case 374:
 tr738:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12813,7 +12921,7 @@ tr738:
       }
 	goto st375;
 tr588:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -12825,7 +12933,7 @@ tr588:
     }
 	goto st375;
 tr1798:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -12840,7 +12948,7 @@ st375:
 	if ( ++p == pe )
 		goto _test_eof375;
 case 375:
-#line 12844 "shortcodes.c"
+#line 12952 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st375;
 		case 34: goto tr742;
@@ -12870,7 +12978,7 @@ st376:
 	if ( ++p == pe )
 		goto _test_eof376;
 case 376:
-#line 12874 "shortcodes.c"
+#line 12982 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr747;
 		case 34: goto st126;
@@ -12885,6 +12993,7 @@ case 376:
 tr575:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -12902,7 +13011,7 @@ tr575:
       }
 	goto st377;
 tr748:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -12914,7 +13023,7 @@ tr748:
     }
 	goto st377;
 tr1876:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -12929,7 +13038,7 @@ st377:
 	if ( ++p == pe )
 		goto _test_eof377;
 case 377:
-#line 12933 "shortcodes.c"
+#line 13042 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -12947,7 +13056,7 @@ case 378:
 	}
 	goto st125;
 tr749:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -12959,7 +13068,7 @@ tr749:
     }
 	goto st379;
 tr1877:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -12974,7 +13083,7 @@ st379:
 	if ( ++p == pe )
 		goto _test_eof379;
 case 379:
-#line 12978 "shortcodes.c"
+#line 13087 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 62: goto st380;
@@ -13004,6 +13113,7 @@ case 381:
 tr578:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13021,7 +13131,7 @@ tr578:
       }
 	goto st382;
 tr750:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -13033,7 +13143,7 @@ tr750:
     }
 	goto st382;
 tr1879:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -13048,7 +13158,7 @@ st382:
 	if ( ++p == pe )
 		goto _test_eof382;
 case 382:
-#line 13052 "shortcodes.c"
+#line 13162 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -13075,7 +13185,7 @@ st384:
 	if ( ++p == pe )
 		goto _test_eof384;
 case 384:
-#line 13079 "shortcodes.c"
+#line 13189 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -13092,7 +13202,7 @@ st385:
 	if ( ++p == pe )
 		goto _test_eof385;
 case 385:
-#line 13096 "shortcodes.c"
+#line 13206 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr762;
 		case 37: goto tr763;
@@ -13107,6 +13217,7 @@ case 385:
 tr1964:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13124,7 +13235,7 @@ tr1964:
       }
 	goto st386;
 tr762:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -13136,7 +13247,7 @@ tr762:
     }
 	goto st386;
 tr1785:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -13151,7 +13262,7 @@ st386:
 	if ( ++p == pe )
 		goto _test_eof386;
 case 386:
-#line 13155 "shortcodes.c"
+#line 13266 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st386;
 		case 34: goto tr743;
@@ -13176,6 +13287,7 @@ case 386:
 tr1965:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13193,7 +13305,7 @@ tr1965:
       }
 	goto st387;
 tr763:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -13205,7 +13317,7 @@ tr763:
     }
 	goto st387;
 tr1786:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -13220,7 +13332,7 @@ st387:
 	if ( ++p == pe )
 		goto _test_eof387;
 case 387:
-#line 13224 "shortcodes.c"
+#line 13336 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -13247,7 +13359,7 @@ st389:
 	if ( ++p == pe )
 		goto _test_eof389;
 case 389:
-#line 13251 "shortcodes.c"
+#line 13363 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr775;
 		case 39: goto st303;
@@ -13260,6 +13372,7 @@ case 389:
 tr1850:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13277,7 +13390,7 @@ tr1850:
       }
 	goto st390;
 tr775:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -13289,7 +13402,7 @@ tr775:
     }
 	goto st390;
 tr1777:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -13304,7 +13417,7 @@ st390:
 	if ( ++p == pe )
 		goto _test_eof390;
 case 390:
-#line 13308 "shortcodes.c"
+#line 13421 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st390;
 		case 34: goto tr582;
@@ -13334,7 +13447,7 @@ st391:
 	if ( ++p == pe )
 		goto _test_eof391;
 case 391:
-#line 13338 "shortcodes.c"
+#line 13451 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13342,18 +13455,18 @@ case 391:
 	}
 	goto st391;
 tr785:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st392;
 st392:
 	if ( ++p == pe )
 		goto _test_eof392;
 case 392:
-#line 13357 "shortcodes.c"
+#line 13470 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13361,18 +13474,18 @@ case 392:
 	}
 	goto st391;
 tr786:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st393;
 st393:
 	if ( ++p == pe )
 		goto _test_eof393;
 case 393:
-#line 13376 "shortcodes.c"
+#line 13489 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 37: goto st394;
@@ -13446,7 +13559,7 @@ st397:
 	if ( ++p == pe )
 		goto _test_eof397;
 case 397:
-#line 13450 "shortcodes.c"
+#line 13563 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr794;
 		case 34: goto st389;
@@ -13471,6 +13584,7 @@ case 397:
 tr794:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13491,7 +13605,7 @@ st398:
 	if ( ++p == pe )
 		goto _test_eof398;
 case 398:
-#line 13495 "shortcodes.c"
+#line 13609 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st398;
 		case 34: goto st389;
@@ -13507,6 +13621,7 @@ case 398:
 tr795:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -13527,7 +13642,7 @@ st399:
 	if ( ++p == pe )
 		goto _test_eof399;
 case 399:
-#line 13531 "shortcodes.c"
+#line 13646 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -13547,9 +13662,9 @@ case 400:
 	}
 	goto st391;
 tr845:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13557,9 +13672,9 @@ tr845:
     }
 	goto st1914;
 tr804:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13601,11 +13716,11 @@ tr804:
 }
 	goto st1914;
 tr808:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13647,11 +13762,11 @@ tr808:
 }
 	goto st1914;
 tr810:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13693,9 +13808,9 @@ tr810:
 }
 	goto st1914;
 tr812:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13737,13 +13852,13 @@ tr812:
 }
 	goto st1914;
 tr816:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13785,13 +13900,13 @@ tr816:
 }
 	goto st1914;
 tr818:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -13833,11 +13948,11 @@ tr818:
 }
 	goto st1914;
 tr848:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13845,9 +13960,9 @@ tr848:
     }
 	goto st1914;
 tr850:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -13858,13 +13973,13 @@ tr850:
   }
 	goto st1914;
 tr1757:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13872,9 +13987,9 @@ tr1757:
     }
 	goto st1914;
 tr1066:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13882,9 +13997,9 @@ tr1066:
     }
 	goto st1914;
 tr1651:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -13895,11 +14010,11 @@ tr1651:
   }
 	goto st1914;
 tr1654:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13907,9 +14022,9 @@ tr1654:
     }
 	goto st1914;
 tr1661:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13917,13 +14032,13 @@ tr1661:
     }
 	goto st1914;
 tr1772:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -13934,7 +14049,7 @@ st1914:
 	if ( ++p == pe )
 		goto _test_eof1914;
 case 1914:
-#line 13938 "shortcodes.c"
+#line 14053 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14000,6 +14115,7 @@ case 405:
 tr798:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14020,7 +14136,7 @@ st406:
 	if ( ++p == pe )
 		goto _test_eof406;
 case 406:
-#line 14024 "shortcodes.c"
+#line 14140 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14042,6 +14158,7 @@ case 407:
 tr797:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14062,7 +14179,7 @@ st408:
 	if ( ++p == pe )
 		goto _test_eof408;
 case 408:
-#line 14066 "shortcodes.c"
+#line 14183 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr794;
 		case 34: goto st389;
@@ -14087,6 +14204,7 @@ case 408:
 tr813:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14107,7 +14225,7 @@ st409:
 	if ( ++p == pe )
 		goto _test_eof409;
 case 409:
-#line 14111 "shortcodes.c"
+#line 14229 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14129,6 +14247,7 @@ case 410:
 tr814:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14149,7 +14268,7 @@ st411:
 	if ( ++p == pe )
 		goto _test_eof411;
 case 411:
-#line 14153 "shortcodes.c"
+#line 14272 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14178,7 +14297,7 @@ st413:
 	if ( ++p == pe )
 		goto _test_eof413;
 case 413:
-#line 14182 "shortcodes.c"
+#line 14301 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr819;
 		case 34: goto st389;
@@ -14203,6 +14322,7 @@ case 413:
 tr819:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14220,7 +14340,7 @@ tr819:
       }
 	goto st414;
 tr840:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14232,7 +14352,7 @@ tr840:
     }
 	goto st414;
 tr1748:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14247,7 +14367,7 @@ st414:
 	if ( ++p == pe )
 		goto _test_eof414;
 case 414:
-#line 14251 "shortcodes.c"
+#line 14371 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st414;
 		case 34: goto tr825;
@@ -14279,7 +14399,7 @@ st415:
 	if ( ++p == pe )
 		goto _test_eof415;
 case 415:
-#line 14283 "shortcodes.c"
+#line 14403 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr832;
 		case 34: goto st332;
@@ -14293,6 +14413,7 @@ case 415:
 tr1590:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14310,7 +14431,7 @@ tr1590:
       }
 	goto st416;
 tr832:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14322,7 +14443,7 @@ tr832:
     }
 	goto st416;
 tr1743:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14337,7 +14458,7 @@ st416:
 	if ( ++p == pe )
 		goto _test_eof416;
 case 416:
-#line 14341 "shortcodes.c"
+#line 14462 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st416;
 		case 34: goto tr835;
@@ -14367,7 +14488,7 @@ st417:
 	if ( ++p == pe )
 		goto _test_eof417;
 case 417:
-#line 14371 "shortcodes.c"
+#line 14492 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr840;
 		case 34: goto st389;
@@ -14383,6 +14504,7 @@ case 417:
 tr820:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14400,7 +14522,7 @@ tr820:
       }
 	goto st418;
 tr841:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14412,7 +14534,7 @@ tr841:
     }
 	goto st418;
 tr1749:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14427,7 +14549,7 @@ st418:
 	if ( ++p == pe )
 		goto _test_eof418;
 case 418:
-#line 14431 "shortcodes.c"
+#line 14553 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14447,7 +14569,7 @@ case 419:
 	}
 	goto st391;
 tr842:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14459,7 +14581,7 @@ tr842:
     }
 	goto st420;
 tr1750:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14474,7 +14596,7 @@ st420:
 	if ( ++p == pe )
 		goto _test_eof420;
 case 420:
-#line 14478 "shortcodes.c"
+#line 14600 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 37: goto st421;
@@ -14507,6 +14629,7 @@ case 422:
 tr823:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14524,7 +14647,7 @@ tr823:
       }
 	goto st423;
 tr843:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14536,7 +14659,7 @@ tr843:
     }
 	goto st423;
 tr1752:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14551,7 +14674,7 @@ st423:
 	if ( ++p == pe )
 		goto _test_eof423;
 case 423:
-#line 14555 "shortcodes.c"
+#line 14678 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -14580,7 +14703,7 @@ st425:
 	if ( ++p == pe )
 		goto _test_eof425;
 case 425:
-#line 14584 "shortcodes.c"
+#line 14707 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr851;
 		case 34: goto st153;
@@ -14596,6 +14719,7 @@ case 425:
 tr1939:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14613,7 +14737,7 @@ tr1939:
       }
 	goto st426;
 tr851:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14625,7 +14749,7 @@ tr851:
     }
 	goto st426;
 tr1734:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14640,7 +14764,7 @@ st426:
 	if ( ++p == pe )
 		goto _test_eof426;
 case 426:
-#line 14644 "shortcodes.c"
+#line 14768 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st426;
 		case 34: goto tr856;
@@ -14672,7 +14796,7 @@ st427:
 	if ( ++p == pe )
 		goto _test_eof427;
 case 427:
-#line 14676 "shortcodes.c"
+#line 14800 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr862;
 		case 34: goto st385;
@@ -14688,6 +14812,7 @@ case 427:
 tr907:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14705,7 +14830,7 @@ tr907:
       }
 	goto st428;
 tr862:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14717,7 +14842,7 @@ tr862:
     }
 	goto st428;
 tr1722:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14732,7 +14857,7 @@ st428:
 	if ( ++p == pe )
 		goto _test_eof428;
 case 428:
-#line 14736 "shortcodes.c"
+#line 14861 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st428;
 		case 34: goto tr836;
@@ -14757,6 +14882,7 @@ case 428:
 tr908:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14774,7 +14900,7 @@ tr908:
       }
 	goto st429;
 tr863:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -14786,7 +14912,7 @@ tr863:
     }
 	goto st429;
 tr1723:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -14801,7 +14927,7 @@ st429:
 	if ( ++p == pe )
 		goto _test_eof429;
 case 429:
-#line 14805 "shortcodes.c"
+#line 14931 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14810,18 +14936,18 @@ case 429:
 	}
 	goto st384;
 tr761:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st430;
 st430:
 	if ( ++p == pe )
 		goto _test_eof430;
 case 430:
-#line 14825 "shortcodes.c"
+#line 14951 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -14829,18 +14955,18 @@ case 430:
 	}
 	goto st384;
 tr874:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st431;
 st431:
 	if ( ++p == pe )
 		goto _test_eof431;
 case 431:
-#line 14844 "shortcodes.c"
+#line 14970 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 37: goto st432;
@@ -14914,7 +15040,7 @@ st435:
 	if ( ++p == pe )
 		goto _test_eof435;
 case 435:
-#line 14918 "shortcodes.c"
+#line 15044 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr882;
 		case 34: goto st385;
@@ -14939,6 +15065,7 @@ case 435:
 tr882:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14959,7 +15086,7 @@ st436:
 	if ( ++p == pe )
 		goto _test_eof436;
 case 436:
-#line 14963 "shortcodes.c"
+#line 15090 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st436;
 		case 34: goto st385;
@@ -14975,6 +15102,7 @@ case 436:
 tr883:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -14995,7 +15123,7 @@ st437:
 	if ( ++p == pe )
 		goto _test_eof437;
 case 437:
-#line 14999 "shortcodes.c"
+#line 15127 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15015,9 +15143,9 @@ case 438:
 	}
 	goto st384;
 tr1718:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15025,9 +15153,9 @@ tr1718:
     }
 	goto st1915;
 tr892:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15069,11 +15197,11 @@ tr892:
 }
 	goto st1915;
 tr896:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15115,11 +15243,11 @@ tr896:
 }
 	goto st1915;
 tr898:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15161,9 +15289,9 @@ tr898:
 }
 	goto st1915;
 tr900:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15205,13 +15333,13 @@ tr900:
 }
 	goto st1915;
 tr904:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15253,13 +15381,13 @@ tr904:
 }
 	goto st1915;
 tr906:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -15301,11 +15429,11 @@ tr906:
 }
 	goto st1915;
 tr1721:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15313,9 +15441,9 @@ tr1721:
     }
 	goto st1915;
 tr916:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -15326,13 +15454,13 @@ tr916:
   }
 	goto st1915;
 tr914:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15340,9 +15468,9 @@ tr914:
     }
 	goto st1915;
 tr944:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15350,9 +15478,9 @@ tr944:
     }
 	goto st1915;
 tr1107:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -15363,11 +15491,11 @@ tr1107:
   }
 	goto st1915;
 tr1110:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15375,9 +15503,9 @@ tr1110:
     }
 	goto st1915;
 tr1112:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15385,13 +15513,13 @@ tr1112:
     }
 	goto st1915;
 tr1717:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -15402,7 +15530,7 @@ st1915:
 	if ( ++p == pe )
 		goto _test_eof1915;
 case 1915:
-#line 15406 "shortcodes.c"
+#line 15534 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15468,6 +15596,7 @@ case 443:
 tr886:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15488,7 +15617,7 @@ st444:
 	if ( ++p == pe )
 		goto _test_eof444;
 case 444:
-#line 15492 "shortcodes.c"
+#line 15621 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15510,6 +15639,7 @@ case 445:
 tr885:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15530,7 +15660,7 @@ st446:
 	if ( ++p == pe )
 		goto _test_eof446;
 case 446:
-#line 15534 "shortcodes.c"
+#line 15664 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr882;
 		case 34: goto st385;
@@ -15555,6 +15685,7 @@ case 446:
 tr901:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15575,7 +15706,7 @@ st447:
 	if ( ++p == pe )
 		goto _test_eof447;
 case 447:
-#line 15579 "shortcodes.c"
+#line 15710 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15597,6 +15728,7 @@ case 448:
 tr902:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15617,7 +15749,7 @@ st449:
 	if ( ++p == pe )
 		goto _test_eof449;
 case 449:
-#line 15621 "shortcodes.c"
+#line 15753 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15646,7 +15778,7 @@ st451:
 	if ( ++p == pe )
 		goto _test_eof451;
 case 451:
-#line 15650 "shortcodes.c"
+#line 15782 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr907;
 		case 34: goto st385;
@@ -15671,6 +15803,7 @@ case 451:
 tr910:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15691,7 +15824,7 @@ st452:
 	if ( ++p == pe )
 		goto _test_eof452;
 case 452:
-#line 15695 "shortcodes.c"
+#line 15828 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr907;
 		case 34: goto st385;
@@ -15716,6 +15849,7 @@ case 452:
 tr912:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15736,7 +15870,7 @@ st453:
 	if ( ++p == pe )
 		goto _test_eof453;
 case 453:
-#line 15740 "shortcodes.c"
+#line 15874 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15758,6 +15892,7 @@ case 454:
 tr911:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15775,7 +15910,7 @@ tr911:
       }
 	goto st455;
 tr865:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -15787,7 +15922,7 @@ tr865:
     }
 	goto st455;
 tr1726:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -15802,7 +15937,7 @@ st455:
 	if ( ++p == pe )
 		goto _test_eof455;
 case 455:
-#line 15806 "shortcodes.c"
+#line 15941 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -15866,7 +16001,7 @@ st459:
 	if ( ++p == pe )
 		goto _test_eof459;
 case 459:
-#line 15870 "shortcodes.c"
+#line 16005 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr919;
 		case 34: goto st385;
@@ -15889,6 +16024,7 @@ case 459:
 tr919:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15906,7 +16042,7 @@ tr919:
       }
 	goto st460;
 tr939:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -15918,7 +16054,7 @@ tr939:
     }
 	goto st460;
 tr1082:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -15933,7 +16069,7 @@ st460:
 	if ( ++p == pe )
 		goto _test_eof460;
 case 460:
-#line 15937 "shortcodes.c"
+#line 16073 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st460;
 		case 34: goto tr923;
@@ -15963,7 +16099,7 @@ st461:
 	if ( ++p == pe )
 		goto _test_eof461;
 case 461:
-#line 15967 "shortcodes.c"
+#line 16103 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr928;
 		case 34: goto st244;
@@ -15979,6 +16115,7 @@ case 461:
 tr1046:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -15996,7 +16133,7 @@ tr1046:
       }
 	goto st462;
 tr928:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -16008,7 +16145,7 @@ tr928:
     }
 	goto st462;
 tr1075:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -16023,7 +16160,7 @@ st462:
 	if ( ++p == pe )
 		goto _test_eof462;
 case 462:
-#line 16027 "shortcodes.c"
+#line 16164 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st462;
 		case 34: goto tr924;
@@ -16055,7 +16192,7 @@ st463:
 	if ( ++p == pe )
 		goto _test_eof463;
 case 463:
-#line 16059 "shortcodes.c"
+#line 16196 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr939;
 		case 34: goto st385;
@@ -16069,6 +16206,7 @@ case 463:
 tr920:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16086,7 +16224,7 @@ tr920:
       }
 	goto st464;
 tr940:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -16098,7 +16236,7 @@ tr940:
     }
 	goto st464;
 tr1083:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -16113,7 +16251,7 @@ st464:
 	if ( ++p == pe )
 		goto _test_eof464;
 case 464:
-#line 16117 "shortcodes.c"
+#line 16255 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -16158,6 +16296,7 @@ case 467:
 tr1047:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16175,7 +16314,7 @@ tr1047:
       }
 	goto st468;
 tr929:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -16187,7 +16326,7 @@ tr929:
     }
 	goto st468;
 tr1076:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -16202,7 +16341,7 @@ st468:
 	if ( ++p == pe )
 		goto _test_eof468;
 case 468:
-#line 16206 "shortcodes.c"
+#line 16345 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16211,18 +16350,18 @@ case 468:
 	}
 	goto st243;
 tr477:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st469;
 st469:
 	if ( ++p == pe )
 		goto _test_eof469;
 case 469:
-#line 16226 "shortcodes.c"
+#line 16365 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16230,18 +16369,18 @@ case 469:
 	}
 	goto st243;
 tr946:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st470;
 st470:
 	if ( ++p == pe )
 		goto _test_eof470;
 case 470:
-#line 16245 "shortcodes.c"
+#line 16384 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 37: goto st471;
@@ -16315,7 +16454,7 @@ st474:
 	if ( ++p == pe )
 		goto _test_eof474;
 case 474:
-#line 16319 "shortcodes.c"
+#line 16458 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr954;
 		case 34: goto st244;
@@ -16340,6 +16479,7 @@ case 474:
 tr954:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16360,7 +16500,7 @@ st475:
 	if ( ++p == pe )
 		goto _test_eof475;
 case 475:
-#line 16364 "shortcodes.c"
+#line 16504 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st475;
 		case 34: goto st244;
@@ -16376,6 +16516,7 @@ case 475:
 tr955:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16396,7 +16537,7 @@ st476:
 	if ( ++p == pe )
 		goto _test_eof476;
 case 476:
-#line 16400 "shortcodes.c"
+#line 16541 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16416,9 +16557,9 @@ case 477:
 	}
 	goto st243;
 tr1007:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16426,9 +16567,9 @@ tr1007:
     }
 	goto st1916;
 tr964:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16470,11 +16611,11 @@ tr964:
 }
 	goto st1916;
 tr968:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16516,11 +16657,11 @@ tr968:
 }
 	goto st1916;
 tr970:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16562,9 +16703,9 @@ tr970:
 }
 	goto st1916;
 tr972:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16606,13 +16747,13 @@ tr972:
 }
 	goto st1916;
 tr976:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16654,13 +16795,13 @@ tr976:
 }
 	goto st1916;
 tr978:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -16702,11 +16843,11 @@ tr978:
 }
 	goto st1916;
 tr1010:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16714,9 +16855,9 @@ tr1010:
     }
 	goto st1916;
 tr1017:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -16727,13 +16868,13 @@ tr1017:
   }
 	goto st1916;
 tr1022:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16741,9 +16882,9 @@ tr1022:
     }
 	goto st1916;
 tr1038:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16751,9 +16892,9 @@ tr1038:
     }
 	goto st1916;
 tr1056:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -16764,11 +16905,11 @@ tr1056:
   }
 	goto st1916;
 tr1074:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16776,9 +16917,9 @@ tr1074:
     }
 	goto st1916;
 tr1055:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16786,13 +16927,13 @@ tr1055:
     }
 	goto st1916;
 tr1053:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -16803,7 +16944,7 @@ st1916:
 	if ( ++p == pe )
 		goto _test_eof1916;
 case 1916:
-#line 16807 "shortcodes.c"
+#line 16948 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16869,6 +17010,7 @@ case 482:
 tr958:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16889,7 +17031,7 @@ st483:
 	if ( ++p == pe )
 		goto _test_eof483;
 case 483:
-#line 16893 "shortcodes.c"
+#line 17035 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16911,6 +17053,7 @@ case 484:
 tr957:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16931,7 +17074,7 @@ st485:
 	if ( ++p == pe )
 		goto _test_eof485;
 case 485:
-#line 16935 "shortcodes.c"
+#line 17078 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr954;
 		case 34: goto st244;
@@ -16956,6 +17099,7 @@ case 485:
 tr973:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -16976,7 +17120,7 @@ st486:
 	if ( ++p == pe )
 		goto _test_eof486;
 case 486:
-#line 16980 "shortcodes.c"
+#line 17124 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -16998,6 +17142,7 @@ case 487:
 tr974:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17018,7 +17163,7 @@ st488:
 	if ( ++p == pe )
 		goto _test_eof488;
 case 488:
-#line 17022 "shortcodes.c"
+#line 17167 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17047,7 +17192,7 @@ st490:
 	if ( ++p == pe )
 		goto _test_eof490;
 case 490:
-#line 17051 "shortcodes.c"
+#line 17196 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr979;
 		case 34: goto st244;
@@ -17072,6 +17217,7 @@ case 490:
 tr979:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17089,7 +17235,7 @@ tr979:
       }
 	goto st491;
 tr471:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17101,7 +17247,7 @@ tr471:
     }
 	goto st491;
 tr1011:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17116,7 +17262,7 @@ st491:
 	if ( ++p == pe )
 		goto _test_eof491;
 case 491:
-#line 17120 "shortcodes.c"
+#line 17266 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st491;
 		case 34: goto tr985;
@@ -17148,7 +17294,7 @@ st492:
 	if ( ++p == pe )
 		goto _test_eof492;
 case 492:
-#line 17152 "shortcodes.c"
+#line 17298 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr991;
 		case 34: goto st153;
@@ -17162,6 +17308,7 @@ case 492:
 tr1934:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17179,7 +17326,7 @@ tr1934:
       }
 	goto st493;
 tr991:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17191,7 +17338,7 @@ tr991:
     }
 	goto st493;
 tr1001:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17206,7 +17353,7 @@ st493:
 	if ( ++p == pe )
 		goto _test_eof493;
 case 493:
-#line 17210 "shortcodes.c"
+#line 17357 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st493;
 		case 34: goto tr460;
@@ -17229,6 +17376,7 @@ case 493:
 tr1935:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17246,7 +17394,7 @@ tr1935:
       }
 	goto st494;
 tr992:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17258,7 +17406,7 @@ tr992:
     }
 	goto st494;
 tr1002:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17273,7 +17421,7 @@ st494:
 	if ( ++p == pe )
 		goto _test_eof494;
 case 494:
-#line 17277 "shortcodes.c"
+#line 17425 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -17325,7 +17473,7 @@ st498:
 	if ( ++p == pe )
 		goto _test_eof498;
 case 498:
-#line 17329 "shortcodes.c"
+#line 17477 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1001;
 		case 34: goto st153;
@@ -17355,7 +17503,7 @@ st499:
 	if ( ++p == pe )
 		goto _test_eof499;
 case 499:
-#line 17359 "shortcodes.c"
+#line 17507 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1001;
 		case 34: goto st153;
@@ -17377,7 +17525,7 @@ case 499:
 		goto st498;
 	goto st152;
 tr1004:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -17387,7 +17535,7 @@ st500:
 	if ( ++p == pe )
 		goto _test_eof500;
 case 500:
-#line 17391 "shortcodes.c"
+#line 17539 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr460;
 		case 39: goto tr985;
@@ -17405,6 +17553,7 @@ case 500:
 tr980:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17422,7 +17571,7 @@ tr980:
       }
 	goto st501;
 tr473:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17434,7 +17583,7 @@ tr473:
     }
 	goto st501;
 tr1012:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17449,7 +17598,7 @@ st501:
 	if ( ++p == pe )
 		goto _test_eof501;
 case 501:
-#line 17453 "shortcodes.c"
+#line 17602 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17469,7 +17618,7 @@ case 502:
 	}
 	goto st243;
 tr475:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17481,7 +17630,7 @@ tr475:
     }
 	goto st503;
 tr1013:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17496,7 +17645,7 @@ st503:
 	if ( ++p == pe )
 		goto _test_eof503;
 case 503:
-#line 17500 "shortcodes.c"
+#line 17649 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 37: goto st504;
@@ -17536,7 +17685,7 @@ st506:
 	if ( ++p == pe )
 		goto _test_eof506;
 case 506:
-#line 17540 "shortcodes.c"
+#line 17689 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1011;
 		case 34: goto st244;
@@ -17561,6 +17710,7 @@ case 506:
 tr983:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17578,7 +17728,7 @@ tr983:
       }
 	goto st507;
 tr476:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17590,7 +17740,7 @@ tr476:
     }
 	goto st507;
 tr1015:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17605,7 +17755,7 @@ st507:
 	if ( ++p == pe )
 		goto _test_eof507;
 case 507:
-#line 17609 "shortcodes.c"
+#line 17759 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17634,7 +17784,7 @@ st509:
 	if ( ++p == pe )
 		goto _test_eof509;
 case 509:
-#line 17638 "shortcodes.c"
+#line 17788 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1011;
 		case 34: goto st244;
@@ -17658,7 +17808,7 @@ case 509:
 		goto st506;
 	goto st243;
 tr1018:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -17668,7 +17818,7 @@ st510:
 	if ( ++p == pe )
 		goto _test_eof510;
 case 510:
-#line 17672 "shortcodes.c"
+#line 17822 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr985;
 		case 39: goto tr459;
@@ -17686,6 +17836,7 @@ case 510:
 tr982:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17706,7 +17857,7 @@ st511:
 	if ( ++p == pe )
 		goto _test_eof511;
 case 511:
-#line 17710 "shortcodes.c"
+#line 17861 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr979;
 		case 34: goto st244;
@@ -17731,6 +17882,7 @@ case 511:
 tr1020:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17751,7 +17903,7 @@ st512:
 	if ( ++p == pe )
 		goto _test_eof512;
 case 512:
-#line 17755 "shortcodes.c"
+#line 17907 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -17815,7 +17967,7 @@ st516:
 	if ( ++p == pe )
 		goto _test_eof516;
 case 516:
-#line 17819 "shortcodes.c"
+#line 17971 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1025;
 		case 34: goto st244;
@@ -17838,6 +17990,7 @@ case 516:
 tr1025:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17855,7 +18008,7 @@ tr1025:
       }
 	goto st517;
 tr1033:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17867,7 +18020,7 @@ tr1033:
     }
 	goto st517;
 tr1039:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17882,7 +18035,7 @@ st517:
 	if ( ++p == pe )
 		goto _test_eof517;
 case 517:
-#line 17886 "shortcodes.c"
+#line 18039 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st517;
 		case 34: goto tr1029;
@@ -17912,7 +18065,7 @@ st518:
 	if ( ++p == pe )
 		goto _test_eof518;
 case 518:
-#line 17916 "shortcodes.c"
+#line 18069 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1033;
 		case 34: goto st244;
@@ -17926,6 +18079,7 @@ case 518:
 tr1026:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -17943,7 +18097,7 @@ tr1026:
       }
 	goto st519;
 tr1034:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -17955,7 +18109,7 @@ tr1034:
     }
 	goto st519;
 tr1040:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -17970,7 +18124,7 @@ st519:
 	if ( ++p == pe )
 		goto _test_eof519;
 case 519:
-#line 17974 "shortcodes.c"
+#line 18128 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -18022,7 +18176,7 @@ st523:
 	if ( ++p == pe )
 		goto _test_eof523;
 case 523:
-#line 18026 "shortcodes.c"
+#line 18180 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1039;
 		case 34: goto st244;
@@ -18052,7 +18206,7 @@ st524:
 	if ( ++p == pe )
 		goto _test_eof524;
 case 524:
-#line 18056 "shortcodes.c"
+#line 18210 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1039;
 		case 34: goto st244;
@@ -18074,7 +18228,7 @@ case 524:
 		goto st523;
 	goto st243;
 tr1042:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -18084,7 +18238,7 @@ st525:
 	if ( ++p == pe )
 		goto _test_eof525;
 case 525:
-#line 18088 "shortcodes.c"
+#line 18242 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1029;
 		case 39: goto tr1029;
@@ -18149,7 +18303,7 @@ st528:
 	if ( ++p == pe )
 		goto _test_eof528;
 case 528:
-#line 18153 "shortcodes.c"
+#line 18307 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1046;
 		case 34: goto st244;
@@ -18174,6 +18328,7 @@ case 528:
 tr1049:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18194,7 +18349,7 @@ st529:
 	if ( ++p == pe )
 		goto _test_eof529;
 case 529:
-#line 18198 "shortcodes.c"
+#line 18353 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1046;
 		case 34: goto st244;
@@ -18219,6 +18374,7 @@ case 529:
 tr1051:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18239,7 +18395,7 @@ st530:
 	if ( ++p == pe )
 		goto _test_eof530;
 case 530:
-#line 18243 "shortcodes.c"
+#line 18399 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -18261,6 +18417,7 @@ case 531:
 tr1050:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18278,7 +18435,7 @@ tr1050:
       }
 	goto st532;
 tr931:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -18290,7 +18447,7 @@ tr931:
     }
 	goto st532;
 tr1079:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -18305,7 +18462,7 @@ st532:
 	if ( ++p == pe )
 		goto _test_eof532;
 case 532:
-#line 18309 "shortcodes.c"
+#line 18466 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -18345,7 +18502,7 @@ st535:
 	if ( ++p == pe )
 		goto _test_eof535;
 case 535:
-#line 18349 "shortcodes.c"
+#line 18506 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1057;
 		case 34: goto st389;
@@ -18359,6 +18516,7 @@ case 535:
 tr1760:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18376,7 +18534,7 @@ tr1760:
       }
 	goto st536;
 tr1057:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -18388,7 +18546,7 @@ tr1057:
     }
 	goto st536;
 tr1067:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -18403,7 +18561,7 @@ st536:
 	if ( ++p == pe )
 		goto _test_eof536;
 case 536:
-#line 18407 "shortcodes.c"
+#line 18565 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st536;
 		case 34: goto tr934;
@@ -18426,6 +18584,7 @@ case 536:
 tr1761:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18443,7 +18602,7 @@ tr1761:
       }
 	goto st537;
 tr1058:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -18455,7 +18614,7 @@ tr1058:
     }
 	goto st537;
 tr1068:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -18470,7 +18629,7 @@ st537:
 	if ( ++p == pe )
 		goto _test_eof537;
 case 537:
-#line 18474 "shortcodes.c"
+#line 18633 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -18522,7 +18681,7 @@ st541:
 	if ( ++p == pe )
 		goto _test_eof541;
 case 541:
-#line 18526 "shortcodes.c"
+#line 18685 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1067;
 		case 34: goto st389;
@@ -18552,7 +18711,7 @@ st542:
 	if ( ++p == pe )
 		goto _test_eof542;
 case 542:
-#line 18556 "shortcodes.c"
+#line 18715 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1067;
 		case 34: goto st389;
@@ -18574,7 +18733,7 @@ case 542:
 		goto st541;
 	goto st391;
 tr1070:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -18584,7 +18743,7 @@ st543:
 	if ( ++p == pe )
 		goto _test_eof543;
 case 543:
-#line 18588 "shortcodes.c"
+#line 18747 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr934;
 		case 39: goto tr923;
@@ -18600,7 +18759,7 @@ case 543:
 		goto tr1061;
 	goto st391;
 tr930:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -18612,7 +18771,7 @@ tr930:
     }
 	goto st544;
 tr1077:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -18627,7 +18786,7 @@ st544:
 	if ( ++p == pe )
 		goto _test_eof544;
 case 544:
-#line 18631 "shortcodes.c"
+#line 18790 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st244;
 		case 39: goto st253;
@@ -18667,7 +18826,7 @@ st547:
 	if ( ++p == pe )
 		goto _test_eof547;
 case 547:
-#line 18671 "shortcodes.c"
+#line 18830 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1075;
 		case 34: goto st244;
@@ -18699,7 +18858,7 @@ st548:
 	if ( ++p == pe )
 		goto _test_eof548;
 case 548:
-#line 18703 "shortcodes.c"
+#line 18862 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1075;
 		case 34: goto st244;
@@ -18723,7 +18882,7 @@ case 548:
 		goto st547;
 	goto st243;
 tr1080:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -18733,7 +18892,7 @@ st549:
 	if ( ++p == pe )
 		goto _test_eof549;
 case 549:
-#line 18737 "shortcodes.c"
+#line 18896 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr924;
 		case 39: goto tr934;
@@ -18758,7 +18917,7 @@ st550:
 	if ( ++p == pe )
 		goto _test_eof550;
 case 550:
-#line 18762 "shortcodes.c"
+#line 18921 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1082;
 		case 34: goto st385;
@@ -18788,7 +18947,7 @@ st551:
 	if ( ++p == pe )
 		goto _test_eof551;
 case 551:
-#line 18792 "shortcodes.c"
+#line 18951 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1082;
 		case 34: goto st385;
@@ -18810,7 +18969,7 @@ case 551:
 		goto st550;
 	goto st384;
 tr1085:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -18820,7 +18979,7 @@ st552:
 	if ( ++p == pe )
 		goto _test_eof552;
 case 552:
-#line 18824 "shortcodes.c"
+#line 18983 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr923;
 		case 39: goto tr924;
@@ -18885,7 +19044,7 @@ st555:
 	if ( ++p == pe )
 		goto _test_eof555;
 case 555:
-#line 18889 "shortcodes.c"
+#line 19048 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1089;
 		case 34: goto st385;
@@ -18910,6 +19069,7 @@ case 555:
 tr1089:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -18927,7 +19087,7 @@ tr1089:
       }
 	goto st556;
 tr1102:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -18939,7 +19099,7 @@ tr1102:
     }
 	goto st556;
 tr1708:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -18954,7 +19114,7 @@ st556:
 	if ( ++p == pe )
 		goto _test_eof556;
 case 556:
-#line 18958 "shortcodes.c"
+#line 19118 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st556;
 		case 34: goto tr1095;
@@ -18986,7 +19146,7 @@ st557:
 	if ( ++p == pe )
 		goto _test_eof557;
 case 557:
-#line 18990 "shortcodes.c"
+#line 19150 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1102;
 		case 34: goto st385;
@@ -19002,6 +19162,7 @@ case 557:
 tr1090:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19019,7 +19180,7 @@ tr1090:
       }
 	goto st558;
 tr1103:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19031,7 +19192,7 @@ tr1103:
     }
 	goto st558;
 tr1709:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19046,7 +19207,7 @@ st558:
 	if ( ++p == pe )
 		goto _test_eof558;
 case 558:
-#line 19050 "shortcodes.c"
+#line 19211 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -19066,7 +19227,7 @@ case 559:
 	}
 	goto st384;
 tr1104:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19078,7 +19239,7 @@ tr1104:
     }
 	goto st560;
 tr1710:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19093,7 +19254,7 @@ st560:
 	if ( ++p == pe )
 		goto _test_eof560;
 case 560:
-#line 19097 "shortcodes.c"
+#line 19258 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -19126,6 +19287,7 @@ case 562:
 tr1093:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19143,7 +19305,7 @@ tr1093:
       }
 	goto st563;
 tr1105:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19155,7 +19317,7 @@ tr1105:
     }
 	goto st563;
 tr1712:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19170,7 +19332,7 @@ st563:
 	if ( ++p == pe )
 		goto _test_eof563;
 case 563:
-#line 19174 "shortcodes.c"
+#line 19336 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -19199,7 +19361,7 @@ st565:
 	if ( ++p == pe )
 		goto _test_eof565;
 case 565:
-#line 19203 "shortcodes.c"
+#line 19365 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1114;
 		case 34: goto st567;
@@ -19220,7 +19382,7 @@ st566:
 	if ( ++p == pe )
 		goto _test_eof566;
 case 566:
-#line 19224 "shortcodes.c"
+#line 19386 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -19237,7 +19399,7 @@ st567:
 	if ( ++p == pe )
 		goto _test_eof567;
 case 567:
-#line 19241 "shortcodes.c"
+#line 19403 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1119;
 		case 37: goto tr1120;
@@ -19252,6 +19414,7 @@ case 567:
 tr1855:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19269,7 +19432,7 @@ tr1855:
       }
 	goto st568;
 tr1119:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19281,7 +19444,7 @@ tr1119:
     }
 	goto st568;
 tr1136:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19296,7 +19459,7 @@ st568:
 	if ( ++p == pe )
 		goto _test_eof568;
 case 568:
-#line 19300 "shortcodes.c"
+#line 19463 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st568;
 		case 34: goto tr1124;
@@ -19321,6 +19484,7 @@ case 568:
 tr1856:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19338,7 +19502,7 @@ tr1856:
       }
 	goto st569;
 tr1120:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19350,7 +19514,7 @@ tr1120:
     }
 	goto st569;
 tr1137:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19365,7 +19529,7 @@ st569:
 	if ( ++p == pe )
 		goto _test_eof569;
 case 569:
-#line 19369 "shortcodes.c"
+#line 19533 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -19383,7 +19547,7 @@ case 570:
 	}
 	goto st307;
 tr1121:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19395,7 +19559,7 @@ tr1121:
     }
 	goto st571;
 tr1138:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19410,7 +19574,7 @@ st571:
 	if ( ++p == pe )
 		goto _test_eof571;
 case 571:
-#line 19414 "shortcodes.c"
+#line 19578 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 62: goto st572;
@@ -19447,7 +19611,7 @@ st574:
 	if ( ++p == pe )
 		goto _test_eof574;
 case 574:
-#line 19451 "shortcodes.c"
+#line 19615 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1136;
 		case 37: goto tr1137;
@@ -19471,6 +19635,7 @@ case 574:
 tr1859:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19488,7 +19653,7 @@ tr1859:
       }
 	goto st575;
 tr1122:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19500,7 +19665,7 @@ tr1122:
     }
 	goto st575;
 tr1140:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19515,7 +19680,7 @@ st575:
 	if ( ++p == pe )
 		goto _test_eof575;
 case 575:
-#line 19519 "shortcodes.c"
+#line 19684 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -19542,7 +19707,7 @@ st577:
 	if ( ++p == pe )
 		goto _test_eof577;
 case 577:
-#line 19546 "shortcodes.c"
+#line 19711 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1136;
 		case 37: goto tr1137;
@@ -19565,7 +19730,7 @@ case 577:
 		goto st574;
 	goto st307;
 tr1143:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -19575,7 +19740,7 @@ st578:
 	if ( ++p == pe )
 		goto _test_eof578;
 case 578:
-#line 19579 "shortcodes.c"
+#line 19744 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1124;
 		case 39: goto tr1126;
@@ -19600,7 +19765,7 @@ st579:
 	if ( ++p == pe )
 		goto _test_eof579;
 case 579:
-#line 19604 "shortcodes.c"
+#line 19769 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1145;
 		case 34: goto st303;
@@ -19615,6 +19780,7 @@ case 579:
 tr1805:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19632,7 +19798,7 @@ tr1805:
       }
 	goto st580;
 tr1145:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19644,7 +19810,7 @@ tr1145:
     }
 	goto st580;
 tr1161:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19659,7 +19825,7 @@ st580:
 	if ( ++p == pe )
 		goto _test_eof580;
 case 580:
-#line 19663 "shortcodes.c"
+#line 19829 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st580;
 		case 34: goto tr1150;
@@ -19684,6 +19850,7 @@ case 580:
 tr1806:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19701,7 +19868,7 @@ tr1806:
       }
 	goto st581;
 tr1146:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19713,7 +19880,7 @@ tr1146:
     }
 	goto st581;
 tr1162:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19728,7 +19895,7 @@ st581:
 	if ( ++p == pe )
 		goto _test_eof581;
 case 581:
-#line 19732 "shortcodes.c"
+#line 19899 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -19746,7 +19913,7 @@ case 582:
 	}
 	goto st302;
 tr1147:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19758,7 +19925,7 @@ tr1147:
     }
 	goto st583;
 tr1163:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19773,7 +19940,7 @@ st583:
 	if ( ++p == pe )
 		goto _test_eof583;
 case 583:
-#line 19777 "shortcodes.c"
+#line 19944 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 62: goto st584;
@@ -19810,7 +19977,7 @@ st586:
 	if ( ++p == pe )
 		goto _test_eof586;
 case 586:
-#line 19814 "shortcodes.c"
+#line 19981 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1161;
 		case 34: goto st303;
@@ -19834,6 +20001,7 @@ case 586:
 tr1809:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -19851,7 +20019,7 @@ tr1809:
       }
 	goto st587;
 tr1148:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -19863,7 +20031,7 @@ tr1148:
     }
 	goto st587;
 tr1165:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -19878,7 +20046,7 @@ st587:
 	if ( ++p == pe )
 		goto _test_eof587;
 case 587:
-#line 19882 "shortcodes.c"
+#line 20050 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -19905,7 +20073,7 @@ st589:
 	if ( ++p == pe )
 		goto _test_eof589;
 case 589:
-#line 19909 "shortcodes.c"
+#line 20077 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1161;
 		case 34: goto st303;
@@ -19928,7 +20096,7 @@ case 589:
 		goto st586;
 	goto st302;
 tr1168:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -19938,7 +20106,7 @@ st590:
 	if ( ++p == pe )
 		goto _test_eof590;
 case 590:
-#line 19942 "shortcodes.c"
+#line 20110 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1150;
 		case 39: goto tr1124;
@@ -19954,18 +20122,18 @@ case 590:
 		goto tr1153;
 	goto st302;
 tr1118:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st591;
 st591:
 	if ( ++p == pe )
 		goto _test_eof591;
 case 591:
-#line 19969 "shortcodes.c"
+#line 20137 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -19973,18 +20141,18 @@ case 591:
 	}
 	goto st566;
 tr1170:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st592;
 st592:
 	if ( ++p == pe )
 		goto _test_eof592;
 case 592:
-#line 19988 "shortcodes.c"
+#line 20156 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 37: goto st593;
@@ -20058,7 +20226,7 @@ st596:
 	if ( ++p == pe )
 		goto _test_eof596;
 case 596:
-#line 20062 "shortcodes.c"
+#line 20230 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1178;
 		case 34: goto st567;
@@ -20083,6 +20251,7 @@ case 596:
 tr1178:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20103,7 +20272,7 @@ st597:
 	if ( ++p == pe )
 		goto _test_eof597;
 case 597:
-#line 20107 "shortcodes.c"
+#line 20276 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st597;
 		case 34: goto st567;
@@ -20119,6 +20288,7 @@ case 597:
 tr1179:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20139,7 +20309,7 @@ st598:
 	if ( ++p == pe )
 		goto _test_eof598;
 case 598:
-#line 20143 "shortcodes.c"
+#line 20313 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20159,9 +20329,9 @@ case 599:
 	}
 	goto st566;
 tr1232:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20169,9 +20339,9 @@ tr1232:
     }
 	goto st1917;
 tr1188:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20213,11 +20383,11 @@ tr1188:
 }
 	goto st1917;
 tr1192:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20259,11 +20429,11 @@ tr1192:
 }
 	goto st1917;
 tr1194:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20305,9 +20475,9 @@ tr1194:
 }
 	goto st1917;
 tr1196:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20349,13 +20519,13 @@ tr1196:
 }
 	goto st1917;
 tr1200:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20397,13 +20567,13 @@ tr1200:
 }
 	goto st1917;
 tr1202:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -20445,11 +20615,11 @@ tr1202:
 }
 	goto st1917;
 tr1235:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20457,9 +20627,9 @@ tr1235:
     }
 	goto st1917;
 tr1237:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -20470,13 +20640,13 @@ tr1237:
   }
 	goto st1917;
 tr1629:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20484,9 +20654,9 @@ tr1629:
     }
 	goto st1917;
 tr1667:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20494,9 +20664,9 @@ tr1667:
     }
 	goto st1917;
 tr1692:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -20507,11 +20677,11 @@ tr1692:
   }
 	goto st1917;
 tr1695:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20519,9 +20689,9 @@ tr1695:
     }
 	goto st1917;
 tr1697:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20529,13 +20699,13 @@ tr1697:
     }
 	goto st1917;
 tr1707:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -20546,7 +20716,7 @@ st1917:
 	if ( ++p == pe )
 		goto _test_eof1917;
 case 1917:
-#line 20550 "shortcodes.c"
+#line 20720 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20612,6 +20782,7 @@ case 604:
 tr1182:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20632,7 +20803,7 @@ st605:
 	if ( ++p == pe )
 		goto _test_eof605;
 case 605:
-#line 20636 "shortcodes.c"
+#line 20807 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20654,6 +20825,7 @@ case 606:
 tr1181:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20674,7 +20846,7 @@ st607:
 	if ( ++p == pe )
 		goto _test_eof607;
 case 607:
-#line 20678 "shortcodes.c"
+#line 20850 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1178;
 		case 34: goto st567;
@@ -20699,6 +20871,7 @@ case 607:
 tr1197:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20719,7 +20892,7 @@ st608:
 	if ( ++p == pe )
 		goto _test_eof608;
 case 608:
-#line 20723 "shortcodes.c"
+#line 20896 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20741,6 +20914,7 @@ case 609:
 tr1198:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20761,7 +20935,7 @@ st610:
 	if ( ++p == pe )
 		goto _test_eof610;
 case 610:
-#line 20765 "shortcodes.c"
+#line 20939 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -20790,7 +20964,7 @@ st612:
 	if ( ++p == pe )
 		goto _test_eof612;
 case 612:
-#line 20794 "shortcodes.c"
+#line 20968 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1203;
 		case 34: goto st567;
@@ -20815,6 +20989,7 @@ case 612:
 tr1203:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20832,7 +21007,7 @@ tr1203:
       }
 	goto st613;
 tr1227:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -20844,7 +21019,7 @@ tr1227:
     }
 	goto st613;
 tr1620:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -20859,7 +21034,7 @@ st613:
 	if ( ++p == pe )
 		goto _test_eof613;
 case 613:
-#line 20863 "shortcodes.c"
+#line 21038 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st613;
 		case 34: goto tr1209;
@@ -20891,7 +21066,7 @@ st614:
 	if ( ++p == pe )
 		goto _test_eof614;
 case 614:
-#line 20895 "shortcodes.c"
+#line 21070 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1216;
 		case 34: goto st332;
@@ -20907,6 +21082,7 @@ case 614:
 tr1599:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -20924,7 +21100,7 @@ tr1599:
       }
 	goto st615;
 tr1216:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -20936,7 +21112,7 @@ tr1216:
     }
 	goto st615;
 tr1613:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -20951,7 +21127,7 @@ st615:
 	if ( ++p == pe )
 		goto _test_eof615;
 case 615:
-#line 20955 "shortcodes.c"
+#line 21131 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st615;
 		case 34: goto tr1221;
@@ -20983,7 +21159,7 @@ st616:
 	if ( ++p == pe )
 		goto _test_eof616;
 case 616:
-#line 20987 "shortcodes.c"
+#line 21163 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1227;
 		case 34: goto st567;
@@ -20999,6 +21175,7 @@ case 616:
 tr1204:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21016,7 +21193,7 @@ tr1204:
       }
 	goto st617;
 tr1228:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -21028,7 +21205,7 @@ tr1228:
     }
 	goto st617;
 tr1621:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -21043,7 +21220,7 @@ st617:
 	if ( ++p == pe )
 		goto _test_eof617;
 case 617:
-#line 21047 "shortcodes.c"
+#line 21224 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -21063,7 +21240,7 @@ case 618:
 	}
 	goto st566;
 tr1229:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -21075,7 +21252,7 @@ tr1229:
     }
 	goto st619;
 tr1622:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -21090,7 +21267,7 @@ st619:
 	if ( ++p == pe )
 		goto _test_eof619;
 case 619:
-#line 21094 "shortcodes.c"
+#line 21271 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 37: goto st620;
@@ -21123,6 +21300,7 @@ case 621:
 tr1207:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21140,7 +21318,7 @@ tr1207:
       }
 	goto st622;
 tr1230:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -21152,7 +21330,7 @@ tr1230:
     }
 	goto st622;
 tr1624:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -21167,7 +21345,7 @@ st622:
 	if ( ++p == pe )
 		goto _test_eof622;
 case 622:
-#line 21171 "shortcodes.c"
+#line 21349 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -21189,6 +21367,7 @@ case 623:
 tr1600:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21206,7 +21385,7 @@ tr1600:
       }
 	goto st624;
 tr1217:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -21218,7 +21397,7 @@ tr1217:
     }
 	goto st624;
 tr1614:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -21233,7 +21412,7 @@ st624:
 	if ( ++p == pe )
 		goto _test_eof624;
 case 624:
-#line 21237 "shortcodes.c"
+#line 21416 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21242,18 +21421,18 @@ case 624:
 	}
 	goto st331;
 tr657:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st625;
 st625:
 	if ( ++p == pe )
 		goto _test_eof625;
 case 625:
-#line 21257 "shortcodes.c"
+#line 21436 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21261,18 +21440,18 @@ case 625:
 	}
 	goto st331;
 tr1239:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st626;
 st626:
 	if ( ++p == pe )
 		goto _test_eof626;
 case 626:
-#line 21276 "shortcodes.c"
+#line 21455 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 37: goto st627;
@@ -21346,7 +21525,7 @@ st630:
 	if ( ++p == pe )
 		goto _test_eof630;
 case 630:
-#line 21350 "shortcodes.c"
+#line 21529 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1247;
 		case 34: goto st332;
@@ -21371,6 +21550,7 @@ case 630:
 tr1247:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21391,7 +21571,7 @@ st631:
 	if ( ++p == pe )
 		goto _test_eof631;
 case 631:
-#line 21395 "shortcodes.c"
+#line 21575 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st631;
 		case 34: goto st332;
@@ -21407,6 +21587,7 @@ case 631:
 tr1248:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21427,7 +21608,7 @@ st632:
 	if ( ++p == pe )
 		goto _test_eof632;
 case 632:
-#line 21431 "shortcodes.c"
+#line 21612 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21447,9 +21628,9 @@ case 633:
 	}
 	goto st331;
 tr1290:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21457,9 +21638,9 @@ tr1290:
     }
 	goto st1918;
 tr1257:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21501,11 +21682,11 @@ tr1257:
 }
 	goto st1918;
 tr1261:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21547,11 +21728,11 @@ tr1261:
 }
 	goto st1918;
 tr1263:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21593,9 +21774,9 @@ tr1263:
 }
 	goto st1918;
 tr1265:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21637,13 +21818,13 @@ tr1265:
 }
 	goto st1918;
 tr1269:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21685,13 +21866,13 @@ tr1269:
 }
 	goto st1918;
 tr1271:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -21733,11 +21914,11 @@ tr1271:
 }
 	goto st1918;
 tr1293:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21745,9 +21926,9 @@ tr1293:
     }
 	goto st1918;
 tr1295:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -21758,13 +21939,13 @@ tr1295:
   }
 	goto st1918;
 tr1587:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21772,9 +21953,9 @@ tr1587:
     }
 	goto st1918;
 tr1596:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21782,9 +21963,9 @@ tr1596:
     }
 	goto st1918;
 tr1609:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -21795,11 +21976,11 @@ tr1609:
   }
 	goto st1918;
 tr1612:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21807,9 +21988,9 @@ tr1612:
     }
 	goto st1918;
 tr1608:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21817,13 +21998,13 @@ tr1608:
     }
 	goto st1918;
 tr1606:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -21834,7 +22015,7 @@ st1918:
 	if ( ++p == pe )
 		goto _test_eof1918;
 case 1918:
-#line 21838 "shortcodes.c"
+#line 22019 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21900,6 +22081,7 @@ case 638:
 tr1251:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21920,7 +22102,7 @@ st639:
 	if ( ++p == pe )
 		goto _test_eof639;
 case 639:
-#line 21924 "shortcodes.c"
+#line 22106 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -21942,6 +22124,7 @@ case 640:
 tr1250:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -21962,7 +22145,7 @@ st641:
 	if ( ++p == pe )
 		goto _test_eof641;
 case 641:
-#line 21966 "shortcodes.c"
+#line 22149 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1247;
 		case 34: goto st332;
@@ -21987,6 +22170,7 @@ case 641:
 tr1266:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22007,7 +22191,7 @@ st642:
 	if ( ++p == pe )
 		goto _test_eof642;
 case 642:
-#line 22011 "shortcodes.c"
+#line 22195 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -22029,6 +22213,7 @@ case 643:
 tr1267:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22049,7 +22234,7 @@ st644:
 	if ( ++p == pe )
 		goto _test_eof644;
 case 644:
-#line 22053 "shortcodes.c"
+#line 22238 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -22078,7 +22263,7 @@ st646:
 	if ( ++p == pe )
 		goto _test_eof646;
 case 646:
-#line 22082 "shortcodes.c"
+#line 22267 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1272;
 		case 34: goto st332;
@@ -22103,6 +22288,7 @@ case 646:
 tr1272:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22120,7 +22306,7 @@ tr1272:
       }
 	goto st647;
 tr1285:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22132,7 +22318,7 @@ tr1285:
     }
 	goto st647;
 tr1578:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22147,7 +22333,7 @@ st647:
 	if ( ++p == pe )
 		goto _test_eof647;
 case 647:
-#line 22151 "shortcodes.c"
+#line 22337 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st647;
 		case 34: goto tr1278;
@@ -22179,7 +22365,7 @@ st648:
 	if ( ++p == pe )
 		goto _test_eof648;
 case 648:
-#line 22183 "shortcodes.c"
+#line 22369 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1285;
 		case 34: goto st332;
@@ -22195,6 +22381,7 @@ case 648:
 tr1273:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22212,7 +22399,7 @@ tr1273:
       }
 	goto st649;
 tr1286:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22224,7 +22411,7 @@ tr1286:
     }
 	goto st649;
 tr1579:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22239,7 +22426,7 @@ st649:
 	if ( ++p == pe )
 		goto _test_eof649;
 case 649:
-#line 22243 "shortcodes.c"
+#line 22430 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -22259,7 +22446,7 @@ case 650:
 	}
 	goto st331;
 tr1287:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22271,7 +22458,7 @@ tr1287:
     }
 	goto st651;
 tr1580:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22286,7 +22473,7 @@ st651:
 	if ( ++p == pe )
 		goto _test_eof651;
 case 651:
-#line 22290 "shortcodes.c"
+#line 22477 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 37: goto st652;
@@ -22319,6 +22506,7 @@ case 653:
 tr1276:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22336,7 +22524,7 @@ tr1276:
       }
 	goto st654;
 tr1288:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22348,7 +22536,7 @@ tr1288:
     }
 	goto st654;
 tr1582:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22363,7 +22551,7 @@ st654:
 	if ( ++p == pe )
 		goto _test_eof654;
 case 654:
-#line 22367 "shortcodes.c"
+#line 22555 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -22392,7 +22580,7 @@ st656:
 	if ( ++p == pe )
 		goto _test_eof656;
 case 656:
-#line 22396 "shortcodes.c"
+#line 22584 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1296;
 		case 34: goto st76;
@@ -22408,6 +22596,7 @@ case 656:
 tr1557:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22425,7 +22614,7 @@ tr1557:
       }
 	goto st657;
 tr1296:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22437,7 +22626,7 @@ tr1296:
     }
 	goto st657;
 tr1571:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22452,7 +22641,7 @@ st657:
 	if ( ++p == pe )
 		goto _test_eof657;
 case 657:
-#line 22456 "shortcodes.c"
+#line 22645 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st657;
 		case 34: goto tr1301;
@@ -22484,7 +22673,7 @@ st658:
 	if ( ++p == pe )
 		goto _test_eof658;
 case 658:
-#line 22488 "shortcodes.c"
+#line 22677 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1308;
 		case 34: goto st660;
@@ -22507,7 +22696,7 @@ st659:
 	if ( ++p == pe )
 		goto _test_eof659;
 case 659:
-#line 22511 "shortcodes.c"
+#line 22700 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22524,7 +22713,7 @@ st660:
 	if ( ++p == pe )
 		goto _test_eof660;
 case 660:
-#line 22528 "shortcodes.c"
+#line 22717 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1315;
 		case 37: goto tr1316;
@@ -22539,6 +22728,7 @@ case 660:
 tr1988:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22556,7 +22746,7 @@ tr1988:
       }
 	goto st661;
 tr1315:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22568,7 +22758,7 @@ tr1315:
     }
 	goto st661;
 tr1331:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22583,7 +22773,7 @@ st661:
 	if ( ++p == pe )
 		goto _test_eof661;
 case 661:
-#line 22587 "shortcodes.c"
+#line 22777 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st661;
 		case 34: goto tr687;
@@ -22608,6 +22798,7 @@ case 661:
 tr1989:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22625,7 +22816,7 @@ tr1989:
       }
 	goto st662;
 tr1316:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22637,7 +22828,7 @@ tr1316:
     }
 	goto st662;
 tr1332:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22652,7 +22843,7 @@ st662:
 	if ( ++p == pe )
 		goto _test_eof662;
 case 662:
-#line 22656 "shortcodes.c"
+#line 22847 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -22670,7 +22861,7 @@ case 663:
 	}
 	goto st77;
 tr1317:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22682,7 +22873,7 @@ tr1317:
     }
 	goto st664;
 tr1333:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22697,7 +22888,7 @@ st664:
 	if ( ++p == pe )
 		goto _test_eof664;
 case 664:
-#line 22701 "shortcodes.c"
+#line 22892 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 62: goto st665;
@@ -22734,7 +22925,7 @@ st667:
 	if ( ++p == pe )
 		goto _test_eof667;
 case 667:
-#line 22738 "shortcodes.c"
+#line 22929 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1331;
 		case 37: goto tr1332;
@@ -22758,6 +22949,7 @@ case 667:
 tr1992:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -22775,7 +22967,7 @@ tr1992:
       }
 	goto st668;
 tr1318:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -22787,7 +22979,7 @@ tr1318:
     }
 	goto st668;
 tr1335:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -22802,7 +22994,7 @@ st668:
 	if ( ++p == pe )
 		goto _test_eof668;
 case 668:
-#line 22806 "shortcodes.c"
+#line 22998 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -22829,7 +23021,7 @@ st670:
 	if ( ++p == pe )
 		goto _test_eof670;
 case 670:
-#line 22833 "shortcodes.c"
+#line 23025 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1331;
 		case 37: goto tr1332;
@@ -22852,7 +23044,7 @@ case 670:
 		goto st667;
 	goto st77;
 tr1338:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -22862,7 +23054,7 @@ st671:
 	if ( ++p == pe )
 		goto _test_eof671;
 case 671:
-#line 22866 "shortcodes.c"
+#line 23058 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr687;
 		case 39: goto tr1321;
@@ -22878,18 +23070,18 @@ case 671:
 		goto tr1323;
 	goto st77;
 tr1314:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st672;
 st672:
 	if ( ++p == pe )
 		goto _test_eof672;
 case 672:
-#line 22893 "shortcodes.c"
+#line 23085 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -22897,18 +23089,18 @@ case 672:
 	}
 	goto st659;
 tr1340:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st673;
 st673:
 	if ( ++p == pe )
 		goto _test_eof673;
 case 673:
-#line 22912 "shortcodes.c"
+#line 23104 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 37: goto st674;
@@ -22982,7 +23174,7 @@ st677:
 	if ( ++p == pe )
 		goto _test_eof677;
 case 677:
-#line 22986 "shortcodes.c"
+#line 23178 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1348;
 		case 34: goto st660;
@@ -23007,6 +23199,7 @@ case 677:
 tr1348:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23027,7 +23220,7 @@ st678:
 	if ( ++p == pe )
 		goto _test_eof678;
 case 678:
-#line 23031 "shortcodes.c"
+#line 23224 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st678;
 		case 34: goto st660;
@@ -23043,6 +23236,7 @@ case 678:
 tr1349:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23063,7 +23257,7 @@ st679:
 	if ( ++p == pe )
 		goto _test_eof679;
 case 679:
-#line 23067 "shortcodes.c"
+#line 23261 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23083,9 +23277,9 @@ case 680:
 	}
 	goto st659;
 tr1385:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23093,9 +23287,9 @@ tr1385:
     }
 	goto st1919;
 tr1358:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23137,11 +23331,11 @@ tr1358:
 }
 	goto st1919;
 tr1362:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23183,11 +23377,11 @@ tr1362:
 }
 	goto st1919;
 tr1364:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23229,9 +23423,9 @@ tr1364:
 }
 	goto st1919;
 tr1366:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23273,13 +23467,13 @@ tr1366:
 }
 	goto st1919;
 tr1370:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23321,13 +23515,13 @@ tr1370:
 }
 	goto st1919;
 tr1372:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -23369,11 +23563,11 @@ tr1372:
 }
 	goto st1919;
 tr1388:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23381,9 +23575,9 @@ tr1388:
     }
 	goto st1919;
 tr1395:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -23394,13 +23588,13 @@ tr1395:
   }
 	goto st1919;
 tr1400:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23408,9 +23602,9 @@ tr1400:
     }
 	goto st1919;
 tr1425:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23418,9 +23612,9 @@ tr1425:
     }
 	goto st1919;
 tr1463:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -23431,11 +23625,11 @@ tr1463:
   }
 	goto st1919;
 tr1466:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23443,9 +23637,9 @@ tr1466:
     }
 	goto st1919;
 tr1468:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23453,13 +23647,13 @@ tr1468:
     }
 	goto st1919;
 tr1478:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -23470,7 +23664,7 @@ st1919:
 	if ( ++p == pe )
 		goto _test_eof1919;
 case 1919:
-#line 23474 "shortcodes.c"
+#line 23668 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23536,6 +23730,7 @@ case 685:
 tr1352:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23556,7 +23751,7 @@ st686:
 	if ( ++p == pe )
 		goto _test_eof686;
 case 686:
-#line 23560 "shortcodes.c"
+#line 23755 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23578,6 +23773,7 @@ case 687:
 tr1351:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23598,7 +23794,7 @@ st688:
 	if ( ++p == pe )
 		goto _test_eof688;
 case 688:
-#line 23602 "shortcodes.c"
+#line 23798 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1348;
 		case 34: goto st660;
@@ -23623,6 +23819,7 @@ case 688:
 tr1367:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23643,7 +23840,7 @@ st689:
 	if ( ++p == pe )
 		goto _test_eof689;
 case 689:
-#line 23647 "shortcodes.c"
+#line 23844 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23665,6 +23862,7 @@ case 690:
 tr1368:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23685,7 +23883,7 @@ st691:
 	if ( ++p == pe )
 		goto _test_eof691;
 case 691:
-#line 23689 "shortcodes.c"
+#line 23887 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23714,7 +23912,7 @@ st693:
 	if ( ++p == pe )
 		goto _test_eof693;
 case 693:
-#line 23718 "shortcodes.c"
+#line 23916 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1373;
 		case 34: goto st660;
@@ -23739,6 +23937,7 @@ case 693:
 tr1373:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23756,7 +23955,7 @@ tr1373:
       }
 	goto st694;
 tr1308:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -23768,7 +23967,7 @@ tr1308:
     }
 	goto st694;
 tr1389:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -23783,7 +23982,7 @@ st694:
 	if ( ++p == pe )
 		goto _test_eof694;
 case 694:
-#line 23787 "shortcodes.c"
+#line 23986 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st694;
 		case 34: goto tr1280;
@@ -23808,6 +24007,7 @@ case 694:
 tr1374:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23825,7 +24025,7 @@ tr1374:
       }
 	goto st695;
 tr1310:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -23837,7 +24037,7 @@ tr1310:
     }
 	goto st695;
 tr1390:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -23852,7 +24052,7 @@ st695:
 	if ( ++p == pe )
 		goto _test_eof695;
 case 695:
-#line 23856 "shortcodes.c"
+#line 24056 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -23872,7 +24072,7 @@ case 696:
 	}
 	goto st659;
 tr1312:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -23884,7 +24084,7 @@ tr1312:
     }
 	goto st697;
 tr1391:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -23899,7 +24099,7 @@ st697:
 	if ( ++p == pe )
 		goto _test_eof697;
 case 697:
-#line 23903 "shortcodes.c"
+#line 24103 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 37: goto st698;
@@ -23939,7 +24139,7 @@ st700:
 	if ( ++p == pe )
 		goto _test_eof700;
 case 700:
-#line 23943 "shortcodes.c"
+#line 24143 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1389;
 		case 34: goto st660;
@@ -23964,6 +24164,7 @@ case 700:
 tr1377:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -23981,7 +24182,7 @@ tr1377:
       }
 	goto st701;
 tr1313:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -23993,7 +24194,7 @@ tr1313:
     }
 	goto st701;
 tr1393:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24008,7 +24209,7 @@ st701:
 	if ( ++p == pe )
 		goto _test_eof701;
 case 701:
-#line 24012 "shortcodes.c"
+#line 24213 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24037,7 +24238,7 @@ st703:
 	if ( ++p == pe )
 		goto _test_eof703;
 case 703:
-#line 24041 "shortcodes.c"
+#line 24242 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1389;
 		case 34: goto st660;
@@ -24061,7 +24262,7 @@ case 703:
 		goto st700;
 	goto st659;
 tr1396:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -24071,7 +24272,7 @@ st704:
 	if ( ++p == pe )
 		goto _test_eof704;
 case 704:
-#line 24075 "shortcodes.c"
+#line 24276 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1280;
 		case 39: goto tr1301;
@@ -24089,6 +24290,7 @@ case 704:
 tr1376:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24109,7 +24311,7 @@ st705:
 	if ( ++p == pe )
 		goto _test_eof705;
 case 705:
-#line 24113 "shortcodes.c"
+#line 24315 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1373;
 		case 34: goto st660;
@@ -24134,6 +24336,7 @@ case 705:
 tr1398:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24154,7 +24357,7 @@ st706:
 	if ( ++p == pe )
 		goto _test_eof706;
 case 706:
-#line 24158 "shortcodes.c"
+#line 24361 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24218,7 +24421,7 @@ st710:
 	if ( ++p == pe )
 		goto _test_eof710;
 case 710:
-#line 24222 "shortcodes.c"
+#line 24425 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1403;
 		case 34: goto st660;
@@ -24241,6 +24444,7 @@ case 710:
 tr1403:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24258,7 +24462,7 @@ tr1403:
       }
 	goto st711;
 tr1420:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24270,7 +24474,7 @@ tr1420:
     }
 	goto st711;
 tr1440:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24285,7 +24489,7 @@ st711:
 	if ( ++p == pe )
 		goto _test_eof711;
 case 711:
-#line 24289 "shortcodes.c"
+#line 24493 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st711;
 		case 34: goto tr827;
@@ -24315,7 +24519,7 @@ st712:
 	if ( ++p == pe )
 		goto _test_eof712;
 case 712:
-#line 24319 "shortcodes.c"
+#line 24523 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1410;
 		case 34: goto st119;
@@ -24331,6 +24535,7 @@ case 712:
 tr1898:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24348,7 +24553,7 @@ tr1898:
       }
 	goto st713;
 tr1410:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24360,7 +24565,7 @@ tr1410:
     }
 	goto st713;
 tr1431:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24375,7 +24580,7 @@ st713:
 	if ( ++p == pe )
 		goto _test_eof713;
 case 713:
-#line 24379 "shortcodes.c"
+#line 24584 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st713;
 		case 34: goto tr868;
@@ -24407,7 +24612,7 @@ st714:
 	if ( ++p == pe )
 		goto _test_eof714;
 case 714:
-#line 24411 "shortcodes.c"
+#line 24616 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1420;
 		case 34: goto st660;
@@ -24421,6 +24626,7 @@ case 714:
 tr1404:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24438,7 +24644,7 @@ tr1404:
       }
 	goto st715;
 tr1421:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24450,7 +24656,7 @@ tr1421:
     }
 	goto st715;
 tr1441:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24465,7 +24671,7 @@ st715:
 	if ( ++p == pe )
 		goto _test_eof715;
 case 715:
-#line 24469 "shortcodes.c"
+#line 24675 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -24510,6 +24716,7 @@ case 718:
 tr1899:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24527,7 +24734,7 @@ tr1899:
       }
 	goto st719;
 tr1411:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24539,7 +24746,7 @@ tr1411:
     }
 	goto st719;
 tr1432:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24554,7 +24761,7 @@ st719:
 	if ( ++p == pe )
 		goto _test_eof719;
 case 719:
-#line 24558 "shortcodes.c"
+#line 24765 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -24574,7 +24781,7 @@ case 720:
 	}
 	goto st118;
 tr1412:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24586,7 +24793,7 @@ tr1412:
     }
 	goto st721;
 tr1433:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24601,7 +24808,7 @@ st721:
 	if ( ++p == pe )
 		goto _test_eof721;
 case 721:
-#line 24605 "shortcodes.c"
+#line 24812 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -24641,7 +24848,7 @@ st724:
 	if ( ++p == pe )
 		goto _test_eof724;
 case 724:
-#line 24645 "shortcodes.c"
+#line 24852 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1431;
 		case 34: goto st119;
@@ -24666,6 +24873,7 @@ case 724:
 tr1902:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24683,7 +24891,7 @@ tr1902:
       }
 	goto st725;
 tr1413:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24695,7 +24903,7 @@ tr1413:
     }
 	goto st725;
 tr1435:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24710,7 +24918,7 @@ st725:
 	if ( ++p == pe )
 		goto _test_eof725;
 case 725:
-#line 24714 "shortcodes.c"
+#line 24922 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -24739,7 +24947,7 @@ st727:
 	if ( ++p == pe )
 		goto _test_eof727;
 case 727:
-#line 24743 "shortcodes.c"
+#line 24951 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1431;
 		case 34: goto st119;
@@ -24763,7 +24971,7 @@ case 727:
 		goto st724;
 	goto st118;
 tr1438:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -24773,7 +24981,7 @@ st728:
 	if ( ++p == pe )
 		goto _test_eof728;
 case 728:
-#line 24777 "shortcodes.c"
+#line 24985 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr868;
 		case 39: goto tr835;
@@ -24798,7 +25006,7 @@ st729:
 	if ( ++p == pe )
 		goto _test_eof729;
 case 729:
-#line 24802 "shortcodes.c"
+#line 25010 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1440;
 		case 34: goto st660;
@@ -24828,7 +25036,7 @@ st730:
 	if ( ++p == pe )
 		goto _test_eof730;
 case 730:
-#line 24832 "shortcodes.c"
+#line 25040 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1440;
 		case 34: goto st660;
@@ -24850,7 +25058,7 @@ case 730:
 		goto st729;
 	goto st659;
 tr1443:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -24860,7 +25068,7 @@ st731:
 	if ( ++p == pe )
 		goto _test_eof731;
 case 731:
-#line 24864 "shortcodes.c"
+#line 25072 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr827;
 		case 39: goto tr856;
@@ -24925,7 +25133,7 @@ st734:
 	if ( ++p == pe )
 		goto _test_eof734;
 case 734:
-#line 24929 "shortcodes.c"
+#line 25137 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1447;
 		case 34: goto st660;
@@ -24950,6 +25158,7 @@ case 734:
 tr1447:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -24967,7 +25176,7 @@ tr1447:
       }
 	goto st735;
 tr1458:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -24979,7 +25188,7 @@ tr1458:
     }
 	goto st735;
 tr1469:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -24994,7 +25203,7 @@ st735:
 	if ( ++p == pe )
 		goto _test_eof735;
 case 735:
-#line 24998 "shortcodes.c"
+#line 25207 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st735;
 		case 34: goto tr1211;
@@ -25026,7 +25235,7 @@ st736:
 	if ( ++p == pe )
 		goto _test_eof736;
 case 736:
-#line 25030 "shortcodes.c"
+#line 25239 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1458;
 		case 34: goto st660;
@@ -25042,6 +25251,7 @@ case 736:
 tr1448:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25059,7 +25269,7 @@ tr1448:
       }
 	goto st737;
 tr1459:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -25071,7 +25281,7 @@ tr1459:
     }
 	goto st737;
 tr1470:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -25086,7 +25296,7 @@ st737:
 	if ( ++p == pe )
 		goto _test_eof737;
 case 737:
-#line 25090 "shortcodes.c"
+#line 25300 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -25106,7 +25316,7 @@ case 738:
 	}
 	goto st659;
 tr1460:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -25118,7 +25328,7 @@ tr1460:
     }
 	goto st739;
 tr1471:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -25133,7 +25343,7 @@ st739:
 	if ( ++p == pe )
 		goto _test_eof739;
 case 739:
-#line 25137 "shortcodes.c"
+#line 25347 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -25166,6 +25376,7 @@ case 741:
 tr1451:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25183,7 +25394,7 @@ tr1451:
       }
 	goto st742;
 tr1461:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -25195,7 +25406,7 @@ tr1461:
     }
 	goto st742;
 tr1473:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -25210,7 +25421,7 @@ st742:
 	if ( ++p == pe )
 		goto _test_eof742;
 case 742:
-#line 25214 "shortcodes.c"
+#line 25425 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -25239,7 +25450,7 @@ st744:
 	if ( ++p == pe )
 		goto _test_eof744;
 case 744:
-#line 25243 "shortcodes.c"
+#line 25454 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1469;
 		case 34: goto st660;
@@ -25271,7 +25482,7 @@ st745:
 	if ( ++p == pe )
 		goto _test_eof745;
 case 745:
-#line 25275 "shortcodes.c"
+#line 25486 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1469;
 		case 34: goto st660;
@@ -25295,7 +25506,7 @@ case 745:
 		goto st744;
 	goto st659;
 tr1474:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -25305,7 +25516,7 @@ st746:
 	if ( ++p == pe )
 		goto _test_eof746;
 case 746:
-#line 25309 "shortcodes.c"
+#line 25520 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1211;
 		case 39: goto tr1221;
@@ -25323,6 +25534,7 @@ case 746:
 tr1450:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25343,7 +25555,7 @@ st747:
 	if ( ++p == pe )
 		goto _test_eof747;
 case 747:
-#line 25347 "shortcodes.c"
+#line 25559 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1447;
 		case 34: goto st660;
@@ -25368,6 +25580,7 @@ case 747:
 tr1476:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25388,7 +25601,7 @@ st748:
 	if ( ++p == pe )
 		goto _test_eof748;
 case 748:
-#line 25392 "shortcodes.c"
+#line 25605 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st660;
 		case 39: goto st342;
@@ -25410,6 +25623,7 @@ case 749:
 tr1558:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25427,7 +25641,7 @@ tr1558:
       }
 	goto st750;
 tr1297:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -25439,7 +25653,7 @@ tr1297:
     }
 	goto st750;
 tr1572:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -25454,7 +25668,7 @@ st750:
 	if ( ++p == pe )
 		goto _test_eof750;
 case 750:
-#line 25458 "shortcodes.c"
+#line 25672 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25463,18 +25677,18 @@ case 750:
 	}
 	goto st75;
 tr151:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st751;
 st751:
 	if ( ++p == pe )
 		goto _test_eof751;
 case 751:
-#line 25478 "shortcodes.c"
+#line 25692 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25482,18 +25696,18 @@ case 751:
 	}
 	goto st75;
 tr1480:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
-#line 133 "shortcodes.rl"
+#line 134 "shortcodes.rl"
 	{sc_mark = p;}
 	goto st752;
 st752:
 	if ( ++p == pe )
 		goto _test_eof752;
 case 752:
-#line 25497 "shortcodes.c"
+#line 25711 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 37: goto st753;
@@ -25567,7 +25781,7 @@ st756:
 	if ( ++p == pe )
 		goto _test_eof756;
 case 756:
-#line 25571 "shortcodes.c"
+#line 25785 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1488;
 		case 34: goto st76;
@@ -25592,6 +25806,7 @@ case 756:
 tr1488:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25612,7 +25827,7 @@ st757:
 	if ( ++p == pe )
 		goto _test_eof757;
 case 757:
-#line 25616 "shortcodes.c"
+#line 25831 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st757;
 		case 34: goto st76;
@@ -25628,6 +25843,7 @@ case 757:
 tr1489:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -25648,7 +25864,7 @@ st758:
 	if ( ++p == pe )
 		goto _test_eof758;
 case 758:
-#line 25652 "shortcodes.c"
+#line 25868 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -25668,9 +25884,9 @@ case 759:
 	}
 	goto st75;
 tr1530:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -25678,9 +25894,9 @@ tr1530:
     }
 	goto st1920;
 tr1498:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25722,11 +25938,11 @@ tr1498:
 }
 	goto st1920;
 tr1502:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25768,11 +25984,11 @@ tr1502:
 }
 	goto st1920;
 tr1504:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25814,9 +26030,9 @@ tr1504:
 }
 	goto st1920;
 tr1506:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25858,13 +26074,13 @@ tr1506:
 }
 	goto st1920;
 tr1510:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25906,13 +26122,13 @@ tr1510:
 }
 	goto st1920;
 tr1512:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 137 "shortcodes.rl"
+#line 138 "shortcodes.rl"
 	{
     // First find what opening shortcode we are closing
     // IF ANY!
@@ -25954,11 +26170,11 @@ tr1512:
 }
 	goto st1920;
 tr1533:
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -25966,9 +26182,9 @@ tr1533:
     }
 	goto st1920;
 tr1535:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -25979,13 +26195,13 @@ tr1535:
   }
 	goto st1920;
 tr1545:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 83 "shortcodes.rl"
+#line 84 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -25993,9 +26209,9 @@ tr1545:
     }
 	goto st1920;
 tr1554:
-#line 100 "shortcodes.rl"
+#line 101 "shortcodes.rl"
 	{sc_list[c_sc].escaped = 1;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -26003,9 +26219,9 @@ tr1554:
     }
 	goto st1920;
 tr1567:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -26016,11 +26232,11 @@ tr1567:
   }
 	goto st1920;
 tr1570:
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -26028,9 +26244,9 @@ tr1570:
     }
 	goto st1920;
 tr1566:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -26038,13 +26254,13 @@ tr1566:
     }
 	goto st1920;
 tr1564:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 93 "shortcodes.rl"
+#line 94 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;
     sc_list[c_sc].self_closing = 1;
   }
-#line 125 "shortcodes.rl"
+#line 126 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
       data_mark = p+1;
@@ -26055,7 +26271,7 @@ st1920:
 	if ( ++p == pe )
 		goto _test_eof1920;
 case 1920:
-#line 26059 "shortcodes.c"
+#line 26275 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26121,6 +26337,7 @@ case 764:
 tr1492:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26141,7 +26358,7 @@ st765:
 	if ( ++p == pe )
 		goto _test_eof765;
 case 765:
-#line 26145 "shortcodes.c"
+#line 26362 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26163,6 +26380,7 @@ case 766:
 tr1491:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26183,7 +26401,7 @@ st767:
 	if ( ++p == pe )
 		goto _test_eof767;
 case 767:
-#line 26187 "shortcodes.c"
+#line 26405 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1488;
 		case 34: goto st76;
@@ -26208,6 +26426,7 @@ case 767:
 tr1507:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26228,7 +26447,7 @@ st768:
 	if ( ++p == pe )
 		goto _test_eof768;
 case 768:
-#line 26232 "shortcodes.c"
+#line 26451 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26250,6 +26469,7 @@ case 769:
 tr1508:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26270,7 +26490,7 @@ st770:
 	if ( ++p == pe )
 		goto _test_eof770;
 case 770:
-#line 26274 "shortcodes.c"
+#line 26494 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26299,7 +26519,7 @@ st772:
 	if ( ++p == pe )
 		goto _test_eof772;
 case 772:
-#line 26303 "shortcodes.c"
+#line 26523 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1513;
 		case 34: goto st76;
@@ -26324,6 +26544,7 @@ case 772:
 tr1513:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26341,7 +26562,7 @@ tr1513:
       }
 	goto st773;
 tr1525:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -26353,7 +26574,7 @@ tr1525:
     }
 	goto st773;
 tr1536:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -26368,7 +26589,7 @@ st773:
 	if ( ++p == pe )
 		goto _test_eof773;
 case 773:
-#line 26372 "shortcodes.c"
+#line 26593 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st773;
 		case 34: goto tr1519;
@@ -26400,7 +26621,7 @@ st774:
 	if ( ++p == pe )
 		goto _test_eof774;
 case 774:
-#line 26404 "shortcodes.c"
+#line 26625 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1525;
 		case 34: goto st76;
@@ -26416,6 +26637,7 @@ case 774:
 tr1514:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26433,7 +26655,7 @@ tr1514:
       }
 	goto st775;
 tr1526:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -26445,7 +26667,7 @@ tr1526:
     }
 	goto st775;
 tr1537:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -26460,7 +26682,7 @@ st775:
 	if ( ++p == pe )
 		goto _test_eof775;
 case 775:
-#line 26464 "shortcodes.c"
+#line 26686 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26480,7 +26702,7 @@ case 776:
 	}
 	goto st75;
 tr1527:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -26492,7 +26714,7 @@ tr1527:
     }
 	goto st777;
 tr1538:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -26507,7 +26729,7 @@ st777:
 	if ( ++p == pe )
 		goto _test_eof777;
 case 777:
-#line 26511 "shortcodes.c"
+#line 26733 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 37: goto st778;
@@ -26540,6 +26762,7 @@ case 779:
 tr1517:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26557,7 +26780,7 @@ tr1517:
       }
 	goto st780;
 tr1528:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -26569,7 +26792,7 @@ tr1528:
     }
 	goto st780;
 tr1540:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -26584,7 +26807,7 @@ st780:
 	if ( ++p == pe )
 		goto _test_eof780;
 case 780:
-#line 26588 "shortcodes.c"
+#line 26811 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26613,7 +26836,7 @@ st782:
 	if ( ++p == pe )
 		goto _test_eof782;
 case 782:
-#line 26617 "shortcodes.c"
+#line 26840 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1536;
 		case 34: goto st76;
@@ -26645,7 +26868,7 @@ st783:
 	if ( ++p == pe )
 		goto _test_eof783;
 case 783:
-#line 26649 "shortcodes.c"
+#line 26872 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1536;
 		case 34: goto st76;
@@ -26669,7 +26892,7 @@ case 783:
 		goto st782;
 	goto st75;
 tr1541:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -26679,7 +26902,7 @@ st784:
 	if ( ++p == pe )
 		goto _test_eof784;
 case 784:
-#line 26683 "shortcodes.c"
+#line 26906 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1519;
 		case 39: goto tr1519;
@@ -26697,6 +26920,7 @@ case 784:
 tr1516:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26717,7 +26941,7 @@ st785:
 	if ( ++p == pe )
 		goto _test_eof785;
 case 785:
-#line 26721 "shortcodes.c"
+#line 26945 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1513;
 		case 34: goto st76;
@@ -26742,6 +26966,7 @@ case 785:
 tr1543:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26762,7 +26987,7 @@ st786:
 	if ( ++p == pe )
 		goto _test_eof786;
 case 786:
-#line 26766 "shortcodes.c"
+#line 26991 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26826,7 +27051,7 @@ st790:
 	if ( ++p == pe )
 		goto _test_eof790;
 case 790:
-#line 26830 "shortcodes.c"
+#line 27055 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1548;
 		case 34: goto st76;
@@ -26849,6 +27074,7 @@ case 790:
 tr1549:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -26866,7 +27092,7 @@ tr1549:
       }
 	goto st791;
 tr393:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -26878,7 +27104,7 @@ tr393:
     }
 	goto st791;
 tr1918:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -26893,7 +27119,7 @@ st791:
 	if ( ++p == pe )
 		goto _test_eof791;
 case 791:
-#line 26897 "shortcodes.c"
+#line 27123 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -26985,7 +27211,7 @@ st797:
 	if ( ++p == pe )
 		goto _test_eof797;
 case 797:
-#line 26989 "shortcodes.c"
+#line 27215 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1557;
 		case 34: goto st76;
@@ -27010,6 +27236,7 @@ case 797:
 tr1560:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27030,7 +27257,7 @@ st798:
 	if ( ++p == pe )
 		goto _test_eof798;
 case 798:
-#line 27034 "shortcodes.c"
+#line 27261 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1557;
 		case 34: goto st76;
@@ -27055,6 +27282,7 @@ case 798:
 tr1562:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27075,7 +27303,7 @@ st799:
 	if ( ++p == pe )
 		goto _test_eof799;
 case 799:
-#line 27079 "shortcodes.c"
+#line 27307 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -27097,6 +27325,7 @@ case 800:
 tr1561:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27114,7 +27343,7 @@ tr1561:
       }
 	goto st801;
 tr1299:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -27126,7 +27355,7 @@ tr1299:
     }
 	goto st801;
 tr1575:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -27141,7 +27370,7 @@ st801:
 	if ( ++p == pe )
 		goto _test_eof801;
 case 801:
-#line 27145 "shortcodes.c"
+#line 27374 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -27172,7 +27401,7 @@ case 803:
 	}
 	goto st75;
 tr1298:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -27184,7 +27413,7 @@ tr1298:
     }
 	goto st804;
 tr1573:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -27199,7 +27428,7 @@ st804:
 	if ( ++p == pe )
 		goto _test_eof804;
 case 804:
-#line 27203 "shortcodes.c"
+#line 27432 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st76;
 		case 39: goto st67;
@@ -27239,7 +27468,7 @@ st807:
 	if ( ++p == pe )
 		goto _test_eof807;
 case 807:
-#line 27243 "shortcodes.c"
+#line 27472 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1571;
 		case 34: goto st76;
@@ -27271,7 +27500,7 @@ st808:
 	if ( ++p == pe )
 		goto _test_eof808;
 case 808:
-#line 27275 "shortcodes.c"
+#line 27504 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1571;
 		case 34: goto st76;
@@ -27295,7 +27524,7 @@ case 808:
 		goto st807;
 	goto st75;
 tr1576:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -27305,7 +27534,7 @@ st809:
 	if ( ++p == pe )
 		goto _test_eof809;
 case 809:
-#line 27309 "shortcodes.c"
+#line 27538 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1301;
 		case 39: goto tr1278;
@@ -27330,7 +27559,7 @@ st810:
 	if ( ++p == pe )
 		goto _test_eof810;
 case 810:
-#line 27334 "shortcodes.c"
+#line 27563 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1578;
 		case 34: goto st332;
@@ -27362,7 +27591,7 @@ st811:
 	if ( ++p == pe )
 		goto _test_eof811;
 case 811:
-#line 27366 "shortcodes.c"
+#line 27595 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1578;
 		case 34: goto st332;
@@ -27386,7 +27615,7 @@ case 811:
 		goto st810;
 	goto st331;
 tr1583:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -27396,7 +27625,7 @@ st812:
 	if ( ++p == pe )
 		goto _test_eof812;
 case 812:
-#line 27400 "shortcodes.c"
+#line 27629 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1278;
 		case 39: goto tr1280;
@@ -27414,6 +27643,7 @@ case 812:
 tr1275:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27434,7 +27664,7 @@ st813:
 	if ( ++p == pe )
 		goto _test_eof813;
 case 813:
-#line 27438 "shortcodes.c"
+#line 27668 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1272;
 		case 34: goto st332;
@@ -27459,6 +27689,7 @@ case 813:
 tr1585:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27479,7 +27710,7 @@ st814:
 	if ( ++p == pe )
 		goto _test_eof814;
 case 814:
-#line 27483 "shortcodes.c"
+#line 27714 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27543,7 +27774,7 @@ st818:
 	if ( ++p == pe )
 		goto _test_eof818;
 case 818:
-#line 27547 "shortcodes.c"
+#line 27778 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1590;
 		case 34: goto st332;
@@ -27566,6 +27797,7 @@ case 818:
 tr1591:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27583,7 +27815,7 @@ tr1591:
       }
 	goto st819;
 tr833:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -27595,7 +27827,7 @@ tr833:
     }
 	goto st819;
 tr1744:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -27610,7 +27842,7 @@ st819:
 	if ( ++p == pe )
 		goto _test_eof819;
 case 819:
-#line 27614 "shortcodes.c"
+#line 27846 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27702,7 +27934,7 @@ st825:
 	if ( ++p == pe )
 		goto _test_eof825;
 case 825:
-#line 27706 "shortcodes.c"
+#line 27938 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1599;
 		case 34: goto st332;
@@ -27727,6 +27959,7 @@ case 825:
 tr1602:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27747,7 +27980,7 @@ st826:
 	if ( ++p == pe )
 		goto _test_eof826;
 case 826:
-#line 27751 "shortcodes.c"
+#line 27984 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1599;
 		case 34: goto st332;
@@ -27772,6 +28005,7 @@ case 826:
 tr1604:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27792,7 +28026,7 @@ st827:
 	if ( ++p == pe )
 		goto _test_eof827;
 case 827:
-#line 27796 "shortcodes.c"
+#line 28030 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27814,6 +28048,7 @@ case 828:
 tr1603:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -27831,7 +28066,7 @@ tr1603:
       }
 	goto st829;
 tr1219:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -27843,7 +28078,7 @@ tr1219:
     }
 	goto st829;
 tr1617:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -27858,7 +28093,7 @@ st829:
 	if ( ++p == pe )
 		goto _test_eof829;
 case 829:
-#line 27862 "shortcodes.c"
+#line 28097 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27889,7 +28124,7 @@ case 831:
 	}
 	goto st331;
 tr1218:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -27901,7 +28136,7 @@ tr1218:
     }
 	goto st832;
 tr1615:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -27916,7 +28151,7 @@ st832:
 	if ( ++p == pe )
 		goto _test_eof832;
 case 832:
-#line 27920 "shortcodes.c"
+#line 28155 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st332;
 		case 39: goto st340;
@@ -27956,7 +28191,7 @@ st835:
 	if ( ++p == pe )
 		goto _test_eof835;
 case 835:
-#line 27960 "shortcodes.c"
+#line 28195 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1613;
 		case 34: goto st332;
@@ -27988,7 +28223,7 @@ st836:
 	if ( ++p == pe )
 		goto _test_eof836;
 case 836:
-#line 27992 "shortcodes.c"
+#line 28227 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1613;
 		case 34: goto st332;
@@ -28012,7 +28247,7 @@ case 836:
 		goto st835;
 	goto st331;
 tr1618:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -28022,7 +28257,7 @@ st837:
 	if ( ++p == pe )
 		goto _test_eof837;
 case 837:
-#line 28026 "shortcodes.c"
+#line 28261 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1221;
 		case 39: goto tr1209;
@@ -28047,7 +28282,7 @@ st838:
 	if ( ++p == pe )
 		goto _test_eof838;
 case 838:
-#line 28051 "shortcodes.c"
+#line 28286 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1620;
 		case 34: goto st567;
@@ -28079,7 +28314,7 @@ st839:
 	if ( ++p == pe )
 		goto _test_eof839;
 case 839:
-#line 28083 "shortcodes.c"
+#line 28318 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1620;
 		case 34: goto st567;
@@ -28103,7 +28338,7 @@ case 839:
 		goto st838;
 	goto st566;
 tr1625:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -28113,7 +28348,7 @@ st840:
 	if ( ++p == pe )
 		goto _test_eof840;
 case 840:
-#line 28117 "shortcodes.c"
+#line 28352 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1209;
 		case 39: goto tr1211;
@@ -28131,6 +28366,7 @@ case 840:
 tr1206:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28151,7 +28387,7 @@ st841:
 	if ( ++p == pe )
 		goto _test_eof841;
 case 841:
-#line 28155 "shortcodes.c"
+#line 28391 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1203;
 		case 34: goto st567;
@@ -28176,6 +28412,7 @@ case 841:
 tr1627:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28196,7 +28433,7 @@ st842:
 	if ( ++p == pe )
 		goto _test_eof842;
 case 842:
-#line 28200 "shortcodes.c"
+#line 28437 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28260,7 +28497,7 @@ st846:
 	if ( ++p == pe )
 		goto _test_eof846;
 case 846:
-#line 28264 "shortcodes.c"
+#line 28501 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1632;
 		case 34: goto st567;
@@ -28283,6 +28520,7 @@ case 846:
 tr1632:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28300,7 +28538,7 @@ tr1632:
       }
 	goto st847;
 tr1114:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28312,7 +28550,7 @@ tr1114:
     }
 	goto st847;
 tr1668:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28327,7 +28565,7 @@ st847:
 	if ( ++p == pe )
 		goto _test_eof847;
 case 847:
-#line 28331 "shortcodes.c"
+#line 28569 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st847;
 		case 34: goto tr1636;
@@ -28357,7 +28595,7 @@ st848:
 	if ( ++p == pe )
 		goto _test_eof848;
 case 848:
-#line 28361 "shortcodes.c"
+#line 28599 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1640;
 		case 34: goto st389;
@@ -28373,6 +28611,7 @@ case 848:
 tr1765:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28390,7 +28629,7 @@ tr1765:
       }
 	goto st849;
 tr1640:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28402,7 +28641,7 @@ tr1640:
     }
 	goto st849;
 tr1655:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28417,7 +28656,7 @@ st849:
 	if ( ++p == pe )
 		goto _test_eof849;
 case 849:
-#line 28421 "shortcodes.c"
+#line 28660 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st849;
 		case 34: goto tr1097;
@@ -28442,6 +28681,7 @@ case 849:
 tr1766:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28459,7 +28699,7 @@ tr1766:
       }
 	goto st850;
 tr1641:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28471,7 +28711,7 @@ tr1641:
     }
 	goto st850;
 tr1656:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28486,7 +28726,7 @@ st850:
 	if ( ++p == pe )
 		goto _test_eof850;
 case 850:
-#line 28490 "shortcodes.c"
+#line 28730 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -28506,7 +28746,7 @@ case 851:
 	}
 	goto st391;
 tr1642:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28518,7 +28758,7 @@ tr1642:
     }
 	goto st852;
 tr1657:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28533,7 +28773,7 @@ st852:
 	if ( ++p == pe )
 		goto _test_eof852;
 case 852:
-#line 28537 "shortcodes.c"
+#line 28777 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -28573,7 +28813,7 @@ st855:
 	if ( ++p == pe )
 		goto _test_eof855;
 case 855:
-#line 28577 "shortcodes.c"
+#line 28817 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1655;
 		case 34: goto st389;
@@ -28598,6 +28838,7 @@ case 855:
 tr1769:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28615,7 +28856,7 @@ tr1769:
       }
 	goto st856;
 tr1643:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28627,7 +28868,7 @@ tr1643:
     }
 	goto st856;
 tr1659:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28642,7 +28883,7 @@ st856:
 	if ( ++p == pe )
 		goto _test_eof856;
 case 856:
-#line 28646 "shortcodes.c"
+#line 28887 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -28671,7 +28912,7 @@ st858:
 	if ( ++p == pe )
 		goto _test_eof858;
 case 858:
-#line 28675 "shortcodes.c"
+#line 28916 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1655;
 		case 34: goto st389;
@@ -28695,7 +28936,7 @@ case 858:
 		goto st855;
 	goto st391;
 tr1662:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -28705,7 +28946,7 @@ st859:
 	if ( ++p == pe )
 		goto _test_eof859;
 case 859:
-#line 28709 "shortcodes.c"
+#line 28950 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1097;
 		case 39: goto tr1636;
@@ -28723,6 +28964,7 @@ case 859:
 tr1633:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28740,7 +28982,7 @@ tr1633:
       }
 	goto st860;
 tr1117:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -28752,7 +28994,7 @@ tr1117:
     }
 	goto st860;
 tr1669:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -28767,7 +29009,7 @@ st860:
 	if ( ++p == pe )
 		goto _test_eof860;
 case 860:
-#line 28771 "shortcodes.c"
+#line 29013 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -28819,7 +29061,7 @@ st864:
 	if ( ++p == pe )
 		goto _test_eof864;
 case 864:
-#line 28823 "shortcodes.c"
+#line 29065 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1668;
 		case 34: goto st567;
@@ -28849,7 +29091,7 @@ st865:
 	if ( ++p == pe )
 		goto _test_eof865;
 case 865:
-#line 28853 "shortcodes.c"
+#line 29095 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1668;
 		case 34: goto st567;
@@ -28871,7 +29113,7 @@ case 865:
 		goto st864;
 	goto st566;
 tr1671:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -28881,7 +29123,7 @@ st866:
 	if ( ++p == pe )
 		goto _test_eof866;
 case 866:
-#line 28885 "shortcodes.c"
+#line 29127 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1636;
 		case 39: goto tr1095;
@@ -28946,7 +29188,7 @@ st869:
 	if ( ++p == pe )
 		goto _test_eof869;
 case 869:
-#line 28950 "shortcodes.c"
+#line 29192 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1675;
 		case 34: goto st567;
@@ -28971,6 +29213,7 @@ case 869:
 tr1675:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -28988,7 +29231,7 @@ tr1675:
       }
 	goto st870;
 tr1687:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29000,7 +29243,7 @@ tr1687:
     }
 	goto st870;
 tr1698:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29015,7 +29258,7 @@ st870:
 	if ( ++p == pe )
 		goto _test_eof870;
 case 870:
-#line 29019 "shortcodes.c"
+#line 29262 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st870;
 		case 34: goto tr1681;
@@ -29047,7 +29290,7 @@ st871:
 	if ( ++p == pe )
 		goto _test_eof871;
 case 871:
-#line 29051 "shortcodes.c"
+#line 29294 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1687;
 		case 34: goto st567;
@@ -29063,6 +29306,7 @@ case 871:
 tr1676:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29080,7 +29324,7 @@ tr1676:
       }
 	goto st872;
 tr1688:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29092,7 +29336,7 @@ tr1688:
     }
 	goto st872;
 tr1699:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29107,7 +29351,7 @@ st872:
 	if ( ++p == pe )
 		goto _test_eof872;
 case 872:
-#line 29111 "shortcodes.c"
+#line 29355 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -29127,7 +29371,7 @@ case 873:
 	}
 	goto st566;
 tr1689:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29139,7 +29383,7 @@ tr1689:
     }
 	goto st874;
 tr1700:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29154,7 +29398,7 @@ st874:
 	if ( ++p == pe )
 		goto _test_eof874;
 case 874:
-#line 29158 "shortcodes.c"
+#line 29402 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -29187,6 +29431,7 @@ case 876:
 tr1679:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29204,7 +29449,7 @@ tr1679:
       }
 	goto st877;
 tr1690:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29216,7 +29461,7 @@ tr1690:
     }
 	goto st877;
 tr1702:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29231,7 +29476,7 @@ st877:
 	if ( ++p == pe )
 		goto _test_eof877;
 case 877:
-#line 29235 "shortcodes.c"
+#line 29480 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -29260,7 +29505,7 @@ st879:
 	if ( ++p == pe )
 		goto _test_eof879;
 case 879:
-#line 29264 "shortcodes.c"
+#line 29509 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1698;
 		case 34: goto st567;
@@ -29292,7 +29537,7 @@ st880:
 	if ( ++p == pe )
 		goto _test_eof880;
 case 880:
-#line 29296 "shortcodes.c"
+#line 29541 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1698;
 		case 34: goto st567;
@@ -29316,7 +29561,7 @@ case 880:
 		goto st879;
 	goto st566;
 tr1703:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -29326,7 +29571,7 @@ st881:
 	if ( ++p == pe )
 		goto _test_eof881;
 case 881:
-#line 29330 "shortcodes.c"
+#line 29575 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1681;
 		case 39: goto tr1681;
@@ -29344,6 +29589,7 @@ case 881:
 tr1678:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29364,7 +29610,7 @@ st882:
 	if ( ++p == pe )
 		goto _test_eof882;
 case 882:
-#line 29368 "shortcodes.c"
+#line 29614 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1675;
 		case 34: goto st567;
@@ -29389,6 +29635,7 @@ case 882:
 tr1705:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29409,7 +29656,7 @@ st883:
 	if ( ++p == pe )
 		goto _test_eof883;
 case 883:
-#line 29413 "shortcodes.c"
+#line 29660 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st567;
 		case 39: goto st579;
@@ -29438,7 +29685,7 @@ st885:
 	if ( ++p == pe )
 		goto _test_eof885;
 case 885:
-#line 29442 "shortcodes.c"
+#line 29689 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1708;
 		case 34: goto st385;
@@ -29470,7 +29717,7 @@ st886:
 	if ( ++p == pe )
 		goto _test_eof886;
 case 886:
-#line 29474 "shortcodes.c"
+#line 29721 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1708;
 		case 34: goto st385;
@@ -29494,7 +29741,7 @@ case 886:
 		goto st885;
 	goto st384;
 tr1713:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -29504,7 +29751,7 @@ st887:
 	if ( ++p == pe )
 		goto _test_eof887;
 case 887:
-#line 29508 "shortcodes.c"
+#line 29755 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr1095;
 		case 39: goto tr1097;
@@ -29522,6 +29769,7 @@ case 887:
 tr1092:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29542,7 +29790,7 @@ st888:
 	if ( ++p == pe )
 		goto _test_eof888;
 case 888:
-#line 29546 "shortcodes.c"
+#line 29794 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1089;
 		case 34: goto st385;
@@ -29567,6 +29815,7 @@ case 888:
 tr1715:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29587,7 +29836,7 @@ st889:
 	if ( ++p == pe )
 		goto _test_eof889;
 case 889:
-#line 29591 "shortcodes.c"
+#line 29840 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 39: goto st301;
@@ -29618,7 +29867,7 @@ case 891:
 	}
 	goto st384;
 tr864:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29630,7 +29879,7 @@ tr864:
     }
 	goto st892;
 tr1724:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29645,7 +29894,7 @@ st892:
 	if ( ++p == pe )
 		goto _test_eof892;
 case 892:
-#line 29649 "shortcodes.c"
+#line 29898 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st385;
 		case 37: goto st893;
@@ -29685,7 +29934,7 @@ st895:
 	if ( ++p == pe )
 		goto _test_eof895;
 case 895:
-#line 29689 "shortcodes.c"
+#line 29938 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1722;
 		case 34: goto st385;
@@ -29717,7 +29966,7 @@ st896:
 	if ( ++p == pe )
 		goto _test_eof896;
 case 896:
-#line 29721 "shortcodes.c"
+#line 29970 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1722;
 		case 34: goto st385;
@@ -29741,7 +29990,7 @@ case 896:
 		goto st895;
 	goto st384;
 tr1727:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -29751,7 +30000,7 @@ st897:
 	if ( ++p == pe )
 		goto _test_eof897;
 case 897:
-#line 29755 "shortcodes.c"
+#line 30004 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr836;
 		case 39: goto tr868;
@@ -29769,6 +30018,7 @@ case 897:
 tr1940:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29786,7 +30036,7 @@ tr1940:
       }
 	goto st898;
 tr852:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29798,7 +30048,7 @@ tr852:
     }
 	goto st898;
 tr1735:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29813,7 +30063,7 @@ st898:
 	if ( ++p == pe )
 		goto _test_eof898;
 case 898:
-#line 29817 "shortcodes.c"
+#line 30067 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -29833,7 +30083,7 @@ case 899:
 	}
 	goto st152;
 tr853:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29845,7 +30095,7 @@ tr853:
     }
 	goto st900;
 tr1736:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29860,7 +30110,7 @@ st900:
 	if ( ++p == pe )
 		goto _test_eof900;
 case 900:
-#line 29864 "shortcodes.c"
+#line 30114 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -29900,7 +30150,7 @@ st903:
 	if ( ++p == pe )
 		goto _test_eof903;
 case 903:
-#line 29904 "shortcodes.c"
+#line 30154 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1734;
 		case 34: goto st153;
@@ -29925,6 +30175,7 @@ case 903:
 tr1943:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -29942,7 +30193,7 @@ tr1943:
       }
 	goto st904;
 tr854:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -29954,7 +30205,7 @@ tr854:
     }
 	goto st904;
 tr1738:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -29969,7 +30220,7 @@ st904:
 	if ( ++p == pe )
 		goto _test_eof904;
 case 904:
-#line 29973 "shortcodes.c"
+#line 30224 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -29998,7 +30249,7 @@ st906:
 	if ( ++p == pe )
 		goto _test_eof906;
 case 906:
-#line 30002 "shortcodes.c"
+#line 30253 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1734;
 		case 34: goto st153;
@@ -30022,7 +30273,7 @@ case 906:
 		goto st903;
 	goto st152;
 tr1741:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -30032,7 +30283,7 @@ st907:
 	if ( ++p == pe )
 		goto _test_eof907;
 case 907:
-#line 30036 "shortcodes.c"
+#line 30287 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr856;
 		case 39: goto tr825;
@@ -30057,7 +30308,7 @@ st908:
 	if ( ++p == pe )
 		goto _test_eof908;
 case 908:
-#line 30061 "shortcodes.c"
+#line 30312 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1743;
 		case 34: goto st332;
@@ -30087,7 +30338,7 @@ st909:
 	if ( ++p == pe )
 		goto _test_eof909;
 case 909:
-#line 30091 "shortcodes.c"
+#line 30342 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1743;
 		case 34: goto st332;
@@ -30109,7 +30360,7 @@ case 909:
 		goto st908;
 	goto st331;
 tr1746:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -30119,7 +30370,7 @@ st910:
 	if ( ++p == pe )
 		goto _test_eof910;
 case 910:
-#line 30123 "shortcodes.c"
+#line 30374 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr835;
 		case 39: goto tr836;
@@ -30144,7 +30395,7 @@ st911:
 	if ( ++p == pe )
 		goto _test_eof911;
 case 911:
-#line 30148 "shortcodes.c"
+#line 30399 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1748;
 		case 34: goto st389;
@@ -30176,7 +30427,7 @@ st912:
 	if ( ++p == pe )
 		goto _test_eof912;
 case 912:
-#line 30180 "shortcodes.c"
+#line 30431 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1748;
 		case 34: goto st389;
@@ -30200,7 +30451,7 @@ case 912:
 		goto st911;
 	goto st391;
 tr1753:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -30210,7 +30461,7 @@ st913:
 	if ( ++p == pe )
 		goto _test_eof913;
 case 913:
-#line 30214 "shortcodes.c"
+#line 30465 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr825;
 		case 39: goto tr827;
@@ -30228,6 +30479,7 @@ case 913:
 tr822:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30248,7 +30500,7 @@ st914:
 	if ( ++p == pe )
 		goto _test_eof914;
 case 914:
-#line 30252 "shortcodes.c"
+#line 30504 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr819;
 		case 34: goto st389;
@@ -30273,6 +30525,7 @@ case 914:
 tr1755:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30293,7 +30546,7 @@ st915:
 	if ( ++p == pe )
 		goto _test_eof915;
 case 915:
-#line 30297 "shortcodes.c"
+#line 30550 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -30357,7 +30610,7 @@ st919:
 	if ( ++p == pe )
 		goto _test_eof919;
 case 919:
-#line 30361 "shortcodes.c"
+#line 30614 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1760;
 		case 34: goto st389;
@@ -30427,7 +30680,7 @@ st922:
 	if ( ++p == pe )
 		goto _test_eof922;
 case 922:
-#line 30431 "shortcodes.c"
+#line 30684 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1765;
 		case 34: goto st389;
@@ -30452,6 +30705,7 @@ case 922:
 tr1768:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30472,7 +30726,7 @@ st923:
 	if ( ++p == pe )
 		goto _test_eof923;
 case 923:
-#line 30476 "shortcodes.c"
+#line 30730 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1765;
 		case 34: goto st389;
@@ -30497,6 +30751,7 @@ case 923:
 tr1770:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30517,7 +30772,7 @@ st924:
 	if ( ++p == pe )
 		goto _test_eof924;
 case 924:
-#line 30521 "shortcodes.c"
+#line 30776 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st389;
 		case 39: goto st376;
@@ -30539,6 +30794,7 @@ case 925:
 tr1851:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30556,7 +30812,7 @@ tr1851:
       }
 	goto st926;
 tr776:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -30568,7 +30824,7 @@ tr776:
     }
 	goto st926;
 tr1778:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -30583,7 +30839,7 @@ st926:
 	if ( ++p == pe )
 		goto _test_eof926;
 case 926:
-#line 30587 "shortcodes.c"
+#line 30843 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 47: goto st927;
@@ -30631,7 +30887,7 @@ st930:
 	if ( ++p == pe )
 		goto _test_eof930;
 case 930:
-#line 30635 "shortcodes.c"
+#line 30891 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1777;
 		case 39: goto st303;
@@ -30660,7 +30916,7 @@ st931:
 	if ( ++p == pe )
 		goto _test_eof931;
 case 931:
-#line 30664 "shortcodes.c"
+#line 30920 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1777;
 		case 39: goto st303;
@@ -30681,7 +30937,7 @@ case 931:
 		goto st930;
 	goto st307;
 tr1780:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -30691,7 +30947,7 @@ st932:
 	if ( ++p == pe )
 		goto _test_eof932;
 case 932:
-#line 30695 "shortcodes.c"
+#line 30951 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr582;
 		case 39: goto tr778;
@@ -30707,7 +30963,7 @@ case 932:
 		goto tr780;
 	goto st307;
 tr764:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -30719,7 +30975,7 @@ tr764:
     }
 	goto st933;
 tr1787:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -30734,7 +30990,7 @@ st933:
 	if ( ++p == pe )
 		goto _test_eof933;
 case 933:
-#line 30738 "shortcodes.c"
+#line 30994 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 62: goto st934;
@@ -30771,7 +31027,7 @@ st936:
 	if ( ++p == pe )
 		goto _test_eof936;
 case 936:
-#line 30775 "shortcodes.c"
+#line 31031 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1785;
 		case 37: goto tr1786;
@@ -30795,6 +31051,7 @@ case 936:
 tr1968:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30812,7 +31069,7 @@ tr1968:
       }
 	goto st937;
 tr765:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -30824,7 +31081,7 @@ tr765:
     }
 	goto st937;
 tr1789:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -30839,7 +31096,7 @@ st937:
 	if ( ++p == pe )
 		goto _test_eof937;
 case 937:
-#line 30843 "shortcodes.c"
+#line 31100 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -30866,7 +31123,7 @@ st939:
 	if ( ++p == pe )
 		goto _test_eof939;
 case 939:
-#line 30870 "shortcodes.c"
+#line 31127 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1785;
 		case 37: goto tr1786;
@@ -30889,7 +31146,7 @@ case 939:
 		goto st936;
 	goto st128;
 tr1792:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -30899,7 +31156,7 @@ st940:
 	if ( ++p == pe )
 		goto _test_eof940;
 case 940:
-#line 30903 "shortcodes.c"
+#line 31160 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr743;
 		case 39: goto tr768;
@@ -30917,6 +31174,7 @@ case 940:
 tr739:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -30934,7 +31192,7 @@ tr739:
       }
 	goto st941;
 tr590:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -30946,7 +31204,7 @@ tr590:
     }
 	goto st941;
 tr1799:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -30961,7 +31219,7 @@ st941:
 	if ( ++p == pe )
 		goto _test_eof941;
 case 941:
-#line 30965 "shortcodes.c"
+#line 31223 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 47: goto st942;
@@ -31009,7 +31267,7 @@ st945:
 	if ( ++p == pe )
 		goto _test_eof945;
 case 945:
-#line 31013 "shortcodes.c"
+#line 31271 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1798;
 		case 34: goto st303;
@@ -31038,7 +31296,7 @@ st946:
 	if ( ++p == pe )
 		goto _test_eof946;
 case 946:
-#line 31042 "shortcodes.c"
+#line 31300 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1798;
 		case 34: goto st303;
@@ -31059,7 +31317,7 @@ case 946:
 		goto st945;
 	goto st302;
 tr1801:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -31069,7 +31327,7 @@ st947:
 	if ( ++p == pe )
 		goto _test_eof947;
 case 947:
-#line 31073 "shortcodes.c"
+#line 31331 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr742;
 		case 39: goto tr743;
@@ -31132,7 +31390,7 @@ st950:
 	if ( ++p == pe )
 		goto _test_eof950;
 case 950:
-#line 31136 "shortcodes.c"
+#line 31394 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1805;
 		case 34: goto st303;
@@ -31156,6 +31414,7 @@ case 950:
 tr1808:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31176,7 +31435,7 @@ st951:
 	if ( ++p == pe )
 		goto _test_eof951;
 case 951:
-#line 31180 "shortcodes.c"
+#line 31439 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1805;
 		case 34: goto st303;
@@ -31200,6 +31459,7 @@ case 951:
 tr1810:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31220,7 +31480,7 @@ st952:
 	if ( ++p == pe )
 		goto _test_eof952;
 case 952:
-#line 31224 "shortcodes.c"
+#line 31484 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 123: goto tr591;
@@ -31248,7 +31508,7 @@ case 954:
 	}
 	goto st302;
 tr682:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -31260,7 +31520,7 @@ tr682:
     }
 	goto st955;
 tr1819:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -31275,7 +31535,7 @@ st955:
 	if ( ++p == pe )
 		goto _test_eof955;
 case 955:
-#line 31279 "shortcodes.c"
+#line 31539 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st303;
 		case 37: goto st956;
@@ -31312,7 +31572,7 @@ st958:
 	if ( ++p == pe )
 		goto _test_eof958;
 case 958:
-#line 31316 "shortcodes.c"
+#line 31576 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1817;
 		case 34: goto st303;
@@ -31343,7 +31603,7 @@ st959:
 	if ( ++p == pe )
 		goto _test_eof959;
 case 959:
-#line 31347 "shortcodes.c"
+#line 31607 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1817;
 		case 34: goto st303;
@@ -31366,7 +31626,7 @@ case 959:
 		goto st958;
 	goto st302;
 tr1822:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -31376,7 +31636,7 @@ st960:
 	if ( ++p == pe )
 		goto _test_eof960;
 case 960:
-#line 31380 "shortcodes.c"
+#line 31640 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr685;
 		case 39: goto tr687;
@@ -31394,6 +31654,7 @@ case 960:
 tr2014:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31411,7 +31672,7 @@ tr2014:
       }
 	goto st961;
 tr670:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -31423,7 +31684,7 @@ tr670:
     }
 	goto st961;
 tr1830:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -31438,7 +31699,7 @@ st961:
 	if ( ++p == pe )
 		goto _test_eof961;
 case 961:
-#line 31442 "shortcodes.c"
+#line 31703 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -31456,7 +31717,7 @@ case 962:
 	}
 	goto st35;
 tr671:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -31468,7 +31729,7 @@ tr671:
     }
 	goto st963;
 tr1831:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -31483,7 +31744,7 @@ st963:
 	if ( ++p == pe )
 		goto _test_eof963;
 case 963:
-#line 31487 "shortcodes.c"
+#line 31748 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 62: goto st964;
@@ -31520,7 +31781,7 @@ st966:
 	if ( ++p == pe )
 		goto _test_eof966;
 case 966:
-#line 31524 "shortcodes.c"
+#line 31785 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1829;
 		case 34: goto st36;
@@ -31544,6 +31805,7 @@ case 966:
 tr2017:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31561,7 +31823,7 @@ tr2017:
       }
 	goto st967;
 tr672:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -31573,7 +31835,7 @@ tr672:
     }
 	goto st967;
 tr1833:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -31588,7 +31850,7 @@ st967:
 	if ( ++p == pe )
 		goto _test_eof967;
 case 967:
-#line 31592 "shortcodes.c"
+#line 31854 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -31615,7 +31877,7 @@ st969:
 	if ( ++p == pe )
 		goto _test_eof969;
 case 969:
-#line 31619 "shortcodes.c"
+#line 31881 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1829;
 		case 34: goto st36;
@@ -31638,7 +31900,7 @@ case 969:
 		goto st966;
 	goto st35;
 tr1836:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -31648,7 +31910,7 @@ st970:
 	if ( ++p == pe )
 		goto _test_eof970;
 case 970:
-#line 31652 "shortcodes.c"
+#line 31914 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr674;
 		case 39: goto tr647;
@@ -31673,7 +31935,7 @@ st971:
 	if ( ++p == pe )
 		goto _test_eof971;
 case 971:
-#line 31677 "shortcodes.c"
+#line 31939 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1838;
 		case 37: goto tr1839;
@@ -31704,7 +31966,7 @@ st972:
 	if ( ++p == pe )
 		goto _test_eof972;
 case 972:
-#line 31708 "shortcodes.c"
+#line 31970 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1838;
 		case 37: goto tr1839;
@@ -31727,7 +31989,7 @@ case 972:
 		goto st971;
 	goto st307;
 tr1843:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -31737,7 +31999,7 @@ st973:
 	if ( ++p == pe )
 		goto _test_eof973;
 case 973:
-#line 31741 "shortcodes.c"
+#line 32003 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr647;
 		case 39: goto tr649;
@@ -31755,6 +32017,7 @@ case 973:
 tr644:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31775,7 +32038,7 @@ st974:
 	if ( ++p == pe )
 		goto _test_eof974;
 case 974:
-#line 31779 "shortcodes.c"
+#line 32042 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr641;
 		case 37: goto tr1845;
@@ -31799,6 +32062,7 @@ case 974:
 tr1845:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31819,7 +32083,7 @@ st975:
 	if ( ++p == pe )
 		goto _test_eof975;
 case 975:
-#line 31823 "shortcodes.c"
+#line 32087 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -31879,7 +32143,7 @@ st979:
 	if ( ++p == pe )
 		goto _test_eof979;
 case 979:
-#line 31883 "shortcodes.c"
+#line 32147 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1850;
 		case 39: goto st303;
@@ -31946,7 +32210,7 @@ st982:
 	if ( ++p == pe )
 		goto _test_eof982;
 case 982:
-#line 31950 "shortcodes.c"
+#line 32214 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1855;
 		case 37: goto tr1856;
@@ -31970,6 +32234,7 @@ case 982:
 tr1858:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -31990,7 +32255,7 @@ st983:
 	if ( ++p == pe )
 		goto _test_eof983;
 case 983:
-#line 31994 "shortcodes.c"
+#line 32259 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1855;
 		case 37: goto tr1856;
@@ -32014,6 +32279,7 @@ case 983:
 tr1860:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32034,7 +32300,7 @@ st984:
 	if ( ++p == pe )
 		goto _test_eof984;
 case 984:
-#line 32038 "shortcodes.c"
+#line 32304 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st303;
 		case 123: goto tr607;
@@ -32052,7 +32318,7 @@ case 985:
 	}
 	goto st307;
 tr594:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -32064,7 +32330,7 @@ tr594:
     }
 	goto st986;
 tr1868:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -32079,7 +32345,7 @@ st986:
 	if ( ++p == pe )
 		goto _test_eof986;
 case 986:
-#line 32083 "shortcodes.c"
+#line 32349 "shortcodes.c"
 	switch( (*p) ) {
 		case 62: goto st987;
 		case 123: goto tr31;
@@ -32113,7 +32379,7 @@ st989:
 	if ( ++p == pe )
 		goto _test_eof989;
 case 989:
-#line 32117 "shortcodes.c"
+#line 32383 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1866;
 		case 37: goto tr1867;
@@ -32136,6 +32402,7 @@ case 989:
 tr2042:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32153,7 +32420,7 @@ tr2042:
       }
 	goto st990;
 tr595:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -32165,7 +32432,7 @@ tr595:
     }
 	goto st990;
 tr1870:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -32180,7 +32447,7 @@ st990:
 	if ( ++p == pe )
 		goto _test_eof990;
 case 990:
-#line 32184 "shortcodes.c"
+#line 32451 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st991;
@@ -32205,7 +32472,7 @@ st992:
 	if ( ++p == pe )
 		goto _test_eof992;
 case 992:
-#line 32209 "shortcodes.c"
+#line 32476 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1866;
 		case 37: goto tr1867;
@@ -32227,7 +32494,7 @@ case 992:
 		goto st989;
 	goto st11;
 tr1873:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32237,7 +32504,7 @@ st993:
 	if ( ++p == pe )
 		goto _test_eof993;
 case 993:
-#line 32241 "shortcodes.c"
+#line 32508 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr597;
 		case 39: goto tr599;
@@ -32262,7 +32529,7 @@ st994:
 	if ( ++p == pe )
 		goto _test_eof994;
 case 994:
-#line 32266 "shortcodes.c"
+#line 32533 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1875;
 		case 34: goto st126;
@@ -32293,7 +32560,7 @@ st995:
 	if ( ++p == pe )
 		goto _test_eof995;
 case 995:
-#line 32297 "shortcodes.c"
+#line 32564 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1875;
 		case 34: goto st126;
@@ -32316,7 +32583,7 @@ case 995:
 		goto st994;
 	goto st125;
 tr1880:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32326,7 +32593,7 @@ st996:
 	if ( ++p == pe )
 		goto _test_eof996;
 case 996:
-#line 32330 "shortcodes.c"
+#line 32597 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr580;
 		case 39: goto tr582;
@@ -32344,6 +32611,7 @@ case 996:
 tr577:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32364,7 +32632,7 @@ st997:
 	if ( ++p == pe )
 		goto _test_eof997;
 case 997:
-#line 32368 "shortcodes.c"
+#line 32636 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr574;
 		case 34: goto st126;
@@ -32388,6 +32656,7 @@ case 997:
 tr1882:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32408,7 +32677,7 @@ st998:
 	if ( ++p == pe )
 		goto _test_eof998;
 case 998:
-#line 32412 "shortcodes.c"
+#line 32681 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st126;
 		case 123: goto tr247;
@@ -32445,7 +32714,7 @@ st1001:
 	if ( ++p == pe )
 		goto _test_eof1001;
 case 1001:
-#line 32449 "shortcodes.c"
+#line 32718 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1886;
 		case 34: goto st126;
@@ -32474,7 +32743,7 @@ st1002:
 	if ( ++p == pe )
 		goto _test_eof1002;
 case 1002:
-#line 32478 "shortcodes.c"
+#line 32747 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1886;
 		case 34: goto st126;
@@ -32495,7 +32764,7 @@ case 1002:
 		goto st1001;
 	goto st125;
 tr1889:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32505,7 +32774,7 @@ st1003:
 	if ( ++p == pe )
 		goto _test_eof1003;
 case 1003:
-#line 32509 "shortcodes.c"
+#line 32778 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr498;
 		case 39: goto tr481;
@@ -32530,7 +32799,7 @@ st1004:
 	if ( ++p == pe )
 		goto _test_eof1004;
 case 1004:
-#line 32534 "shortcodes.c"
+#line 32803 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1891;
 		case 34: goto st119;
@@ -32560,7 +32829,7 @@ st1005:
 	if ( ++p == pe )
 		goto _test_eof1005;
 case 1005:
-#line 32564 "shortcodes.c"
+#line 32833 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1891;
 		case 34: goto st119;
@@ -32582,7 +32851,7 @@ case 1005:
 		goto st1004;
 	goto st118;
 tr1894:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32592,7 +32861,7 @@ st1006:
 	if ( ++p == pe )
 		goto _test_eof1006;
 case 1006:
-#line 32596 "shortcodes.c"
+#line 32865 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr459;
 		case 39: goto tr460;
@@ -32657,7 +32926,7 @@ st1009:
 	if ( ++p == pe )
 		goto _test_eof1009;
 case 1009:
-#line 32661 "shortcodes.c"
+#line 32930 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1898;
 		case 34: goto st119;
@@ -32682,6 +32951,7 @@ case 1009:
 tr1901:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32702,7 +32972,7 @@ st1010:
 	if ( ++p == pe )
 		goto _test_eof1010;
 case 1010:
-#line 32706 "shortcodes.c"
+#line 32976 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1898;
 		case 34: goto st119;
@@ -32727,6 +32997,7 @@ case 1010:
 tr1903:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -32747,7 +33018,7 @@ st1011:
 	if ( ++p == pe )
 		goto _test_eof1011;
 case 1011:
-#line 32751 "shortcodes.c"
+#line 33022 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 39: goto st124;
@@ -32778,7 +33049,7 @@ case 1013:
 	}
 	goto st118;
 tr401:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -32790,7 +33061,7 @@ tr401:
     }
 	goto st1014;
 tr1912:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -32805,7 +33076,7 @@ st1014:
 	if ( ++p == pe )
 		goto _test_eof1014;
 case 1014:
-#line 32809 "shortcodes.c"
+#line 33080 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st119;
 		case 37: goto st1015;
@@ -32845,7 +33116,7 @@ st1017:
 	if ( ++p == pe )
 		goto _test_eof1017;
 case 1017:
-#line 32849 "shortcodes.c"
+#line 33120 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1910;
 		case 34: goto st119;
@@ -32877,7 +33148,7 @@ st1018:
 	if ( ++p == pe )
 		goto _test_eof1018;
 case 1018:
-#line 32881 "shortcodes.c"
+#line 33152 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1910;
 		case 34: goto st119;
@@ -32901,7 +33172,7 @@ case 1018:
 		goto st1017;
 	goto st118;
 tr1915:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32911,7 +33182,7 @@ st1019:
 	if ( ++p == pe )
 		goto _test_eof1019;
 case 1019:
-#line 32915 "shortcodes.c"
+#line 33186 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr376;
 		case 39: goto tr395;
@@ -32936,7 +33207,7 @@ st1020:
 	if ( ++p == pe )
 		goto _test_eof1020;
 case 1020:
-#line 32940 "shortcodes.c"
+#line 33211 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1917;
 		case 34: goto st76;
@@ -32966,7 +33237,7 @@ st1021:
 	if ( ++p == pe )
 		goto _test_eof1021;
 case 1021:
-#line 32970 "shortcodes.c"
+#line 33241 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1917;
 		case 34: goto st76;
@@ -32988,7 +33259,7 @@ case 1021:
 		goto st1020;
 	goto st75;
 tr1920:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -32998,7 +33269,7 @@ st1022:
 	if ( ++p == pe )
 		goto _test_eof1022;
 case 1022:
-#line 33002 "shortcodes.c"
+#line 33273 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr395;
 		case 39: goto tr374;
@@ -33023,7 +33294,7 @@ st1023:
 	if ( ++p == pe )
 		goto _test_eof1023;
 case 1023:
-#line 33027 "shortcodes.c"
+#line 33298 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1922;
 		case 34: goto st153;
@@ -33055,7 +33326,7 @@ st1024:
 	if ( ++p == pe )
 		goto _test_eof1024;
 case 1024:
-#line 33059 "shortcodes.c"
+#line 33330 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1922;
 		case 34: goto st153;
@@ -33079,7 +33350,7 @@ case 1024:
 		goto st1023;
 	goto st152;
 tr1927:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -33089,7 +33360,7 @@ st1025:
 	if ( ++p == pe )
 		goto _test_eof1025;
 case 1025:
-#line 33093 "shortcodes.c"
+#line 33364 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr374;
 		case 39: goto tr376;
@@ -33107,6 +33378,7 @@ case 1025:
 tr371:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33127,7 +33399,7 @@ st1026:
 	if ( ++p == pe )
 		goto _test_eof1026;
 case 1026:
-#line 33131 "shortcodes.c"
+#line 33403 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr368;
 		case 34: goto st153;
@@ -33152,6 +33424,7 @@ case 1026:
 tr1929:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33172,7 +33445,7 @@ st1027:
 	if ( ++p == pe )
 		goto _test_eof1027;
 case 1027:
-#line 33176 "shortcodes.c"
+#line 33449 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -33236,7 +33509,7 @@ st1031:
 	if ( ++p == pe )
 		goto _test_eof1031;
 case 1031:
-#line 33240 "shortcodes.c"
+#line 33513 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1934;
 		case 34: goto st153;
@@ -33306,7 +33579,7 @@ st1034:
 	if ( ++p == pe )
 		goto _test_eof1034;
 case 1034:
-#line 33310 "shortcodes.c"
+#line 33583 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1939;
 		case 34: goto st153;
@@ -33331,6 +33604,7 @@ case 1034:
 tr1942:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33351,7 +33625,7 @@ st1035:
 	if ( ++p == pe )
 		goto _test_eof1035;
 case 1035:
-#line 33355 "shortcodes.c"
+#line 33629 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1939;
 		case 34: goto st153;
@@ -33376,6 +33650,7 @@ case 1035:
 tr1944:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33396,7 +33671,7 @@ st1036:
 	if ( ++p == pe )
 		goto _test_eof1036;
 case 1036:
-#line 33400 "shortcodes.c"
+#line 33675 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st153;
 		case 39: goto st161;
@@ -33425,7 +33700,7 @@ st1038:
 	if ( ++p == pe )
 		goto _test_eof1038;
 case 1038:
-#line 33429 "shortcodes.c"
+#line 33704 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1947;
 		case 37: goto tr1948;
@@ -33456,7 +33731,7 @@ st1039:
 	if ( ++p == pe )
 		goto _test_eof1039;
 case 1039:
-#line 33460 "shortcodes.c"
+#line 33735 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1947;
 		case 37: goto tr1948;
@@ -33479,7 +33754,7 @@ case 1039:
 		goto st1038;
 	goto st128;
 tr1952:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -33489,7 +33764,7 @@ st1040:
 	if ( ++p == pe )
 		goto _test_eof1040;
 case 1040:
-#line 33493 "shortcodes.c"
+#line 33768 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr297;
 		case 39: goto tr299;
@@ -33507,6 +33782,7 @@ case 1040:
 tr294:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33527,7 +33803,7 @@ st1041:
 	if ( ++p == pe )
 		goto _test_eof1041;
 case 1041:
-#line 33531 "shortcodes.c"
+#line 33807 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr291;
 		case 37: goto tr1954;
@@ -33551,6 +33827,7 @@ case 1041:
 tr1954:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33571,7 +33848,7 @@ st1042:
 	if ( ++p == pe )
 		goto _test_eof1042;
 case 1042:
-#line 33575 "shortcodes.c"
+#line 33852 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -33631,7 +33908,7 @@ st1046:
 	if ( ++p == pe )
 		goto _test_eof1046;
 case 1046:
-#line 33635 "shortcodes.c"
+#line 33912 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1959;
 		case 39: goto st126;
@@ -33698,7 +33975,7 @@ st1049:
 	if ( ++p == pe )
 		goto _test_eof1049;
 case 1049:
-#line 33702 "shortcodes.c"
+#line 33979 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1964;
 		case 37: goto tr1965;
@@ -33722,6 +33999,7 @@ case 1049:
 tr1967:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33742,7 +34020,7 @@ st1050:
 	if ( ++p == pe )
 		goto _test_eof1050;
 case 1050:
-#line 33746 "shortcodes.c"
+#line 34024 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1964;
 		case 37: goto tr1965;
@@ -33766,6 +34044,7 @@ case 1050:
 tr1969:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33786,7 +34065,7 @@ st1051:
 	if ( ++p == pe )
 		goto _test_eof1051;
 case 1051:
-#line 33790 "shortcodes.c"
+#line 34069 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st126;
 		case 123: goto tr257;
@@ -33806,6 +34085,7 @@ case 1052:
 tr2034:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -33823,7 +34103,7 @@ tr2034:
       }
 	goto st1053;
 tr249:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -33835,7 +34115,7 @@ tr249:
     }
 	goto st1053;
 tr1977:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -33850,7 +34130,7 @@ st1053:
 	if ( ++p == pe )
 		goto _test_eof1053;
 case 1053:
-#line 33854 "shortcodes.c"
+#line 34134 "shortcodes.c"
 	switch( (*p) ) {
 		case 47: goto st1054;
 		case 123: goto tr31;
@@ -33894,7 +34174,7 @@ st1057:
 	if ( ++p == pe )
 		goto _test_eof1057;
 case 1057:
-#line 33898 "shortcodes.c"
+#line 34178 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1976;
 		case 42: goto tr1977;
@@ -33922,7 +34202,7 @@ st1058:
 	if ( ++p == pe )
 		goto _test_eof1058;
 case 1058:
-#line 33926 "shortcodes.c"
+#line 34206 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1976;
 		case 42: goto tr1977;
@@ -33942,7 +34222,7 @@ case 1058:
 		goto st1057;
 	goto st11;
 tr1979:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -33952,7 +34232,7 @@ st1059:
 	if ( ++p == pe )
 		goto _test_eof1059;
 case 1059:
-#line 33956 "shortcodes.c"
+#line 34236 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr251;
 		case 39: goto tr252;
@@ -33977,7 +34257,7 @@ st1060:
 	if ( ++p == pe )
 		goto _test_eof1060;
 case 1060:
-#line 33981 "shortcodes.c"
+#line 34261 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1981;
 		case 39: goto st36;
@@ -34006,7 +34286,7 @@ st1061:
 	if ( ++p == pe )
 		goto _test_eof1061;
 case 1061:
-#line 34010 "shortcodes.c"
+#line 34290 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1981;
 		case 39: goto st36;
@@ -34027,7 +34307,7 @@ case 1061:
 		goto st1060;
 	goto st77;
 tr1984:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -34037,7 +34317,7 @@ st1062:
 	if ( ++p == pe )
 		goto _test_eof1062;
 case 1062:
-#line 34041 "shortcodes.c"
+#line 34321 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr226;
 		case 39: goto tr227;
@@ -34100,7 +34380,7 @@ st1065:
 	if ( ++p == pe )
 		goto _test_eof1065;
 case 1065:
-#line 34104 "shortcodes.c"
+#line 34384 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1988;
 		case 37: goto tr1989;
@@ -34124,6 +34404,7 @@ case 1065:
 tr1991:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34144,7 +34425,7 @@ st1066:
 	if ( ++p == pe )
 		goto _test_eof1066;
 case 1066:
-#line 34148 "shortcodes.c"
+#line 34429 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1988;
 		case 37: goto tr1989;
@@ -34168,6 +34449,7 @@ case 1066:
 tr1993:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34188,7 +34470,7 @@ st1067:
 	if ( ++p == pe )
 		goto _test_eof1067;
 case 1067:
-#line 34192 "shortcodes.c"
+#line 34474 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st36;
 		case 123: goto tr157;
@@ -34215,7 +34497,7 @@ st1069:
 	if ( ++p == pe )
 		goto _test_eof1069;
 case 1069:
-#line 34219 "shortcodes.c"
+#line 34501 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1996;
 		case 34: goto st36;
@@ -34246,7 +34528,7 @@ st1070:
 	if ( ++p == pe )
 		goto _test_eof1070;
 case 1070:
-#line 34250 "shortcodes.c"
+#line 34532 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr1996;
 		case 34: goto st36;
@@ -34269,7 +34551,7 @@ case 1070:
 		goto st1069;
 	goto st35;
 tr2001:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -34279,7 +34561,7 @@ st1071:
 	if ( ++p == pe )
 		goto _test_eof1071;
 case 1071:
-#line 34283 "shortcodes.c"
+#line 34565 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr130;
 		case 39: goto tr132;
@@ -34297,6 +34579,7 @@ case 1071:
 tr127:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34317,7 +34600,7 @@ st1072:
 	if ( ++p == pe )
 		goto _test_eof1072;
 case 1072:
-#line 34321 "shortcodes.c"
+#line 34604 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr124;
 		case 34: goto st36;
@@ -34341,6 +34624,7 @@ case 1072:
 tr2003:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34361,7 +34645,7 @@ st1073:
 	if ( ++p == pe )
 		goto _test_eof1073;
 case 1073:
-#line 34365 "shortcodes.c"
+#line 34649 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -34421,7 +34705,7 @@ st1077:
 	if ( ++p == pe )
 		goto _test_eof1077;
 case 1077:
-#line 34425 "shortcodes.c"
+#line 34709 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2008;
 		case 34: goto st36;
@@ -34488,7 +34772,7 @@ st1080:
 	if ( ++p == pe )
 		goto _test_eof1080;
 case 1080:
-#line 34492 "shortcodes.c"
+#line 34776 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2013;
 		case 34: goto st36;
@@ -34512,6 +34796,7 @@ case 1080:
 tr2016:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34532,7 +34817,7 @@ st1081:
 	if ( ++p == pe )
 		goto _test_eof1081;
 case 1081:
-#line 34536 "shortcodes.c"
+#line 34821 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2013;
 		case 34: goto st36;
@@ -34556,6 +34841,7 @@ case 1081:
 tr2018:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34576,7 +34862,7 @@ st1082:
 	if ( ++p == pe )
 		goto _test_eof1082;
 case 1082:
-#line 34580 "shortcodes.c"
+#line 34866 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st36;
 		case 123: goto tr80;
@@ -34603,7 +34889,7 @@ st1084:
 	if ( ++p == pe )
 		goto _test_eof1084;
 case 1084:
-#line 34607 "shortcodes.c"
+#line 34893 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2021;
 		case 37: goto tr2022;
@@ -34633,7 +34919,7 @@ st1085:
 	if ( ++p == pe )
 		goto _test_eof1085;
 case 1085:
-#line 34637 "shortcodes.c"
+#line 34923 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2021;
 		case 37: goto tr2022;
@@ -34655,7 +34941,7 @@ case 1085:
 		goto st1084;
 	goto st11;
 tr2026:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -34665,7 +34951,7 @@ st1086:
 	if ( ++p == pe )
 		goto _test_eof1086;
 case 1086:
-#line 34669 "shortcodes.c"
+#line 34955 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr71;
 		case 39: goto tr73;
@@ -34683,6 +34969,7 @@ case 1086:
 tr68:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34703,7 +34990,7 @@ st1087:
 	if ( ++p == pe )
 		goto _test_eof1087;
 case 1087:
-#line 34707 "shortcodes.c"
+#line 34994 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr65;
 		case 37: goto tr2028;
@@ -34726,6 +35013,7 @@ case 1087:
 tr2028:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34746,7 +35034,7 @@ st1088:
 	if ( ++p == pe )
 		goto _test_eof1088;
 case 1088:
-#line 34750 "shortcodes.c"
+#line 35038 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st1089;
@@ -34802,7 +35090,7 @@ st1092:
 	if ( ++p == pe )
 		goto _test_eof1092;
 case 1092:
-#line 34806 "shortcodes.c"
+#line 35094 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2033;
 		case 42: goto tr2034;
@@ -34866,7 +35154,7 @@ st1095:
 	if ( ++p == pe )
 		goto _test_eof1095;
 case 1095:
-#line 34870 "shortcodes.c"
+#line 35158 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2038;
 		case 37: goto tr2039;
@@ -34889,6 +35177,7 @@ case 1095:
 tr2041:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34909,7 +35198,7 @@ st1096:
 	if ( ++p == pe )
 		goto _test_eof1096;
 case 1096:
-#line 34913 "shortcodes.c"
+#line 35202 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2038;
 		case 37: goto tr2039;
@@ -34932,6 +35221,7 @@ case 1096:
 tr2043:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -34952,7 +35242,7 @@ st1097:
 	if ( ++p == pe )
 		goto _test_eof1097;
 case 1097:
-#line 34956 "shortcodes.c"
+#line 35246 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr31;
 		case 125: goto st1098;
@@ -34968,7 +35258,7 @@ case 1098:
 	}
 	goto st11;
 tr26:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -34980,7 +35270,7 @@ tr26:
     }
 	goto st1099;
 tr3469:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -34995,7 +35285,7 @@ st1099:
 	if ( ++p == pe )
 		goto _test_eof1099;
 case 1099:
-#line 34999 "shortcodes.c"
+#line 35289 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1100;
 		case 123: goto tr1;
@@ -35022,6 +35312,7 @@ case 1101:
 tr12:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35039,7 +35330,7 @@ tr12:
       }
 	goto st1102;
 tr27:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35051,7 +35342,7 @@ tr27:
     }
 	goto st1102;
 tr3471:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35066,7 +35357,7 @@ st1102:
 	if ( ++p == pe )
 		goto _test_eof1102;
 case 1102:
-#line 35070 "shortcodes.c"
+#line 35361 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1103;
@@ -35082,7 +35373,7 @@ case 1103:
 	}
 	goto st0;
 tr23:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -35091,14 +35382,14 @@ st1104:
 	if ( ++p == pe )
 		goto _test_eof1104;
 case 1104:
-#line 35095 "shortcodes.c"
+#line 35386 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr2050;
 	}
 	goto st7;
 tr2050:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -35107,7 +35398,7 @@ st1105:
 	if ( ++p == pe )
 		goto _test_eof1105;
 case 1105:
-#line 35111 "shortcodes.c"
+#line 35402 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 37: goto st1106;
@@ -35162,7 +35453,7 @@ st1108:
 	if ( ++p == pe )
 		goto _test_eof1108;
 case 1108:
-#line 35166 "shortcodes.c"
+#line 35457 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2056;
 		case 34: goto st8;
@@ -35186,6 +35477,7 @@ case 1108:
 tr2056:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35203,7 +35495,7 @@ tr2056:
       }
 	goto st1109;
 tr2069:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35215,7 +35507,7 @@ tr2069:
     }
 	goto st1109;
 tr3444:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35230,7 +35522,7 @@ st1109:
 	if ( ++p == pe )
 		goto _test_eof1109;
 case 1109:
-#line 35234 "shortcodes.c"
+#line 35526 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1109;
 		case 34: goto tr2062;
@@ -35262,7 +35554,7 @@ st1110:
 	if ( ++p == pe )
 		goto _test_eof1110;
 case 1110:
-#line 35266 "shortcodes.c"
+#line 35558 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2069;
 		case 34: goto st8;
@@ -35277,6 +35569,7 @@ case 1110:
 tr2057:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35294,7 +35587,7 @@ tr2057:
       }
 	goto st1111;
 tr2070:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35306,7 +35599,7 @@ tr2070:
     }
 	goto st1111;
 tr3445:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35321,7 +35614,7 @@ st1111:
 	if ( ++p == pe )
 		goto _test_eof1111;
 case 1111:
-#line 35325 "shortcodes.c"
+#line 35618 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -35339,7 +35632,7 @@ case 1112:
 	}
 	goto st7;
 tr2071:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35351,7 +35644,7 @@ tr2071:
     }
 	goto st1113;
 tr3446:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35366,7 +35659,7 @@ st1113:
 	if ( ++p == pe )
 		goto _test_eof1113;
 case 1113:
-#line 35370 "shortcodes.c"
+#line 35663 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 37: goto st1114;
@@ -35396,6 +35689,7 @@ case 1115:
 tr2060:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35413,7 +35707,7 @@ tr2060:
       }
 	goto st1116;
 tr2072:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35425,7 +35719,7 @@ tr2072:
     }
 	goto st1116;
 tr3448:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35440,7 +35734,7 @@ st1116:
 	if ( ++p == pe )
 		goto _test_eof1116;
 case 1116:
-#line 35444 "shortcodes.c"
+#line 35738 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -35458,9 +35752,9 @@ case 1117:
 	}
 	goto st7;
 tr2077:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -35471,9 +35765,9 @@ tr2077:
   }
 	goto st1921;
 tr3290:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -35487,7 +35781,7 @@ st1921:
 	if ( ++p == pe )
 		goto _test_eof1921;
 case 1921:
-#line 35491 "shortcodes.c"
+#line 35785 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -35503,7 +35797,7 @@ st1118:
 	if ( ++p == pe )
 		goto _test_eof1118;
 case 1118:
-#line 35507 "shortcodes.c"
+#line 35801 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -35520,7 +35814,7 @@ st1119:
 	if ( ++p == pe )
 		goto _test_eof1119;
 case 1119:
-#line 35524 "shortcodes.c"
+#line 35818 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2083;
 		case 37: goto tr2084;
@@ -35542,14 +35836,14 @@ st1120:
 	if ( ++p == pe )
 		goto _test_eof1120;
 case 1120:
-#line 35546 "shortcodes.c"
+#line 35840 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
 	}
 	goto st1120;
 tr2087:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -35558,14 +35852,14 @@ st1121:
 	if ( ++p == pe )
 		goto _test_eof1121;
 case 1121:
-#line 35562 "shortcodes.c"
+#line 35856 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2088;
 	}
 	goto st1120;
 tr2088:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -35574,7 +35868,7 @@ st1122:
 	if ( ++p == pe )
 		goto _test_eof1122;
 case 1122:
-#line 35578 "shortcodes.c"
+#line 35872 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1123;
 		case 39: goto st8;
@@ -35629,7 +35923,7 @@ st1125:
 	if ( ++p == pe )
 		goto _test_eof1125;
 case 1125:
-#line 35633 "shortcodes.c"
+#line 35927 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2094;
 		case 37: goto tr2095;
@@ -35653,6 +35947,7 @@ case 1125:
 tr2094:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35670,7 +35965,7 @@ tr2094:
       }
 	goto st1126;
 tr2083:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35682,7 +35977,7 @@ tr2083:
     }
 	goto st1126;
 tr2109:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35697,7 +35992,7 @@ st1126:
 	if ( ++p == pe )
 		goto _test_eof1126;
 case 1126:
-#line 35701 "shortcodes.c"
+#line 35996 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1126;
 		case 34: goto tr2064;
@@ -35722,6 +36017,7 @@ case 1126:
 tr2095:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35739,7 +36035,7 @@ tr2095:
       }
 	goto st1127;
 tr2084:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35751,7 +36047,7 @@ tr2084:
     }
 	goto st1127;
 tr2110:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35766,7 +36062,7 @@ st1127:
 	if ( ++p == pe )
 		goto _test_eof1127;
 case 1127:
-#line 35770 "shortcodes.c"
+#line 36066 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -35784,7 +36080,7 @@ case 1128:
 	}
 	goto st1120;
 tr2085:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35796,7 +36092,7 @@ tr2085:
     }
 	goto st1129;
 tr2111:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35811,7 +36107,7 @@ st1129:
 	if ( ++p == pe )
 		goto _test_eof1129;
 case 1129:
-#line 35815 "shortcodes.c"
+#line 36111 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1130;
 		case 39: goto st8;
@@ -35848,7 +36144,7 @@ st1132:
 	if ( ++p == pe )
 		goto _test_eof1132;
 case 1132:
-#line 35852 "shortcodes.c"
+#line 36148 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2109;
 		case 37: goto tr2110;
@@ -35872,6 +36168,7 @@ case 1132:
 tr2098:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -35889,7 +36186,7 @@ tr2098:
       }
 	goto st1133;
 tr2086:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -35901,7 +36198,7 @@ tr2086:
     }
 	goto st1133;
 tr2113:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -35916,7 +36213,7 @@ st1133:
 	if ( ++p == pe )
 		goto _test_eof1133;
 case 1133:
-#line 35920 "shortcodes.c"
+#line 36217 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -35934,9 +36231,9 @@ case 1134:
 	}
 	goto st1120;
 tr2115:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -35947,9 +36244,9 @@ tr2115:
   }
 	goto st1922;
 tr2890:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -35963,7 +36260,7 @@ st1922:
 	if ( ++p == pe )
 		goto _test_eof1922;
 case 1922:
-#line 35967 "shortcodes.c"
+#line 36264 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -35979,7 +36276,7 @@ st1135:
 	if ( ++p == pe )
 		goto _test_eof1135;
 case 1135:
-#line 35983 "shortcodes.c"
+#line 36280 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2109;
 		case 37: goto tr2110;
@@ -36002,7 +36299,7 @@ case 1135:
 		goto st1132;
 	goto st1120;
 tr2116:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -36012,7 +36309,7 @@ st1136:
 	if ( ++p == pe )
 		goto _test_eof1136;
 case 1136:
-#line 36016 "shortcodes.c"
+#line 36313 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2064;
 		case 39: goto tr2101;
@@ -36030,6 +36327,7 @@ case 1136:
 tr2097:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36050,7 +36348,7 @@ st1137:
 	if ( ++p == pe )
 		goto _test_eof1137;
 case 1137:
-#line 36054 "shortcodes.c"
+#line 36352 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2094;
 		case 37: goto tr2118;
@@ -36074,6 +36372,7 @@ case 1137:
 tr2118:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36094,7 +36393,7 @@ st1138:
 	if ( ++p == pe )
 		goto _test_eof1138;
 case 1138:
-#line 36098 "shortcodes.c"
+#line 36397 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -36149,7 +36448,7 @@ st1142:
 	if ( ++p == pe )
 		goto _test_eof1142;
 case 1142:
-#line 36153 "shortcodes.c"
+#line 36452 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2122;
 		case 39: goto st8;
@@ -36171,6 +36470,7 @@ case 1142:
 tr2122:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36188,7 +36488,7 @@ tr2122:
       }
 	goto st1143;
 tr2135:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36200,7 +36500,7 @@ tr2135:
     }
 	goto st1143;
 tr3430:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36215,7 +36515,7 @@ st1143:
 	if ( ++p == pe )
 		goto _test_eof1143;
 case 1143:
-#line 36219 "shortcodes.c"
+#line 36519 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1143;
 		case 34: goto tr2126;
@@ -36245,7 +36545,7 @@ st1144:
 	if ( ++p == pe )
 		goto _test_eof1144;
 case 1144:
-#line 36249 "shortcodes.c"
+#line 36549 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -36262,7 +36562,7 @@ st1145:
 	if ( ++p == pe )
 		goto _test_eof1145;
 case 1145:
-#line 36266 "shortcodes.c"
+#line 36566 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2135;
 		case 39: goto st8;
@@ -36275,6 +36575,7 @@ case 1145:
 tr2123:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36292,7 +36593,7 @@ tr2123:
       }
 	goto st1146;
 tr2136:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36304,7 +36605,7 @@ tr2136:
     }
 	goto st1146;
 tr3431:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36319,7 +36620,7 @@ st1146:
 	if ( ++p == pe )
 		goto _test_eof1146;
 case 1146:
-#line 36323 "shortcodes.c"
+#line 36624 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 47: goto st1147;
@@ -36367,7 +36668,7 @@ st1150:
 	if ( ++p == pe )
 		goto _test_eof1150;
 case 1150:
-#line 36371 "shortcodes.c"
+#line 36672 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2141;
 		case 34: goto st1152;
@@ -36389,7 +36690,7 @@ st1151:
 	if ( ++p == pe )
 		goto _test_eof1151;
 case 1151:
-#line 36393 "shortcodes.c"
+#line 36694 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -36410,6 +36711,7 @@ case 1152:
 tr3478:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36427,7 +36729,7 @@ tr3478:
       }
 	goto st1153;
 tr2147:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36439,7 +36741,7 @@ tr2147:
     }
 	goto st1153;
 tr3425:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36454,7 +36756,7 @@ st1153:
 	if ( ++p == pe )
 		goto _test_eof1153;
 case 1153:
-#line 36458 "shortcodes.c"
+#line 36760 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1153;
 		case 34: goto tr2150;
@@ -36484,14 +36786,14 @@ st1154:
 	if ( ++p == pe )
 		goto _test_eof1154;
 case 1154:
-#line 36488 "shortcodes.c"
+#line 36790 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
 	}
 	goto st1154;
 tr2156:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -36500,14 +36802,14 @@ st1155:
 	if ( ++p == pe )
 		goto _test_eof1155;
 case 1155:
-#line 36504 "shortcodes.c"
+#line 36806 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2157;
 	}
 	goto st1154;
 tr2157:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -36516,7 +36818,7 @@ st1156:
 	if ( ++p == pe )
 		goto _test_eof1156;
 case 1156:
-#line 36520 "shortcodes.c"
+#line 36822 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1157;
 		case 39: goto st1152;
@@ -36571,7 +36873,7 @@ st1159:
 	if ( ++p == pe )
 		goto _test_eof1159;
 case 1159:
-#line 36575 "shortcodes.c"
+#line 36877 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2163;
 		case 37: goto tr2164;
@@ -36595,6 +36897,7 @@ case 1159:
 tr2163:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36612,7 +36915,7 @@ tr2163:
       }
 	goto st1160;
 tr2180:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36624,7 +36927,7 @@ tr2180:
     }
 	goto st1160;
 tr3399:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36639,7 +36942,7 @@ st1160:
 	if ( ++p == pe )
 		goto _test_eof1160;
 case 1160:
-#line 36643 "shortcodes.c"
+#line 36946 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1160;
 		case 34: goto tr2169;
@@ -36671,7 +36974,7 @@ st1161:
 	if ( ++p == pe )
 		goto _test_eof1161;
 case 1161:
-#line 36675 "shortcodes.c"
+#line 36978 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -36688,7 +36991,7 @@ st1162:
 	if ( ++p == pe )
 		goto _test_eof1162;
 case 1162:
-#line 36692 "shortcodes.c"
+#line 36995 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2180;
 		case 37: goto tr2181;
@@ -36703,6 +37006,7 @@ case 1162:
 tr2164:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36720,7 +37024,7 @@ tr2164:
       }
 	goto st1163;
 tr2181:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36732,7 +37036,7 @@ tr2181:
     }
 	goto st1163;
 tr3400:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36747,7 +37051,7 @@ st1163:
 	if ( ++p == pe )
 		goto _test_eof1163;
 case 1163:
-#line 36751 "shortcodes.c"
+#line 37055 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -36765,7 +37069,7 @@ case 1164:
 	}
 	goto st1154;
 tr2182:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36777,7 +37081,7 @@ tr2182:
     }
 	goto st1165;
 tr3401:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36792,7 +37096,7 @@ st1165:
 	if ( ++p == pe )
 		goto _test_eof1165;
 case 1165:
-#line 36796 "shortcodes.c"
+#line 37100 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1166;
 		case 39: goto st1152;
@@ -36822,6 +37126,7 @@ case 1167:
 tr2167:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36839,7 +37144,7 @@ tr2167:
       }
 	goto st1168;
 tr2183:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36851,7 +37156,7 @@ tr2183:
     }
 	goto st1168;
 tr3403:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36866,7 +37171,7 @@ st1168:
 	if ( ++p == pe )
 		goto _test_eof1168;
 case 1168:
-#line 36870 "shortcodes.c"
+#line 37175 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -36884,9 +37189,9 @@ case 1169:
 	}
 	goto st1154;
 tr2188:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -36897,9 +37202,9 @@ tr2188:
   }
 	goto st1923;
 tr2495:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -36913,7 +37218,7 @@ st1923:
 	if ( ++p == pe )
 		goto _test_eof1923;
 case 1923:
-#line 36917 "shortcodes.c"
+#line 37222 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -36929,7 +37234,7 @@ st1170:
 	if ( ++p == pe )
 		goto _test_eof1170;
 case 1170:
-#line 36933 "shortcodes.c"
+#line 37238 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2189;
 		case 34: goto st8;
@@ -36942,6 +37247,7 @@ case 1170:
 tr3455:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -36959,7 +37265,7 @@ tr3455:
       }
 	goto st1171;
 tr2189:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -36971,7 +37277,7 @@ tr2189:
     }
 	goto st1171;
 tr2199:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -36986,7 +37292,7 @@ st1171:
 	if ( ++p == pe )
 		goto _test_eof1171;
 case 1171:
-#line 36990 "shortcodes.c"
+#line 37296 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1171;
 		case 34: goto tr2192;
@@ -37009,6 +37315,7 @@ case 1171:
 tr3456:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37026,7 +37333,7 @@ tr3456:
       }
 	goto st1172;
 tr2190:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37038,7 +37345,7 @@ tr2190:
     }
 	goto st1172;
 tr2200:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37053,7 +37360,7 @@ st1172:
 	if ( ++p == pe )
 		goto _test_eof1172;
 case 1172:
-#line 37057 "shortcodes.c"
+#line 37364 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 47: goto st1173;
@@ -37101,7 +37408,7 @@ st1176:
 	if ( ++p == pe )
 		goto _test_eof1176;
 case 1176:
-#line 37105 "shortcodes.c"
+#line 37412 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2199;
 		case 34: goto st8;
@@ -37130,7 +37437,7 @@ st1177:
 	if ( ++p == pe )
 		goto _test_eof1177;
 case 1177:
-#line 37134 "shortcodes.c"
+#line 37441 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2199;
 		case 34: goto st8;
@@ -37151,7 +37458,7 @@ case 1177:
 		goto st1176;
 	goto st7;
 tr2202:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -37161,7 +37468,7 @@ st1178:
 	if ( ++p == pe )
 		goto _test_eof1178;
 case 1178:
-#line 37165 "shortcodes.c"
+#line 37472 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2192;
 		case 39: goto tr2169;
@@ -37177,7 +37484,7 @@ case 1178:
 		goto tr2194;
 	goto st7;
 tr2179:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -37186,7 +37493,7 @@ st1179:
 	if ( ++p == pe )
 		goto _test_eof1179;
 case 1179:
-#line 37190 "shortcodes.c"
+#line 37497 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -37194,7 +37501,7 @@ case 1179:
 	}
 	goto st1161;
 tr2204:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -37203,7 +37510,7 @@ st1180:
 	if ( ++p == pe )
 		goto _test_eof1180;
 case 1180:
-#line 37207 "shortcodes.c"
+#line 37514 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 37: goto st1181;
@@ -37261,7 +37568,7 @@ st1183:
 	if ( ++p == pe )
 		goto _test_eof1183;
 case 1183:
-#line 37265 "shortcodes.c"
+#line 37572 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2210;
 		case 34: goto st1162;
@@ -37286,6 +37593,7 @@ case 1183:
 tr2210:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37303,7 +37611,7 @@ tr2210:
       }
 	goto st1184;
 tr2223:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37315,7 +37623,7 @@ tr2223:
     }
 	goto st1184;
 tr3376:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37330,7 +37638,7 @@ st1184:
 	if ( ++p == pe )
 		goto _test_eof1184;
 case 1184:
-#line 37334 "shortcodes.c"
+#line 37642 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1184;
 		case 34: goto tr2216;
@@ -37362,7 +37670,7 @@ st1185:
 	if ( ++p == pe )
 		goto _test_eof1185;
 case 1185:
-#line 37366 "shortcodes.c"
+#line 37674 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2223;
 		case 34: goto st1162;
@@ -37378,6 +37686,7 @@ case 1185:
 tr2211:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37395,7 +37704,7 @@ tr2211:
       }
 	goto st1186;
 tr2224:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37407,7 +37716,7 @@ tr2224:
     }
 	goto st1186;
 tr3377:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37422,7 +37731,7 @@ st1186:
 	if ( ++p == pe )
 		goto _test_eof1186;
 case 1186:
-#line 37426 "shortcodes.c"
+#line 37735 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -37442,7 +37751,7 @@ case 1187:
 	}
 	goto st1161;
 tr2225:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37454,7 +37763,7 @@ tr2225:
     }
 	goto st1188;
 tr3378:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37469,7 +37778,7 @@ st1188:
 	if ( ++p == pe )
 		goto _test_eof1188;
 case 1188:
-#line 37473 "shortcodes.c"
+#line 37782 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 37: goto st1189;
@@ -37502,6 +37811,7 @@ case 1190:
 tr2214:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37519,7 +37829,7 @@ tr2214:
       }
 	goto st1191;
 tr2226:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37531,7 +37841,7 @@ tr2226:
     }
 	goto st1191;
 tr3380:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37546,7 +37856,7 @@ st1191:
 	if ( ++p == pe )
 		goto _test_eof1191;
 case 1191:
-#line 37550 "shortcodes.c"
+#line 37860 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -37566,9 +37876,9 @@ case 1192:
 	}
 	goto st1161;
 tr2231:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -37579,9 +37889,9 @@ tr2231:
   }
 	goto st1924;
 tr3206:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -37595,7 +37905,7 @@ st1924:
 	if ( ++p == pe )
 		goto _test_eof1924;
 case 1924:
-#line 37599 "shortcodes.c"
+#line 37909 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -37612,7 +37922,7 @@ st1193:
 	if ( ++p == pe )
 		goto _test_eof1193;
 case 1193:
-#line 37616 "shortcodes.c"
+#line 37926 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2232;
 		case 34: goto st1119;
@@ -37626,6 +37936,7 @@ case 1193:
 tr3043:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37643,7 +37954,7 @@ tr3043:
       }
 	goto st1194;
 tr2232:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37655,7 +37966,7 @@ tr2232:
     }
 	goto st1194;
 tr3371:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37670,7 +37981,7 @@ st1194:
 	if ( ++p == pe )
 		goto _test_eof1194;
 case 1194:
-#line 37674 "shortcodes.c"
+#line 37985 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1194;
 		case 34: goto tr2235;
@@ -37700,7 +38011,7 @@ st1195:
 	if ( ++p == pe )
 		goto _test_eof1195;
 case 1195:
-#line 37704 "shortcodes.c"
+#line 38015 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2239;
 		case 34: goto st1145;
@@ -37716,6 +38027,7 @@ case 1195:
 tr2256:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37733,7 +38045,7 @@ tr2256:
       }
 	goto st1196;
 tr2239:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37745,7 +38057,7 @@ tr2239:
     }
 	goto st1196;
 tr3364:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37760,7 +38072,7 @@ st1196:
 	if ( ++p == pe )
 		goto _test_eof1196;
 case 1196:
-#line 37764 "shortcodes.c"
+#line 38076 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1196;
 		case 34: goto tr2218;
@@ -37785,6 +38097,7 @@ case 1196:
 tr2257:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37802,7 +38115,7 @@ tr2257:
       }
 	goto st1197;
 tr2240:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -37814,7 +38127,7 @@ tr2240:
     }
 	goto st1197;
 tr3365:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -37829,7 +38142,7 @@ st1197:
 	if ( ++p == pe )
 		goto _test_eof1197;
 case 1197:
-#line 37833 "shortcodes.c"
+#line 38146 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37838,7 +38151,7 @@ case 1197:
 	}
 	goto st1144;
 tr2134:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -37847,7 +38160,7 @@ st1198:
 	if ( ++p == pe )
 		goto _test_eof1198;
 case 1198:
-#line 37851 "shortcodes.c"
+#line 38164 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -37855,7 +38168,7 @@ case 1198:
 	}
 	goto st1144;
 tr2250:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -37864,7 +38177,7 @@ st1199:
 	if ( ++p == pe )
 		goto _test_eof1199;
 case 1199:
-#line 37868 "shortcodes.c"
+#line 38181 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 37: goto st1200;
@@ -37922,7 +38235,7 @@ st1202:
 	if ( ++p == pe )
 		goto _test_eof1202;
 case 1202:
-#line 37926 "shortcodes.c"
+#line 38239 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2256;
 		case 34: goto st1145;
@@ -37947,6 +38260,7 @@ case 1202:
 tr2259:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -37967,7 +38281,7 @@ st1203:
 	if ( ++p == pe )
 		goto _test_eof1203;
 case 1203:
-#line 37971 "shortcodes.c"
+#line 38285 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2256;
 		case 34: goto st1145;
@@ -37992,6 +38306,7 @@ case 1203:
 tr2261:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38012,7 +38327,7 @@ st1204:
 	if ( ++p == pe )
 		goto _test_eof1204;
 case 1204:
-#line 38016 "shortcodes.c"
+#line 38331 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -38034,6 +38349,7 @@ case 1205:
 tr2260:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38051,7 +38367,7 @@ tr2260:
       }
 	goto st1206;
 tr2242:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38063,7 +38379,7 @@ tr2242:
     }
 	goto st1206;
 tr3368:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38078,7 +38394,7 @@ st1206:
 	if ( ++p == pe )
 		goto _test_eof1206;
 case 1206:
-#line 38082 "shortcodes.c"
+#line 38398 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -38098,9 +38414,9 @@ case 1207:
 	}
 	goto st1144;
 tr2264:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -38111,9 +38427,9 @@ tr2264:
   }
 	goto st1925;
 tr2957:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -38127,7 +38443,7 @@ st1925:
 	if ( ++p == pe )
 		goto _test_eof1925;
 case 1925:
-#line 38131 "shortcodes.c"
+#line 38447 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -38174,7 +38490,7 @@ st1210:
 	if ( ++p == pe )
 		goto _test_eof1210;
 case 1210:
-#line 38178 "shortcodes.c"
+#line 38494 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2267;
 		case 34: goto st1145;
@@ -38197,6 +38513,7 @@ case 1210:
 tr2267:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38214,7 +38531,7 @@ tr2267:
       }
 	goto st1211;
 tr2276:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38226,7 +38543,7 @@ tr2276:
     }
 	goto st1211;
 tr3348:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38241,7 +38558,7 @@ st1211:
 	if ( ++p == pe )
 		goto _test_eof1211;
 case 1211:
-#line 38245 "shortcodes.c"
+#line 38562 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1211;
 		case 34: goto tr2271;
@@ -38271,7 +38588,7 @@ st1212:
 	if ( ++p == pe )
 		goto _test_eof1212;
 case 1212:
-#line 38275 "shortcodes.c"
+#line 38592 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2276;
 		case 34: goto st1145;
@@ -38285,6 +38602,7 @@ case 1212:
 tr2268:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38302,7 +38620,7 @@ tr2268:
       }
 	goto st1213;
 tr2277:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38314,7 +38632,7 @@ tr2277:
     }
 	goto st1213;
 tr3349:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38329,7 +38647,7 @@ st1213:
 	if ( ++p == pe )
 		goto _test_eof1213;
 case 1213:
-#line 38333 "shortcodes.c"
+#line 38651 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -38381,7 +38699,7 @@ st1217:
 	if ( ++p == pe )
 		goto _test_eof1217;
 case 1217:
-#line 38385 "shortcodes.c"
+#line 38703 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2282;
 		case 34: goto st1219;
@@ -38404,7 +38722,7 @@ st1218:
 	if ( ++p == pe )
 		goto _test_eof1218;
 case 1218:
-#line 38408 "shortcodes.c"
+#line 38726 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -38421,7 +38739,7 @@ st1219:
 	if ( ++p == pe )
 		goto _test_eof1219;
 case 1219:
-#line 38425 "shortcodes.c"
+#line 38743 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2289;
 		case 39: goto st1152;
@@ -38434,6 +38752,7 @@ case 1219:
 tr3410:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38451,7 +38770,7 @@ tr3410:
       }
 	goto st1220;
 tr2289:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38463,7 +38782,7 @@ tr2289:
     }
 	goto st1220;
 tr2300:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38478,7 +38797,7 @@ st1220:
 	if ( ++p == pe )
 		goto _test_eof1220;
 case 1220:
-#line 38482 "shortcodes.c"
+#line 38801 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1220;
 		case 34: goto tr2292;
@@ -38501,6 +38820,7 @@ case 1220:
 tr3411:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38518,7 +38838,7 @@ tr3411:
       }
 	goto st1221;
 tr2290:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38530,7 +38850,7 @@ tr2290:
     }
 	goto st1221;
 tr2301:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38545,7 +38865,7 @@ st1221:
 	if ( ++p == pe )
 		goto _test_eof1221;
 case 1221:
-#line 38549 "shortcodes.c"
+#line 38869 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 47: goto st1222;
@@ -38593,7 +38913,7 @@ st1225:
 	if ( ++p == pe )
 		goto _test_eof1225;
 case 1225:
-#line 38597 "shortcodes.c"
+#line 38917 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2300;
 		case 39: goto st1152;
@@ -38622,7 +38942,7 @@ st1226:
 	if ( ++p == pe )
 		goto _test_eof1226;
 case 1226:
-#line 38626 "shortcodes.c"
+#line 38946 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2300;
 		case 39: goto st1152;
@@ -38643,7 +38963,7 @@ case 1226:
 		goto st1225;
 	goto st1154;
 tr2303:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -38653,7 +38973,7 @@ st1227:
 	if ( ++p == pe )
 		goto _test_eof1227;
 case 1227:
-#line 38657 "shortcodes.c"
+#line 38977 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2292;
 		case 39: goto tr2293;
@@ -38678,7 +38998,7 @@ st1228:
 	if ( ++p == pe )
 		goto _test_eof1228;
 case 1228:
-#line 38682 "shortcodes.c"
+#line 39002 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2305;
 		case 34: goto st1152;
@@ -38691,6 +39011,7 @@ case 1228:
 tr2349:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38708,7 +39029,7 @@ tr2349:
       }
 	goto st1229;
 tr2305:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38720,7 +39041,7 @@ tr2305:
     }
 	goto st1229;
 tr3343:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38735,7 +39056,7 @@ st1229:
 	if ( ++p == pe )
 		goto _test_eof1229;
 case 1229:
-#line 38739 "shortcodes.c"
+#line 39060 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1229;
 		case 34: goto tr2308;
@@ -38758,6 +39079,7 @@ case 1229:
 tr2350:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38775,7 +39097,7 @@ tr2350:
       }
 	goto st1230;
 tr2306:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38787,7 +39109,7 @@ tr2306:
     }
 	goto st1230;
 tr3344:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38802,7 +39124,7 @@ st1230:
 	if ( ++p == pe )
 		goto _test_eof1230;
 case 1230:
-#line 38806 "shortcodes.c"
+#line 39128 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 47: goto st1231;
@@ -38831,7 +39153,7 @@ case 1232:
 	}
 	goto st1151;
 tr2146:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -38840,14 +39162,14 @@ st1233:
 	if ( ++p == pe )
 		goto _test_eof1233;
 case 1233:
-#line 38844 "shortcodes.c"
+#line 39166 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2315;
 	}
 	goto st1151;
 tr2315:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -38856,7 +39178,7 @@ st1234:
 	if ( ++p == pe )
 		goto _test_eof1234;
 case 1234:
-#line 38860 "shortcodes.c"
+#line 39182 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 37: goto st1235;
@@ -38911,7 +39233,7 @@ st1237:
 	if ( ++p == pe )
 		goto _test_eof1237;
 case 1237:
-#line 38915 "shortcodes.c"
+#line 39237 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2321;
 		case 34: goto st1152;
@@ -38935,6 +39257,7 @@ case 1237:
 tr2321:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -38952,7 +39275,7 @@ tr2321:
       }
 	goto st1238;
 tr2141:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -38964,7 +39287,7 @@ tr2141:
     }
 	goto st1238;
 tr2336:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -38979,7 +39302,7 @@ st1238:
 	if ( ++p == pe )
 		goto _test_eof1238;
 case 1238:
-#line 38983 "shortcodes.c"
+#line 39306 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1238;
 		case 34: goto tr2327;
@@ -39004,6 +39327,7 @@ case 1238:
 tr2322:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39021,7 +39345,7 @@ tr2322:
       }
 	goto st1239;
 tr2143:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39033,7 +39357,7 @@ tr2143:
     }
 	goto st1239;
 tr2337:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39048,7 +39372,7 @@ st1239:
 	if ( ++p == pe )
 		goto _test_eof1239;
 case 1239:
-#line 39052 "shortcodes.c"
+#line 39376 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -39066,7 +39390,7 @@ case 1240:
 	}
 	goto st1151;
 tr2144:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39078,7 +39402,7 @@ tr2144:
     }
 	goto st1241;
 tr2338:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39093,7 +39417,7 @@ st1241:
 	if ( ++p == pe )
 		goto _test_eof1241;
 case 1241:
-#line 39097 "shortcodes.c"
+#line 39421 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 37: goto st1242;
@@ -39130,7 +39454,7 @@ st1244:
 	if ( ++p == pe )
 		goto _test_eof1244;
 case 1244:
-#line 39134 "shortcodes.c"
+#line 39458 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2336;
 		case 34: goto st1152;
@@ -39154,6 +39478,7 @@ case 1244:
 tr2325:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39171,7 +39496,7 @@ tr2325:
       }
 	goto st1245;
 tr2145:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39183,7 +39508,7 @@ tr2145:
     }
 	goto st1245;
 tr2340:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39198,7 +39523,7 @@ st1245:
 	if ( ++p == pe )
 		goto _test_eof1245;
 case 1245:
-#line 39202 "shortcodes.c"
+#line 39527 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -39216,9 +39541,9 @@ case 1246:
 	}
 	goto st1151;
 tr2342:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -39229,9 +39554,9 @@ tr2342:
   }
 	goto st1926;
 tr2475:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -39245,7 +39570,7 @@ st1926:
 	if ( ++p == pe )
 		goto _test_eof1926;
 case 1926:
-#line 39249 "shortcodes.c"
+#line 39574 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -39261,7 +39586,7 @@ st1247:
 	if ( ++p == pe )
 		goto _test_eof1247;
 case 1247:
-#line 39265 "shortcodes.c"
+#line 39590 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2336;
 		case 34: goto st1152;
@@ -39284,7 +39609,7 @@ case 1247:
 		goto st1244;
 	goto st1151;
 tr2343:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -39294,7 +39619,7 @@ st1248:
 	if ( ++p == pe )
 		goto _test_eof1248;
 case 1248:
-#line 39298 "shortcodes.c"
+#line 39623 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2327;
 		case 39: goto tr2126;
@@ -39312,6 +39637,7 @@ case 1248:
 tr2324:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39332,7 +39658,7 @@ st1249:
 	if ( ++p == pe )
 		goto _test_eof1249;
 case 1249:
-#line 39336 "shortcodes.c"
+#line 39662 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2321;
 		case 34: goto st1152;
@@ -39356,6 +39682,7 @@ case 1249:
 tr2345:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39376,7 +39703,7 @@ st1250:
 	if ( ++p == pe )
 		goto _test_eof1250;
 case 1250:
-#line 39380 "shortcodes.c"
+#line 39707 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -39431,7 +39758,7 @@ st1254:
 	if ( ++p == pe )
 		goto _test_eof1254;
 case 1254:
-#line 39435 "shortcodes.c"
+#line 39762 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2349;
 		case 34: goto st1152;
@@ -39497,7 +39824,7 @@ st1257:
 	if ( ++p == pe )
 		goto _test_eof1257;
 case 1257:
-#line 39501 "shortcodes.c"
+#line 39828 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2354;
 		case 34: goto st1152;
@@ -39521,6 +39848,7 @@ case 1257:
 tr2354:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39538,7 +39866,7 @@ tr2354:
       }
 	goto st1258;
 tr2470:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39550,7 +39878,7 @@ tr2470:
     }
 	goto st1258;
 tr3334:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39565,7 +39893,7 @@ st1258:
 	if ( ++p == pe )
 		goto _test_eof1258;
 case 1258:
-#line 39569 "shortcodes.c"
+#line 39897 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1258;
 		case 34: goto tr2360;
@@ -39597,7 +39925,7 @@ st1259:
 	if ( ++p == pe )
 		goto _test_eof1259;
 case 1259:
-#line 39601 "shortcodes.c"
+#line 39929 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2368;
 		case 34: goto st1261;
@@ -39617,7 +39945,7 @@ st1260:
 	if ( ++p == pe )
 		goto _test_eof1260;
 case 1260:
-#line 39621 "shortcodes.c"
+#line 39949 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -39640,6 +39968,7 @@ case 1261:
 tr3483:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39657,7 +39986,7 @@ tr3483:
       }
 	goto st1262;
 tr2372:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39669,7 +39998,7 @@ tr2372:
     }
 	goto st1262;
 tr3326:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39684,7 +40013,7 @@ st1262:
 	if ( ++p == pe )
 		goto _test_eof1262;
 case 1262:
-#line 39688 "shortcodes.c"
+#line 40017 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1262;
 		case 34: goto tr2377;
@@ -39709,6 +40038,7 @@ case 1262:
 tr3484:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39726,7 +40056,7 @@ tr3484:
       }
 	goto st1263;
 tr2373:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39738,7 +40068,7 @@ tr2373:
     }
 	goto st1263;
 tr3327:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39753,7 +40083,7 @@ st1263:
 	if ( ++p == pe )
 		goto _test_eof1263;
 case 1263:
-#line 39757 "shortcodes.c"
+#line 40087 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1264;
@@ -39778,14 +40108,14 @@ st1265:
 	if ( ++p == pe )
 		goto _test_eof1265;
 case 1265:
-#line 39782 "shortcodes.c"
+#line 40112 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
 	}
 	goto st1265;
 tr2387:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -39794,14 +40124,14 @@ st1266:
 	if ( ++p == pe )
 		goto _test_eof1266;
 case 1266:
-#line 39798 "shortcodes.c"
+#line 40128 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2388;
 	}
 	goto st1265;
 tr2388:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -39810,7 +40140,7 @@ st1267:
 	if ( ++p == pe )
 		goto _test_eof1267;
 case 1267:
-#line 39814 "shortcodes.c"
+#line 40144 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1268;
 		case 39: goto st1261;
@@ -39865,7 +40195,7 @@ st1270:
 	if ( ++p == pe )
 		goto _test_eof1270;
 case 1270:
-#line 39869 "shortcodes.c"
+#line 40199 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2394;
 		case 37: goto tr2395;
@@ -39889,6 +40219,7 @@ case 1270:
 tr2394:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -39906,7 +40237,7 @@ tr2394:
       }
 	goto st1271;
 tr2411:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -39918,7 +40249,7 @@ tr2411:
     }
 	goto st1271;
 tr3301:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -39933,7 +40264,7 @@ st1271:
 	if ( ++p == pe )
 		goto _test_eof1271;
 case 1271:
-#line 39937 "shortcodes.c"
+#line 40268 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1271;
 		case 34: goto tr2400;
@@ -39965,7 +40296,7 @@ st1272:
 	if ( ++p == pe )
 		goto _test_eof1272;
 case 1272:
-#line 39969 "shortcodes.c"
+#line 40300 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -39982,7 +40313,7 @@ st1273:
 	if ( ++p == pe )
 		goto _test_eof1273;
 case 1273:
-#line 39986 "shortcodes.c"
+#line 40317 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2411;
 		case 37: goto tr2412;
@@ -39997,6 +40328,7 @@ case 1273:
 tr2395:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40014,7 +40346,7 @@ tr2395:
       }
 	goto st1274;
 tr2412:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40026,7 +40358,7 @@ tr2412:
     }
 	goto st1274;
 tr3302:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40041,7 +40373,7 @@ st1274:
 	if ( ++p == pe )
 		goto _test_eof1274;
 case 1274:
-#line 40045 "shortcodes.c"
+#line 40377 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -40059,7 +40391,7 @@ case 1275:
 	}
 	goto st1265;
 tr2413:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40071,7 +40403,7 @@ tr2413:
     }
 	goto st1276;
 tr3303:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40086,7 +40418,7 @@ st1276:
 	if ( ++p == pe )
 		goto _test_eof1276;
 case 1276:
-#line 40090 "shortcodes.c"
+#line 40422 "shortcodes.c"
 	switch( (*p) ) {
 		case 37: goto st1277;
 		case 39: goto st1261;
@@ -40116,6 +40448,7 @@ case 1278:
 tr2398:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40133,7 +40466,7 @@ tr2398:
       }
 	goto st1279;
 tr2414:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40145,7 +40478,7 @@ tr2414:
     }
 	goto st1279;
 tr3305:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40160,7 +40493,7 @@ st1279:
 	if ( ++p == pe )
 		goto _test_eof1279;
 case 1279:
-#line 40164 "shortcodes.c"
+#line 40497 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -40178,9 +40511,9 @@ case 1280:
 	}
 	goto st1265;
 tr2419:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -40191,9 +40524,9 @@ tr2419:
   }
 	goto st1927;
 tr2757:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -40207,7 +40540,7 @@ st1927:
 	if ( ++p == pe )
 		goto _test_eof1927;
 case 1927:
-#line 40211 "shortcodes.c"
+#line 40544 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -40223,7 +40556,7 @@ st1281:
 	if ( ++p == pe )
 		goto _test_eof1281;
 case 1281:
-#line 40227 "shortcodes.c"
+#line 40560 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2420;
 		case 34: goto st8;
@@ -40238,6 +40571,7 @@ case 1281:
 tr3460:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40255,7 +40589,7 @@ tr3460:
       }
 	goto st1282;
 tr2420:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40267,7 +40601,7 @@ tr2420:
     }
 	goto st1282;
 tr3293:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40282,7 +40616,7 @@ st1282:
 	if ( ++p == pe )
 		goto _test_eof1282;
 case 1282:
-#line 40286 "shortcodes.c"
+#line 40620 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1282;
 		case 34: goto tr2425;
@@ -40314,7 +40648,7 @@ st1283:
 	if ( ++p == pe )
 		goto _test_eof1283;
 case 1283:
-#line 40318 "shortcodes.c"
+#line 40652 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2431;
 		case 34: goto st1261;
@@ -40329,6 +40663,7 @@ case 1283:
 tr2450:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40346,7 +40681,7 @@ tr2450:
       }
 	goto st1284;
 tr2431:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40358,7 +40693,7 @@ tr2431:
     }
 	goto st1284;
 tr3282:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40373,7 +40708,7 @@ st1284:
 	if ( ++p == pe )
 		goto _test_eof1284;
 case 1284:
-#line 40377 "shortcodes.c"
+#line 40712 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1284;
 		case 34: goto tr2436;
@@ -40398,6 +40733,7 @@ case 1284:
 tr2451:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40415,7 +40751,7 @@ tr2451:
       }
 	goto st1285;
 tr2432:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40427,7 +40763,7 @@ tr2432:
     }
 	goto st1285;
 tr3283:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40442,7 +40778,7 @@ st1285:
 	if ( ++p == pe )
 		goto _test_eof1285;
 case 1285:
-#line 40446 "shortcodes.c"
+#line 40782 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -40450,7 +40786,7 @@ case 1285:
 	}
 	goto st1260;
 tr2371:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -40459,14 +40795,14 @@ st1286:
 	if ( ++p == pe )
 		goto _test_eof1286;
 case 1286:
-#line 40463 "shortcodes.c"
+#line 40799 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2444;
 	}
 	goto st1260;
 tr2444:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -40475,7 +40811,7 @@ st1287:
 	if ( ++p == pe )
 		goto _test_eof1287;
 case 1287:
-#line 40479 "shortcodes.c"
+#line 40815 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 37: goto st1288;
@@ -40530,7 +40866,7 @@ st1290:
 	if ( ++p == pe )
 		goto _test_eof1290;
 case 1290:
-#line 40534 "shortcodes.c"
+#line 40870 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2450;
 		case 34: goto st1261;
@@ -40554,6 +40890,7 @@ case 1290:
 tr2453:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40574,7 +40911,7 @@ st1291:
 	if ( ++p == pe )
 		goto _test_eof1291;
 case 1291:
-#line 40578 "shortcodes.c"
+#line 40915 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2450;
 		case 34: goto st1261;
@@ -40598,6 +40935,7 @@ case 1291:
 tr2455:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40618,7 +40956,7 @@ st1292:
 	if ( ++p == pe )
 		goto _test_eof1292;
 case 1292:
-#line 40622 "shortcodes.c"
+#line 40960 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -40638,6 +40976,7 @@ case 1293:
 tr2454:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40655,7 +40994,7 @@ tr2454:
       }
 	goto st1294;
 tr2434:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40667,7 +41006,7 @@ tr2434:
     }
 	goto st1294;
 tr3286:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40682,7 +41021,7 @@ st1294:
 	if ( ++p == pe )
 		goto _test_eof1294;
 case 1294:
-#line 40686 "shortcodes.c"
+#line 41025 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -40700,9 +41039,9 @@ case 1295:
 	}
 	goto st1260;
 tr2458:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -40713,9 +41052,9 @@ tr2458:
   }
 	goto st1928;
 tr2780:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -40729,7 +41068,7 @@ st1928:
 	if ( ++p == pe )
 		goto _test_eof1928;
 case 1928:
-#line 40733 "shortcodes.c"
+#line 41072 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -40773,7 +41112,7 @@ st1298:
 	if ( ++p == pe )
 		goto _test_eof1298;
 case 1298:
-#line 40777 "shortcodes.c"
+#line 41116 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2461;
 		case 34: goto st1261;
@@ -40795,6 +41134,7 @@ case 1298:
 tr2461:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40812,7 +41152,7 @@ tr2461:
       }
 	goto st1299;
 tr2368:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40824,7 +41164,7 @@ tr2368:
     }
 	goto st1299;
 tr3266:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40839,7 +41179,7 @@ st1299:
 	if ( ++p == pe )
 		goto _test_eof1299;
 case 1299:
-#line 40843 "shortcodes.c"
+#line 41183 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1299;
 		case 34: goto tr2465;
@@ -40869,7 +41209,7 @@ st1300:
 	if ( ++p == pe )
 		goto _test_eof1300;
 case 1300:
-#line 40873 "shortcodes.c"
+#line 41213 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2470;
 		case 34: goto st1152;
@@ -40884,6 +41224,7 @@ case 1300:
 tr2355:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -40901,7 +41242,7 @@ tr2355:
       }
 	goto st1301;
 tr2471:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40913,7 +41254,7 @@ tr2471:
     }
 	goto st1301;
 tr3335:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40928,7 +41269,7 @@ st1301:
 	if ( ++p == pe )
 		goto _test_eof1301;
 case 1301:
-#line 40932 "shortcodes.c"
+#line 41273 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -40946,7 +41287,7 @@ case 1302:
 	}
 	goto st1151;
 tr2472:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -40958,7 +41299,7 @@ tr2472:
     }
 	goto st1303;
 tr3336:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -40973,7 +41314,7 @@ st1303:
 	if ( ++p == pe )
 		goto _test_eof1303;
 case 1303:
-#line 40977 "shortcodes.c"
+#line 41318 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 62: goto st1304;
@@ -41003,6 +41344,7 @@ case 1305:
 tr2358:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41020,7 +41362,7 @@ tr2358:
       }
 	goto st1306;
 tr2473:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41032,7 +41374,7 @@ tr2473:
     }
 	goto st1306;
 tr3338:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41047,7 +41389,7 @@ st1306:
 	if ( ++p == pe )
 		goto _test_eof1306;
 case 1306:
-#line 41051 "shortcodes.c"
+#line 41393 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -41074,7 +41416,7 @@ st1308:
 	if ( ++p == pe )
 		goto _test_eof1308;
 case 1308:
-#line 41078 "shortcodes.c"
+#line 41420 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -41091,7 +41433,7 @@ st1309:
 	if ( ++p == pe )
 		goto _test_eof1309;
 case 1309:
-#line 41095 "shortcodes.c"
+#line 41437 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2483;
 		case 37: goto tr2484;
@@ -41106,6 +41448,7 @@ case 1309:
 tr3415:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41123,7 +41466,7 @@ tr3415:
       }
 	goto st1310;
 tr2483:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41135,7 +41478,7 @@ tr2483:
     }
 	goto st1310;
 tr3255:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41150,7 +41493,7 @@ st1310:
 	if ( ++p == pe )
 		goto _test_eof1310;
 case 1310:
-#line 41154 "shortcodes.c"
+#line 41497 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1310;
 		case 34: goto tr2466;
@@ -41175,6 +41518,7 @@ case 1310:
 tr3416:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41192,7 +41536,7 @@ tr3416:
       }
 	goto st1311;
 tr2484:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41204,7 +41548,7 @@ tr2484:
     }
 	goto st1311;
 tr3256:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41219,7 +41563,7 @@ st1311:
 	if ( ++p == pe )
 		goto _test_eof1311;
 case 1311:
-#line 41223 "shortcodes.c"
+#line 41567 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -41246,7 +41590,7 @@ st1313:
 	if ( ++p == pe )
 		goto _test_eof1313;
 case 1313:
-#line 41250 "shortcodes.c"
+#line 41594 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2496;
 		case 39: goto st1261;
@@ -41259,6 +41603,7 @@ case 1313:
 tr3312:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41276,7 +41621,7 @@ tr3312:
       }
 	goto st1314;
 tr2496:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41288,7 +41633,7 @@ tr2496:
     }
 	goto st1314;
 tr3248:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41303,7 +41648,7 @@ st1314:
 	if ( ++p == pe )
 		goto _test_eof1314;
 case 1314:
-#line 41307 "shortcodes.c"
+#line 41652 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1314;
 		case 34: goto tr2362;
@@ -41333,7 +41678,7 @@ st1315:
 	if ( ++p == pe )
 		goto _test_eof1315;
 case 1315:
-#line 41337 "shortcodes.c"
+#line 41682 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -41341,7 +41686,7 @@ case 1315:
 	}
 	goto st1315;
 tr2506:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -41350,7 +41695,7 @@ st1316:
 	if ( ++p == pe )
 		goto _test_eof1316;
 case 1316:
-#line 41354 "shortcodes.c"
+#line 41699 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -41358,7 +41703,7 @@ case 1316:
 	}
 	goto st1315;
 tr2507:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -41367,7 +41712,7 @@ st1317:
 	if ( ++p == pe )
 		goto _test_eof1317;
 case 1317:
-#line 41371 "shortcodes.c"
+#line 41716 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 37: goto st1318;
@@ -41425,7 +41770,7 @@ st1320:
 	if ( ++p == pe )
 		goto _test_eof1320;
 case 1320:
-#line 41429 "shortcodes.c"
+#line 41774 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2513;
 		case 34: goto st1313;
@@ -41450,6 +41795,7 @@ case 1320:
 tr2513:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41467,7 +41813,7 @@ tr2513:
       }
 	goto st1321;
 tr2534:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41479,7 +41825,7 @@ tr2534:
     }
 	goto st1321;
 tr3222:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41494,7 +41840,7 @@ st1321:
 	if ( ++p == pe )
 		goto _test_eof1321;
 case 1321:
-#line 41498 "shortcodes.c"
+#line 41844 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1321;
 		case 34: goto tr2519;
@@ -41526,7 +41872,7 @@ st1322:
 	if ( ++p == pe )
 		goto _test_eof1322;
 case 1322:
-#line 41530 "shortcodes.c"
+#line 41876 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2526;
 		case 34: goto st1273;
@@ -41540,6 +41886,7 @@ case 1322:
 tr3080:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41557,7 +41904,7 @@ tr3080:
       }
 	goto st1323;
 tr2526:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41569,7 +41916,7 @@ tr2526:
     }
 	goto st1323;
 tr3217:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41584,7 +41931,7 @@ st1323:
 	if ( ++p == pe )
 		goto _test_eof1323;
 case 1323:
-#line 41588 "shortcodes.c"
+#line 41935 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1323;
 		case 34: goto tr2529;
@@ -41614,7 +41961,7 @@ st1324:
 	if ( ++p == pe )
 		goto _test_eof1324;
 case 1324:
-#line 41618 "shortcodes.c"
+#line 41965 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2534;
 		case 34: goto st1313;
@@ -41630,6 +41977,7 @@ case 1324:
 tr2514:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41647,7 +41995,7 @@ tr2514:
       }
 	goto st1325;
 tr2535:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41659,7 +42007,7 @@ tr2535:
     }
 	goto st1325;
 tr3223:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41674,7 +42022,7 @@ st1325:
 	if ( ++p == pe )
 		goto _test_eof1325;
 case 1325:
-#line 41678 "shortcodes.c"
+#line 42026 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -41694,7 +42042,7 @@ case 1326:
 	}
 	goto st1315;
 tr2536:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41706,7 +42054,7 @@ tr2536:
     }
 	goto st1327;
 tr3224:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41721,7 +42069,7 @@ st1327:
 	if ( ++p == pe )
 		goto _test_eof1327;
 case 1327:
-#line 41725 "shortcodes.c"
+#line 42073 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 37: goto st1328;
@@ -41754,6 +42102,7 @@ case 1329:
 tr2517:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41771,7 +42120,7 @@ tr2517:
       }
 	goto st1330;
 tr2537:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41783,7 +42132,7 @@ tr2537:
     }
 	goto st1330;
 tr3226:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41798,7 +42147,7 @@ st1330:
 	if ( ++p == pe )
 		goto _test_eof1330;
 case 1330:
-#line 41802 "shortcodes.c"
+#line 42151 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -41818,9 +42167,9 @@ case 1331:
 	}
 	goto st1315;
 tr2542:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -41831,9 +42180,9 @@ tr2542:
   }
 	goto st1929;
 tr3136:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -41847,7 +42196,7 @@ st1929:
 	if ( ++p == pe )
 		goto _test_eof1929;
 case 1929:
-#line 41851 "shortcodes.c"
+#line 42200 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -41864,7 +42213,7 @@ st1332:
 	if ( ++p == pe )
 		goto _test_eof1332;
 case 1332:
-#line 41868 "shortcodes.c"
+#line 42217 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2543;
 		case 34: goto st1162;
@@ -41880,6 +42229,7 @@ case 1332:
 tr3392:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41897,7 +42247,7 @@ tr3392:
       }
 	goto st1333;
 tr2543:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -41909,7 +42259,7 @@ tr2543:
     }
 	goto st1333;
 tr3209:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -41924,7 +42274,7 @@ st1333:
 	if ( ++p == pe )
 		goto _test_eof1333;
 case 1333:
-#line 41928 "shortcodes.c"
+#line 42278 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1333;
 		case 34: goto tr2548;
@@ -41956,7 +42306,7 @@ st1334:
 	if ( ++p == pe )
 		goto _test_eof1334;
 case 1334:
-#line 41960 "shortcodes.c"
+#line 42310 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2554;
 		case 34: goto st1309;
@@ -41972,6 +42322,7 @@ case 1334:
 tr2572:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -41989,7 +42340,7 @@ tr2572:
       }
 	goto st1335;
 tr2554:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42001,7 +42352,7 @@ tr2554:
     }
 	goto st1335;
 tr3198:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42016,7 +42367,7 @@ st1335:
 	if ( ++p == pe )
 		goto _test_eof1335;
 case 1335:
-#line 42020 "shortcodes.c"
+#line 42371 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1335;
 		case 34: goto tr2530;
@@ -42041,6 +42392,7 @@ case 1335:
 tr2573:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42058,7 +42410,7 @@ tr2573:
       }
 	goto st1336;
 tr2555:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42070,7 +42422,7 @@ tr2555:
     }
 	goto st1336;
 tr3199:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42085,7 +42437,7 @@ st1336:
 	if ( ++p == pe )
 		goto _test_eof1336;
 case 1336:
-#line 42089 "shortcodes.c"
+#line 42441 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42094,7 +42446,7 @@ case 1336:
 	}
 	goto st1308;
 tr2482:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -42103,7 +42455,7 @@ st1337:
 	if ( ++p == pe )
 		goto _test_eof1337;
 case 1337:
-#line 42107 "shortcodes.c"
+#line 42459 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42111,7 +42463,7 @@ case 1337:
 	}
 	goto st1308;
 tr2566:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -42120,7 +42472,7 @@ st1338:
 	if ( ++p == pe )
 		goto _test_eof1338;
 case 1338:
-#line 42124 "shortcodes.c"
+#line 42476 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 37: goto st1339;
@@ -42178,7 +42530,7 @@ st1341:
 	if ( ++p == pe )
 		goto _test_eof1341;
 case 1341:
-#line 42182 "shortcodes.c"
+#line 42534 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2572;
 		case 34: goto st1309;
@@ -42203,6 +42555,7 @@ case 1341:
 tr2575:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42223,7 +42576,7 @@ st1342:
 	if ( ++p == pe )
 		goto _test_eof1342;
 case 1342:
-#line 42227 "shortcodes.c"
+#line 42580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2572;
 		case 34: goto st1309;
@@ -42248,6 +42601,7 @@ case 1342:
 tr2577:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42268,7 +42622,7 @@ st1343:
 	if ( ++p == pe )
 		goto _test_eof1343;
 case 1343:
-#line 42272 "shortcodes.c"
+#line 42626 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42290,6 +42644,7 @@ case 1344:
 tr2576:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42307,7 +42662,7 @@ tr2576:
       }
 	goto st1345;
 tr2557:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42319,7 +42674,7 @@ tr2557:
     }
 	goto st1345;
 tr3202:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42334,7 +42689,7 @@ st1345:
 	if ( ++p == pe )
 		goto _test_eof1345;
 case 1345:
-#line 42338 "shortcodes.c"
+#line 42693 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42354,9 +42709,9 @@ case 1346:
 	}
 	goto st1308;
 tr2580:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -42367,9 +42722,9 @@ tr2580:
   }
 	goto st1930;
 tr2734:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -42383,7 +42738,7 @@ st1930:
 	if ( ++p == pe )
 		goto _test_eof1930;
 case 1930:
-#line 42387 "shortcodes.c"
+#line 42742 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42430,7 +42785,7 @@ st1349:
 	if ( ++p == pe )
 		goto _test_eof1349;
 case 1349:
-#line 42434 "shortcodes.c"
+#line 42789 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2583;
 		case 34: goto st1309;
@@ -42453,6 +42808,7 @@ case 1349:
 tr2583:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42470,7 +42826,7 @@ tr2583:
       }
 	goto st1350;
 tr2603:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42482,7 +42838,7 @@ tr2603:
     }
 	goto st1350;
 tr2709:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42497,7 +42853,7 @@ st1350:
 	if ( ++p == pe )
 		goto _test_eof1350;
 case 1350:
-#line 42501 "shortcodes.c"
+#line 42857 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1350;
 		case 34: goto tr2587;
@@ -42527,7 +42883,7 @@ st1351:
 	if ( ++p == pe )
 		goto _test_eof1351;
 case 1351:
-#line 42531 "shortcodes.c"
+#line 42887 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2592;
 		case 34: goto st1219;
@@ -42543,6 +42899,7 @@ case 1351:
 tr2677:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42560,7 +42917,7 @@ tr2677:
       }
 	goto st1352;
 tr2592:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42572,7 +42929,7 @@ tr2592:
     }
 	goto st1352;
 tr2702:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42587,7 +42944,7 @@ st1352:
 	if ( ++p == pe )
 		goto _test_eof1352;
 case 1352:
-#line 42591 "shortcodes.c"
+#line 42948 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1352;
 		case 34: goto tr2588;
@@ -42619,7 +42976,7 @@ st1353:
 	if ( ++p == pe )
 		goto _test_eof1353;
 case 1353:
-#line 42623 "shortcodes.c"
+#line 42980 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2603;
 		case 34: goto st1309;
@@ -42633,6 +42990,7 @@ case 1353:
 tr2584:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42650,7 +43008,7 @@ tr2584:
       }
 	goto st1354;
 tr2604:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42662,7 +43020,7 @@ tr2604:
     }
 	goto st1354;
 tr2710:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42677,7 +43035,7 @@ st1354:
 	if ( ++p == pe )
 		goto _test_eof1354;
 case 1354:
-#line 42681 "shortcodes.c"
+#line 43039 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -42722,6 +43080,7 @@ case 1357:
 tr2678:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42739,7 +43098,7 @@ tr2678:
       }
 	goto st1358;
 tr2593:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42751,7 +43110,7 @@ tr2593:
     }
 	goto st1358;
 tr2703:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42766,7 +43125,7 @@ st1358:
 	if ( ++p == pe )
 		goto _test_eof1358;
 case 1358:
-#line 42770 "shortcodes.c"
+#line 43129 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42775,7 +43134,7 @@ case 1358:
 	}
 	goto st1218;
 tr2288:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -42784,7 +43143,7 @@ st1359:
 	if ( ++p == pe )
 		goto _test_eof1359;
 case 1359:
-#line 42788 "shortcodes.c"
+#line 43147 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -42792,7 +43151,7 @@ case 1359:
 	}
 	goto st1218;
 tr2609:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -42801,7 +43160,7 @@ st1360:
 	if ( ++p == pe )
 		goto _test_eof1360;
 case 1360:
-#line 42805 "shortcodes.c"
+#line 43164 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 37: goto st1361;
@@ -42859,7 +43218,7 @@ st1363:
 	if ( ++p == pe )
 		goto _test_eof1363;
 case 1363:
-#line 42863 "shortcodes.c"
+#line 43222 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2615;
 		case 34: goto st1219;
@@ -42884,6 +43243,7 @@ case 1363:
 tr2615:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42901,7 +43261,7 @@ tr2615:
       }
 	goto st1364;
 tr2282:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -42913,7 +43273,7 @@ tr2282:
     }
 	goto st1364;
 tr2644:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -42928,7 +43288,7 @@ st1364:
 	if ( ++p == pe )
 		goto _test_eof1364;
 case 1364:
-#line 42932 "shortcodes.c"
+#line 43292 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1364;
 		case 34: goto tr2621;
@@ -42960,7 +43320,7 @@ st1365:
 	if ( ++p == pe )
 		goto _test_eof1365;
 case 1365:
-#line 42964 "shortcodes.c"
+#line 43324 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2627;
 		case 34: goto st1162;
@@ -42974,6 +43334,7 @@ case 1365:
 tr3387:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -42991,7 +43352,7 @@ tr3387:
       }
 	goto st1366;
 tr2627:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43003,7 +43364,7 @@ tr2627:
     }
 	goto st1366;
 tr2636:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43018,7 +43379,7 @@ st1366:
 	if ( ++p == pe )
 		goto _test_eof1366;
 case 1366:
-#line 43022 "shortcodes.c"
+#line 43383 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1366;
 		case 34: goto tr2272;
@@ -43041,6 +43402,7 @@ case 1366:
 tr3388:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43058,7 +43420,7 @@ tr3388:
       }
 	goto st1367;
 tr2628:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43070,7 +43432,7 @@ tr2628:
     }
 	goto st1367;
 tr2637:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43085,7 +43447,7 @@ st1367:
 	if ( ++p == pe )
 		goto _test_eof1367;
 case 1367:
-#line 43089 "shortcodes.c"
+#line 43451 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -43137,7 +43499,7 @@ st1371:
 	if ( ++p == pe )
 		goto _test_eof1371;
 case 1371:
-#line 43141 "shortcodes.c"
+#line 43503 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2636;
 		case 34: goto st1162;
@@ -43167,7 +43529,7 @@ st1372:
 	if ( ++p == pe )
 		goto _test_eof1372;
 case 1372:
-#line 43171 "shortcodes.c"
+#line 43533 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2636;
 		case 34: goto st1162;
@@ -43189,7 +43551,7 @@ case 1372:
 		goto st1371;
 	goto st1161;
 tr2639:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -43199,7 +43561,7 @@ st1373:
 	if ( ++p == pe )
 		goto _test_eof1373;
 case 1373:
-#line 43203 "shortcodes.c"
+#line 43565 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2272;
 		case 39: goto tr2621;
@@ -43217,6 +43579,7 @@ case 1373:
 tr2616:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43234,7 +43597,7 @@ tr2616:
       }
 	goto st1374;
 tr2284:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43246,7 +43609,7 @@ tr2284:
     }
 	goto st1374;
 tr2645:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43261,7 +43624,7 @@ st1374:
 	if ( ++p == pe )
 		goto _test_eof1374;
 case 1374:
-#line 43265 "shortcodes.c"
+#line 43628 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43281,7 +43644,7 @@ case 1375:
 	}
 	goto st1218;
 tr2286:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43293,7 +43656,7 @@ tr2286:
     }
 	goto st1376;
 tr2646:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43308,7 +43671,7 @@ st1376:
 	if ( ++p == pe )
 		goto _test_eof1376;
 case 1376:
-#line 43312 "shortcodes.c"
+#line 43675 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 37: goto st1377;
@@ -43348,7 +43711,7 @@ st1379:
 	if ( ++p == pe )
 		goto _test_eof1379;
 case 1379:
-#line 43352 "shortcodes.c"
+#line 43715 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2644;
 		case 34: goto st1219;
@@ -43373,6 +43736,7 @@ case 1379:
 tr2619:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43390,7 +43754,7 @@ tr2619:
       }
 	goto st1380;
 tr2287:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43402,7 +43766,7 @@ tr2287:
     }
 	goto st1380;
 tr2648:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43417,7 +43781,7 @@ st1380:
 	if ( ++p == pe )
 		goto _test_eof1380;
 case 1380:
-#line 43421 "shortcodes.c"
+#line 43785 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43437,9 +43801,9 @@ case 1381:
 	}
 	goto st1218;
 tr2650:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -43450,9 +43814,9 @@ tr2650:
   }
 	goto st1931;
 tr2685:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -43466,7 +43830,7 @@ st1931:
 	if ( ++p == pe )
 		goto _test_eof1931;
 case 1931:
-#line 43470 "shortcodes.c"
+#line 43834 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43483,7 +43847,7 @@ st1382:
 	if ( ++p == pe )
 		goto _test_eof1382;
 case 1382:
-#line 43487 "shortcodes.c"
+#line 43851 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2644;
 		case 34: goto st1219;
@@ -43507,7 +43871,7 @@ case 1382:
 		goto st1379;
 	goto st1218;
 tr2651:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -43517,7 +43881,7 @@ st1383:
 	if ( ++p == pe )
 		goto _test_eof1383;
 case 1383:
-#line 43521 "shortcodes.c"
+#line 43885 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2621;
 		case 39: goto tr2271;
@@ -43535,6 +43899,7 @@ case 1383:
 tr2618:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43555,7 +43920,7 @@ st1384:
 	if ( ++p == pe )
 		goto _test_eof1384;
 case 1384:
-#line 43559 "shortcodes.c"
+#line 43924 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2615;
 		case 34: goto st1219;
@@ -43580,6 +43945,7 @@ case 1384:
 tr2653:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43600,7 +43966,7 @@ st1385:
 	if ( ++p == pe )
 		goto _test_eof1385;
 case 1385:
-#line 43604 "shortcodes.c"
+#line 43970 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43659,7 +44025,7 @@ st1389:
 	if ( ++p == pe )
 		goto _test_eof1389;
 case 1389:
-#line 43663 "shortcodes.c"
+#line 44029 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2657;
 		case 34: goto st1219;
@@ -43682,6 +44048,7 @@ case 1389:
 tr2657:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43699,7 +44066,7 @@ tr2657:
       }
 	goto st1390;
 tr2665:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43711,7 +44078,7 @@ tr2665:
     }
 	goto st1390;
 tr2670:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43726,7 +44093,7 @@ st1390:
 	if ( ++p == pe )
 		goto _test_eof1390;
 case 1390:
-#line 43730 "shortcodes.c"
+#line 44097 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1390;
 		case 34: goto tr2661;
@@ -43756,7 +44123,7 @@ st1391:
 	if ( ++p == pe )
 		goto _test_eof1391;
 case 1391:
-#line 43760 "shortcodes.c"
+#line 44127 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2665;
 		case 34: goto st1219;
@@ -43770,6 +44137,7 @@ case 1391:
 tr2658:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -43787,7 +44155,7 @@ tr2658:
       }
 	goto st1392;
 tr2666:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -43799,7 +44167,7 @@ tr2666:
     }
 	goto st1392;
 tr2671:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -43814,7 +44182,7 @@ st1392:
 	if ( ++p == pe )
 		goto _test_eof1392;
 case 1392:
-#line 43818 "shortcodes.c"
+#line 44186 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -43866,7 +44234,7 @@ st1396:
 	if ( ++p == pe )
 		goto _test_eof1396;
 case 1396:
-#line 43870 "shortcodes.c"
+#line 44238 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2670;
 		case 34: goto st1219;
@@ -43896,7 +44264,7 @@ st1397:
 	if ( ++p == pe )
 		goto _test_eof1397;
 case 1397:
-#line 43900 "shortcodes.c"
+#line 44268 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2670;
 		case 34: goto st1219;
@@ -43918,7 +44286,7 @@ case 1397:
 		goto st1396;
 	goto st1218;
 tr2673:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -43928,7 +44296,7 @@ st1398:
 	if ( ++p == pe )
 		goto _test_eof1398;
 case 1398:
-#line 43932 "shortcodes.c"
+#line 44300 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2661;
 		case 39: goto tr2661;
@@ -43992,7 +44360,7 @@ st1401:
 	if ( ++p == pe )
 		goto _test_eof1401;
 case 1401:
-#line 43996 "shortcodes.c"
+#line 44364 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2677;
 		case 34: goto st1219;
@@ -44017,6 +44385,7 @@ case 1401:
 tr2680:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44037,7 +44406,7 @@ st1402:
 	if ( ++p == pe )
 		goto _test_eof1402;
 case 1402:
-#line 44041 "shortcodes.c"
+#line 44410 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2677;
 		case 34: goto st1219;
@@ -44062,6 +44431,7 @@ case 1402:
 tr2682:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44082,7 +44452,7 @@ st1403:
 	if ( ++p == pe )
 		goto _test_eof1403;
 case 1403:
-#line 44086 "shortcodes.c"
+#line 44456 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -44104,6 +44474,7 @@ case 1404:
 tr2681:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44121,7 +44492,7 @@ tr2681:
       }
 	goto st1405;
 tr2595:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44133,7 +44504,7 @@ tr2595:
     }
 	goto st1405;
 tr2706:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44148,7 +44519,7 @@ st1405:
 	if ( ++p == pe )
 		goto _test_eof1405;
 case 1405:
-#line 44152 "shortcodes.c"
+#line 44523 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -44188,7 +44559,7 @@ st1408:
 	if ( ++p == pe )
 		goto _test_eof1408;
 case 1408:
-#line 44192 "shortcodes.c"
+#line 44563 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2686;
 		case 34: goto st1313;
@@ -44202,6 +44573,7 @@ case 1408:
 tr3233:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44219,7 +44591,7 @@ tr3233:
       }
 	goto st1409;
 tr2686:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44231,7 +44603,7 @@ tr2686:
     }
 	goto st1409;
 tr2695:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44246,7 +44618,7 @@ st1409:
 	if ( ++p == pe )
 		goto _test_eof1409;
 case 1409:
-#line 44250 "shortcodes.c"
+#line 44622 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1409;
 		case 34: goto tr2598;
@@ -44269,6 +44641,7 @@ case 1409:
 tr3234:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44286,7 +44659,7 @@ tr3234:
       }
 	goto st1410;
 tr2687:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44298,7 +44671,7 @@ tr2687:
     }
 	goto st1410;
 tr2696:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44313,7 +44686,7 @@ st1410:
 	if ( ++p == pe )
 		goto _test_eof1410;
 case 1410:
-#line 44317 "shortcodes.c"
+#line 44690 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -44365,7 +44738,7 @@ st1414:
 	if ( ++p == pe )
 		goto _test_eof1414;
 case 1414:
-#line 44369 "shortcodes.c"
+#line 44742 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2695;
 		case 34: goto st1313;
@@ -44395,7 +44768,7 @@ st1415:
 	if ( ++p == pe )
 		goto _test_eof1415;
 case 1415:
-#line 44399 "shortcodes.c"
+#line 44772 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2695;
 		case 34: goto st1313;
@@ -44417,7 +44790,7 @@ case 1415:
 		goto st1414;
 	goto st1315;
 tr2698:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -44427,7 +44800,7 @@ st1416:
 	if ( ++p == pe )
 		goto _test_eof1416;
 case 1416:
-#line 44431 "shortcodes.c"
+#line 44804 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2598;
 		case 39: goto tr2587;
@@ -44443,7 +44816,7 @@ case 1416:
 		goto tr2690;
 	goto st1315;
 tr2594:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44455,7 +44828,7 @@ tr2594:
     }
 	goto st1417;
 tr2704:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44470,7 +44843,7 @@ st1417:
 	if ( ++p == pe )
 		goto _test_eof1417;
 case 1417:
-#line 44474 "shortcodes.c"
+#line 44847 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1219;
 		case 39: goto st1228;
@@ -44510,7 +44883,7 @@ st1420:
 	if ( ++p == pe )
 		goto _test_eof1420;
 case 1420:
-#line 44514 "shortcodes.c"
+#line 44887 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2702;
 		case 34: goto st1219;
@@ -44542,7 +44915,7 @@ st1421:
 	if ( ++p == pe )
 		goto _test_eof1421;
 case 1421:
-#line 44546 "shortcodes.c"
+#line 44919 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2702;
 		case 34: goto st1219;
@@ -44566,7 +44939,7 @@ case 1421:
 		goto st1420;
 	goto st1218;
 tr2707:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -44576,7 +44949,7 @@ st1422:
 	if ( ++p == pe )
 		goto _test_eof1422;
 case 1422:
-#line 44580 "shortcodes.c"
+#line 44953 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2588;
 		case 39: goto tr2598;
@@ -44601,7 +44974,7 @@ st1423:
 	if ( ++p == pe )
 		goto _test_eof1423;
 case 1423:
-#line 44605 "shortcodes.c"
+#line 44978 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2709;
 		case 34: goto st1309;
@@ -44631,7 +45004,7 @@ st1424:
 	if ( ++p == pe )
 		goto _test_eof1424;
 case 1424:
-#line 44635 "shortcodes.c"
+#line 45008 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2709;
 		case 34: goto st1309;
@@ -44653,7 +45026,7 @@ case 1424:
 		goto st1423;
 	goto st1308;
 tr2712:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -44663,7 +45036,7 @@ st1425:
 	if ( ++p == pe )
 		goto _test_eof1425;
 case 1425:
-#line 44667 "shortcodes.c"
+#line 45040 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2587;
 		case 39: goto tr2588;
@@ -44727,7 +45100,7 @@ st1428:
 	if ( ++p == pe )
 		goto _test_eof1428;
 case 1428:
-#line 44731 "shortcodes.c"
+#line 45104 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2716;
 		case 34: goto st1309;
@@ -44752,6 +45125,7 @@ case 1428:
 tr2716:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44769,7 +45143,7 @@ tr2716:
       }
 	goto st1429;
 tr2729:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44781,7 +45155,7 @@ tr2729:
     }
 	goto st1429;
 tr3187:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44796,7 +45170,7 @@ st1429:
 	if ( ++p == pe )
 		goto _test_eof1429;
 case 1429:
-#line 44800 "shortcodes.c"
+#line 45174 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1429;
 		case 34: goto tr2722;
@@ -44828,7 +45202,7 @@ st1430:
 	if ( ++p == pe )
 		goto _test_eof1430;
 case 1430:
-#line 44832 "shortcodes.c"
+#line 45206 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2729;
 		case 34: goto st1309;
@@ -44844,6 +45218,7 @@ case 1430:
 tr2717:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44861,7 +45236,7 @@ tr2717:
       }
 	goto st1431;
 tr2730:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44873,7 +45248,7 @@ tr2730:
     }
 	goto st1431;
 tr3188:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44888,7 +45263,7 @@ st1431:
 	if ( ++p == pe )
 		goto _test_eof1431;
 case 1431:
-#line 44892 "shortcodes.c"
+#line 45267 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -44908,7 +45283,7 @@ case 1432:
 	}
 	goto st1308;
 tr2731:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44920,7 +45295,7 @@ tr2731:
     }
 	goto st1433;
 tr3189:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -44935,7 +45310,7 @@ st1433:
 	if ( ++p == pe )
 		goto _test_eof1433;
 case 1433:
-#line 44939 "shortcodes.c"
+#line 45314 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -44968,6 +45343,7 @@ case 1435:
 tr2720:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -44985,7 +45361,7 @@ tr2720:
       }
 	goto st1436;
 tr2732:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -44997,7 +45373,7 @@ tr2732:
     }
 	goto st1436;
 tr3191:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45012,7 +45388,7 @@ st1436:
 	if ( ++p == pe )
 		goto _test_eof1436;
 case 1436:
-#line 45016 "shortcodes.c"
+#line 45392 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -45041,7 +45417,7 @@ st1438:
 	if ( ++p == pe )
 		goto _test_eof1438;
 case 1438:
-#line 45045 "shortcodes.c"
+#line 45421 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2739;
 		case 34: goto st1440;
@@ -45062,7 +45438,7 @@ st1439:
 	if ( ++p == pe )
 		goto _test_eof1439;
 case 1439:
-#line 45066 "shortcodes.c"
+#line 45442 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -45079,7 +45455,7 @@ st1440:
 	if ( ++p == pe )
 		goto _test_eof1440;
 case 1440:
-#line 45083 "shortcodes.c"
+#line 45459 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2744;
 		case 37: goto tr2745;
@@ -45094,6 +45470,7 @@ case 1440:
 tr3317:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45111,7 +45488,7 @@ tr3317:
       }
 	goto st1441;
 tr2744:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45123,7 +45500,7 @@ tr2744:
     }
 	goto st1441;
 tr2760:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45138,7 +45515,7 @@ st1441:
 	if ( ++p == pe )
 		goto _test_eof1441;
 case 1441:
-#line 45142 "shortcodes.c"
+#line 45519 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1441;
 		case 34: goto tr2749;
@@ -45163,6 +45540,7 @@ case 1441:
 tr3318:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45180,7 +45558,7 @@ tr3318:
       }
 	goto st1442;
 tr2745:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45192,7 +45570,7 @@ tr2745:
     }
 	goto st1442;
 tr2761:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45207,7 +45585,7 @@ st1442:
 	if ( ++p == pe )
 		goto _test_eof1442;
 case 1442:
-#line 45211 "shortcodes.c"
+#line 45589 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -45225,7 +45603,7 @@ case 1443:
 	}
 	goto st1265;
 tr2746:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45237,7 +45615,7 @@ tr2746:
     }
 	goto st1444;
 tr2762:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45252,7 +45630,7 @@ st1444:
 	if ( ++p == pe )
 		goto _test_eof1444;
 case 1444:
-#line 45256 "shortcodes.c"
+#line 45634 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 62: goto st1445;
@@ -45289,7 +45667,7 @@ st1447:
 	if ( ++p == pe )
 		goto _test_eof1447;
 case 1447:
-#line 45293 "shortcodes.c"
+#line 45671 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2760;
 		case 37: goto tr2761;
@@ -45313,6 +45691,7 @@ case 1447:
 tr3321:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45330,7 +45709,7 @@ tr3321:
       }
 	goto st1448;
 tr2747:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45342,7 +45721,7 @@ tr2747:
     }
 	goto st1448;
 tr2764:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45357,7 +45736,7 @@ st1448:
 	if ( ++p == pe )
 		goto _test_eof1448;
 case 1448:
-#line 45361 "shortcodes.c"
+#line 45740 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -45384,7 +45763,7 @@ st1450:
 	if ( ++p == pe )
 		goto _test_eof1450;
 case 1450:
-#line 45388 "shortcodes.c"
+#line 45767 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2760;
 		case 37: goto tr2761;
@@ -45407,7 +45786,7 @@ case 1450:
 		goto st1447;
 	goto st1265;
 tr2766:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -45417,7 +45796,7 @@ st1451:
 	if ( ++p == pe )
 		goto _test_eof1451;
 case 1451:
-#line 45421 "shortcodes.c"
+#line 45800 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2749;
 		case 39: goto tr2751;
@@ -45442,7 +45821,7 @@ st1452:
 	if ( ++p == pe )
 		goto _test_eof1452;
 case 1452:
-#line 45446 "shortcodes.c"
+#line 45825 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2768;
 		case 34: goto st1261;
@@ -45457,6 +45836,7 @@ case 1452:
 tr3273:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45474,7 +45854,7 @@ tr3273:
       }
 	goto st1453;
 tr2768:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45486,7 +45866,7 @@ tr2768:
     }
 	goto st1453;
 tr2783:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45501,7 +45881,7 @@ st1453:
 	if ( ++p == pe )
 		goto _test_eof1453;
 case 1453:
-#line 45505 "shortcodes.c"
+#line 45885 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1453;
 		case 34: goto tr2773;
@@ -45526,6 +45906,7 @@ case 1453:
 tr3274:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45543,7 +45924,7 @@ tr3274:
       }
 	goto st1454;
 tr2769:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45555,7 +45936,7 @@ tr2769:
     }
 	goto st1454;
 tr2784:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45570,7 +45951,7 @@ st1454:
 	if ( ++p == pe )
 		goto _test_eof1454;
 case 1454:
-#line 45574 "shortcodes.c"
+#line 45955 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -45588,7 +45969,7 @@ case 1455:
 	}
 	goto st1260;
 tr2770:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45600,7 +45981,7 @@ tr2770:
     }
 	goto st1456;
 tr2785:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45615,7 +45996,7 @@ st1456:
 	if ( ++p == pe )
 		goto _test_eof1456;
 case 1456:
-#line 45619 "shortcodes.c"
+#line 46000 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 62: goto st1457;
@@ -45652,7 +46033,7 @@ st1459:
 	if ( ++p == pe )
 		goto _test_eof1459;
 case 1459:
-#line 45656 "shortcodes.c"
+#line 46037 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2783;
 		case 34: goto st1261;
@@ -45676,6 +46057,7 @@ case 1459:
 tr3277:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45693,7 +46075,7 @@ tr3277:
       }
 	goto st1460;
 tr2771:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45705,7 +46087,7 @@ tr2771:
     }
 	goto st1460;
 tr2787:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45720,7 +46102,7 @@ st1460:
 	if ( ++p == pe )
 		goto _test_eof1460;
 case 1460:
-#line 45724 "shortcodes.c"
+#line 46106 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -45747,7 +46129,7 @@ st1462:
 	if ( ++p == pe )
 		goto _test_eof1462;
 case 1462:
-#line 45751 "shortcodes.c"
+#line 46133 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2783;
 		case 34: goto st1261;
@@ -45770,7 +46152,7 @@ case 1462:
 		goto st1459;
 	goto st1260;
 tr2789:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -45780,7 +46162,7 @@ st1463:
 	if ( ++p == pe )
 		goto _test_eof1463;
 case 1463:
-#line 45784 "shortcodes.c"
+#line 46166 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2773;
 		case 39: goto tr2749;
@@ -45796,7 +46178,7 @@ case 1463:
 		goto tr2776;
 	goto st1260;
 tr2743:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -45805,7 +46187,7 @@ st1464:
 	if ( ++p == pe )
 		goto _test_eof1464;
 case 1464:
-#line 45809 "shortcodes.c"
+#line 46191 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -45813,7 +46195,7 @@ case 1464:
 	}
 	goto st1439;
 tr2791:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -45822,7 +46204,7 @@ st1465:
 	if ( ++p == pe )
 		goto _test_eof1465;
 case 1465:
-#line 45826 "shortcodes.c"
+#line 46208 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 37: goto st1466;
@@ -45880,7 +46262,7 @@ st1468:
 	if ( ++p == pe )
 		goto _test_eof1468;
 case 1468:
-#line 45884 "shortcodes.c"
+#line 46266 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2797;
 		case 34: goto st1440;
@@ -45905,6 +46287,7 @@ case 1468:
 tr2797:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -45922,7 +46305,7 @@ tr2797:
       }
 	goto st1469;
 tr2821:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -45934,7 +46317,7 @@ tr2821:
     }
 	goto st1469;
 tr3106:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -45949,7 +46332,7 @@ st1469:
 	if ( ++p == pe )
 		goto _test_eof1469;
 case 1469:
-#line 45953 "shortcodes.c"
+#line 46336 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1469;
 		case 34: goto tr2803;
@@ -45981,7 +46364,7 @@ st1470:
 	if ( ++p == pe )
 		goto _test_eof1470;
 case 1470:
-#line 45985 "shortcodes.c"
+#line 46368 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2810;
 		case 34: goto st1273;
@@ -45997,6 +46380,7 @@ case 1470:
 tr3088:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46014,7 +46398,7 @@ tr3088:
       }
 	goto st1471;
 tr2810:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46026,7 +46410,7 @@ tr2810:
     }
 	goto st1471;
 tr3099:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46041,7 +46425,7 @@ st1471:
 	if ( ++p == pe )
 		goto _test_eof1471;
 case 1471:
-#line 46045 "shortcodes.c"
+#line 46429 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1471;
 		case 34: goto tr2815;
@@ -46073,7 +46457,7 @@ st1472:
 	if ( ++p == pe )
 		goto _test_eof1472;
 case 1472:
-#line 46077 "shortcodes.c"
+#line 46461 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2821;
 		case 34: goto st1440;
@@ -46089,6 +46473,7 @@ case 1472:
 tr2798:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46106,7 +46491,7 @@ tr2798:
       }
 	goto st1473;
 tr2822:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46118,7 +46503,7 @@ tr2822:
     }
 	goto st1473;
 tr3107:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46133,7 +46518,7 @@ st1473:
 	if ( ++p == pe )
 		goto _test_eof1473;
 case 1473:
-#line 46137 "shortcodes.c"
+#line 46522 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -46153,7 +46538,7 @@ case 1474:
 	}
 	goto st1439;
 tr2823:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46165,7 +46550,7 @@ tr2823:
     }
 	goto st1475;
 tr3108:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46180,7 +46565,7 @@ st1475:
 	if ( ++p == pe )
 		goto _test_eof1475;
 case 1475:
-#line 46184 "shortcodes.c"
+#line 46569 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 37: goto st1476;
@@ -46213,6 +46598,7 @@ case 1477:
 tr2801:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46230,7 +46616,7 @@ tr2801:
       }
 	goto st1478;
 tr2824:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46242,7 +46628,7 @@ tr2824:
     }
 	goto st1478;
 tr3110:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46257,7 +46643,7 @@ st1478:
 	if ( ++p == pe )
 		goto _test_eof1478;
 case 1478:
-#line 46261 "shortcodes.c"
+#line 46647 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -46277,9 +46663,9 @@ case 1479:
 	}
 	goto st1439;
 tr2829:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -46290,9 +46676,9 @@ tr2829:
   }
 	goto st1932;
 tr3174:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -46306,7 +46692,7 @@ st1932:
 	if ( ++p == pe )
 		goto _test_eof1932;
 case 1932:
-#line 46310 "shortcodes.c"
+#line 46696 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -46316,6 +46702,7 @@ case 1932:
 tr3089:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46333,7 +46720,7 @@ tr3089:
       }
 	goto st1480;
 tr2811:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46345,7 +46732,7 @@ tr2811:
     }
 	goto st1480;
 tr3100:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46360,7 +46747,7 @@ st1480:
 	if ( ++p == pe )
 		goto _test_eof1480;
 case 1480:
-#line 46364 "shortcodes.c"
+#line 46751 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -46369,7 +46756,7 @@ case 1480:
 	}
 	goto st1272;
 tr2410:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -46378,7 +46765,7 @@ st1481:
 	if ( ++p == pe )
 		goto _test_eof1481;
 case 1481:
-#line 46382 "shortcodes.c"
+#line 46769 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -46386,7 +46773,7 @@ case 1481:
 	}
 	goto st1272;
 tr2831:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -46395,7 +46782,7 @@ st1482:
 	if ( ++p == pe )
 		goto _test_eof1482;
 case 1482:
-#line 46399 "shortcodes.c"
+#line 46786 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 37: goto st1483;
@@ -46453,7 +46840,7 @@ st1485:
 	if ( ++p == pe )
 		goto _test_eof1485;
 case 1485:
-#line 46457 "shortcodes.c"
+#line 46844 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2837;
 		case 34: goto st1273;
@@ -46478,6 +46865,7 @@ case 1485:
 tr2837:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46495,7 +46883,7 @@ tr2837:
       }
 	goto st1486;
 tr2850:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46507,7 +46895,7 @@ tr2850:
     }
 	goto st1486;
 tr3069:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46522,7 +46910,7 @@ st1486:
 	if ( ++p == pe )
 		goto _test_eof1486;
 case 1486:
-#line 46526 "shortcodes.c"
+#line 46914 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1486;
 		case 34: goto tr2843;
@@ -46554,7 +46942,7 @@ st1487:
 	if ( ++p == pe )
 		goto _test_eof1487;
 case 1487:
-#line 46558 "shortcodes.c"
+#line 46946 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2850;
 		case 34: goto st1273;
@@ -46570,6 +46958,7 @@ case 1487:
 tr2838:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46587,7 +46976,7 @@ tr2838:
       }
 	goto st1488;
 tr2851:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46599,7 +46988,7 @@ tr2851:
     }
 	goto st1488;
 tr3070:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46614,7 +47003,7 @@ st1488:
 	if ( ++p == pe )
 		goto _test_eof1488;
 case 1488:
-#line 46618 "shortcodes.c"
+#line 47007 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -46634,7 +47023,7 @@ case 1489:
 	}
 	goto st1272;
 tr2852:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46646,7 +47035,7 @@ tr2852:
     }
 	goto st1490;
 tr3071:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46661,7 +47050,7 @@ st1490:
 	if ( ++p == pe )
 		goto _test_eof1490;
 case 1490:
-#line 46665 "shortcodes.c"
+#line 47054 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 37: goto st1491;
@@ -46694,6 +47083,7 @@ case 1492:
 tr2841:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46711,7 +47101,7 @@ tr2841:
       }
 	goto st1493;
 tr2853:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46723,7 +47113,7 @@ tr2853:
     }
 	goto st1493;
 tr3073:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46738,7 +47128,7 @@ st1493:
 	if ( ++p == pe )
 		goto _test_eof1493;
 case 1493:
-#line 46742 "shortcodes.c"
+#line 47132 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -46758,9 +47148,9 @@ case 1494:
 	}
 	goto st1272;
 tr2858:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -46771,9 +47161,9 @@ tr2858:
   }
 	goto st1933;
 tr3096:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -46787,7 +47177,7 @@ st1933:
 	if ( ++p == pe )
 		goto _test_eof1933;
 case 1933:
-#line 46791 "shortcodes.c"
+#line 47181 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -46804,7 +47194,7 @@ st1495:
 	if ( ++p == pe )
 		goto _test_eof1495;
 case 1495:
-#line 46808 "shortcodes.c"
+#line 47198 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2859;
 		case 34: goto st1119;
@@ -46820,6 +47210,7 @@ case 1495:
 tr3051:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46837,7 +47228,7 @@ tr3051:
       }
 	goto st1496;
 tr2859:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46849,7 +47240,7 @@ tr2859:
     }
 	goto st1496;
 tr3062:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46864,7 +47255,7 @@ st1496:
 	if ( ++p == pe )
 		goto _test_eof1496;
 case 1496:
-#line 46868 "shortcodes.c"
+#line 47259 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1496;
 		case 34: goto tr2864;
@@ -46896,7 +47287,7 @@ st1497:
 	if ( ++p == pe )
 		goto _test_eof1497;
 case 1497:
-#line 46900 "shortcodes.c"
+#line 47291 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2871;
 		case 34: goto st1499;
@@ -46919,7 +47310,7 @@ st1498:
 	if ( ++p == pe )
 		goto _test_eof1498;
 case 1498:
-#line 46923 "shortcodes.c"
+#line 47314 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -46936,7 +47327,7 @@ st1499:
 	if ( ++p == pe )
 		goto _test_eof1499;
 case 1499:
-#line 46940 "shortcodes.c"
+#line 47331 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2878;
 		case 37: goto tr2879;
@@ -46951,6 +47342,7 @@ case 1499:
 tr3437:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -46968,7 +47360,7 @@ tr3437:
       }
 	goto st1500;
 tr2878:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -46980,7 +47372,7 @@ tr2878:
     }
 	goto st1500;
 tr2893:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -46995,7 +47387,7 @@ st1500:
 	if ( ++p == pe )
 		goto _test_eof1500;
 case 1500:
-#line 46999 "shortcodes.c"
+#line 47391 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1500;
 		case 34: goto tr2438;
@@ -47020,6 +47412,7 @@ case 1500:
 tr3438:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47037,7 +47430,7 @@ tr3438:
       }
 	goto st1501;
 tr2879:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47049,7 +47442,7 @@ tr2879:
     }
 	goto st1501;
 tr2894:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47064,7 +47457,7 @@ st1501:
 	if ( ++p == pe )
 		goto _test_eof1501;
 case 1501:
-#line 47068 "shortcodes.c"
+#line 47461 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -47082,7 +47475,7 @@ case 1502:
 	}
 	goto st1120;
 tr2880:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47094,7 +47487,7 @@ tr2880:
     }
 	goto st1503;
 tr2895:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47109,7 +47502,7 @@ st1503:
 	if ( ++p == pe )
 		goto _test_eof1503;
 case 1503:
-#line 47113 "shortcodes.c"
+#line 47506 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 62: goto st1504;
@@ -47146,7 +47539,7 @@ st1506:
 	if ( ++p == pe )
 		goto _test_eof1506;
 case 1506:
-#line 47150 "shortcodes.c"
+#line 47543 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2893;
 		case 37: goto tr2894;
@@ -47170,6 +47563,7 @@ case 1506:
 tr3441:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47187,7 +47581,7 @@ tr3441:
       }
 	goto st1507;
 tr2881:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47199,7 +47593,7 @@ tr2881:
     }
 	goto st1507;
 tr2897:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47214,7 +47608,7 @@ st1507:
 	if ( ++p == pe )
 		goto _test_eof1507;
 case 1507:
-#line 47218 "shortcodes.c"
+#line 47612 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -47241,7 +47635,7 @@ st1509:
 	if ( ++p == pe )
 		goto _test_eof1509;
 case 1509:
-#line 47245 "shortcodes.c"
+#line 47639 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2893;
 		case 37: goto tr2894;
@@ -47264,7 +47658,7 @@ case 1509:
 		goto st1506;
 	goto st1120;
 tr2899:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -47274,7 +47668,7 @@ st1510:
 	if ( ++p == pe )
 		goto _test_eof1510;
 case 1510:
-#line 47278 "shortcodes.c"
+#line 47672 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2438;
 		case 39: goto tr2884;
@@ -47290,7 +47684,7 @@ case 1510:
 		goto tr2886;
 	goto st1120;
 tr2877:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -47299,7 +47693,7 @@ st1511:
 	if ( ++p == pe )
 		goto _test_eof1511;
 case 1511:
-#line 47303 "shortcodes.c"
+#line 47697 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47307,7 +47701,7 @@ case 1511:
 	}
 	goto st1498;
 tr2901:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -47316,7 +47710,7 @@ st1512:
 	if ( ++p == pe )
 		goto _test_eof1512;
 case 1512:
-#line 47320 "shortcodes.c"
+#line 47714 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 37: goto st1513;
@@ -47374,7 +47768,7 @@ st1515:
 	if ( ++p == pe )
 		goto _test_eof1515;
 case 1515:
-#line 47378 "shortcodes.c"
+#line 47772 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2907;
 		case 34: goto st1499;
@@ -47399,6 +47793,7 @@ case 1515:
 tr2907:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47416,7 +47811,7 @@ tr2907:
       }
 	goto st1516;
 tr2871:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47428,7 +47823,7 @@ tr2871:
     }
 	goto st1516;
 tr2921:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47443,7 +47838,7 @@ st1516:
 	if ( ++p == pe )
 		goto _test_eof1516;
 case 1516:
-#line 47447 "shortcodes.c"
+#line 47842 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1516;
 		case 34: goto tr2845;
@@ -47468,6 +47863,7 @@ case 1516:
 tr2908:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47485,7 +47881,7 @@ tr2908:
       }
 	goto st1517;
 tr2873:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47497,7 +47893,7 @@ tr2873:
     }
 	goto st1517;
 tr2922:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47512,7 +47908,7 @@ st1517:
 	if ( ++p == pe )
 		goto _test_eof1517;
 case 1517:
-#line 47516 "shortcodes.c"
+#line 47912 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47532,7 +47928,7 @@ case 1518:
 	}
 	goto st1498;
 tr2875:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47544,7 +47940,7 @@ tr2875:
     }
 	goto st1519;
 tr2923:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47559,7 +47955,7 @@ st1519:
 	if ( ++p == pe )
 		goto _test_eof1519;
 case 1519:
-#line 47563 "shortcodes.c"
+#line 47959 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 37: goto st1520;
@@ -47599,7 +47995,7 @@ st1522:
 	if ( ++p == pe )
 		goto _test_eof1522;
 case 1522:
-#line 47603 "shortcodes.c"
+#line 47999 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2921;
 		case 34: goto st1499;
@@ -47624,6 +48020,7 @@ case 1522:
 tr2911:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47641,7 +48038,7 @@ tr2911:
       }
 	goto st1523;
 tr2876:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47653,7 +48050,7 @@ tr2876:
     }
 	goto st1523;
 tr2925:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47668,7 +48065,7 @@ st1523:
 	if ( ++p == pe )
 		goto _test_eof1523;
 case 1523:
-#line 47672 "shortcodes.c"
+#line 48069 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47688,9 +48085,9 @@ case 1524:
 	}
 	goto st1498;
 tr2927:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -47701,9 +48098,9 @@ tr2927:
   }
 	goto st1934;
 tr2991:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -47717,7 +48114,7 @@ st1934:
 	if ( ++p == pe )
 		goto _test_eof1934;
 case 1934:
-#line 47721 "shortcodes.c"
+#line 48118 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47734,7 +48131,7 @@ st1525:
 	if ( ++p == pe )
 		goto _test_eof1525;
 case 1525:
-#line 47738 "shortcodes.c"
+#line 48135 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2921;
 		case 34: goto st1499;
@@ -47758,7 +48155,7 @@ case 1525:
 		goto st1522;
 	goto st1498;
 tr2928:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -47768,7 +48165,7 @@ st1526:
 	if ( ++p == pe )
 		goto _test_eof1526;
 case 1526:
-#line 47772 "shortcodes.c"
+#line 48169 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2845;
 		case 39: goto tr2864;
@@ -47786,6 +48183,7 @@ case 1526:
 tr2910:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47806,7 +48204,7 @@ st1527:
 	if ( ++p == pe )
 		goto _test_eof1527;
 case 1527:
-#line 47810 "shortcodes.c"
+#line 48208 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2907;
 		case 34: goto st1499;
@@ -47831,6 +48229,7 @@ case 1527:
 tr2930:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47851,7 +48250,7 @@ st1528:
 	if ( ++p == pe )
 		goto _test_eof1528;
 case 1528:
-#line 47855 "shortcodes.c"
+#line 48254 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -47910,7 +48309,7 @@ st1532:
 	if ( ++p == pe )
 		goto _test_eof1532;
 case 1532:
-#line 47914 "shortcodes.c"
+#line 48313 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2934;
 		case 34: goto st1499;
@@ -47933,6 +48332,7 @@ case 1532:
 tr2934:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -47950,7 +48350,7 @@ tr2934:
       }
 	goto st1533;
 tr2951:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -47962,7 +48362,7 @@ tr2951:
     }
 	goto st1533;
 tr2968:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -47977,7 +48377,7 @@ st1533:
 	if ( ++p == pe )
 		goto _test_eof1533;
 case 1533:
-#line 47981 "shortcodes.c"
+#line 48381 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1533;
 		case 34: goto tr2521;
@@ -48007,7 +48407,7 @@ st1534:
 	if ( ++p == pe )
 		goto _test_eof1534;
 case 1534:
-#line 48011 "shortcodes.c"
+#line 48411 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2941;
 		case 34: goto st1145;
@@ -48023,6 +48423,7 @@ case 1534:
 tr3355:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48040,7 +48441,7 @@ tr3355:
       }
 	goto st1535;
 tr2941:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48052,7 +48453,7 @@ tr2941:
     }
 	goto st1535;
 tr2960:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48067,7 +48468,7 @@ st1535:
 	if ( ++p == pe )
 		goto _test_eof1535;
 case 1535:
-#line 48071 "shortcodes.c"
+#line 48472 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1535;
 		case 34: goto tr2560;
@@ -48099,7 +48500,7 @@ st1536:
 	if ( ++p == pe )
 		goto _test_eof1536;
 case 1536:
-#line 48103 "shortcodes.c"
+#line 48504 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2951;
 		case 34: goto st1499;
@@ -48113,6 +48514,7 @@ case 1536:
 tr2935:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48130,7 +48532,7 @@ tr2935:
       }
 	goto st1537;
 tr2952:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48142,7 +48544,7 @@ tr2952:
     }
 	goto st1537;
 tr2969:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48157,7 +48559,7 @@ st1537:
 	if ( ++p == pe )
 		goto _test_eof1537;
 case 1537:
-#line 48161 "shortcodes.c"
+#line 48563 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -48202,6 +48604,7 @@ case 1540:
 tr3356:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48219,7 +48622,7 @@ tr3356:
       }
 	goto st1541;
 tr2942:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48231,7 +48634,7 @@ tr2942:
     }
 	goto st1541;
 tr2961:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48246,7 +48649,7 @@ st1541:
 	if ( ++p == pe )
 		goto _test_eof1541;
 case 1541:
-#line 48250 "shortcodes.c"
+#line 48653 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -48266,7 +48669,7 @@ case 1542:
 	}
 	goto st1144;
 tr2943:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48278,7 +48681,7 @@ tr2943:
     }
 	goto st1543;
 tr2962:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48293,7 +48696,7 @@ st1543:
 	if ( ++p == pe )
 		goto _test_eof1543;
 case 1543:
-#line 48297 "shortcodes.c"
+#line 48700 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -48333,7 +48736,7 @@ st1546:
 	if ( ++p == pe )
 		goto _test_eof1546;
 case 1546:
-#line 48337 "shortcodes.c"
+#line 48740 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2960;
 		case 34: goto st1145;
@@ -48358,6 +48761,7 @@ case 1546:
 tr3359:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48375,7 +48779,7 @@ tr3359:
       }
 	goto st1547;
 tr2944:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48387,7 +48791,7 @@ tr2944:
     }
 	goto st1547;
 tr2964:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48402,7 +48806,7 @@ st1547:
 	if ( ++p == pe )
 		goto _test_eof1547;
 case 1547:
-#line 48406 "shortcodes.c"
+#line 48810 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -48431,7 +48835,7 @@ st1549:
 	if ( ++p == pe )
 		goto _test_eof1549;
 case 1549:
-#line 48435 "shortcodes.c"
+#line 48839 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2960;
 		case 34: goto st1145;
@@ -48455,7 +48859,7 @@ case 1549:
 		goto st1546;
 	goto st1144;
 tr2966:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -48465,7 +48869,7 @@ st1550:
 	if ( ++p == pe )
 		goto _test_eof1550;
 case 1550:
-#line 48469 "shortcodes.c"
+#line 48873 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2560;
 		case 39: goto tr2529;
@@ -48490,7 +48894,7 @@ st1551:
 	if ( ++p == pe )
 		goto _test_eof1551;
 case 1551:
-#line 48494 "shortcodes.c"
+#line 48898 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2968;
 		case 34: goto st1499;
@@ -48520,7 +48924,7 @@ st1552:
 	if ( ++p == pe )
 		goto _test_eof1552;
 case 1552:
-#line 48524 "shortcodes.c"
+#line 48928 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2968;
 		case 34: goto st1499;
@@ -48542,7 +48946,7 @@ case 1552:
 		goto st1551;
 	goto st1498;
 tr2971:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -48552,7 +48956,7 @@ st1553:
 	if ( ++p == pe )
 		goto _test_eof1553;
 case 1553:
-#line 48556 "shortcodes.c"
+#line 48960 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2521;
 		case 39: goto tr2548;
@@ -48616,7 +49020,7 @@ st1556:
 	if ( ++p == pe )
 		goto _test_eof1556;
 case 1556:
-#line 48620 "shortcodes.c"
+#line 49024 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2975;
 		case 34: goto st1499;
@@ -48641,6 +49045,7 @@ case 1556:
 tr2975:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48658,7 +49063,7 @@ tr2975:
       }
 	goto st1557;
 tr2986:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48670,7 +49075,7 @@ tr2986:
     }
 	goto st1557;
 tr2995:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48685,7 +49090,7 @@ st1557:
 	if ( ++p == pe )
 		goto _test_eof1557;
 case 1557:
-#line 48689 "shortcodes.c"
+#line 49094 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1557;
 		case 34: goto tr2805;
@@ -48717,7 +49122,7 @@ st1558:
 	if ( ++p == pe )
 		goto _test_eof1558;
 case 1558:
-#line 48721 "shortcodes.c"
+#line 49126 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2986;
 		case 34: goto st1499;
@@ -48733,6 +49138,7 @@ case 1558:
 tr2976:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48750,7 +49156,7 @@ tr2976:
       }
 	goto st1559;
 tr2987:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48762,7 +49168,7 @@ tr2987:
     }
 	goto st1559;
 tr2996:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48777,7 +49183,7 @@ st1559:
 	if ( ++p == pe )
 		goto _test_eof1559;
 case 1559:
-#line 48781 "shortcodes.c"
+#line 49187 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -48797,7 +49203,7 @@ case 1560:
 	}
 	goto st1498;
 tr2988:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48809,7 +49215,7 @@ tr2988:
     }
 	goto st1561;
 tr2997:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48824,7 +49230,7 @@ st1561:
 	if ( ++p == pe )
 		goto _test_eof1561;
 case 1561:
-#line 48828 "shortcodes.c"
+#line 49234 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -48857,6 +49263,7 @@ case 1563:
 tr2979:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -48874,7 +49281,7 @@ tr2979:
       }
 	goto st1564;
 tr2989:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -48886,7 +49293,7 @@ tr2989:
     }
 	goto st1564;
 tr2999:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -48901,7 +49308,7 @@ st1564:
 	if ( ++p == pe )
 		goto _test_eof1564;
 case 1564:
-#line 48905 "shortcodes.c"
+#line 49312 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -48930,7 +49337,7 @@ st1566:
 	if ( ++p == pe )
 		goto _test_eof1566;
 case 1566:
-#line 48934 "shortcodes.c"
+#line 49341 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2995;
 		case 34: goto st1499;
@@ -48962,7 +49369,7 @@ st1567:
 	if ( ++p == pe )
 		goto _test_eof1567;
 case 1567:
-#line 48966 "shortcodes.c"
+#line 49373 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2995;
 		case 34: goto st1499;
@@ -48986,7 +49393,7 @@ case 1567:
 		goto st1566;
 	goto st1498;
 tr3000:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -48996,7 +49403,7 @@ st1568:
 	if ( ++p == pe )
 		goto _test_eof1568;
 case 1568:
-#line 49000 "shortcodes.c"
+#line 49407 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2805;
 		case 39: goto tr2815;
@@ -49014,6 +49421,7 @@ case 1568:
 tr2978:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49034,7 +49442,7 @@ st1569:
 	if ( ++p == pe )
 		goto _test_eof1569;
 case 1569:
-#line 49038 "shortcodes.c"
+#line 49446 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2975;
 		case 34: goto st1499;
@@ -49059,6 +49467,7 @@ case 1569:
 tr3002:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49079,7 +49488,7 @@ st1570:
 	if ( ++p == pe )
 		goto _test_eof1570;
 case 1570:
-#line 49083 "shortcodes.c"
+#line 49492 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1499;
 		case 39: goto st1283;
@@ -49101,6 +49510,7 @@ case 1571:
 tr3052:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49118,7 +49528,7 @@ tr3052:
       }
 	goto st1572;
 tr2860:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49130,7 +49540,7 @@ tr2860:
     }
 	goto st1572;
 tr3063:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49145,7 +49555,7 @@ st1572:
 	if ( ++p == pe )
 		goto _test_eof1572;
 case 1572:
-#line 49149 "shortcodes.c"
+#line 49559 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49154,7 +49564,7 @@ case 1572:
 	}
 	goto st1118;
 tr2081:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -49163,7 +49573,7 @@ st1573:
 	if ( ++p == pe )
 		goto _test_eof1573;
 case 1573:
-#line 49167 "shortcodes.c"
+#line 49577 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49171,7 +49581,7 @@ case 1573:
 	}
 	goto st1118;
 tr3005:
-#line 122 "shortcodes.rl"
+#line 123 "shortcodes.rl"
 	{
       sc_list[c_sc].whole.start = p-start-1;
     }
@@ -49180,7 +49590,7 @@ st1574:
 	if ( ++p == pe )
 		goto _test_eof1574;
 case 1574:
-#line 49184 "shortcodes.c"
+#line 49594 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 37: goto st1575;
@@ -49238,7 +49648,7 @@ st1577:
 	if ( ++p == pe )
 		goto _test_eof1577;
 case 1577:
-#line 49242 "shortcodes.c"
+#line 49652 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3011;
 		case 34: goto st1119;
@@ -49263,6 +49673,7 @@ case 1577:
 tr3011:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49280,7 +49691,7 @@ tr3011:
       }
 	goto st1578;
 tr3023:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49292,7 +49703,7 @@ tr3023:
     }
 	goto st1578;
 tr3032:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49307,7 +49718,7 @@ st1578:
 	if ( ++p == pe )
 		goto _test_eof1578;
 case 1578:
-#line 49311 "shortcodes.c"
+#line 49722 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1578;
 		case 34: goto tr3017;
@@ -49339,7 +49750,7 @@ st1579:
 	if ( ++p == pe )
 		goto _test_eof1579;
 case 1579:
-#line 49343 "shortcodes.c"
+#line 49754 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3023;
 		case 34: goto st1119;
@@ -49355,6 +49766,7 @@ case 1579:
 tr3012:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49372,7 +49784,7 @@ tr3012:
       }
 	goto st1580;
 tr3024:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49384,7 +49796,7 @@ tr3024:
     }
 	goto st1580;
 tr3033:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49399,7 +49811,7 @@ st1580:
 	if ( ++p == pe )
 		goto _test_eof1580;
 case 1580:
-#line 49403 "shortcodes.c"
+#line 49815 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49419,7 +49831,7 @@ case 1581:
 	}
 	goto st1118;
 tr3025:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49431,7 +49843,7 @@ tr3025:
     }
 	goto st1582;
 tr3034:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49446,7 +49858,7 @@ st1582:
 	if ( ++p == pe )
 		goto _test_eof1582;
 case 1582:
-#line 49450 "shortcodes.c"
+#line 49862 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 37: goto st1583;
@@ -49479,6 +49891,7 @@ case 1584:
 tr3015:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49496,7 +49909,7 @@ tr3015:
       }
 	goto st1585;
 tr3026:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49508,7 +49921,7 @@ tr3026:
     }
 	goto st1585;
 tr3036:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49523,7 +49936,7 @@ st1585:
 	if ( ++p == pe )
 		goto _test_eof1585;
 case 1585:
-#line 49527 "shortcodes.c"
+#line 49940 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49543,9 +49956,9 @@ case 1586:
 	}
 	goto st1118;
 tr3031:
-#line 91 "shortcodes.rl"
+#line 92 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 0;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -49556,9 +49969,9 @@ tr3031:
   }
 	goto st1935;
 tr3059:
-#line 81 "shortcodes.rl"
+#line 82 "shortcodes.rl"
 	{sc_list[c_sc].markdown = 1;}
-#line 111 "shortcodes.rl"
+#line 112 "shortcodes.rl"
 	{
     // Since it's mismatched, remove the name
     sc_list[c_sc].name.start = 0;
@@ -49572,7 +49985,7 @@ st1935:
 	if ( ++p == pe )
 		goto _test_eof1935;
 case 1935:
-#line 49576 "shortcodes.c"
+#line 49989 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49589,7 +50002,7 @@ st1587:
 	if ( ++p == pe )
 		goto _test_eof1587;
 case 1587:
-#line 49593 "shortcodes.c"
+#line 50006 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3032;
 		case 34: goto st1119;
@@ -49621,7 +50034,7 @@ st1588:
 	if ( ++p == pe )
 		goto _test_eof1588;
 case 1588:
-#line 49625 "shortcodes.c"
+#line 50038 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3032;
 		case 34: goto st1119;
@@ -49645,7 +50058,7 @@ case 1588:
 		goto st1587;
 	goto st1118;
 tr3037:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -49655,7 +50068,7 @@ st1589:
 	if ( ++p == pe )
 		goto _test_eof1589;
 case 1589:
-#line 49659 "shortcodes.c"
+#line 50072 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3017;
 		case 39: goto tr3017;
@@ -49673,6 +50086,7 @@ case 1589:
 tr3014:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49693,7 +50107,7 @@ st1590:
 	if ( ++p == pe )
 		goto _test_eof1590;
 case 1590:
-#line 49697 "shortcodes.c"
+#line 50111 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3011;
 		case 34: goto st1119;
@@ -49718,6 +50132,7 @@ case 1590:
 tr3039:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49738,7 +50153,7 @@ st1591:
 	if ( ++p == pe )
 		goto _test_eof1591;
 case 1591:
-#line 49742 "shortcodes.c"
+#line 50157 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49797,7 +50212,7 @@ st1595:
 	if ( ++p == pe )
 		goto _test_eof1595;
 case 1595:
-#line 49801 "shortcodes.c"
+#line 50216 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3043;
 		case 34: goto st1119;
@@ -49820,6 +50235,7 @@ case 1595:
 tr3044:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -49837,7 +50253,7 @@ tr3044:
       }
 	goto st1596;
 tr2233:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -49849,7 +50265,7 @@ tr2233:
     }
 	goto st1596;
 tr3372:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -49864,7 +50280,7 @@ st1596:
 	if ( ++p == pe )
 		goto _test_eof1596;
 case 1596:
-#line 49868 "shortcodes.c"
+#line 50284 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -49955,7 +50371,7 @@ st1602:
 	if ( ++p == pe )
 		goto _test_eof1602;
 case 1602:
-#line 49959 "shortcodes.c"
+#line 50375 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3051;
 		case 34: goto st1119;
@@ -49980,6 +50396,7 @@ case 1602:
 tr3054:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50000,7 +50417,7 @@ st1603:
 	if ( ++p == pe )
 		goto _test_eof1603;
 case 1603:
-#line 50004 "shortcodes.c"
+#line 50421 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3051;
 		case 34: goto st1119;
@@ -50025,6 +50442,7 @@ case 1603:
 tr3056:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50045,7 +50463,7 @@ st1604:
 	if ( ++p == pe )
 		goto _test_eof1604;
 case 1604:
-#line 50049 "shortcodes.c"
+#line 50467 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -50067,6 +50485,7 @@ case 1605:
 tr3055:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50084,7 +50503,7 @@ tr3055:
       }
 	goto st1606;
 tr2862:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -50096,7 +50515,7 @@ tr2862:
     }
 	goto st1606;
 tr3066:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -50111,7 +50530,7 @@ st1606:
 	if ( ++p == pe )
 		goto _test_eof1606;
 case 1606:
-#line 50115 "shortcodes.c"
+#line 50534 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -50142,7 +50561,7 @@ case 1608:
 	}
 	goto st1118;
 tr2861:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -50154,7 +50573,7 @@ tr2861:
     }
 	goto st1609;
 tr3064:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -50169,7 +50588,7 @@ st1609:
 	if ( ++p == pe )
 		goto _test_eof1609;
 case 1609:
-#line 50173 "shortcodes.c"
+#line 50592 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1119;
 		case 39: goto st1110;
@@ -50209,7 +50628,7 @@ st1612:
 	if ( ++p == pe )
 		goto _test_eof1612;
 case 1612:
-#line 50213 "shortcodes.c"
+#line 50632 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3062;
 		case 34: goto st1119;
@@ -50241,7 +50660,7 @@ st1613:
 	if ( ++p == pe )
 		goto _test_eof1613;
 case 1613:
-#line 50245 "shortcodes.c"
+#line 50664 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3062;
 		case 34: goto st1119;
@@ -50265,7 +50684,7 @@ case 1613:
 		goto st1612;
 	goto st1118;
 tr3067:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -50275,7 +50694,7 @@ st1614:
 	if ( ++p == pe )
 		goto _test_eof1614;
 case 1614:
-#line 50279 "shortcodes.c"
+#line 50698 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2864;
 		case 39: goto tr2843;
@@ -50300,7 +50719,7 @@ st1615:
 	if ( ++p == pe )
 		goto _test_eof1615;
 case 1615:
-#line 50304 "shortcodes.c"
+#line 50723 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3069;
 		case 34: goto st1273;
@@ -50332,7 +50751,7 @@ st1616:
 	if ( ++p == pe )
 		goto _test_eof1616;
 case 1616:
-#line 50336 "shortcodes.c"
+#line 50755 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3069;
 		case 34: goto st1273;
@@ -50356,7 +50775,7 @@ case 1616:
 		goto st1615;
 	goto st1272;
 tr3074:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -50366,7 +50785,7 @@ st1617:
 	if ( ++p == pe )
 		goto _test_eof1617;
 case 1617:
-#line 50370 "shortcodes.c"
+#line 50789 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2843;
 		case 39: goto tr2845;
@@ -50384,6 +50803,7 @@ case 1617:
 tr2840:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50404,7 +50824,7 @@ st1618:
 	if ( ++p == pe )
 		goto _test_eof1618;
 case 1618:
-#line 50408 "shortcodes.c"
+#line 50828 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2837;
 		case 34: goto st1273;
@@ -50429,6 +50849,7 @@ case 1618:
 tr3076:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50449,7 +50870,7 @@ st1619:
 	if ( ++p == pe )
 		goto _test_eof1619;
 case 1619:
-#line 50453 "shortcodes.c"
+#line 50874 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -50508,7 +50929,7 @@ st1623:
 	if ( ++p == pe )
 		goto _test_eof1623;
 case 1623:
-#line 50512 "shortcodes.c"
+#line 50933 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3080;
 		case 34: goto st1273;
@@ -50531,6 +50952,7 @@ case 1623:
 tr3081:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50548,7 +50970,7 @@ tr3081:
       }
 	goto st1624;
 tr2527:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -50560,7 +50982,7 @@ tr2527:
     }
 	goto st1624;
 tr3218:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -50575,7 +50997,7 @@ st1624:
 	if ( ++p == pe )
 		goto _test_eof1624;
 case 1624:
-#line 50579 "shortcodes.c"
+#line 51001 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -50666,7 +51088,7 @@ st1630:
 	if ( ++p == pe )
 		goto _test_eof1630;
 case 1630:
-#line 50670 "shortcodes.c"
+#line 51092 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3088;
 		case 34: goto st1273;
@@ -50691,6 +51113,7 @@ case 1630:
 tr3091:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50711,7 +51134,7 @@ st1631:
 	if ( ++p == pe )
 		goto _test_eof1631;
 case 1631:
-#line 50715 "shortcodes.c"
+#line 51138 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3088;
 		case 34: goto st1273;
@@ -50736,6 +51159,7 @@ case 1631:
 tr3093:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50756,7 +51180,7 @@ st1632:
 	if ( ++p == pe )
 		goto _test_eof1632;
 case 1632:
-#line 50760 "shortcodes.c"
+#line 51184 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -50778,6 +51202,7 @@ case 1633:
 tr3092:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -50795,7 +51220,7 @@ tr3092:
       }
 	goto st1634;
 tr2813:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -50807,7 +51232,7 @@ tr2813:
     }
 	goto st1634;
 tr3103:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -50822,7 +51247,7 @@ st1634:
 	if ( ++p == pe )
 		goto _test_eof1634;
 case 1634:
-#line 50826 "shortcodes.c"
+#line 51251 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -50853,7 +51278,7 @@ case 1636:
 	}
 	goto st1272;
 tr2812:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -50865,7 +51290,7 @@ tr2812:
     }
 	goto st1637;
 tr3101:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -50880,7 +51305,7 @@ st1637:
 	if ( ++p == pe )
 		goto _test_eof1637;
 case 1637:
-#line 50884 "shortcodes.c"
+#line 51309 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1273;
 		case 39: goto st1281;
@@ -50920,7 +51345,7 @@ st1640:
 	if ( ++p == pe )
 		goto _test_eof1640;
 case 1640:
-#line 50924 "shortcodes.c"
+#line 51349 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3099;
 		case 34: goto st1273;
@@ -50952,7 +51377,7 @@ st1641:
 	if ( ++p == pe )
 		goto _test_eof1641;
 case 1641:
-#line 50956 "shortcodes.c"
+#line 51381 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3099;
 		case 34: goto st1273;
@@ -50976,7 +51401,7 @@ case 1641:
 		goto st1640;
 	goto st1272;
 tr3104:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -50986,7 +51411,7 @@ st1642:
 	if ( ++p == pe )
 		goto _test_eof1642;
 case 1642:
-#line 50990 "shortcodes.c"
+#line 51415 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2815;
 		case 39: goto tr2803;
@@ -51011,7 +51436,7 @@ st1643:
 	if ( ++p == pe )
 		goto _test_eof1643;
 case 1643:
-#line 51015 "shortcodes.c"
+#line 51440 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3106;
 		case 34: goto st1440;
@@ -51043,7 +51468,7 @@ st1644:
 	if ( ++p == pe )
 		goto _test_eof1644;
 case 1644:
-#line 51047 "shortcodes.c"
+#line 51472 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3106;
 		case 34: goto st1440;
@@ -51067,7 +51492,7 @@ case 1644:
 		goto st1643;
 	goto st1439;
 tr3111:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -51077,7 +51502,7 @@ st1645:
 	if ( ++p == pe )
 		goto _test_eof1645;
 case 1645:
-#line 51081 "shortcodes.c"
+#line 51506 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2803;
 		case 39: goto tr2805;
@@ -51095,6 +51520,7 @@ case 1645:
 tr2800:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51115,7 +51541,7 @@ st1646:
 	if ( ++p == pe )
 		goto _test_eof1646;
 case 1646:
-#line 51119 "shortcodes.c"
+#line 51545 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2797;
 		case 34: goto st1440;
@@ -51140,6 +51566,7 @@ case 1646:
 tr3113:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51160,7 +51587,7 @@ st1647:
 	if ( ++p == pe )
 		goto _test_eof1647;
 case 1647:
-#line 51164 "shortcodes.c"
+#line 51591 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -51219,7 +51646,7 @@ st1651:
 	if ( ++p == pe )
 		goto _test_eof1651;
 case 1651:
-#line 51223 "shortcodes.c"
+#line 51650 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3117;
 		case 34: goto st1440;
@@ -51242,6 +51669,7 @@ case 1651:
 tr3117:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51259,7 +51687,7 @@ tr3117:
       }
 	goto st1652;
 tr2739:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51271,7 +51699,7 @@ tr2739:
     }
 	goto st1652;
 tr3150:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51286,7 +51714,7 @@ st1652:
 	if ( ++p == pe )
 		goto _test_eof1652;
 case 1652:
-#line 51290 "shortcodes.c"
+#line 51718 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1652;
 		case 34: goto tr3121;
@@ -51316,7 +51744,7 @@ st1653:
 	if ( ++p == pe )
 		goto _test_eof1653;
 case 1653:
-#line 51320 "shortcodes.c"
+#line 51748 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3125;
 		case 34: goto st1313;
@@ -51332,6 +51760,7 @@ case 1653:
 tr3238:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51349,7 +51778,7 @@ tr3238:
       }
 	goto st1654;
 tr3125:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51361,7 +51790,7 @@ tr3125:
     }
 	goto st1654;
 tr3139:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51376,7 +51805,7 @@ st1654:
 	if ( ++p == pe )
 		goto _test_eof1654;
 case 1654:
-#line 51380 "shortcodes.c"
+#line 51809 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1654;
 		case 34: goto tr2724;
@@ -51401,6 +51830,7 @@ case 1654:
 tr3239:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51418,7 +51848,7 @@ tr3239:
       }
 	goto st1655;
 tr3126:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51430,7 +51860,7 @@ tr3126:
     }
 	goto st1655;
 tr3140:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51445,7 +51875,7 @@ st1655:
 	if ( ++p == pe )
 		goto _test_eof1655;
 case 1655:
-#line 51449 "shortcodes.c"
+#line 51879 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -51465,7 +51895,7 @@ case 1656:
 	}
 	goto st1315;
 tr3127:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51477,7 +51907,7 @@ tr3127:
     }
 	goto st1657;
 tr3141:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51492,7 +51922,7 @@ st1657:
 	if ( ++p == pe )
 		goto _test_eof1657;
 case 1657:
-#line 51496 "shortcodes.c"
+#line 51926 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -51532,7 +51962,7 @@ st1660:
 	if ( ++p == pe )
 		goto _test_eof1660;
 case 1660:
-#line 51536 "shortcodes.c"
+#line 51966 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3139;
 		case 34: goto st1313;
@@ -51557,6 +51987,7 @@ case 1660:
 tr3242:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51574,7 +52005,7 @@ tr3242:
       }
 	goto st1661;
 tr3128:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51586,7 +52017,7 @@ tr3128:
     }
 	goto st1661;
 tr3143:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51601,7 +52032,7 @@ st1661:
 	if ( ++p == pe )
 		goto _test_eof1661;
 case 1661:
-#line 51605 "shortcodes.c"
+#line 52036 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -51630,7 +52061,7 @@ st1663:
 	if ( ++p == pe )
 		goto _test_eof1663;
 case 1663:
-#line 51634 "shortcodes.c"
+#line 52065 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3139;
 		case 34: goto st1313;
@@ -51654,7 +52085,7 @@ case 1663:
 		goto st1660;
 	goto st1315;
 tr3145:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -51664,7 +52095,7 @@ st1664:
 	if ( ++p == pe )
 		goto _test_eof1664;
 case 1664:
-#line 51668 "shortcodes.c"
+#line 52099 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2724;
 		case 39: goto tr3121;
@@ -51682,6 +52113,7 @@ case 1664:
 tr3118:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51699,7 +52131,7 @@ tr3118:
       }
 	goto st1665;
 tr2742:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51711,7 +52143,7 @@ tr2742:
     }
 	goto st1665;
 tr3151:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51726,7 +52158,7 @@ st1665:
 	if ( ++p == pe )
 		goto _test_eof1665;
 case 1665:
-#line 51730 "shortcodes.c"
+#line 52162 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -51778,7 +52210,7 @@ st1669:
 	if ( ++p == pe )
 		goto _test_eof1669;
 case 1669:
-#line 51782 "shortcodes.c"
+#line 52214 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3150;
 		case 34: goto st1440;
@@ -51808,7 +52240,7 @@ st1670:
 	if ( ++p == pe )
 		goto _test_eof1670;
 case 1670:
-#line 51812 "shortcodes.c"
+#line 52244 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3150;
 		case 34: goto st1440;
@@ -51830,7 +52262,7 @@ case 1670:
 		goto st1669;
 	goto st1439;
 tr3153:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -51840,7 +52272,7 @@ st1671:
 	if ( ++p == pe )
 		goto _test_eof1671;
 case 1671:
-#line 51844 "shortcodes.c"
+#line 52276 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3121;
 		case 39: goto tr2722;
@@ -51904,7 +52336,7 @@ st1674:
 	if ( ++p == pe )
 		goto _test_eof1674;
 case 1674:
-#line 51908 "shortcodes.c"
+#line 52340 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3157;
 		case 34: goto st1440;
@@ -51929,6 +52361,7 @@ case 1674:
 tr3157:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -51946,7 +52379,7 @@ tr3157:
       }
 	goto st1675;
 tr3169:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -51958,7 +52391,7 @@ tr3169:
     }
 	goto st1675;
 tr3178:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -51973,7 +52406,7 @@ st1675:
 	if ( ++p == pe )
 		goto _test_eof1675;
 case 1675:
-#line 51977 "shortcodes.c"
+#line 52410 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto st1675;
 		case 34: goto tr3163;
@@ -52005,7 +52438,7 @@ st1676:
 	if ( ++p == pe )
 		goto _test_eof1676;
 case 1676:
-#line 52009 "shortcodes.c"
+#line 52442 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3169;
 		case 34: goto st1440;
@@ -52021,6 +52454,7 @@ case 1676:
 tr3158:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52038,7 +52472,7 @@ tr3158:
       }
 	goto st1677;
 tr3170:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52050,7 +52484,7 @@ tr3170:
     }
 	goto st1677;
 tr3179:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52065,7 +52499,7 @@ st1677:
 	if ( ++p == pe )
 		goto _test_eof1677;
 case 1677:
-#line 52069 "shortcodes.c"
+#line 52503 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -52085,7 +52519,7 @@ case 1678:
 	}
 	goto st1439;
 tr3171:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52097,7 +52531,7 @@ tr3171:
     }
 	goto st1679;
 tr3180:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52112,7 +52546,7 @@ st1679:
 	if ( ++p == pe )
 		goto _test_eof1679;
 case 1679:
-#line 52116 "shortcodes.c"
+#line 52550 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -52145,6 +52579,7 @@ case 1681:
 tr3161:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52162,7 +52597,7 @@ tr3161:
       }
 	goto st1682;
 tr3172:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52174,7 +52609,7 @@ tr3172:
     }
 	goto st1682;
 tr3182:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52189,7 +52624,7 @@ st1682:
 	if ( ++p == pe )
 		goto _test_eof1682;
 case 1682:
-#line 52193 "shortcodes.c"
+#line 52628 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -52218,7 +52653,7 @@ st1684:
 	if ( ++p == pe )
 		goto _test_eof1684;
 case 1684:
-#line 52222 "shortcodes.c"
+#line 52657 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3178;
 		case 34: goto st1440;
@@ -52250,7 +52685,7 @@ st1685:
 	if ( ++p == pe )
 		goto _test_eof1685;
 case 1685:
-#line 52254 "shortcodes.c"
+#line 52689 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3178;
 		case 34: goto st1440;
@@ -52274,7 +52709,7 @@ case 1685:
 		goto st1684;
 	goto st1439;
 tr3183:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -52284,7 +52719,7 @@ st1686:
 	if ( ++p == pe )
 		goto _test_eof1686;
 case 1686:
-#line 52288 "shortcodes.c"
+#line 52723 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr3163;
 		case 39: goto tr3163;
@@ -52302,6 +52737,7 @@ case 1686:
 tr3160:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52322,7 +52758,7 @@ st1687:
 	if ( ++p == pe )
 		goto _test_eof1687;
 case 1687:
-#line 52326 "shortcodes.c"
+#line 52762 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3157;
 		case 34: goto st1440;
@@ -52347,6 +52783,7 @@ case 1687:
 tr3185:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52367,7 +52804,7 @@ st1688:
 	if ( ++p == pe )
 		goto _test_eof1688;
 case 1688:
-#line 52371 "shortcodes.c"
+#line 52808 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1440;
 		case 39: goto st1452;
@@ -52396,7 +52833,7 @@ st1690:
 	if ( ++p == pe )
 		goto _test_eof1690;
 case 1690:
-#line 52400 "shortcodes.c"
+#line 52837 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3187;
 		case 34: goto st1309;
@@ -52428,7 +52865,7 @@ st1691:
 	if ( ++p == pe )
 		goto _test_eof1691;
 case 1691:
-#line 52432 "shortcodes.c"
+#line 52869 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3187;
 		case 34: goto st1309;
@@ -52452,7 +52889,7 @@ case 1691:
 		goto st1690;
 	goto st1308;
 tr3192:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -52462,7 +52899,7 @@ st1692:
 	if ( ++p == pe )
 		goto _test_eof1692;
 case 1692:
-#line 52466 "shortcodes.c"
+#line 52903 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2722;
 		case 39: goto tr2724;
@@ -52480,6 +52917,7 @@ case 1692:
 tr2719:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52500,7 +52938,7 @@ st1693:
 	if ( ++p == pe )
 		goto _test_eof1693;
 case 1693:
-#line 52504 "shortcodes.c"
+#line 52942 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2716;
 		case 34: goto st1309;
@@ -52525,6 +52963,7 @@ case 1693:
 tr3194:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52545,7 +52984,7 @@ st1694:
 	if ( ++p == pe )
 		goto _test_eof1694;
 case 1694:
-#line 52549 "shortcodes.c"
+#line 52988 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 39: goto st1259;
@@ -52576,7 +53015,7 @@ case 1696:
 	}
 	goto st1308;
 tr2556:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52588,7 +53027,7 @@ tr2556:
     }
 	goto st1697;
 tr3200:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52603,7 +53042,7 @@ st1697:
 	if ( ++p == pe )
 		goto _test_eof1697;
 case 1697:
-#line 52607 "shortcodes.c"
+#line 53046 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1309;
 		case 37: goto st1698;
@@ -52643,7 +53082,7 @@ st1700:
 	if ( ++p == pe )
 		goto _test_eof1700;
 case 1700:
-#line 52647 "shortcodes.c"
+#line 53086 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3198;
 		case 34: goto st1309;
@@ -52675,7 +53114,7 @@ st1701:
 	if ( ++p == pe )
 		goto _test_eof1701;
 case 1701:
-#line 52679 "shortcodes.c"
+#line 53118 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3198;
 		case 34: goto st1309;
@@ -52699,7 +53138,7 @@ case 1701:
 		goto st1700;
 	goto st1308;
 tr3203:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -52709,7 +53148,7 @@ st1702:
 	if ( ++p == pe )
 		goto _test_eof1702;
 case 1702:
-#line 52713 "shortcodes.c"
+#line 53152 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2530;
 		case 39: goto tr2560;
@@ -52727,6 +53166,7 @@ case 1702:
 tr3393:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52744,7 +53184,7 @@ tr3393:
       }
 	goto st1703;
 tr2544:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52756,7 +53196,7 @@ tr2544:
     }
 	goto st1703;
 tr3210:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52771,7 +53211,7 @@ st1703:
 	if ( ++p == pe )
 		goto _test_eof1703;
 case 1703:
-#line 52775 "shortcodes.c"
+#line 53215 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -52791,7 +53231,7 @@ case 1704:
 	}
 	goto st1161;
 tr2545:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52803,7 +53243,7 @@ tr2545:
     }
 	goto st1705;
 tr3211:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52818,7 +53258,7 @@ st1705:
 	if ( ++p == pe )
 		goto _test_eof1705;
 case 1705:
-#line 52822 "shortcodes.c"
+#line 53262 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -52858,7 +53298,7 @@ st1708:
 	if ( ++p == pe )
 		goto _test_eof1708;
 case 1708:
-#line 52862 "shortcodes.c"
+#line 53302 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3209;
 		case 34: goto st1162;
@@ -52883,6 +53323,7 @@ case 1708:
 tr3396:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -52900,7 +53341,7 @@ tr3396:
       }
 	goto st1709;
 tr2546:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -52912,7 +53353,7 @@ tr2546:
     }
 	goto st1709;
 tr3213:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -52927,7 +53368,7 @@ st1709:
 	if ( ++p == pe )
 		goto _test_eof1709;
 case 1709:
-#line 52931 "shortcodes.c"
+#line 53372 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -52956,7 +53397,7 @@ st1711:
 	if ( ++p == pe )
 		goto _test_eof1711;
 case 1711:
-#line 52960 "shortcodes.c"
+#line 53401 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3209;
 		case 34: goto st1162;
@@ -52980,7 +53421,7 @@ case 1711:
 		goto st1708;
 	goto st1161;
 tr3215:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -52990,7 +53431,7 @@ st1712:
 	if ( ++p == pe )
 		goto _test_eof1712;
 case 1712:
-#line 52994 "shortcodes.c"
+#line 53435 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2548;
 		case 39: goto tr2519;
@@ -53015,7 +53456,7 @@ st1713:
 	if ( ++p == pe )
 		goto _test_eof1713;
 case 1713:
-#line 53019 "shortcodes.c"
+#line 53460 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3217;
 		case 34: goto st1273;
@@ -53045,7 +53486,7 @@ st1714:
 	if ( ++p == pe )
 		goto _test_eof1714;
 case 1714:
-#line 53049 "shortcodes.c"
+#line 53490 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3217;
 		case 34: goto st1273;
@@ -53067,7 +53508,7 @@ case 1714:
 		goto st1713;
 	goto st1272;
 tr3220:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -53077,7 +53518,7 @@ st1715:
 	if ( ++p == pe )
 		goto _test_eof1715;
 case 1715:
-#line 53081 "shortcodes.c"
+#line 53522 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2529;
 		case 39: goto tr2530;
@@ -53102,7 +53543,7 @@ st1716:
 	if ( ++p == pe )
 		goto _test_eof1716;
 case 1716:
-#line 53106 "shortcodes.c"
+#line 53547 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3222;
 		case 34: goto st1313;
@@ -53134,7 +53575,7 @@ st1717:
 	if ( ++p == pe )
 		goto _test_eof1717;
 case 1717:
-#line 53138 "shortcodes.c"
+#line 53579 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3222;
 		case 34: goto st1313;
@@ -53158,7 +53599,7 @@ case 1717:
 		goto st1716;
 	goto st1315;
 tr3227:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -53168,7 +53609,7 @@ st1718:
 	if ( ++p == pe )
 		goto _test_eof1718;
 case 1718:
-#line 53172 "shortcodes.c"
+#line 53613 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2519;
 		case 39: goto tr2521;
@@ -53186,6 +53627,7 @@ case 1718:
 tr2516:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53206,7 +53648,7 @@ st1719:
 	if ( ++p == pe )
 		goto _test_eof1719;
 case 1719:
-#line 53210 "shortcodes.c"
+#line 53652 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2513;
 		case 34: goto st1313;
@@ -53231,6 +53673,7 @@ case 1719:
 tr3229:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53251,7 +53694,7 @@ st1720:
 	if ( ++p == pe )
 		goto _test_eof1720;
 case 1720:
-#line 53255 "shortcodes.c"
+#line 53698 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -53310,7 +53753,7 @@ st1724:
 	if ( ++p == pe )
 		goto _test_eof1724;
 case 1724:
-#line 53314 "shortcodes.c"
+#line 53757 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3233;
 		case 34: goto st1313;
@@ -53379,7 +53822,7 @@ st1727:
 	if ( ++p == pe )
 		goto _test_eof1727;
 case 1727:
-#line 53383 "shortcodes.c"
+#line 53826 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3238;
 		case 34: goto st1313;
@@ -53404,6 +53847,7 @@ case 1727:
 tr3241:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53424,7 +53868,7 @@ st1728:
 	if ( ++p == pe )
 		goto _test_eof1728;
 case 1728:
-#line 53428 "shortcodes.c"
+#line 53872 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3238;
 		case 34: goto st1313;
@@ -53449,6 +53893,7 @@ case 1728:
 tr3243:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53469,7 +53914,7 @@ st1729:
 	if ( ++p == pe )
 		goto _test_eof1729;
 case 1729:
-#line 53473 "shortcodes.c"
+#line 53918 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1313;
 		case 39: goto st1300;
@@ -53491,6 +53936,7 @@ case 1730:
 tr3313:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53508,7 +53954,7 @@ tr3313:
       }
 	goto st1731;
 tr2497:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -53520,7 +53966,7 @@ tr2497:
     }
 	goto st1731;
 tr3249:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -53535,7 +53981,7 @@ st1731:
 	if ( ++p == pe )
 		goto _test_eof1731;
 case 1731:
-#line 53539 "shortcodes.c"
+#line 53985 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 47: goto st1732;
@@ -53583,7 +54029,7 @@ st1735:
 	if ( ++p == pe )
 		goto _test_eof1735;
 case 1735:
-#line 53587 "shortcodes.c"
+#line 54033 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3248;
 		case 39: goto st1261;
@@ -53612,7 +54058,7 @@ st1736:
 	if ( ++p == pe )
 		goto _test_eof1736;
 case 1736:
-#line 53616 "shortcodes.c"
+#line 54062 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3248;
 		case 39: goto st1261;
@@ -53633,7 +54079,7 @@ case 1736:
 		goto st1735;
 	goto st1265;
 tr3251:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -53643,7 +54089,7 @@ st1737:
 	if ( ++p == pe )
 		goto _test_eof1737;
 case 1737:
-#line 53647 "shortcodes.c"
+#line 54093 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2362;
 		case 39: goto tr2499;
@@ -53659,7 +54105,7 @@ case 1737:
 		goto tr2501;
 	goto st1265;
 tr2485:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -53671,7 +54117,7 @@ tr2485:
     }
 	goto st1738;
 tr3257:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -53686,7 +54132,7 @@ st1738:
 	if ( ++p == pe )
 		goto _test_eof1738;
 case 1738:
-#line 53690 "shortcodes.c"
+#line 54136 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 62: goto st1739;
@@ -53723,7 +54169,7 @@ st1741:
 	if ( ++p == pe )
 		goto _test_eof1741;
 case 1741:
-#line 53727 "shortcodes.c"
+#line 54173 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3255;
 		case 37: goto tr3256;
@@ -53747,6 +54193,7 @@ case 1741:
 tr3419:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53764,7 +54211,7 @@ tr3419:
       }
 	goto st1742;
 tr2486:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -53776,7 +54223,7 @@ tr2486:
     }
 	goto st1742;
 tr3259:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -53791,7 +54238,7 @@ st1742:
 	if ( ++p == pe )
 		goto _test_eof1742;
 case 1742:
-#line 53795 "shortcodes.c"
+#line 54242 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -53818,7 +54265,7 @@ st1744:
 	if ( ++p == pe )
 		goto _test_eof1744;
 case 1744:
-#line 53822 "shortcodes.c"
+#line 54269 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3255;
 		case 37: goto tr3256;
@@ -53841,7 +54288,7 @@ case 1744:
 		goto st1741;
 	goto st1154;
 tr3261:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -53851,7 +54298,7 @@ st1745:
 	if ( ++p == pe )
 		goto _test_eof1745;
 case 1745:
-#line 53855 "shortcodes.c"
+#line 54302 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2466;
 		case 39: goto tr2489;
@@ -53869,6 +54316,7 @@ case 1745:
 tr2462:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -53886,7 +54334,7 @@ tr2462:
       }
 	goto st1746;
 tr2370:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -53898,7 +54346,7 @@ tr2370:
     }
 	goto st1746;
 tr3267:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -53913,7 +54361,7 @@ st1746:
 	if ( ++p == pe )
 		goto _test_eof1746;
 case 1746:
-#line 53917 "shortcodes.c"
+#line 54365 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 47: goto st1747;
@@ -53961,7 +54409,7 @@ st1750:
 	if ( ++p == pe )
 		goto _test_eof1750;
 case 1750:
-#line 53965 "shortcodes.c"
+#line 54413 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3266;
 		case 34: goto st1261;
@@ -53990,7 +54438,7 @@ st1751:
 	if ( ++p == pe )
 		goto _test_eof1751;
 case 1751:
-#line 53994 "shortcodes.c"
+#line 54442 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3266;
 		case 34: goto st1261;
@@ -54011,7 +54459,7 @@ case 1751:
 		goto st1750;
 	goto st1260;
 tr3269:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -54021,7 +54469,7 @@ st1752:
 	if ( ++p == pe )
 		goto _test_eof1752;
 case 1752:
-#line 54025 "shortcodes.c"
+#line 54473 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2465;
 		case 39: goto tr2466;
@@ -54083,7 +54531,7 @@ st1755:
 	if ( ++p == pe )
 		goto _test_eof1755;
 case 1755:
-#line 54087 "shortcodes.c"
+#line 54535 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3273;
 		case 34: goto st1261;
@@ -54107,6 +54555,7 @@ case 1755:
 tr3276:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54127,7 +54576,7 @@ st1756:
 	if ( ++p == pe )
 		goto _test_eof1756;
 case 1756:
-#line 54131 "shortcodes.c"
+#line 54580 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3273;
 		case 34: goto st1261;
@@ -54151,6 +54600,7 @@ case 1756:
 tr3278:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54171,7 +54621,7 @@ st1757:
 	if ( ++p == pe )
 		goto _test_eof1757;
 case 1757:
-#line 54175 "shortcodes.c"
+#line 54625 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 123: goto tr2371;
@@ -54199,7 +54649,7 @@ case 1759:
 	}
 	goto st1260;
 tr2433:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -54211,7 +54661,7 @@ tr2433:
     }
 	goto st1760;
 tr3284:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -54226,7 +54676,7 @@ st1760:
 	if ( ++p == pe )
 		goto _test_eof1760;
 case 1760:
-#line 54230 "shortcodes.c"
+#line 54680 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1261;
 		case 37: goto st1761;
@@ -54263,7 +54713,7 @@ st1763:
 	if ( ++p == pe )
 		goto _test_eof1763;
 case 1763:
-#line 54267 "shortcodes.c"
+#line 54717 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3282;
 		case 34: goto st1261;
@@ -54294,7 +54744,7 @@ st1764:
 	if ( ++p == pe )
 		goto _test_eof1764;
 case 1764:
-#line 54298 "shortcodes.c"
+#line 54748 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3282;
 		case 34: goto st1261;
@@ -54317,7 +54767,7 @@ case 1764:
 		goto st1763;
 	goto st1260;
 tr3287:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -54327,7 +54777,7 @@ st1765:
 	if ( ++p == pe )
 		goto _test_eof1765;
 case 1765:
-#line 54331 "shortcodes.c"
+#line 54781 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2436;
 		case 39: goto tr2438;
@@ -54345,6 +54795,7 @@ case 1765:
 tr3461:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54362,7 +54813,7 @@ tr3461:
       }
 	goto st1766;
 tr2421:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -54374,7 +54825,7 @@ tr2421:
     }
 	goto st1766;
 tr3294:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -54389,7 +54840,7 @@ st1766:
 	if ( ++p == pe )
 		goto _test_eof1766;
 case 1766:
-#line 54393 "shortcodes.c"
+#line 54844 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -54407,7 +54858,7 @@ case 1767:
 	}
 	goto st7;
 tr2422:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -54419,7 +54870,7 @@ tr2422:
     }
 	goto st1768;
 tr3295:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -54434,7 +54885,7 @@ st1768:
 	if ( ++p == pe )
 		goto _test_eof1768;
 case 1768:
-#line 54438 "shortcodes.c"
+#line 54889 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 62: goto st1769;
@@ -54471,7 +54922,7 @@ st1771:
 	if ( ++p == pe )
 		goto _test_eof1771;
 case 1771:
-#line 54475 "shortcodes.c"
+#line 54926 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3293;
 		case 34: goto st8;
@@ -54495,6 +54946,7 @@ case 1771:
 tr3464:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54512,7 +54964,7 @@ tr3464:
       }
 	goto st1772;
 tr2423:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -54524,7 +54976,7 @@ tr2423:
     }
 	goto st1772;
 tr3297:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -54539,7 +54991,7 @@ st1772:
 	if ( ++p == pe )
 		goto _test_eof1772;
 case 1772:
-#line 54543 "shortcodes.c"
+#line 54995 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -54566,7 +55018,7 @@ st1774:
 	if ( ++p == pe )
 		goto _test_eof1774;
 case 1774:
-#line 54570 "shortcodes.c"
+#line 55022 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3293;
 		case 34: goto st8;
@@ -54589,7 +55041,7 @@ case 1774:
 		goto st1771;
 	goto st7;
 tr3299:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -54599,7 +55051,7 @@ st1775:
 	if ( ++p == pe )
 		goto _test_eof1775;
 case 1775:
-#line 54603 "shortcodes.c"
+#line 55055 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2425;
 		case 39: goto tr2400;
@@ -54624,7 +55076,7 @@ st1776:
 	if ( ++p == pe )
 		goto _test_eof1776;
 case 1776:
-#line 54628 "shortcodes.c"
+#line 55080 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3301;
 		case 37: goto tr3302;
@@ -54655,7 +55107,7 @@ st1777:
 	if ( ++p == pe )
 		goto _test_eof1777;
 case 1777:
-#line 54659 "shortcodes.c"
+#line 55111 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3301;
 		case 37: goto tr3302;
@@ -54678,7 +55130,7 @@ case 1777:
 		goto st1776;
 	goto st1265;
 tr3306:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -54688,7 +55140,7 @@ st1778:
 	if ( ++p == pe )
 		goto _test_eof1778;
 case 1778:
-#line 54692 "shortcodes.c"
+#line 55144 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2400;
 		case 39: goto tr2402;
@@ -54706,6 +55158,7 @@ case 1778:
 tr2397:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54726,7 +55179,7 @@ st1779:
 	if ( ++p == pe )
 		goto _test_eof1779;
 case 1779:
-#line 54730 "shortcodes.c"
+#line 55183 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2394;
 		case 37: goto tr3308;
@@ -54750,6 +55203,7 @@ case 1779:
 tr3308:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54770,7 +55224,7 @@ st1780:
 	if ( ++p == pe )
 		goto _test_eof1780;
 case 1780:
-#line 54774 "shortcodes.c"
+#line 55228 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -54825,7 +55279,7 @@ st1784:
 	if ( ++p == pe )
 		goto _test_eof1784;
 case 1784:
-#line 54829 "shortcodes.c"
+#line 55283 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3312;
 		case 39: goto st1261;
@@ -54891,7 +55345,7 @@ st1787:
 	if ( ++p == pe )
 		goto _test_eof1787;
 case 1787:
-#line 54895 "shortcodes.c"
+#line 55349 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3317;
 		case 37: goto tr3318;
@@ -54915,6 +55369,7 @@ case 1787:
 tr3320:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54935,7 +55390,7 @@ st1788:
 	if ( ++p == pe )
 		goto _test_eof1788;
 case 1788:
-#line 54939 "shortcodes.c"
+#line 55394 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3317;
 		case 37: goto tr3318;
@@ -54959,6 +55414,7 @@ case 1788:
 tr3322:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -54979,7 +55435,7 @@ st1789:
 	if ( ++p == pe )
 		goto _test_eof1789;
 case 1789:
-#line 54983 "shortcodes.c"
+#line 55439 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1261;
 		case 123: goto tr2387;
@@ -54997,7 +55453,7 @@ case 1790:
 	}
 	goto st1265;
 tr2374:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -55009,7 +55465,7 @@ tr2374:
     }
 	goto st1791;
 tr3328:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -55024,7 +55480,7 @@ st1791:
 	if ( ++p == pe )
 		goto _test_eof1791;
 case 1791:
-#line 55028 "shortcodes.c"
+#line 55484 "shortcodes.c"
 	switch( (*p) ) {
 		case 62: goto st1792;
 		case 123: goto tr1;
@@ -55058,7 +55514,7 @@ st1794:
 	if ( ++p == pe )
 		goto _test_eof1794;
 case 1794:
-#line 55062 "shortcodes.c"
+#line 55518 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3326;
 		case 37: goto tr3327;
@@ -55081,6 +55537,7 @@ case 1794:
 tr3487:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -55098,7 +55555,7 @@ tr3487:
       }
 	goto st1795;
 tr2375:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -55110,7 +55567,7 @@ tr2375:
     }
 	goto st1795;
 tr3330:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -55125,7 +55582,7 @@ st1795:
 	if ( ++p == pe )
 		goto _test_eof1795;
 case 1795:
-#line 55129 "shortcodes.c"
+#line 55586 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1796;
@@ -55150,7 +55607,7 @@ st1797:
 	if ( ++p == pe )
 		goto _test_eof1797;
 case 1797:
-#line 55154 "shortcodes.c"
+#line 55611 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3326;
 		case 37: goto tr3327;
@@ -55172,7 +55629,7 @@ case 1797:
 		goto st1794;
 	goto st0;
 tr3332:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55182,7 +55639,7 @@ st1798:
 	if ( ++p == pe )
 		goto _test_eof1798;
 case 1798:
-#line 55186 "shortcodes.c"
+#line 55643 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2377;
 		case 39: goto tr2379;
@@ -55207,7 +55664,7 @@ st1799:
 	if ( ++p == pe )
 		goto _test_eof1799;
 case 1799:
-#line 55211 "shortcodes.c"
+#line 55668 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3334;
 		case 34: goto st1152;
@@ -55238,7 +55695,7 @@ st1800:
 	if ( ++p == pe )
 		goto _test_eof1800;
 case 1800:
-#line 55242 "shortcodes.c"
+#line 55699 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3334;
 		case 34: goto st1152;
@@ -55261,7 +55718,7 @@ case 1800:
 		goto st1799;
 	goto st1151;
 tr3339:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55271,7 +55728,7 @@ st1801:
 	if ( ++p == pe )
 		goto _test_eof1801;
 case 1801:
-#line 55275 "shortcodes.c"
+#line 55732 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2360;
 		case 39: goto tr2362;
@@ -55289,6 +55746,7 @@ case 1801:
 tr2357:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -55309,7 +55767,7 @@ st1802:
 	if ( ++p == pe )
 		goto _test_eof1802;
 case 1802:
-#line 55313 "shortcodes.c"
+#line 55771 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2354;
 		case 34: goto st1152;
@@ -55333,6 +55791,7 @@ case 1802:
 tr3341:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -55353,7 +55812,7 @@ st1803:
 	if ( ++p == pe )
 		goto _test_eof1803;
 case 1803:
-#line 55357 "shortcodes.c"
+#line 55816 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1152;
 		case 123: goto tr2146;
@@ -55390,7 +55849,7 @@ st1806:
 	if ( ++p == pe )
 		goto _test_eof1806;
 case 1806:
-#line 55394 "shortcodes.c"
+#line 55853 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3343;
 		case 34: goto st1152;
@@ -55419,7 +55878,7 @@ st1807:
 	if ( ++p == pe )
 		goto _test_eof1807;
 case 1807:
-#line 55423 "shortcodes.c"
+#line 55882 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3343;
 		case 34: goto st1152;
@@ -55440,7 +55899,7 @@ case 1807:
 		goto st1806;
 	goto st1151;
 tr3346:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55450,7 +55909,7 @@ st1808:
 	if ( ++p == pe )
 		goto _test_eof1808;
 case 1808:
-#line 55454 "shortcodes.c"
+#line 55913 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2308;
 		case 39: goto tr2292;
@@ -55475,7 +55934,7 @@ st1809:
 	if ( ++p == pe )
 		goto _test_eof1809;
 case 1809:
-#line 55479 "shortcodes.c"
+#line 55938 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3348;
 		case 34: goto st1145;
@@ -55505,7 +55964,7 @@ st1810:
 	if ( ++p == pe )
 		goto _test_eof1810;
 case 1810:
-#line 55509 "shortcodes.c"
+#line 55968 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3348;
 		case 34: goto st1145;
@@ -55527,7 +55986,7 @@ case 1810:
 		goto st1809;
 	goto st1144;
 tr3351:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55537,7 +55996,7 @@ st1811:
 	if ( ++p == pe )
 		goto _test_eof1811;
 case 1811:
-#line 55541 "shortcodes.c"
+#line 56000 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2271;
 		case 39: goto tr2272;
@@ -55601,7 +56060,7 @@ st1814:
 	if ( ++p == pe )
 		goto _test_eof1814;
 case 1814:
-#line 55605 "shortcodes.c"
+#line 56064 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3355;
 		case 34: goto st1145;
@@ -55626,6 +56085,7 @@ case 1814:
 tr3358:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -55646,7 +56106,7 @@ st1815:
 	if ( ++p == pe )
 		goto _test_eof1815;
 case 1815:
-#line 55650 "shortcodes.c"
+#line 56110 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3355;
 		case 34: goto st1145;
@@ -55671,6 +56131,7 @@ case 1815:
 tr3360:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -55691,7 +56152,7 @@ st1816:
 	if ( ++p == pe )
 		goto _test_eof1816;
 case 1816:
-#line 55695 "shortcodes.c"
+#line 56156 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 39: goto st1150;
@@ -55722,7 +56183,7 @@ case 1818:
 	}
 	goto st1144;
 tr2241:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -55734,7 +56195,7 @@ tr2241:
     }
 	goto st1819;
 tr3366:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -55749,7 +56210,7 @@ st1819:
 	if ( ++p == pe )
 		goto _test_eof1819;
 case 1819:
-#line 55753 "shortcodes.c"
+#line 56214 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1145;
 		case 37: goto st1820;
@@ -55789,7 +56250,7 @@ st1822:
 	if ( ++p == pe )
 		goto _test_eof1822;
 case 1822:
-#line 55793 "shortcodes.c"
+#line 56254 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3364;
 		case 34: goto st1145;
@@ -55821,7 +56282,7 @@ st1823:
 	if ( ++p == pe )
 		goto _test_eof1823;
 case 1823:
-#line 55825 "shortcodes.c"
+#line 56286 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3364;
 		case 34: goto st1145;
@@ -55845,7 +56306,7 @@ case 1823:
 		goto st1822;
 	goto st1144;
 tr3369:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55855,7 +56316,7 @@ st1824:
 	if ( ++p == pe )
 		goto _test_eof1824;
 case 1824:
-#line 55859 "shortcodes.c"
+#line 56320 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2218;
 		case 39: goto tr2235;
@@ -55880,7 +56341,7 @@ st1825:
 	if ( ++p == pe )
 		goto _test_eof1825;
 case 1825:
-#line 55884 "shortcodes.c"
+#line 56345 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3371;
 		case 34: goto st1119;
@@ -55910,7 +56371,7 @@ st1826:
 	if ( ++p == pe )
 		goto _test_eof1826;
 case 1826:
-#line 55914 "shortcodes.c"
+#line 56375 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3371;
 		case 34: goto st1119;
@@ -55932,7 +56393,7 @@ case 1826:
 		goto st1825;
 	goto st1118;
 tr3374:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -55942,7 +56403,7 @@ st1827:
 	if ( ++p == pe )
 		goto _test_eof1827;
 case 1827:
-#line 55946 "shortcodes.c"
+#line 56407 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2235;
 		case 39: goto tr2216;
@@ -55967,7 +56428,7 @@ st1828:
 	if ( ++p == pe )
 		goto _test_eof1828;
 case 1828:
-#line 55971 "shortcodes.c"
+#line 56432 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3376;
 		case 34: goto st1162;
@@ -55999,7 +56460,7 @@ st1829:
 	if ( ++p == pe )
 		goto _test_eof1829;
 case 1829:
-#line 56003 "shortcodes.c"
+#line 56464 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3376;
 		case 34: goto st1162;
@@ -56023,7 +56484,7 @@ case 1829:
 		goto st1828;
 	goto st1161;
 tr3381:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -56033,7 +56494,7 @@ st1830:
 	if ( ++p == pe )
 		goto _test_eof1830;
 case 1830:
-#line 56037 "shortcodes.c"
+#line 56498 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2216;
 		case 39: goto tr2218;
@@ -56051,6 +56512,7 @@ case 1830:
 tr2213:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56071,7 +56533,7 @@ st1831:
 	if ( ++p == pe )
 		goto _test_eof1831;
 case 1831:
-#line 56075 "shortcodes.c"
+#line 56537 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2210;
 		case 34: goto st1162;
@@ -56096,6 +56558,7 @@ case 1831:
 tr3383:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56116,7 +56579,7 @@ st1832:
 	if ( ++p == pe )
 		goto _test_eof1832;
 case 1832:
-#line 56120 "shortcodes.c"
+#line 56583 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -56175,7 +56638,7 @@ st1836:
 	if ( ++p == pe )
 		goto _test_eof1836;
 case 1836:
-#line 56179 "shortcodes.c"
+#line 56642 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3387;
 		case 34: goto st1162;
@@ -56244,7 +56707,7 @@ st1839:
 	if ( ++p == pe )
 		goto _test_eof1839;
 case 1839:
-#line 56248 "shortcodes.c"
+#line 56711 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3392;
 		case 34: goto st1162;
@@ -56269,6 +56732,7 @@ case 1839:
 tr3395:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56289,7 +56753,7 @@ st1840:
 	if ( ++p == pe )
 		goto _test_eof1840;
 case 1840:
-#line 56293 "shortcodes.c"
+#line 56757 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3392;
 		case 34: goto st1162;
@@ -56314,6 +56778,7 @@ case 1840:
 tr3397:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56334,7 +56799,7 @@ st1841:
 	if ( ++p == pe )
 		goto _test_eof1841;
 case 1841:
-#line 56338 "shortcodes.c"
+#line 56803 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st1162;
 		case 39: goto st1170;
@@ -56363,7 +56828,7 @@ st1843:
 	if ( ++p == pe )
 		goto _test_eof1843;
 case 1843:
-#line 56367 "shortcodes.c"
+#line 56832 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3399;
 		case 37: goto tr3400;
@@ -56394,7 +56859,7 @@ st1844:
 	if ( ++p == pe )
 		goto _test_eof1844;
 case 1844:
-#line 56398 "shortcodes.c"
+#line 56863 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3399;
 		case 37: goto tr3400;
@@ -56417,7 +56882,7 @@ case 1844:
 		goto st1843;
 	goto st1154;
 tr3404:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -56427,7 +56892,7 @@ st1845:
 	if ( ++p == pe )
 		goto _test_eof1845;
 case 1845:
-#line 56431 "shortcodes.c"
+#line 56896 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2169;
 		case 39: goto tr2171;
@@ -56445,6 +56910,7 @@ case 1845:
 tr2166:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56465,7 +56931,7 @@ st1846:
 	if ( ++p == pe )
 		goto _test_eof1846;
 case 1846:
-#line 56469 "shortcodes.c"
+#line 56935 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2163;
 		case 37: goto tr3406;
@@ -56489,6 +56955,7 @@ case 1846:
 tr3406:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56509,7 +56976,7 @@ st1847:
 	if ( ++p == pe )
 		goto _test_eof1847;
 case 1847:
-#line 56513 "shortcodes.c"
+#line 56980 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -56564,7 +57031,7 @@ st1851:
 	if ( ++p == pe )
 		goto _test_eof1851;
 case 1851:
-#line 56568 "shortcodes.c"
+#line 57035 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3410;
 		case 39: goto st1152;
@@ -56630,7 +57097,7 @@ st1854:
 	if ( ++p == pe )
 		goto _test_eof1854;
 case 1854:
-#line 56634 "shortcodes.c"
+#line 57101 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3415;
 		case 37: goto tr3416;
@@ -56654,6 +57121,7 @@ case 1854:
 tr3418:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56674,7 +57142,7 @@ st1855:
 	if ( ++p == pe )
 		goto _test_eof1855;
 case 1855:
-#line 56678 "shortcodes.c"
+#line 57146 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3415;
 		case 37: goto tr3416;
@@ -56698,6 +57166,7 @@ case 1855:
 tr3420:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56718,7 +57187,7 @@ st1856:
 	if ( ++p == pe )
 		goto _test_eof1856;
 case 1856:
-#line 56722 "shortcodes.c"
+#line 57191 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st1152;
 		case 123: goto tr2156;
@@ -56738,6 +57207,7 @@ case 1857:
 tr3479:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -56755,7 +57225,7 @@ tr3479:
       }
 	goto st1858;
 tr2148:
-#line 51 "shortcodes.rl"
+#line 52 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
@@ -56767,7 +57237,7 @@ tr2148:
     }
 	goto st1858;
 tr3426:
-#line 64 "shortcodes.rl"
+#line 65 "shortcodes.rl"
 	{
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
@@ -56782,7 +57252,7 @@ st1858:
 	if ( ++p == pe )
 		goto _test_eof1858;
 case 1858:
-#line 56786 "shortcodes.c"
+#line 57256 "shortcodes.c"
 	switch( (*p) ) {
 		case 47: goto st1859;
 		case 123: goto tr1;
@@ -56826,7 +57296,7 @@ st1862:
 	if ( ++p == pe )
 		goto _test_eof1862;
 case 1862:
-#line 56830 "shortcodes.c"
+#line 57300 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3425;
 		case 42: goto tr3426;
@@ -56854,7 +57324,7 @@ st1863:
 	if ( ++p == pe )
 		goto _test_eof1863;
 case 1863:
-#line 56858 "shortcodes.c"
+#line 57328 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3425;
 		case 42: goto tr3426;
@@ -56874,7 +57344,7 @@ case 1863:
 		goto st1862;
 	goto st0;
 tr3428:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -56884,7 +57354,7 @@ st1864:
 	if ( ++p == pe )
 		goto _test_eof1864;
 case 1864:
-#line 56888 "shortcodes.c"
+#line 57358 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2150;
 		case 39: goto tr2151;
@@ -56909,7 +57379,7 @@ st1865:
 	if ( ++p == pe )
 		goto _test_eof1865;
 case 1865:
-#line 56913 "shortcodes.c"
+#line 57383 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3430;
 		case 39: goto st8;
@@ -56938,7 +57408,7 @@ st1866:
 	if ( ++p == pe )
 		goto _test_eof1866;
 case 1866:
-#line 56942 "shortcodes.c"
+#line 57412 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3430;
 		case 39: goto st8;
@@ -56959,7 +57429,7 @@ case 1866:
 		goto st1865;
 	goto st1120;
 tr3433:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -56969,7 +57439,7 @@ st1867:
 	if ( ++p == pe )
 		goto _test_eof1867;
 case 1867:
-#line 56973 "shortcodes.c"
+#line 57443 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2126;
 		case 39: goto tr2127;
@@ -57031,7 +57501,7 @@ st1870:
 	if ( ++p == pe )
 		goto _test_eof1870;
 case 1870:
-#line 57035 "shortcodes.c"
+#line 57505 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3437;
 		case 37: goto tr3438;
@@ -57055,6 +57525,7 @@ case 1870:
 tr3440:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57075,7 +57546,7 @@ st1871:
 	if ( ++p == pe )
 		goto _test_eof1871;
 case 1871:
-#line 57079 "shortcodes.c"
+#line 57550 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3437;
 		case 37: goto tr3438;
@@ -57099,6 +57570,7 @@ case 1871:
 tr3442:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57119,7 +57591,7 @@ st1872:
 	if ( ++p == pe )
 		goto _test_eof1872;
 case 1872:
-#line 57123 "shortcodes.c"
+#line 57595 "shortcodes.c"
 	switch( (*p) ) {
 		case 39: goto st8;
 		case 123: goto tr2087;
@@ -57146,7 +57618,7 @@ st1874:
 	if ( ++p == pe )
 		goto _test_eof1874;
 case 1874:
-#line 57150 "shortcodes.c"
+#line 57622 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3444;
 		case 34: goto st8;
@@ -57177,7 +57649,7 @@ st1875:
 	if ( ++p == pe )
 		goto _test_eof1875;
 case 1875:
-#line 57181 "shortcodes.c"
+#line 57653 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3444;
 		case 34: goto st8;
@@ -57200,7 +57672,7 @@ case 1875:
 		goto st1874;
 	goto st7;
 tr3449:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -57210,7 +57682,7 @@ st1876:
 	if ( ++p == pe )
 		goto _test_eof1876;
 case 1876:
-#line 57214 "shortcodes.c"
+#line 57686 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr2062;
 		case 39: goto tr2064;
@@ -57228,6 +57700,7 @@ case 1876:
 tr2059:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57248,7 +57721,7 @@ st1877:
 	if ( ++p == pe )
 		goto _test_eof1877;
 case 1877:
-#line 57252 "shortcodes.c"
+#line 57725 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr2056;
 		case 34: goto st8;
@@ -57272,6 +57745,7 @@ case 1877:
 tr3451:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57292,7 +57766,7 @@ st1878:
 	if ( ++p == pe )
 		goto _test_eof1878;
 case 1878:
-#line 57296 "shortcodes.c"
+#line 57770 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -57347,7 +57821,7 @@ st1882:
 	if ( ++p == pe )
 		goto _test_eof1882;
 case 1882:
-#line 57351 "shortcodes.c"
+#line 57825 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3455;
 		case 34: goto st8;
@@ -57413,7 +57887,7 @@ st1885:
 	if ( ++p == pe )
 		goto _test_eof1885;
 case 1885:
-#line 57417 "shortcodes.c"
+#line 57891 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3460;
 		case 34: goto st8;
@@ -57437,6 +57911,7 @@ case 1885:
 tr3463:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57457,7 +57932,7 @@ st1886:
 	if ( ++p == pe )
 		goto _test_eof1886;
 case 1886:
-#line 57461 "shortcodes.c"
+#line 57936 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3460;
 		case 34: goto st8;
@@ -57481,6 +57956,7 @@ case 1886:
 tr3465:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57501,7 +57977,7 @@ st1887:
 	if ( ++p == pe )
 		goto _test_eof1887;
 case 1887:
-#line 57505 "shortcodes.c"
+#line 57981 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto st8;
 		case 123: goto tr23;
@@ -57528,7 +58004,7 @@ st1889:
 	if ( ++p == pe )
 		goto _test_eof1889;
 case 1889:
-#line 57532 "shortcodes.c"
+#line 58008 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3467;
 		case 37: goto tr3468;
@@ -57558,7 +58034,7 @@ st1890:
 	if ( ++p == pe )
 		goto _test_eof1890;
 case 1890:
-#line 57562 "shortcodes.c"
+#line 58038 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3467;
 		case 37: goto tr3468;
@@ -57580,7 +58056,7 @@ case 1890:
 		goto st1889;
 	goto st0;
 tr3472:
-#line 43 "shortcodes.rl"
+#line 44 "shortcodes.rl"
 	{
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
       sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
@@ -57590,7 +58066,7 @@ st1891:
 	if ( ++p == pe )
 		goto _test_eof1891;
 case 1891:
-#line 57594 "shortcodes.c"
+#line 58070 "shortcodes.c"
 	switch( (*p) ) {
 		case 34: goto tr14;
 		case 39: goto tr16;
@@ -57608,6 +58084,7 @@ case 1891:
 tr11:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57628,7 +58105,7 @@ st1892:
 	if ( ++p == pe )
 		goto _test_eof1892;
 case 1892:
-#line 57632 "shortcodes.c"
+#line 58109 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr8;
 		case 37: goto tr3474;
@@ -57651,6 +58128,7 @@ case 1892:
 tr3474:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57671,7 +58149,7 @@ st1893:
 	if ( ++p == pe )
 		goto _test_eof1893;
 case 1893:
-#line 57675 "shortcodes.c"
+#line 58153 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1894;
@@ -57722,7 +58200,7 @@ st1897:
 	if ( ++p == pe )
 		goto _test_eof1897;
 case 1897:
-#line 57726 "shortcodes.c"
+#line 58204 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3478;
 		case 42: goto tr3479;
@@ -57785,7 +58263,7 @@ st1900:
 	if ( ++p == pe )
 		goto _test_eof1900;
 case 1900:
-#line 57789 "shortcodes.c"
+#line 58267 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3483;
 		case 37: goto tr3484;
@@ -57808,6 +58286,7 @@ case 1900:
 tr3486:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57828,7 +58307,7 @@ st1901:
 	if ( ++p == pe )
 		goto _test_eof1901;
 case 1901:
-#line 57832 "shortcodes.c"
+#line 58311 "shortcodes.c"
 	switch( (*p) ) {
 		case 32: goto tr3483;
 		case 37: goto tr3484;
@@ -57851,6 +58330,7 @@ case 1901:
 tr3488:
 #line 24 "shortcodes.rl"
 	{
+      printf(">>>%s\n%s\n", mark, start);
       sc_list[c_sc].name.start = mark-start;
       sc_list[c_sc].name.len = p-mark;
       sc_list[c_sc].matching = 0;
@@ -57871,7 +58351,7 @@ st1902:
 	if ( ++p == pe )
 		goto _test_eof1902;
 case 1902:
-#line 57875 "shortcodes.c"
+#line 58355 "shortcodes.c"
 	switch( (*p) ) {
 		case 123: goto tr1;
 		case 125: goto st1903;
@@ -59827,7 +60307,7 @@ case 1903:
 	_test_eof: {}
 	}
 
-#line 203 "shortcodes.rl"
+#line 204 "shortcodes.rl"
 
   result.sccount = c_sc;
   return result;

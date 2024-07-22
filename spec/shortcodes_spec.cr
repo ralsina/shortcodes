@@ -7,18 +7,22 @@ describe "Shortcodes" do
     result.errors.size.should eq 0
   end
 
-  it "should parse simeple shortcode" do
-    result = Shortcodes.parse("foobar {{% shortcode %}}blah")
+  it "should parse simple shortcode" do
+    input = "foobar {{% shortcode %}}blah"
+    result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
-    result.shortcodes[0].name.should eq "shortcode"
-    result.shortcodes[0].matching?.should be_false
-    result.shortcodes[0].is_inline?.should be_false
-    result.shortcodes[0].args.size.should eq 0
-    result.shortcodes[0].whole.should eq "{{% shortcode %}}"
+    sc = result.shortcodes[0]
+    sc.name.should eq "shortcode"
+    sc.position.should eq 7
+    input[sc.position...sc.position + sc.whole.size].should eq sc.whole
+    sc.matching?.should be_false
+    sc.is_inline?.should be_false
+    sc.args.size.should eq 0
+    sc.whole.should eq "{{% shortcode %}}"
   end
 
-  it "should parse simeple shortcode with . and / in the name" do
+  it "should parse simple shortcode with . and / in the name" do
     result = Shortcodes.parse("foobar {{% shortcode.foo/bar %}}blah")
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
@@ -282,13 +286,15 @@ describe "Shortcodes" do
   end
 
   it "should handle unicode qvals" do
-    input = "{{% foo arg=\"áé😃\" \"😅😅😅\" %}}"
+    input = "{{% foo arg=\"áé😃\" \"😅😅😅\" %}}áé😃{{%/foo%}}"
     result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.errors.size.should eq 0
-    result.shortcodes[0].args.size.should eq 2
-    result.shortcodes[0].args[0].value.should eq "áé😃"
-    result.shortcodes[0].args[1].value.should eq "😅😅😅"
+    sc = result.shortcodes[0]
+    sc.args.size.should eq 2
+    sc.args[0].value.should eq "áé😃"
+    sc.args[1].value.should eq "😅😅😅"
+    input[sc.position...sc.position + sc.whole.size].should eq sc.whole
   end
 
   it "should only mark as markdown if it ends with %}}" do

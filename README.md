@@ -13,6 +13,7 @@ as close as practical.
 * Implemented in Ragel + C for performance
 * Allocates no memory, because all strings are references to
   pieces of input.
+* Extensive testing, stable API
 
 ## What works
 
@@ -26,7 +27,8 @@ as close as practical.
 * Capture values with and without single/double quotes (no support for quote escaping)
 * UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)
 
-Nested shortcodes should be handled in a higher layer.
+Nested shortcodes should be handled in a higher layer by recursive calls to
+the parser where it makes sense.
 
 ## Building
 

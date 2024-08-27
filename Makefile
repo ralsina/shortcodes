@@ -8,4 +8,4 @@ test:
 clean:
 	rm src/*.o src/shortcodes.c
 
-.PHONY: binding test clean
+.PHONY: binding test clean all

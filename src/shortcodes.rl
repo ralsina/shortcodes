@@ -46,7 +46,7 @@
     };
 
   # quoted string, between double quotes
-  qvalue = (('"' [^"]* '"') | ("'" [^']* "'"))
+  qvalue = (('"' ([^"\\] | /\\./)* '"') | ("'" ([^'\\] | /\\./)* "'"))
     > mark
     % {
       sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;

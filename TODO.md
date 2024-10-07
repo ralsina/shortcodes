@@ -4,7 +4,7 @@
 
 * ✅ Inform tag type (% or <) in result
 * ✅ Handle other kinds of quotes
-* ⏳ Handle escaping quote characters
+* ✅ Handle escaping quote characters (but you get the backslashes in the strings)
 * ✅ Handle escaping the shortcode itself like `{{%/* foo */%}}`
 * ✅ Report errors on mismatched `{{% foo >}}`
 * ✅ Add self-closing shortcodes `{{< foo />}}` (also, how TF do they work?)

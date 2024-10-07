@@ -166,8 +166,8 @@ describe "Shortcodes" do
     result.shortcodes[0].args[0].value.should eq "bar"
   end
 
-  pending "should parse quoted arg with escaped quote" do
-    input = "foobar {{% shortcode \"ba\\\"r\" %}}blah"
+  it "should parse quoted arg with escaped quote" do
+    input = "foobar {{% shortcode 'ba\\'r' %}}blah"
     result = Shortcodes.parse(input)
     sanity_check(input, result)
     result.shortcodes.size.should eq 1
@@ -176,7 +176,7 @@ describe "Shortcodes" do
     result.shortcodes[0].matching?.should be_false
     result.shortcodes[0].args.size.should eq 1
     result.shortcodes[0].args[0].name.should eq ""
-    result.shortcodes[0].args[0].value.should eq "bar"
+    result.shortcodes[0].args[0].value.should eq "ba\\'r"
   end
 
   it "should parse single-quoted arg" do

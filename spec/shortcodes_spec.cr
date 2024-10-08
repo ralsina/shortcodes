@@ -176,7 +176,7 @@ describe "Shortcodes" do
     result.shortcodes[0].matching?.should be_false
     result.shortcodes[0].args.size.should eq 1
     result.shortcodes[0].args[0].name.should eq ""
-    result.shortcodes[0].args[0].value.should eq "ba\\'r"
+    result.shortcodes[0].args[0].value.should eq "ba'r"
   end
 
   it "should parse single-quoted arg" do

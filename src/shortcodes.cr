@@ -117,8 +117,7 @@ module Shortcodes
       (0...sc.argcount).each do |j|
         args << Arg.new(
           extract(sc.argnames[j], input),
-          extract(sc.argvals[j], input),
-        )
+          extract(sc.argvals[j], input).gsub(/\\([^\\])/, "\\1"))
       end
 
       result.shortcodes << Shortcode.new(

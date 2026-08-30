@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1] - 2026-08-30
+
+### 🐛 Bug Fixes
+
+- Report codepoint columns in nice_error
+
+### ⚡ Performance
+
+- Remove avoidable allocations in the Crystal binding
+
+### 🎨 Styling
+
+- Use heredocs for multiline strings
+- Convert remaining multiline literal to heredoc
+- Flatten last multiline literal
+
+### ⚙️ Miscellaneous Tasks
+
+- Add GitHub Actions workflow, harden arg overflow, document limits
+- Pin ameba to 1.7.0
+- Install ragel and verify generated C is up to date
+- Drop strict C drift check, local ragel 7 vs CI ragel 6.10 differ
+- Use the committed ragel-7 generated C, never regenerate in CI
+
 ## [0.4.0] - 2026-08-30
 
 ### 🐛 Bug Fixes

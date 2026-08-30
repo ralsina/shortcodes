@@ -390,9 +390,7 @@ describe "Shortcodes" do
   end
 
   it "should ignore nested shortcodes with inner inline" do
-    input = %(
-      {{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}}
-    )
+    input = "\n      {{< raw >}}{{% foo.inline %}}{{% /foo.inline %}}{{< /raw >}}\n    "
     result = Shortcodes.parse(input)
     sanity_check(input, result)
     result.shortcodes.size.should eq 1

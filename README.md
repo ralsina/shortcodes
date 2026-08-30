@@ -24,7 +24,12 @@ as close as practical.
 * Inline shortcodes
 * Markdown and Verbatim shortcodes
 * Capture arguments with and without names
-* Capture values with and without single/double quotes (no support for quote escaping)
+* Capture values with and without single/double quotes, including escaped quotes
+* Unquoted values support letters, numbers and unambiguous punctuation:
+  `-` `_` `.` `/` `:` `@` `+` `~` `#` (e.g. `src=images/photo-1.png`).
+  Anything else, or values with spaces, can be quoted. A trailing `/` in an
+  unquoted value is ambiguous with the self-closing delimiters, so quote it
+  (`path="dir/"`).
 * UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)
 
 Nested shortcodes should be handled in a higher layer by recursive calls to

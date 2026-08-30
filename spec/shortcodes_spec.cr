@@ -205,6 +205,130 @@ describe "Shortcodes" do
     result.shortcodes[0].args[0].value.should eq "bar"
   end
 
+  # Every punctuation character allowed in unquoted values, in every
+  # position it can legally appear (leading, middle, trailing)
+  unquoted_values = [
+    "-42",
+    "_x",
+    ".hidden",
+    "~x",
+    "+1",
+    "#tag",
+    ":def",
+    "@user",
+    "42",
+    "x",
+    "x_",
+    "end.",
+    "x~",
+    "x#",
+    "x:",
+    "a-b",
+    "a//b",
+    "a-b_c.d:e@f+g~h#i/j",
+    "https://example.com/page#anchor",
+  ]
+
+  unquoted_values.each do |value|
+    it "should parse unquoted positional value #{value.inspect}" do
+      input = "foobar {{% shortcode #{value} %}}blah"
+      result = Shortcodes.parse(input)
+      sanity_check(input, result)
+      result.shortcodes.size.should eq 1
+      result.errors.size.should eq 0
+      result.shortcodes[0].name.should eq "shortcode"
+      result.shortcodes[0].matching?.should be_false
+      result.shortcodes[0].args.size.should eq 1
+      result.shortcodes[0].args[0].name.should eq ""
+      result.shortcodes[0].args[0].value.should eq value
+    end
+
+    it "should parse unquoted named arg v=#{value.inspect}" do
+      input = "foobar {{% shortcode v=#{value} %}}blah"
+      result = Shortcodes.parse(input)
+      sanity_check(input, result)
+      result.shortcodes.size.should eq 1
+      result.errors.size.should eq 0
+      result.shortcodes[0].name.should eq "shortcode"
+      result.shortcodes[0].matching?.should be_false
+      result.shortcodes[0].args.size.should eq 1
+      result.shortcodes[0].args[0].name.should eq "v"
+      result.shortcodes[0].args[0].value.should eq value
+    end
+  end
+
+  it "should parse multiple unquoted args mixed with named ones" do
+    input = "foobar {{% shortcode one two=2 three/four -5 %}}blah"
+    result = Shortcodes.parse(input)
+    sanity_check(input, result)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].args.size.should eq 4
+    result.shortcodes[0].args[0].name.should eq ""
+    result.shortcodes[0].args[0].value.should eq "one"
+    result.shortcodes[0].args[1].name.should eq "two"
+    result.shortcodes[0].args[1].value.should eq "2"
+    result.shortcodes[0].args[2].name.should eq ""
+    result.shortcodes[0].args[2].value.should eq "three/four"
+    result.shortcodes[0].args[3].name.should eq ""
+    result.shortcodes[0].args[3].value.should eq "-5"
+  end
+
+  # Ambiguous unquoted values are rejected instead of misparsed
+  it "should reject an unquoted value with a trailing slash" do
+    input = "foobar {{% shortcode path=dir/ %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+    result.errors.size.should eq 0
+  end
+
+  it "should reject an unquoted value containing =" do
+    input = "foobar {{% shortcode a=b=c %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+  end
+
+  it "should reject an unquoted value containing >" do
+    input = "foobar {{% shortcode a>b %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+  end
+
+  it "should reject an unquoted value with non-ascii characters" do
+    input = "foobar {{% shortcode café %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+  end
+
+  it "should reject an unquoted value containing a backslash" do
+    input = "foobar {{% shortcode a\\b %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 0
+  end
+
+  it "should parse quoted arg with trailing slash" do
+    input = "foobar {{% shortcode path=\"dir/\" %}}blah"
+    result = Shortcodes.parse(input)
+    sanity_check(input, result)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].args.size.should eq 1
+    result.shortcodes[0].args[0].name.should eq "path"
+    result.shortcodes[0].args[0].value.should eq "dir/"
+  end
+
+  it "should not absorb a trailing slash into an unquoted value" do
+    input = "foobar {{% shortcode foo/%}}blah"
+    result = Shortcodes.parse(input)
+    sanity_check(input, result)
+    result.shortcodes.size.should eq 1
+    result.errors.size.should eq 0
+    result.shortcodes[0].args.size.should eq 1
+    result.shortcodes[0].args[0].name.should eq ""
+    result.shortcodes[0].args[0].value.should eq "foo"
+    result.shortcodes[0].self_closing?.should be_true
+  end
+
   it "should parse named arg" do
     input = "foobar {{% shortcode foo=bar %}}blah"
     result = Shortcodes.parse(input)

@@ -27,6 +27,7 @@
       sc_list[c_sc].matching = 0;
       sc_list[c_sc].closed = 0;
       sc_list[c_sc].argcount = 0;
+      in_arg = 0;
       if (p-mark > 7 && !strncmp(p-7, ".inline", 7)) {
         sc_list[c_sc].is_inline = 1;
       } else {
@@ -41,39 +42,66 @@
   argname = alpha+
     > mark
     % {
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start = mark-start;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len = p-mark;
+      if (!in_arg) {
+        cur_arg = sc_list[c_sc].argcount;
+        sc_list[c_sc].argcount++;
+        in_arg = 1;
+      }
+      sc_list[c_sc].argnames[cur_arg].start = mark-start;
+      sc_list[c_sc].argnames[cur_arg].len = p-mark;
     };
 
   # quoted string, between double quotes
   qvalue = (('"' ([^"\\] | /\\./)* '"') | ("'" ([^'\\] | /\\./)* "'"))
     > mark
     % {
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start+1;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark-2;
-      sc_list[c_sc].argcount++;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
+      if (!in_arg) {
+        cur_arg = sc_list[c_sc].argcount;
+        sc_list[c_sc].argcount++;
+        in_arg = 1;
+        /* positional arg: nobody else will write the name slot */
+        sc_list[c_sc].argnames[cur_arg].start = 0;
+        sc_list[c_sc].argnames[cur_arg].len = 0;
+      }
+      sc_list[c_sc].argvals[cur_arg].start = mark-start+1;
+      sc_list[c_sc].argvals[cur_arg].len = p-mark-2;
     };
 
-  # A value, letters or numbers
-  value = alnum+
+  # A value, unquoted: letters, numbers and unambiguous punctuation.
+  # The value must start and end with a non-slash character so a
+  # trailing '/' can't bleed into the self-closing delimiters
+  # '/%}}' or '/>}}'
+  unq = (alnum | '-' | '_' | '.' | ':' | '@' | '+' | '~' | '#');
+  value = (unq ((unq | '/')* unq)?)
     > mark
     % {
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start = mark-start;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len = p-mark;
-      sc_list[c_sc].argcount++;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
+      /* The machine passes through intermediate final states
+         ("docs" vs "docs/v2_1") and this action fires on each:
+         count the arg only the first time, then keep extending
+         the recorded span. */
+      if (last_val_mark != mark) {
+        if (!in_arg) {
+          cur_arg = sc_list[c_sc].argcount;
+          sc_list[c_sc].argcount++;
+          in_arg = 1;
+          /* positional arg: nobody else will write the name slot */
+          sc_list[c_sc].argnames[cur_arg].start = 0;
+          sc_list[c_sc].argnames[cur_arg].len = 0;
+        }
+        last_val_mark = mark;
+      }
+      sc_list[c_sc].argvals[cur_arg].start = mark-start;
+      sc_list[c_sc].argvals[cur_arg].len = p-mark;
     };
 
   # An argument is a name, an = and a value or quoted value
   # Or, just a value or qvalue (positional argument)
+  # argcount is maintained by the actions above, not here.
   arg = ((argname '=')? (value|qvalue));
+
+  # Between args: the current arg is done
+  argsep = sep
+    @{ in_arg = 0; };
 
   # A shortcode with markdown content
   start_p = ('{{%');
@@ -100,7 +128,7 @@
   @{sc_list[c_sc].escaped = 1;};
 
   # Inside a shortcode is content: name, zero or more arguments
-  content = spc name (sep arg)* spc;
+  content = spc name (argsep arg)* spc;
 
   # Both possible starts or ends
   start = start_p | start_b ;
@@ -197,6 +225,9 @@ sc_result parse(char *input, unsigned int len) {
   char *mark = p;
   char *data_mark = p;
   char *sc_mark = p;
+  char *last_val_mark = 0;
+  int in_arg = 0;
+  int cur_arg = 0;
 
   %% write init;
   %% write exec;

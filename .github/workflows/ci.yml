@@ -14,12 +14,14 @@ jobs:
         with:
           crystal: latest
       - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ragel
-          shards install
+        run: shards install
+      # The committed shortcodes.c is generated with ragel 7, which fixes
+      # 6.x bugs we rely on. Distros ship 6.10, so CI must NOT regenerate;
+      # touch it so make compiles the committed file as-is.
       - name: Build binding
-        run: make binding
+        run: |
+          touch src/shortcodes.c
+          make binding
       - name: Run specs
         run: crystal spec
       - name: Lint

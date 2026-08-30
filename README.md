@@ -55,7 +55,9 @@ the parser where it makes sense.
 
 ## Building
 
-You need [Ragel](http://www.colm.net/open-source/ragel/) and a C compiler.
+You need [Ragel](http://www.colm.net/open-source/ragel/) 7 and a C compiler.
+The generated `shortcodes.c` in the repo is built with ragel 7; older
+versions generate different (buggy) code, so don't regenerate with 6.x.
 
 Ragel is used to generate `shortcodes.c` out of `shortcodes.rl`.
 As a convenience there is a generated `shortcodes.c` in the repo,

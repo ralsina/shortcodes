@@ -540,11 +540,12 @@ describe "Shortcodes" do
     input = "áé😃 {{% sc >}}"
     result = Shortcodes.parse(input)
     result.errors.size.should eq 1
-    Shortcodes.nice_error(result.errors[0], input).should eq \
-      "Error in line 1, column 12\n" +
-      "  Mismatched closing bracket style\n" +
-      "  áé😃 {{% sc >}}\n" +
-      "  " + " " * 11 + "⬆️ HERE"
+    Shortcodes.nice_error(result.errors[0], input).should eq <<-ERROR
+      Error in line 1, column 12
+        Mismatched closing bracket style
+        áé😃 {{% sc >}}
+        #{" " * 11}⬆️ HERE
+      ERROR
   end
 
   it "should report codepoint columns on later lines too" do

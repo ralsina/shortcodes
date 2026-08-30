@@ -114,10 +114,12 @@ module Shortcodes
     column = codepoint_count(before[line_start..])
     error_line = s.split('\n')[line]
     msg = MESSAGES[e.code]? || "Unknown error code #{e.code}"
-    %(Error in line #{line + 1}, column #{column + 1}
-  #{msg}
-  #{error_line}
-  #{" "*column + "⬆️ HERE"})
+    <<-ERROR
+      Error in line #{line + 1}, column #{column + 1}
+        #{msg}
+        #{error_line}
+        #{" " * column}⬆️ HERE
+      ERROR
   end
 
   def self.parse(input : String)

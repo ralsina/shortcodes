@@ -76,7 +76,7 @@ module Shortcodes
       @args,
       @whole,
       @position,
-      @len
+      @len,
     )
     end
   end
@@ -99,9 +99,16 @@ module Shortcodes
     ERR_TOO_MANY_ARGS          => "Too many arguments in one shortcode (limit 100)",
   }
 
+  # Counts UTF-8 codepoints in a byte slice without allocating.
+  # A codepoint start byte is anything that is not a continuation byte.
+  def self.codepoint_count(bytes : Slice(UInt8)) : Int32
+    bytes.count { |byte| (byte & 0xC0) != 0x80 }
+  end
+
   def self.nice_error(e : Error, s : String)
-    line = s.byte_slice(0, e.position).count('\n')
-    column = e.position - (s.byte_slice(0, e.position).rindex('\n') || 0)
+    before = s.to_slice[0, e.position]
+    line = before.count(0x0A.to_u8)
+    column = e.position - (before.rindex(0x0A.to_u8) || -1) - 1
     error_line = s.split('\n')[line]
     msg = MESSAGES[e.code]? || "Unknown error code #{e.code}"
     %(Error in line #{line + 1}, column #{column + 1}
@@ -118,9 +125,12 @@ module Shortcodes
       sc = r.shortcodes[i]
       args = [] of Arg
       (0...sc.argcount).each do |j|
+        raw_value = extract(sc.argvals[j], input)
+        # Only allocate a new string if there is something to unescape
+        value = raw_value.includes?('\\') ? raw_value.gsub(/\\([^\\])/, "\\1") : raw_value
         args << Arg.new(
           extract(sc.argnames[j], input),
-          extract(sc.argvals[j], input).gsub(/\\([^\\])/, "\\1"))
+          value)
       end
 
       result.shortcodes << Shortcode.new(
@@ -134,7 +144,7 @@ module Shortcodes
         args,
         extract(sc.whole, input),
         # start is in BYTES, not chars
-        String.new(input.to_slice[0, sc.whole.start]).size,
+        codepoint_count(input.to_slice[0, sc.whole.start]),
         sc.whole.len,
       )
     end

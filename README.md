@@ -11,9 +11,11 @@ It probably won't be 100% identical, but I'll try to make it
 as close as practical.
 
 * Implemented in Ragel + C for performance
-* Allocates no memory, because all strings are references to
-  pieces of input.
-* Extensive testing, stable API
+* The C parser allocates no memory: all positions and lengths are
+  references to pieces of the input, and nothing is copied or
+  heap-allocated during parsing.
+* The Crystal binding allocates only the result objects: one copy of
+  each reported string, and nothing else.
 
 ## What works
 

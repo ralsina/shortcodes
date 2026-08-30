@@ -92,17 +92,20 @@ module Shortcodes
     String.new(s.to_slice[c.start, c.len])
   end
 
+  MESSAGES = {
+    ERR_MISMATCHED_BRACKET     => "Mismatched closing bracket style",
+    ERR_MISMATCHED_CLOSING_TAG => "Closing shortcode that was never opened",
+    ERR_TOO_MANY_SHORTCODES    => "Too many shortcodes in one document (limit 100)",
+    ERR_TOO_MANY_ARGS          => "Too many arguments in one shortcode (limit 100)",
+  }
+
   def self.nice_error(e : Error, s : String)
-    return "" if e.position.nil?
-    line = s[0, e.position].count('\n')
-    column = e.position - (s[0, e.position].rindex('\n') || 0)
+    line = s.byte_slice(0, e.position).count('\n')
+    column = e.position - (s.byte_slice(0, e.position).rindex('\n') || 0)
     error_line = s.split('\n')[line]
-    msg = {
-      ERR_MISMATCHED_BRACKET     => "Mismatched closing bracket style",
-      ERR_MISMATCHED_CLOSING_TAG => "Closing shortcode that was never opened",
-    }
+    msg = MESSAGES[e.code]? || "Unknown error code #{e.code}"
     %(Error in line #{line + 1}, column #{column + 1}
-  #{msg[e.code]}
+  #{msg}
   #{error_line}
   #{" "*column + "⬆️ HERE"})
   end
@@ -155,4 +158,12 @@ module Shortcodes
   # Example:
   # {{% foo >}}
   ERR_MISMATCHED_BRACKET = 2
+
+  # There are more than 100 shortcodes in the document.
+  # Shortcodes past the limit are dropped.
+  ERR_TOO_MANY_SHORTCODES = 3
+
+  # A shortcode has more than 100 arguments.
+  # Arguments past the limit are dropped.
+  ERR_TOO_MANY_ARGS = 4
 end

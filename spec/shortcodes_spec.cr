@@ -508,4 +508,26 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 1
     result.shortcodes[0].escaped?.should be_true
   end
+
+  it "should report an error instead of overflowing past 100 shortcodes" do
+    input = "{{% foo %}}" * 101
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 100
+    result.errors.size.should eq 1
+    result.errors[0].code.should eq Shortcodes::ERR_TOO_MANY_SHORTCODES
+  end
+
+  it "should report an error instead of overflowing past 100 args" do
+    input = "foobar {{% shortcode #{"a=1 " * 100}a=1 %}}blah"
+    result = Shortcodes.parse(input)
+    result.shortcodes.size.should eq 1
+    result.shortcodes[0].args.size.should eq 100
+    result.errors.size.should eq 1
+    result.errors[0].code.should eq Shortcodes::ERR_TOO_MANY_ARGS
+  end
+
+  it "should handle unknown error codes in nice_error" do
+    error = Shortcodes::Error.new(0, 99)
+    Shortcodes.nice_error(error, "irrelevant").should contain "Unknown error code 99"
+  end
 end

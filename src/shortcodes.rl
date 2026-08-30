@@ -22,49 +22,62 @@
   name = (alpha+ path?)
     > mark
     %{
-      sc_list[c_sc].name.start = mark-start;
-      sc_list[c_sc].name.len = p-mark;
-      sc_list[c_sc].matching = 0;
-      sc_list[c_sc].closed = 0;
-      sc_list[c_sc].argcount = 0;
-      in_arg = 0;
-      if (p-mark > 7 && !strncmp(p-7, ".inline", 7)) {
-        sc_list[c_sc].is_inline = 1;
-      } else {
-        sc_list[c_sc].is_inline = 0;
-      }
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
-      sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
-      };
+      if (c_sc < SC_MAX) {
+        sc_list[c_sc].name.start = mark-start;
+        sc_list[c_sc].name.len = p-mark;
+        sc_list[c_sc].matching = 0;
+        sc_list[c_sc].closed = 0;
+        sc_list[c_sc].argcount = 0;
+        in_arg = 0;
+        if (p-mark > 7 && !strncmp(p-7, ".inline", 7)) {
+          sc_list[c_sc].is_inline = 1;
+        } else {
+          sc_list[c_sc].is_inline = 0;
+        }
+        sc_list[c_sc].argnames[sc_list[c_sc].argcount].start=0;
+        sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
+        sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
+        sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
+      }};
   # name for the arg, just a word
   argname = alpha+
     > mark
     % {
-      if (!in_arg) {
-        cur_arg = sc_list[c_sc].argcount;
-        sc_list[c_sc].argcount++;
-        in_arg = 1;
+      if (c_sc < SC_MAX) {
+        if (!in_arg) {
+          if (sc_list[c_sc].argcount >= ARG_MAX) {
+            add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+          } else {
+            cur_arg = sc_list[c_sc].argcount;
+            sc_list[c_sc].argcount++;
+          }
+          in_arg = 1;
+        }
+        sc_list[c_sc].argnames[cur_arg].start = mark-start;
+        sc_list[c_sc].argnames[cur_arg].len = p-mark;
       }
-      sc_list[c_sc].argnames[cur_arg].start = mark-start;
-      sc_list[c_sc].argnames[cur_arg].len = p-mark;
     };
 
   # quoted string, between double quotes
   qvalue = (('"' ([^"\\] | /\\./)* '"') | ("'" ([^'\\] | /\\./)* "'"))
     > mark
     % {
-      if (!in_arg) {
-        cur_arg = sc_list[c_sc].argcount;
-        sc_list[c_sc].argcount++;
-        in_arg = 1;
-        /* positional arg: nobody else will write the name slot */
-        sc_list[c_sc].argnames[cur_arg].start = 0;
-        sc_list[c_sc].argnames[cur_arg].len = 0;
+      if (c_sc < SC_MAX) {
+        if (!in_arg) {
+          if (sc_list[c_sc].argcount >= ARG_MAX) {
+            add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+          } else {
+            cur_arg = sc_list[c_sc].argcount;
+            sc_list[c_sc].argcount++;
+            /* positional arg: nobody else will write the name slot */
+            sc_list[c_sc].argnames[cur_arg].start = 0;
+            sc_list[c_sc].argnames[cur_arg].len = 0;
+          }
+          in_arg = 1;
+        }
+        sc_list[c_sc].argvals[cur_arg].start = mark-start+1;
+        sc_list[c_sc].argvals[cur_arg].len = p-mark-2;
       }
-      sc_list[c_sc].argvals[cur_arg].start = mark-start+1;
-      sc_list[c_sc].argvals[cur_arg].len = p-mark-2;
     };
 
   # A value, unquoted: letters, numbers and unambiguous punctuation.
@@ -79,19 +92,27 @@
          ("docs" vs "docs/v2_1") and this action fires on each:
          count the arg only the first time, then keep extending
          the recorded span. */
-      if (last_val_mark != mark) {
-        if (!in_arg) {
-          cur_arg = sc_list[c_sc].argcount;
-          sc_list[c_sc].argcount++;
-          in_arg = 1;
-          /* positional arg: nobody else will write the name slot */
-          sc_list[c_sc].argnames[cur_arg].start = 0;
-          sc_list[c_sc].argnames[cur_arg].len = 0;
+      if (c_sc < SC_MAX) {
+        if (last_val_mark != mark) {
+          if (!in_arg) {
+            if (sc_list[c_sc].argcount >= ARG_MAX) {
+              add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+            } else {
+              cur_arg = sc_list[c_sc].argcount;
+              sc_list[c_sc].argcount++;
+              /* positional arg: nobody else will write the name slot */
+              sc_list[c_sc].argnames[cur_arg].start = 0;
+              sc_list[c_sc].argnames[cur_arg].len = 0;
+            }
+            in_arg = 1;
+            last_val_mark = mark;
+          } else {
+            last_val_mark = mark;
+          }
         }
-        last_val_mark = mark;
+        sc_list[c_sc].argvals[cur_arg].start = mark-start;
+        sc_list[c_sc].argvals[cur_arg].len = p-mark;
       }
-      sc_list[c_sc].argvals[cur_arg].start = mark-start;
-      sc_list[c_sc].argvals[cur_arg].len = p-mark;
     };
 
   # An argument is a name, an = and a value or quoted value
@@ -138,22 +159,28 @@
   mismatched = ((start_p content end_b) | (start_b content end_p))
   @{
     // Since it's mismatched, remove the name
-    sc_list[c_sc].name.start = 0;
-    sc_list[c_sc].name.len=0;
-    result.errors[result.errcount].position = p-start-2;
-    result.errors[result.errcount].code = ERR_MISMATCHED_BRACKET;
-    result.errcount++;
+    if (c_sc < SC_MAX) {
+      sc_list[c_sc].name.start = 0;
+      sc_list[c_sc].name.len=0;
+    }
+    add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
   };
 
   # A full shortcode
   shortcode = ((start_p content (end_p | end_p_sc)) | (start_b content (end_b | end_b_sc)) | (start_e content end_e))
   > {
-      sc_list[c_sc].whole.start = p-start-1;
+      if (c_sc < SC_MAX) {
+        sc_list[c_sc].whole.start = p-start-1;
+      }
     }
   @ {
-      sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
-      data_mark = p+1;
-      c_sc++;
+      if (c_sc < SC_MAX) {
+        sc_list[c_sc].whole.len = p-start-sc_list[c_sc].whole.start+1;
+        data_mark = p+1;
+        c_sc++;
+      } else {
+        add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+      }
     };
 
   # A closing shortcode for matched "tags"
@@ -167,7 +194,7 @@
     // IF ANY!
     int found = 0;
     // Go back in the list of shortcodes from the previous one
-    for (int i=c_sc-1; i>=0; i--) {
+    for (int i=(c_sc < SC_MAX ? c_sc : 0)-1; i>=0; i--) {
 
       if (!sc_list[i].closed  // If it's a not-closed
         && sc_list[i].name.len == sc_list[c_sc].name.len // Same length
@@ -194,10 +221,8 @@
     }
     if (!found) {
       // We are not closing any shortcode, error
-      result.errors[result.errcount].position =
-          sc_list[c_sc].whole.start;
-      result.errors[result.errcount].code = ERR_MISMATCHED_CLOSING_TAG;
-      result.errcount++;
+      add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+          (c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
       // Do NOT increase c_sc
     }
 };
@@ -205,6 +230,18 @@
   main := (any* (shortcode | matched_shortcode | mismatched))*;
 }%%
 
+/* Limits must match the array sizes in sc_result (shortcodes.h) */
+#define SC_MAX 100
+#define ARG_MAX 100
+#define ERR_MAX 10
+
+static void add_error(sc_result *result, unsigned int code, unsigned int position) {
+  if (result->errcount < ERR_MAX) {
+    result->errors[result->errcount].position = position;
+    result->errors[result->errcount].code = code;
+    result->errcount++;
+  }
+}
 
 sc_result parse(char *input, unsigned int len) {
 

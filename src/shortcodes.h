@@ -61,5 +61,15 @@ Example:
 */
 #define ERR_MISMATCHED_BRACKET 2
 
+/* Too many shortcodes in one document (limit 100).
+Shortcodes past the limit are dropped.
+*/
+#define ERR_TOO_MANY_SHORTCODES 3
+
+/* Too many arguments in one shortcode (limit 100).
+Arguments past the limit are dropped.
+*/
+#define ERR_TOO_MANY_ARGS 4
+
 
 sc_result parse(char *, unsigned int);

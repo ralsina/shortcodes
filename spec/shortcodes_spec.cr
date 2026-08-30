@@ -522,6 +522,9 @@ describe "Shortcodes" do
     result = Shortcodes.parse(input)
     result.shortcodes.size.should eq 1
     result.shortcodes[0].args.size.should eq 100
+    # The 100th arg keeps its recorded value, later args don't mutate it
+    result.shortcodes[0].args[99].name.should eq "a"
+    result.shortcodes[0].args[99].value.should eq "1"
     result.errors.size.should eq 1
     result.errors[0].code.should eq Shortcodes::ERR_TOO_MANY_ARGS
   end

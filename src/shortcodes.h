@@ -45,6 +45,9 @@ struct sc_result
 };
 typedef struct sc_result sc_result;
 
+/* Only the first 10 errors are reported; fix them in order,
+the rest will surface on the next pass. */
+
 // Error codes
 
 /* You are closing the wrong shortcode.

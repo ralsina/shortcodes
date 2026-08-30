@@ -38,7 +38,9 @@
         sc_list[c_sc].argnames[sc_list[c_sc].argcount].len=0;
         sc_list[c_sc].argvals[sc_list[c_sc].argcount].start=0;
         sc_list[c_sc].argvals[sc_list[c_sc].argcount].len=0;
-      }};
+      }
+      arg_overflow = 0;
+    };
   # name for the arg, just a word
   argname = alpha+
     > mark
@@ -47,14 +49,17 @@
         if (!in_arg) {
           if (sc_list[c_sc].argcount >= ARG_MAX) {
             add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+            arg_overflow = 1;
           } else {
             cur_arg = sc_list[c_sc].argcount;
             sc_list[c_sc].argcount++;
           }
           in_arg = 1;
         }
-        sc_list[c_sc].argnames[cur_arg].start = mark-start;
-        sc_list[c_sc].argnames[cur_arg].len = p-mark;
+        if (!arg_overflow) {
+          sc_list[c_sc].argnames[cur_arg].start = mark-start;
+          sc_list[c_sc].argnames[cur_arg].len = p-mark;
+        }
       }
     };
 
@@ -66,6 +71,7 @@
         if (!in_arg) {
           if (sc_list[c_sc].argcount >= ARG_MAX) {
             add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+            arg_overflow = 1;
           } else {
             cur_arg = sc_list[c_sc].argcount;
             sc_list[c_sc].argcount++;
@@ -75,8 +81,10 @@
           }
           in_arg = 1;
         }
-        sc_list[c_sc].argvals[cur_arg].start = mark-start+1;
-        sc_list[c_sc].argvals[cur_arg].len = p-mark-2;
+        if (!arg_overflow) {
+          sc_list[c_sc].argvals[cur_arg].start = mark-start+1;
+          sc_list[c_sc].argvals[cur_arg].len = p-mark-2;
+        }
       }
     };
 
@@ -97,6 +105,7 @@
           if (!in_arg) {
             if (sc_list[c_sc].argcount >= ARG_MAX) {
               add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+              arg_overflow = 1;
             } else {
               cur_arg = sc_list[c_sc].argcount;
               sc_list[c_sc].argcount++;
@@ -110,8 +119,10 @@
             last_val_mark = mark;
           }
         }
-        sc_list[c_sc].argvals[cur_arg].start = mark-start;
-        sc_list[c_sc].argvals[cur_arg].len = p-mark;
+        if (!arg_overflow) {
+          sc_list[c_sc].argvals[cur_arg].start = mark-start;
+          sc_list[c_sc].argvals[cur_arg].len = p-mark;
+        }
       }
     };
 
@@ -265,6 +276,7 @@ sc_result parse(char *input, unsigned int len) {
   char *last_val_mark = 0;
   int in_arg = 0;
   int cur_arg = 0;
+  int arg_overflow = 0;
 
   %% write init;
   %% write exec;

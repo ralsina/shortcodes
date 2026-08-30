@@ -34,6 +34,22 @@ as close as practical.
   (`path="dir/"`).
 * UTF-8 strings AFAICT (arg and shortcode names only support ascii tho)
 
+## Things you should know
+
+* Names and unquoted values are ASCII-only. UTF-8 works fine in the
+  text around shortcodes, in matched content and in quoted values.
+* Text that looks like a shortcode but isn't one (e.g. `{{% foo >}}`)
+  passes through untouched rather than producing an error, because it
+  may be content, not a broken shortcode. Only unambiguous errors
+  (closing a shortcode that was never opened, mismatched bracket
+  *styles* in a complete shortcode) are reported.
+* Only the first 10 errors are reported. Fix them in order, the rest
+  will surface on the next pass.
+* More than 100 shortcodes per document or 100 arguments per shortcode
+  is an error; anything past the limit is dropped.
+* In a `Shortcode`, `position` counts codepoints, while `len` and the
+  sizes of `whole` and `data` are in bytes.
+
 Nested shortcodes should be handled in a higher layer by recursive calls to
 the parser where it makes sense.
 

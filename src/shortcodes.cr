@@ -108,7 +108,10 @@ module Shortcodes
   def self.nice_error(e : Error, s : String)
     before = s.to_slice[0, e.position]
     line = before.count(0x0A.to_u8)
-    column = e.position - (before.rindex(0x0A.to_u8) || -1) - 1
+    # Columns count codepoints, not bytes: the offset from the last
+    # newline (or the start of the input) to the error position.
+    line_start = (before.rindex(0x0A.to_u8) || -1) + 1
+    column = codepoint_count(before[line_start..])
     error_line = s.split('\n')[line]
     msg = MESSAGES[e.code]? || "Unknown error code #{e.code}"
     %(Error in line #{line + 1}, column #{column + 1}

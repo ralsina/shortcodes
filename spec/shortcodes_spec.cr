@@ -530,4 +530,24 @@ describe "Shortcodes" do
     error = Shortcodes::Error.new(0, 99)
     Shortcodes.nice_error(error, "irrelevant").should contain "Unknown error code 99"
   end
+
+  it "should report codepoint columns in nice_error" do
+    # á(2 bytes) é(2 bytes) 😃(4 bytes) so the error's byte position is
+    # 8 bytes higher than its codepoint column
+    input = "áé😃 {{% sc >}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 1
+    Shortcodes.nice_error(result.errors[0], input).should eq \
+      "Error in line 1, column 12\n" +
+      "  Mismatched closing bracket style\n" +
+      "  áé😃 {{% sc >}}\n" +
+      "  " + " " * 11 + "⬆️ HERE"
+  end
+
+  it "should report codepoint columns on later lines too" do
+    input = "áé😃\n{{% sc >}}"
+    result = Shortcodes.parse(input)
+    result.errors.size.should eq 1
+    Shortcodes.nice_error(result.errors[0], input).should contain "Error in line 2, column 8"
+  end
 end

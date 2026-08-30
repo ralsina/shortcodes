@@ -57,11 +57,12 @@ describe "Shortcodes" do
     result.shortcodes.size.should eq 0
     result.errors.size.should eq 1
     result.errors[0].code.should eq Shortcodes::ERR_MISMATCHED_BRACKET
-    Shortcodes.nice_error(result.errors[0], input).should eq \
-      "Error in line 1, column 22\n" +
-      "  Mismatched closing bracket style\n" +
-      "  foobar {{% shortcode >}}blah\n" +
-      "                       ⬆️ HERE"
+    Shortcodes.nice_error(result.errors[0], input).should eq <<-ERROR
+      Error in line 1, column 22
+        Mismatched closing bracket style
+        foobar {{% shortcode >}}blah
+        #{" " * 21}⬆️ HERE
+      ERROR
     input[result.errors[0].position, 3].should eq ">}}"
   end
 

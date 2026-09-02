@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2026-09-02
+
+### 🐛 Bug Fixes
+
+- [**breaking**] Pass sc_result through an output pointer, not by value
+
+### 📚 Documentation
+
+- Explain the by-value struct compile-time pitfall
+
 ## [0.4.1] - 2026-08-30
 
 ### 🐛 Bug Fixes

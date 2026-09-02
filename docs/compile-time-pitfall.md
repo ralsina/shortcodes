@@ -30,6 +30,62 @@ LLVM 22.1.8, Linux x86-64, 12 cores.
 * Bonus pitfall: zero-initializing that same struct on the Crystal side
   (`ScResult.new`) is *also* pathological for LLVM (168s debug builds!).
   Use `uninitialized` + a C-side `memset`.
+* And importantly: **this is not a C-interop problem**. A pure-Crystal
+  def returning a large struct reproduces it with no C, no lib, no
+  macros involved — see the next section.
+
+## It's not about C: a pure-Crystal reproduction
+
+We found this in a C-binding shard, but the C part is incidental. The
+optimizer doesn't care where a big by-value struct comes from. This
+dependency-free program — no `lib`, no C, no macros — reproduces the
+pathology on its own:
+
+```crystal
+# big.cr — a def that returns a ~163KB struct by value
+struct Big
+  getter a : StaticArray(UInt64, 20410) # 20410 * 8 = ~163KB
+
+  def initialize
+    @a = StaticArray(UInt64, 20410).new(0_u64)
+  end
+end
+
+def make : Big
+  big = Big.new
+  big.a[0] = 1_u64
+  big # returned by value
+end
+
+x = make
+y = make
+puts x.a[0] + y.a[0]
+```
+
+Sweeping the size of the returned struct (fresh compiler cache, builds
+run one at a time) shows exactly where the cliff starts. Times in
+parentheses mean the build was killed before finishing:
+
+| returned struct size | debug build | release build |
+|---------------------:|------------:|--------------:|
+| 1 KB                 | 1.2s        | 6.3s          |
+| 4 KB                 | 1.0s        | 6.3s          |
+| 16 KB                | 2.0s        | 7.5s          |
+| 64 KB                | 16.6s       | 28.9s         |
+| 256 KB               | >2 min      | >5 min        |
+| 1 MB                 | 1.7s        | >5 min        |
+
+Up to ~16KB nobody notices anything. At 64KB builds are already 4-5x a
+normal one. From ~256KB the build effectively never finishes — with
+*either* optimization level. The exact numbers wobble at the big end
+(note 1MB debug being fast again): the compiler switches between
+strategies for initializing, copying and scalarizing huge aggregates,
+and which one blows up first depends on the size. The shape of the
+curve is the message: **large value types are compile-time poison, and
+the cliff sits in the tens-of-KB range.**
+
+That also matches the shortcodes story: `sc_result` at 163,688 bytes
+sat deep inside the cliff, and no C was needed to demonstrate it.
 
 ## Symptoms
 
@@ -256,10 +312,10 @@ with `ScResult.new` was the odd case where even debug builds exploded.
   `crystal build --emit llvm-ir` plus `opt -O2 -time-passes` on the
   result. A single function with six-figure instruction counts is the
   smoking gun, and `-time-passes` will name the suffering pass.
-* The same explosion is reproducible with pure Crystal (a def returning
-  a 160KB `StaticArray`-based struct suffices), so this is an LLVM
-  interaction any backend language can hit — Crystal just makes it easy
-  to have a 160KB struct cross an ABI without noticing.
+* The same explosion is reproducible with pure Crystal (see the size
+  sweep above), so this is an LLVM interaction any backend language can
+  hit — Crystal just makes it easy to have a 160KB struct cross an ABI
+  without noticing.
 
 ## Reproducing the measurements
 

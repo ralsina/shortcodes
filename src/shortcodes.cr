@@ -32,7 +32,7 @@ lib LibShortcodes
     errcount : UInt32
   end
 
-  fun parse(input : Pointer(LibC::Char), len : UInt32) : ScResult
+  fun parse(input : Pointer(LibC::Char), len : UInt32, result : ScResult*) : Nil
 end
 
 module Shortcodes
@@ -123,7 +123,13 @@ module Shortcodes
   end
 
   def self.parse(input : String)
-    r = LibShortcodes.parse(input.to_unsafe, input.bytesize)
+    # The parsed result is written into a pre-allocated struct instead of
+    # being returned by value (~160KB), which optimizing compilers handle
+    # pathologically (see parse in shortcodes.rl). It is zeroed on the C
+    # side, so `uninitialized` is safe here (and `.new` would be slow:
+    # zero-initializing this struct is pathological for LLVM, too).
+    r = uninitialized LibShortcodes::ScResult
+    LibShortcodes.parse(input.to_unsafe, input.bytesize, pointerof(r))
     result = Result.new
 
     (0...r.sccount).each do |i|

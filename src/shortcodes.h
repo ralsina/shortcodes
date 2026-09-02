@@ -75,4 +75,7 @@ Arguments past the limit are dropped.
 #define ERR_TOO_MANY_ARGS 4
 
 
-sc_result parse(char *, unsigned int);
+/* Parses input into result. The caller provides the sc_result: the
+struct is ~160KB and returning it by value is pathological for
+optimizing compilers. errcount and sccount are initialized here. */
+void parse(char *, unsigned int, sc_result *);

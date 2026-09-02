@@ -21,10 +21,14 @@ static void add_error(sc_result *result, unsigned int code, unsigned int positio
 	}
 }
 
-sc_result parse(char *input, unsigned int len) {
+/* The result is written into a caller-provided sc_result instead of
+being returned by value: the struct is ~160KB, and by-value returns
+make optimizing compilers explode the copies into hundreds of
+thousands of instructions. */
+void parse(char *input, unsigned int len, sc_result *result) {
 	
 
-#line 25 "shortcodes.c"
+#line 29 "shortcodes.c"
 static const int shortcode_start = 2094;
 	static const int shortcode_first_final = 2094;
 	static const int shortcode_error = -1;
@@ -32,7 +36,7 @@ static const int shortcode_start = 2094;
 	static const int shortcode_en_main = 2094;
 	
 	
-#line 259 "shortcodes.rl"
+#line 263 "shortcodes.rl"
 
 	char *eof = input + len;
 	char *ts, *te = 0;
@@ -42,9 +46,11 @@ static const int shortcode_start = 2094;
 	char *p = input;
 	char *pe = p + len;
 	
-	sc_result result;
-	result.errcount = 0;
-	shortcode *sc_list = result.sc;
+	/* Zero the whole result: some fields (escaped, self_closing, ...)
+	are only assigned when their actions fire, and callers rely on
+	them being 0 otherwise. */
+	memset(result, 0, sizeof(*result));
+	shortcode *sc_list = result->sc;
 	int c_sc = 0;
 	
 	char *mark = p;
@@ -56,15 +62,15 @@ static const int shortcode_start = 2094;
 	int arg_overflow = 0;
 	
 
-#line 54 "shortcodes.c"
+#line 60 "shortcodes.c"
 	{
 		cs = (int)shortcode_start;
 	}
 	
-#line 281 "shortcodes.rl"
+#line 287 "shortcodes.rl"
 
 
-#line 59 "shortcodes.c"
+#line 65 "shortcodes.c"
 {
 		switch ( cs ) {
 			case 2094:
@@ -4325,7 +4331,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 4319 "shortcodes.c"
+#line 4325 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -4335,10 +4341,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 4331 "shortcodes.c"
+#line 4337 "shortcodes.c"
 
 		goto _st2094;
 		_ctr2847:
@@ -4346,7 +4352,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 4338 "shortcodes.c"
+#line 4344 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -4356,10 +4362,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 4350 "shortcodes.c"
+#line 4356 "shortcodes.c"
 
 		goto _st2094;
 		_st2094:
@@ -4389,7 +4395,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4379 "shortcodes.c"
+#line 4385 "shortcodes.c"
 
 		goto _st1;
 		_st1:
@@ -4410,7 +4416,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4399 "shortcodes.c"
+#line 4405 "shortcodes.c"
 
 		goto _st2;
 		_st2:
@@ -4490,7 +4496,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 4478 "shortcodes.c"
+#line 4484 "shortcodes.c"
 
 		goto _st5;
 		_st5:
@@ -4555,13 +4561,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 4542 "shortcodes.c"
+#line 4548 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 4547 "shortcodes.c"
+#line 4553 "shortcodes.c"
 
 		goto _st6;
 		_ctr16:
@@ -4569,7 +4575,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 4554 "shortcodes.c"
+#line 4560 "shortcodes.c"
 
 		goto _st6;
 		_ctr28:
@@ -4579,7 +4585,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -4597,13 +4603,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4581 "shortcodes.c"
+#line 4587 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 4586 "shortcodes.c"
+#line 4592 "shortcodes.c"
 
 		goto _st6;
 		_ctr4137:
@@ -4618,7 +4624,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -4640,13 +4646,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4622 "shortcodes.c"
+#line 4628 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 4627 "shortcodes.c"
+#line 4633 "shortcodes.c"
 
 		goto _st6;
 		_st6:
@@ -4715,7 +4721,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 4695 "shortcodes.c"
+#line 4701 "shortcodes.c"
 
 		goto _st7;
 		_st7:
@@ -4785,7 +4791,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 4764 "shortcodes.c"
+#line 4770 "shortcodes.c"
 
 		goto _st9;
 		_ctr29:
@@ -4795,7 +4801,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -4813,7 +4819,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4791 "shortcodes.c"
+#line 4797 "shortcodes.c"
 
 		goto _st9;
 		_ctr4138:
@@ -4828,7 +4834,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -4850,7 +4856,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 4827 "shortcodes.c"
+#line 4833 "shortcodes.c"
 
 		goto _st9;
 		_st9:
@@ -4886,7 +4892,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 4862 "shortcodes.c"
+#line 4868 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -4896,11 +4902,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 4875 "shortcodes.c"
+#line 4881 "shortcodes.c"
 
 		goto _st2095;
 		_ctr56:
@@ -4908,7 +4914,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 4882 "shortcodes.c"
+#line 4888 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -4944,13 +4950,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 4923 "shortcodes.c"
+#line 4929 "shortcodes.c"
 
 		goto _st2095;
 		_ctr60:
@@ -4960,7 +4966,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 4932 "shortcodes.c"
+#line 4938 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -4996,13 +5002,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 4973 "shortcodes.c"
+#line 4979 "shortcodes.c"
 
 		goto _st2095;
 		_ctr62:
@@ -5012,7 +5018,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 4982 "shortcodes.c"
+#line 4988 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -5048,13 +5054,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 5023 "shortcodes.c"
+#line 5029 "shortcodes.c"
 
 		goto _st2095;
 		_ctr64:
@@ -5062,7 +5068,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 5030 "shortcodes.c"
+#line 5036 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -5098,13 +5104,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 5071 "shortcodes.c"
+#line 5077 "shortcodes.c"
 
 		goto _st2095;
 		_ctr70:
@@ -5112,7 +5118,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 5078 "shortcodes.c"
+#line 5084 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -5120,7 +5126,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5085 "shortcodes.c"
+#line 5091 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -5156,13 +5162,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 5126 "shortcodes.c"
+#line 5132 "shortcodes.c"
 
 		goto _st2095;
 		_ctr73:
@@ -5170,7 +5176,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 5133 "shortcodes.c"
+#line 5139 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -5178,7 +5184,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5140 "shortcodes.c"
+#line 5146 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -5214,13 +5220,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 5181 "shortcodes.c"
+#line 5187 "shortcodes.c"
 
 		goto _st2095;
 		_ctr99:
@@ -5230,7 +5236,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5190 "shortcodes.c"
+#line 5196 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5240,11 +5246,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5203 "shortcodes.c"
+#line 5209 "shortcodes.c"
 
 		goto _st2095;
 		_ctr101:
@@ -5252,7 +5258,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 5210 "shortcodes.c"
+#line 5216 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -5262,10 +5268,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 5222 "shortcodes.c"
+#line 5228 "shortcodes.c"
 
 		goto _st2095;
 		_ctr2394:
@@ -5273,7 +5279,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 5229 "shortcodes.c"
+#line 5235 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -5281,7 +5287,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5236 "shortcodes.c"
+#line 5242 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5291,11 +5297,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5249 "shortcodes.c"
+#line 5255 "shortcodes.c"
 
 		goto _st2095;
 		_ctr304:
@@ -5303,7 +5309,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 5256 "shortcodes.c"
+#line 5262 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5313,11 +5319,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5269 "shortcodes.c"
+#line 5275 "shortcodes.c"
 
 		goto _st2095;
 		_ctr731:
@@ -5325,7 +5331,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 5276 "shortcodes.c"
+#line 5282 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -5335,10 +5341,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 5288 "shortcodes.c"
+#line 5294 "shortcodes.c"
 
 		goto _st2095;
 		_ctr736:
@@ -5348,7 +5354,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5297 "shortcodes.c"
+#line 5303 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5358,11 +5364,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5310 "shortcodes.c"
+#line 5316 "shortcodes.c"
 
 		goto _st2095;
 		_ctr738:
@@ -5370,7 +5376,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 5317 "shortcodes.c"
+#line 5323 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5380,11 +5386,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5330 "shortcodes.c"
+#line 5336 "shortcodes.c"
 
 		goto _st2095;
 		_ctr2411:
@@ -5392,7 +5398,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 5337 "shortcodes.c"
+#line 5343 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -5400,7 +5406,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 5344 "shortcodes.c"
+#line 5350 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -5410,11 +5416,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 5357 "shortcodes.c"
+#line 5363 "shortcodes.c"
 
 		goto _st2095;
 		_st2095:
@@ -5444,13 +5450,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 5386 "shortcodes.c"
+#line 5392 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 5391 "shortcodes.c"
+#line 5397 "shortcodes.c"
 
 		goto _st12;
 		_st12:
@@ -5471,13 +5477,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 5411 "shortcodes.c"
+#line 5417 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 5416 "shortcodes.c"
+#line 5422 "shortcodes.c"
 
 		goto _st13;
 		_st13:
@@ -5576,7 +5582,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 5514 "shortcodes.c"
+#line 5520 "shortcodes.c"
 
 		goto _st17;
 		_st17:
@@ -5641,7 +5647,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5578 "shortcodes.c"
+#line 5584 "shortcodes.c"
 
 		goto _st18;
 		_st18:
@@ -5694,7 +5700,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5630 "shortcodes.c"
+#line 5636 "shortcodes.c"
 
 		goto _st19;
 		_st19:
@@ -5822,7 +5828,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5757 "shortcodes.c"
+#line 5763 "shortcodes.c"
 
 		goto _st26;
 		_st26:
@@ -5877,7 +5883,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5811 "shortcodes.c"
+#line 5817 "shortcodes.c"
 
 		goto _st28;
 		_st28:
@@ -5942,7 +5948,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5875 "shortcodes.c"
+#line 5881 "shortcodes.c"
 
 		goto _st29;
 		_st29:
@@ -5997,7 +6003,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 5929 "shortcodes.c"
+#line 5935 "shortcodes.c"
 
 		goto _st31;
 		_st31:
@@ -6035,7 +6041,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 5966 "shortcodes.c"
+#line 5972 "shortcodes.c"
 
 		goto _st33;
 		_st33:
@@ -6100,13 +6106,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 6030 "shortcodes.c"
+#line 6036 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 6035 "shortcodes.c"
+#line 6041 "shortcodes.c"
 
 		goto _st34;
 		_ctr80:
@@ -6114,7 +6120,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 6042 "shortcodes.c"
+#line 6048 "shortcodes.c"
 
 		goto _st34;
 		_ctr92:
@@ -6124,7 +6130,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -6142,13 +6148,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6069 "shortcodes.c"
+#line 6075 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 6074 "shortcodes.c"
+#line 6080 "shortcodes.c"
 
 		goto _st34;
 		_ctr2381:
@@ -6163,7 +6169,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -6185,13 +6191,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6110 "shortcodes.c"
+#line 6116 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 6115 "shortcodes.c"
+#line 6121 "shortcodes.c"
 
 		goto _st34;
 		_st34:
@@ -6260,7 +6266,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 6183 "shortcodes.c"
+#line 6189 "shortcodes.c"
 
 		goto _st35;
 		_st35:
@@ -6330,7 +6336,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 6252 "shortcodes.c"
+#line 6258 "shortcodes.c"
 
 		goto _st37;
 		_ctr93:
@@ -6340,7 +6346,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -6358,7 +6364,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6279 "shortcodes.c"
+#line 6285 "shortcodes.c"
 
 		goto _st37;
 		_ctr2382:
@@ -6373,7 +6379,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -6395,7 +6401,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6315 "shortcodes.c"
+#line 6321 "shortcodes.c"
 
 		goto _st37;
 		_st37:
@@ -6433,7 +6439,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -6451,7 +6457,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6370 "shortcodes.c"
+#line 6376 "shortcodes.c"
 
 		goto _st39;
 		_st39:
@@ -6520,7 +6526,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 6438 "shortcodes.c"
+#line 6444 "shortcodes.c"
 
 		goto _st42;
 		_ctr95:
@@ -6530,7 +6536,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -6548,7 +6554,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6465 "shortcodes.c"
+#line 6471 "shortcodes.c"
 
 		goto _st42;
 		_ctr2384:
@@ -6563,7 +6569,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -6585,7 +6591,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6501 "shortcodes.c"
+#line 6507 "shortcodes.c"
 
 		goto _st42;
 		_st42:
@@ -6634,13 +6640,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6549 "shortcodes.c"
+#line 6555 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 6554 "shortcodes.c"
+#line 6560 "shortcodes.c"
 
 		goto _st45;
 		_st45:
@@ -6669,13 +6675,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 6582 "shortcodes.c"
+#line 6588 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 6587 "shortcodes.c"
+#line 6593 "shortcodes.c"
 
 		goto _st46;
 		_st46:
@@ -6800,7 +6806,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 6711 "shortcodes.c"
+#line 6717 "shortcodes.c"
 
 		goto _st50;
 		_st50:
@@ -6871,7 +6877,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 6781 "shortcodes.c"
+#line 6787 "shortcodes.c"
 
 		goto _st51;
 		_st51:
@@ -6930,7 +6936,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 6839 "shortcodes.c"
+#line 6845 "shortcodes.c"
 
 		goto _st52;
 		_st52:
@@ -6978,7 +6984,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 6886 "shortcodes.c"
+#line 6892 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -6988,11 +6994,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 6899 "shortcodes.c"
+#line 6905 "shortcodes.c"
 
 		goto _st2096;
 		_ctr122:
@@ -7000,7 +7006,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 6906 "shortcodes.c"
+#line 6912 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7036,13 +7042,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 6947 "shortcodes.c"
+#line 6953 "shortcodes.c"
 
 		goto _st2096;
 		_ctr126:
@@ -7052,7 +7058,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 6956 "shortcodes.c"
+#line 6962 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7088,13 +7094,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 6997 "shortcodes.c"
+#line 7003 "shortcodes.c"
 
 		goto _st2096;
 		_ctr128:
@@ -7104,7 +7110,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7006 "shortcodes.c"
+#line 7012 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7140,13 +7146,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 7047 "shortcodes.c"
+#line 7053 "shortcodes.c"
 
 		goto _st2096;
 		_ctr130:
@@ -7154,7 +7160,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 7054 "shortcodes.c"
+#line 7060 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7190,13 +7196,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 7095 "shortcodes.c"
+#line 7101 "shortcodes.c"
 
 		goto _st2096;
 		_ctr136:
@@ -7204,7 +7210,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 7102 "shortcodes.c"
+#line 7108 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -7212,7 +7218,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7109 "shortcodes.c"
+#line 7115 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7248,13 +7254,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 7150 "shortcodes.c"
+#line 7156 "shortcodes.c"
 
 		goto _st2096;
 		_ctr139:
@@ -7262,7 +7268,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 7157 "shortcodes.c"
+#line 7163 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -7270,7 +7276,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7164 "shortcodes.c"
+#line 7170 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -7306,13 +7312,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 7205 "shortcodes.c"
+#line 7211 "shortcodes.c"
 
 		goto _st2096;
 		_ctr163:
@@ -7322,7 +7328,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7214 "shortcodes.c"
+#line 7220 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7332,11 +7338,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7227 "shortcodes.c"
+#line 7233 "shortcodes.c"
 
 		goto _st2096;
 		_ctr165:
@@ -7344,7 +7350,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 7234 "shortcodes.c"
+#line 7240 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -7354,10 +7360,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 7246 "shortcodes.c"
+#line 7252 "shortcodes.c"
 
 		goto _st2096;
 		_ctr2362:
@@ -7365,7 +7371,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 7253 "shortcodes.c"
+#line 7259 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -7373,7 +7379,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7260 "shortcodes.c"
+#line 7266 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7383,11 +7389,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7273 "shortcodes.c"
+#line 7279 "shortcodes.c"
 
 		goto _st2096;
 		_ctr391:
@@ -7395,7 +7401,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 7280 "shortcodes.c"
+#line 7286 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7405,11 +7411,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7293 "shortcodes.c"
+#line 7299 "shortcodes.c"
 
 		goto _st2096;
 		_ctr2180:
@@ -7417,7 +7423,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 7300 "shortcodes.c"
+#line 7306 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -7427,10 +7433,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 7312 "shortcodes.c"
+#line 7318 "shortcodes.c"
 
 		goto _st2096;
 		_ctr2185:
@@ -7440,7 +7446,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7321 "shortcodes.c"
+#line 7327 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7450,11 +7456,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7334 "shortcodes.c"
+#line 7340 "shortcodes.c"
 
 		goto _st2096;
 		_ctr2187:
@@ -7462,7 +7468,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 7341 "shortcodes.c"
+#line 7347 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7472,11 +7478,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7354 "shortcodes.c"
+#line 7360 "shortcodes.c"
 
 		goto _st2096;
 		_ctr2379:
@@ -7484,7 +7490,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 7361 "shortcodes.c"
+#line 7367 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -7492,7 +7498,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 7368 "shortcodes.c"
+#line 7374 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -7502,11 +7508,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 7381 "shortcodes.c"
+#line 7387 "shortcodes.c"
 
 		goto _st2096;
 		_st2096:
@@ -7653,7 +7659,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 7527 "shortcodes.c"
+#line 7533 "shortcodes.c"
 
 		goto _st59;
 		_st59:
@@ -7720,7 +7726,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 7593 "shortcodes.c"
+#line 7599 "shortcodes.c"
 
 		goto _st61;
 		_st61:
@@ -7791,7 +7797,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 7663 "shortcodes.c"
+#line 7669 "shortcodes.c"
 
 		goto _st62;
 		_st62:
@@ -7858,7 +7864,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 7729 "shortcodes.c"
+#line 7735 "shortcodes.c"
 
 		goto _st64;
 		_st64:
@@ -7908,7 +7914,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 7778 "shortcodes.c"
+#line 7784 "shortcodes.c"
 
 		goto _st66;
 		_st66:
@@ -7979,13 +7985,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 7848 "shortcodes.c"
+#line 7854 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 7853 "shortcodes.c"
+#line 7859 "shortcodes.c"
 
 		goto _st67;
 		_ctr146:
@@ -7993,7 +7999,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 7860 "shortcodes.c"
+#line 7866 "shortcodes.c"
 
 		goto _st67;
 		_ctr155:
@@ -8003,7 +8009,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -8021,13 +8027,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 7887 "shortcodes.c"
+#line 7893 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 7892 "shortcodes.c"
+#line 7898 "shortcodes.c"
 
 		goto _st67;
 		_ctr167:
@@ -8042,7 +8048,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -8064,13 +8070,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 7928 "shortcodes.c"
+#line 7934 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 7933 "shortcodes.c"
+#line 7939 "shortcodes.c"
 
 		goto _st67;
 		_st67:
@@ -8142,7 +8148,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8004 "shortcodes.c"
+#line 8010 "shortcodes.c"
 
 		goto _st68;
 		_st68:
@@ -8201,7 +8207,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 8062 "shortcodes.c"
+#line 8068 "shortcodes.c"
 
 		goto _st69;
 		_ctr156:
@@ -8211,7 +8217,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -8229,7 +8235,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8089 "shortcodes.c"
+#line 8095 "shortcodes.c"
 
 		goto _st69;
 		_ctr168:
@@ -8244,7 +8250,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -8266,7 +8272,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8125 "shortcodes.c"
+#line 8131 "shortcodes.c"
 
 		goto _st69;
 		_st69:
@@ -8316,7 +8322,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -8334,7 +8340,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8192 "shortcodes.c"
+#line 8198 "shortcodes.c"
 
 		goto _st71;
 		_st71:
@@ -8421,7 +8427,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 8278 "shortcodes.c"
+#line 8284 "shortcodes.c"
 
 		goto _st74;
 		_ctr158:
@@ -8431,7 +8437,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -8449,7 +8455,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8305 "shortcodes.c"
+#line 8311 "shortcodes.c"
 
 		goto _st74;
 		_ctr170:
@@ -8464,7 +8470,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -8486,7 +8492,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8341 "shortcodes.c"
+#line 8347 "shortcodes.c"
 
 		goto _st74;
 		_st74:
@@ -8536,7 +8542,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8390 "shortcodes.c"
+#line 8396 "shortcodes.c"
 
 		goto _st76;
 		_st76:
@@ -8607,7 +8613,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -8629,7 +8635,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8482 "shortcodes.c"
+#line 8488 "shortcodes.c"
 
 		goto _st77;
 		_st77:
@@ -8728,7 +8734,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8580 "shortcodes.c"
+#line 8586 "shortcodes.c"
 
 		goto _st79;
 		_st79:
@@ -8758,7 +8764,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8609 "shortcodes.c"
+#line 8615 "shortcodes.c"
 
 		goto _st80;
 		_st80:
@@ -8800,7 +8806,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8650 "shortcodes.c"
+#line 8656 "shortcodes.c"
 
 		goto _st81;
 		_st81:
@@ -8838,13 +8844,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8687 "shortcodes.c"
+#line 8693 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 8692 "shortcodes.c"
+#line 8698 "shortcodes.c"
 
 		goto _st83;
 		_st83:
@@ -8873,13 +8879,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 8720 "shortcodes.c"
+#line 8726 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 8725 "shortcodes.c"
+#line 8731 "shortcodes.c"
 
 		goto _st84;
 		_st84:
@@ -9004,7 +9010,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 8849 "shortcodes.c"
+#line 8855 "shortcodes.c"
 
 		goto _st88;
 		_st88:
@@ -9075,7 +9081,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 8919 "shortcodes.c"
+#line 8925 "shortcodes.c"
 
 		goto _st89;
 		_st89:
@@ -9134,7 +9140,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 8977 "shortcodes.c"
+#line 8983 "shortcodes.c"
 
 		goto _st90;
 		_st90:
@@ -9182,7 +9188,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 9024 "shortcodes.c"
+#line 9030 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9192,11 +9198,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9037 "shortcodes.c"
+#line 9043 "shortcodes.c"
 
 		goto _st2097;
 		_ctr204:
@@ -9204,7 +9210,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 9044 "shortcodes.c"
+#line 9050 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9240,13 +9246,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9085 "shortcodes.c"
+#line 9091 "shortcodes.c"
 
 		goto _st2097;
 		_ctr208:
@@ -9256,7 +9262,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9094 "shortcodes.c"
+#line 9100 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9292,13 +9298,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9135 "shortcodes.c"
+#line 9141 "shortcodes.c"
 
 		goto _st2097;
 		_ctr210:
@@ -9308,7 +9314,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9144 "shortcodes.c"
+#line 9150 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9344,13 +9350,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9185 "shortcodes.c"
+#line 9191 "shortcodes.c"
 
 		goto _st2097;
 		_ctr212:
@@ -9358,7 +9364,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 9192 "shortcodes.c"
+#line 9198 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9394,13 +9400,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9233 "shortcodes.c"
+#line 9239 "shortcodes.c"
 
 		goto _st2097;
 		_ctr218:
@@ -9408,7 +9414,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 9240 "shortcodes.c"
+#line 9246 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -9416,7 +9422,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9247 "shortcodes.c"
+#line 9253 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9452,13 +9458,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9288 "shortcodes.c"
+#line 9294 "shortcodes.c"
 
 		goto _st2097;
 		_ctr221:
@@ -9466,7 +9472,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 9295 "shortcodes.c"
+#line 9301 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -9474,7 +9480,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9302 "shortcodes.c"
+#line 9308 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -9510,13 +9516,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 9343 "shortcodes.c"
+#line 9349 "shortcodes.c"
 
 		goto _st2097;
 		_ctr246:
@@ -9526,7 +9532,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9352 "shortcodes.c"
+#line 9358 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9536,11 +9542,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9365 "shortcodes.c"
+#line 9371 "shortcodes.c"
 
 		goto _st2097;
 		_ctr248:
@@ -9548,7 +9554,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 9372 "shortcodes.c"
+#line 9378 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -9558,10 +9564,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 9384 "shortcodes.c"
+#line 9390 "shortcodes.c"
 
 		goto _st2097;
 		_ctr256:
@@ -9569,7 +9575,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 9391 "shortcodes.c"
+#line 9397 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -9577,7 +9583,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9398 "shortcodes.c"
+#line 9404 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9587,11 +9593,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9411 "shortcodes.c"
+#line 9417 "shortcodes.c"
 
 		goto _st2097;
 		_ctr279:
@@ -9599,7 +9605,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 9418 "shortcodes.c"
+#line 9424 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9609,11 +9615,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9431 "shortcodes.c"
+#line 9437 "shortcodes.c"
 
 		goto _st2097;
 		_ctr1158:
@@ -9621,7 +9627,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 9438 "shortcodes.c"
+#line 9444 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -9631,10 +9637,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 9450 "shortcodes.c"
+#line 9456 "shortcodes.c"
 
 		goto _st2097;
 		_ctr1163:
@@ -9644,7 +9650,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9459 "shortcodes.c"
+#line 9465 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9654,11 +9660,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9472 "shortcodes.c"
+#line 9478 "shortcodes.c"
 
 		goto _st2097;
 		_ctr1165:
@@ -9666,7 +9672,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 9479 "shortcodes.c"
+#line 9485 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9676,11 +9682,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9492 "shortcodes.c"
+#line 9498 "shortcodes.c"
 
 		goto _st2097;
 		_ctr2354:
@@ -9688,7 +9694,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 9499 "shortcodes.c"
+#line 9505 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -9696,7 +9702,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 9506 "shortcodes.c"
+#line 9512 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -9706,11 +9712,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 9519 "shortcodes.c"
+#line 9525 "shortcodes.c"
 
 		goto _st2097;
 		_st2097:
@@ -9857,7 +9863,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 9665 "shortcodes.c"
+#line 9671 "shortcodes.c"
 
 		goto _st97;
 		_st97:
@@ -9924,7 +9930,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 9731 "shortcodes.c"
+#line 9737 "shortcodes.c"
 
 		goto _st99;
 		_st99:
@@ -9995,7 +10001,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 9801 "shortcodes.c"
+#line 9807 "shortcodes.c"
 
 		goto _st100;
 		_st100:
@@ -10062,7 +10068,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 9867 "shortcodes.c"
+#line 9873 "shortcodes.c"
 
 		goto _st102;
 		_st102:
@@ -10112,7 +10118,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 9916 "shortcodes.c"
+#line 9922 "shortcodes.c"
 
 		goto _st104;
 		_st104:
@@ -10183,13 +10189,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 9986 "shortcodes.c"
+#line 9992 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 9991 "shortcodes.c"
+#line 9997 "shortcodes.c"
 
 		goto _st105;
 		_ctr228:
@@ -10197,7 +10203,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 9998 "shortcodes.c"
+#line 10004 "shortcodes.c"
 
 		goto _st105;
 		_ctr178:
@@ -10207,7 +10213,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -10225,13 +10231,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10025 "shortcodes.c"
+#line 10031 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 10030 "shortcodes.c"
+#line 10036 "shortcodes.c"
 
 		goto _st105;
 		_ctr236:
@@ -10246,7 +10252,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -10268,13 +10274,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10066 "shortcodes.c"
+#line 10072 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 10071 "shortcodes.c"
+#line 10077 "shortcodes.c"
 
 		goto _st105;
 		_st105:
@@ -10346,7 +10352,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 10142 "shortcodes.c"
+#line 10148 "shortcodes.c"
 
 		goto _st106;
 		_st106:
@@ -10429,7 +10435,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 10224 "shortcodes.c"
+#line 10230 "shortcodes.c"
 
 		goto _st107;
 		_ctr179:
@@ -10439,7 +10445,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -10457,7 +10463,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10251 "shortcodes.c"
+#line 10257 "shortcodes.c"
 
 		goto _st107;
 		_ctr237:
@@ -10472,7 +10478,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -10494,7 +10500,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10287 "shortcodes.c"
+#line 10293 "shortcodes.c"
 
 		goto _st107;
 		_st107:
@@ -10549,7 +10555,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -10571,7 +10577,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10363 "shortcodes.c"
+#line 10369 "shortcodes.c"
 
 		goto _st109;
 		_st109:
@@ -10727,7 +10733,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 10518 "shortcodes.c"
+#line 10524 "shortcodes.c"
 
 		goto _st113;
 		_ctr181:
@@ -10737,7 +10743,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -10755,7 +10761,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10545 "shortcodes.c"
+#line 10551 "shortcodes.c"
 
 		goto _st113;
 		_ctr239:
@@ -10770,7 +10776,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -10792,7 +10798,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10581 "shortcodes.c"
+#line 10587 "shortcodes.c"
 
 		goto _st113;
 		_st113:
@@ -10842,7 +10848,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -10860,7 +10866,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10648 "shortcodes.c"
+#line 10654 "shortcodes.c"
 
 		goto _st115;
 		_st115:
@@ -10890,7 +10896,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 10677 "shortcodes.c"
+#line 10683 "shortcodes.c"
 
 		goto _st116;
 		_st116:
@@ -10962,7 +10968,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -10977,7 +10983,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 10763 "shortcodes.c"
+#line 10769 "shortcodes.c"
 
 		goto _st117;
 		_st117:
@@ -11051,7 +11057,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 10836 "shortcodes.c"
+#line 10842 "shortcodes.c"
 
 		goto _st118;
 		_st118:
@@ -11122,7 +11128,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 10906 "shortcodes.c"
+#line 10912 "shortcodes.c"
 
 		goto _st119;
 		_st119:
@@ -11230,7 +11236,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11013 "shortcodes.c"
+#line 11019 "shortcodes.c"
 
 		goto _st123;
 		_st123:
@@ -11295,13 +11301,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 11077 "shortcodes.c"
+#line 11083 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11082 "shortcodes.c"
+#line 11088 "shortcodes.c"
 
 		goto _st124;
 		_ctr263:
@@ -11309,7 +11315,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11089 "shortcodes.c"
+#line 11095 "shortcodes.c"
 
 		goto _st124;
 		_ctr274:
@@ -11319,7 +11325,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -11337,13 +11343,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11116 "shortcodes.c"
+#line 11122 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11121 "shortcodes.c"
+#line 11127 "shortcodes.c"
 
 		goto _st124;
 		_ctr2337:
@@ -11358,7 +11364,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -11380,13 +11386,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11157 "shortcodes.c"
+#line 11163 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11162 "shortcodes.c"
+#line 11168 "shortcodes.c"
 
 		goto _st124;
 		_st124:
@@ -11456,7 +11462,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11231 "shortcodes.c"
+#line 11237 "shortcodes.c"
 
 		goto _st125;
 		_st125:
@@ -11486,7 +11492,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11260 "shortcodes.c"
+#line 11266 "shortcodes.c"
 
 		goto _st126;
 		_st126:
@@ -11539,7 +11545,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 11312 "shortcodes.c"
+#line 11318 "shortcodes.c"
 
 		goto _st127;
 		_ctr275:
@@ -11549,7 +11555,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -11567,7 +11573,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11339 "shortcodes.c"
+#line 11345 "shortcodes.c"
 
 		goto _st127;
 		_ctr2338:
@@ -11582,7 +11588,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -11604,7 +11610,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11375 "shortcodes.c"
+#line 11381 "shortcodes.c"
 
 		goto _st127;
 		_st127:
@@ -11697,7 +11703,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11467 "shortcodes.c"
+#line 11473 "shortcodes.c"
 
 		goto _st131;
 		_st131:
@@ -11739,7 +11745,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11508 "shortcodes.c"
+#line 11514 "shortcodes.c"
 
 		goto _st132;
 		_st132:
@@ -11803,13 +11809,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 11571 "shortcodes.c"
+#line 11577 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11576 "shortcodes.c"
+#line 11582 "shortcodes.c"
 
 		goto _st134;
 		_ctr291:
@@ -11817,7 +11823,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11583 "shortcodes.c"
+#line 11589 "shortcodes.c"
 
 		goto _st134;
 		_ctr288:
@@ -11827,7 +11833,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -11845,13 +11851,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11610 "shortcodes.c"
+#line 11616 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11615 "shortcodes.c"
+#line 11621 "shortcodes.c"
 
 		goto _st134;
 		_ctr298:
@@ -11866,7 +11872,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -11888,13 +11894,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11651 "shortcodes.c"
+#line 11657 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 11656 "shortcodes.c"
+#line 11662 "shortcodes.c"
 
 		goto _st134;
 		_st134:
@@ -11961,7 +11967,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11722 "shortcodes.c"
+#line 11728 "shortcodes.c"
 
 		goto _st135;
 		_st135:
@@ -12035,7 +12041,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 11795 "shortcodes.c"
+#line 11801 "shortcodes.c"
 
 		goto _st136;
 		_ctr289:
@@ -12045,7 +12051,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -12063,7 +12069,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11822 "shortcodes.c"
+#line 11828 "shortcodes.c"
 
 		goto _st136;
 		_ctr299:
@@ -12078,7 +12084,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -12100,7 +12106,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 11858 "shortcodes.c"
+#line 11864 "shortcodes.c"
 
 		goto _st136;
 		_st136:
@@ -12206,7 +12212,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 11963 "shortcodes.c"
+#line 11969 "shortcodes.c"
 
 		goto _st141;
 		_st141:
@@ -12244,13 +12250,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 12000 "shortcodes.c"
+#line 12006 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 12005 "shortcodes.c"
+#line 12011 "shortcodes.c"
 
 		goto _st143;
 		_st143:
@@ -12279,13 +12285,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 12033 "shortcodes.c"
+#line 12039 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 12038 "shortcodes.c"
+#line 12044 "shortcodes.c"
 
 		goto _st144;
 		_st144:
@@ -12410,7 +12416,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 12162 "shortcodes.c"
+#line 12168 "shortcodes.c"
 
 		goto _st148;
 		_st148:
@@ -12481,7 +12487,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 12232 "shortcodes.c"
+#line 12238 "shortcodes.c"
 
 		goto _st149;
 		_st149:
@@ -12540,7 +12546,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 12290 "shortcodes.c"
+#line 12296 "shortcodes.c"
 
 		goto _st150;
 		_st150:
@@ -12588,7 +12594,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 12337 "shortcodes.c"
+#line 12343 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -12598,11 +12604,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12350 "shortcodes.c"
+#line 12356 "shortcodes.c"
 
 		goto _st2098;
 		_ctr328:
@@ -12610,7 +12616,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 12357 "shortcodes.c"
+#line 12363 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12646,13 +12652,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12398 "shortcodes.c"
+#line 12404 "shortcodes.c"
 
 		goto _st2098;
 		_ctr332:
@@ -12662,7 +12668,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12407 "shortcodes.c"
+#line 12413 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12698,13 +12704,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12448 "shortcodes.c"
+#line 12454 "shortcodes.c"
 
 		goto _st2098;
 		_ctr334:
@@ -12714,7 +12720,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12457 "shortcodes.c"
+#line 12463 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12750,13 +12756,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12498 "shortcodes.c"
+#line 12504 "shortcodes.c"
 
 		goto _st2098;
 		_ctr336:
@@ -12764,7 +12770,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 12505 "shortcodes.c"
+#line 12511 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12800,13 +12806,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12546 "shortcodes.c"
+#line 12552 "shortcodes.c"
 
 		goto _st2098;
 		_ctr342:
@@ -12814,7 +12820,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 12553 "shortcodes.c"
+#line 12559 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -12822,7 +12828,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12560 "shortcodes.c"
+#line 12566 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12858,13 +12864,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12601 "shortcodes.c"
+#line 12607 "shortcodes.c"
 
 		goto _st2098;
 		_ctr345:
@@ -12872,7 +12878,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 12608 "shortcodes.c"
+#line 12614 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -12880,7 +12886,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12615 "shortcodes.c"
+#line 12621 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -12916,13 +12922,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 12656 "shortcodes.c"
+#line 12662 "shortcodes.c"
 
 		goto _st2098;
 		_ctr373:
@@ -12932,7 +12938,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12665 "shortcodes.c"
+#line 12671 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -12942,11 +12948,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12678 "shortcodes.c"
+#line 12684 "shortcodes.c"
 
 		goto _st2098;
 		_ctr375:
@@ -12954,7 +12960,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 12685 "shortcodes.c"
+#line 12691 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -12964,10 +12970,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 12697 "shortcodes.c"
+#line 12703 "shortcodes.c"
 
 		goto _st2098;
 		_ctr2315:
@@ -12975,7 +12981,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 12704 "shortcodes.c"
+#line 12710 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -12983,7 +12989,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12711 "shortcodes.c"
+#line 12717 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -12993,11 +12999,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12724 "shortcodes.c"
+#line 12730 "shortcodes.c"
 
 		goto _st2098;
 		_ctr592:
@@ -13005,7 +13011,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 12731 "shortcodes.c"
+#line 12737 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -13015,11 +13021,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12744 "shortcodes.c"
+#line 12750 "shortcodes.c"
 
 		goto _st2098;
 		_ctr946:
@@ -13027,7 +13033,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 12751 "shortcodes.c"
+#line 12757 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -13037,10 +13043,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 12763 "shortcodes.c"
+#line 12769 "shortcodes.c"
 
 		goto _st2098;
 		_ctr951:
@@ -13050,7 +13056,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12772 "shortcodes.c"
+#line 12778 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -13060,11 +13066,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12785 "shortcodes.c"
+#line 12791 "shortcodes.c"
 
 		goto _st2098;
 		_ctr953:
@@ -13072,7 +13078,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 12792 "shortcodes.c"
+#line 12798 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -13082,11 +13088,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12805 "shortcodes.c"
+#line 12811 "shortcodes.c"
 
 		goto _st2098;
 		_ctr2332:
@@ -13094,7 +13100,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 12812 "shortcodes.c"
+#line 12818 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -13102,7 +13108,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 12819 "shortcodes.c"
+#line 12825 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -13112,11 +13118,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 12832 "shortcodes.c"
+#line 12838 "shortcodes.c"
 
 		goto _st2098;
 		_st2098:
@@ -13263,7 +13269,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 12978 "shortcodes.c"
+#line 12984 "shortcodes.c"
 
 		goto _st157;
 		_st157:
@@ -13330,7 +13336,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13044 "shortcodes.c"
+#line 13050 "shortcodes.c"
 
 		goto _st159;
 		_st159:
@@ -13401,7 +13407,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13114 "shortcodes.c"
+#line 13120 "shortcodes.c"
 
 		goto _st160;
 		_st160:
@@ -13468,7 +13474,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13180 "shortcodes.c"
+#line 13186 "shortcodes.c"
 
 		goto _st162;
 		_st162:
@@ -13518,7 +13524,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 13229 "shortcodes.c"
+#line 13235 "shortcodes.c"
 
 		goto _st164;
 		_st164:
@@ -13589,13 +13595,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13299 "shortcodes.c"
+#line 13305 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13304 "shortcodes.c"
+#line 13310 "shortcodes.c"
 
 		goto _st165;
 		_ctr352:
@@ -13603,7 +13609,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13311 "shortcodes.c"
+#line 13317 "shortcodes.c"
 
 		goto _st165;
 		_ctr365:
@@ -13613,7 +13619,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -13631,13 +13637,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13338 "shortcodes.c"
+#line 13344 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13343 "shortcodes.c"
+#line 13349 "shortcodes.c"
 
 		goto _st165;
 		_ctr2302:
@@ -13652,7 +13658,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -13674,13 +13680,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13379 "shortcodes.c"
+#line 13385 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13384 "shortcodes.c"
+#line 13390 "shortcodes.c"
 
 		goto _st165;
 		_st165:
@@ -13752,7 +13758,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 13455 "shortcodes.c"
+#line 13461 "shortcodes.c"
 
 		goto _st166;
 		_st166:
@@ -13782,7 +13788,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 13484 "shortcodes.c"
+#line 13490 "shortcodes.c"
 
 		goto _st167;
 		_st167:
@@ -13841,7 +13847,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13542 "shortcodes.c"
+#line 13548 "shortcodes.c"
 
 		goto _st168;
 		_ctr366:
@@ -13851,7 +13857,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -13869,7 +13875,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13569 "shortcodes.c"
+#line 13575 "shortcodes.c"
 
 		goto _st168;
 		_ctr2303:
@@ -13884,7 +13890,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -13906,7 +13912,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13605 "shortcodes.c"
+#line 13611 "shortcodes.c"
 
 		goto _st168;
 		_st168:
@@ -13956,7 +13962,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -13974,7 +13980,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13672 "shortcodes.c"
+#line 13678 "shortcodes.c"
 
 		goto _st170;
 		_st170:
@@ -14061,7 +14067,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13758 "shortcodes.c"
+#line 13764 "shortcodes.c"
 
 		goto _st173;
 		_ctr368:
@@ -14071,7 +14077,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -14089,7 +14095,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13785 "shortcodes.c"
+#line 13791 "shortcodes.c"
 
 		goto _st173;
 		_ctr2305:
@@ -14104,7 +14110,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -14126,7 +14132,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13821 "shortcodes.c"
+#line 13827 "shortcodes.c"
 
 		goto _st173;
 		_st173:
@@ -14176,7 +14182,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 13870 "shortcodes.c"
+#line 13876 "shortcodes.c"
 
 		goto _st175;
 		_st175:
@@ -14229,13 +14235,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 13922 "shortcodes.c"
+#line 13928 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13927 "shortcodes.c"
+#line 13933 "shortcodes.c"
 
 		goto _st176;
 		_ctr379:
@@ -14243,7 +14249,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13934 "shortcodes.c"
+#line 13940 "shortcodes.c"
 
 		goto _st176;
 		_ctr376:
@@ -14253,7 +14259,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -14271,13 +14277,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 13961 "shortcodes.c"
+#line 13967 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 13966 "shortcodes.c"
+#line 13972 "shortcodes.c"
 
 		goto _st176;
 		_ctr385:
@@ -14292,7 +14298,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -14314,13 +14320,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14002 "shortcodes.c"
+#line 14008 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 14007 "shortcodes.c"
+#line 14013 "shortcodes.c"
 
 		goto _st176;
 		_st176:
@@ -14390,7 +14396,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 14076 "shortcodes.c"
+#line 14082 "shortcodes.c"
 
 		goto _st177;
 		_st177:
@@ -14470,7 +14476,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 14155 "shortcodes.c"
+#line 14161 "shortcodes.c"
 
 		goto _st178;
 		_ctr377:
@@ -14480,7 +14486,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -14498,7 +14504,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14182 "shortcodes.c"
+#line 14188 "shortcodes.c"
 
 		goto _st178;
 		_ctr386:
@@ -14513,7 +14519,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -14535,7 +14541,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14218 "shortcodes.c"
+#line 14224 "shortcodes.c"
 
 		goto _st178;
 		_st178:
@@ -14671,7 +14677,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 14353 "shortcodes.c"
+#line 14359 "shortcodes.c"
 
 		goto _st183;
 		_st183:
@@ -14740,7 +14746,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -14755,7 +14761,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14436 "shortcodes.c"
+#line 14442 "shortcodes.c"
 
 		goto _st184;
 		_st184:
@@ -14823,13 +14829,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14503 "shortcodes.c"
+#line 14509 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 14508 "shortcodes.c"
+#line 14514 "shortcodes.c"
 
 		goto _st186;
 		_st186:
@@ -14861,13 +14867,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 14539 "shortcodes.c"
+#line 14545 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 14544 "shortcodes.c"
+#line 14550 "shortcodes.c"
 
 		goto _st187;
 		_st187:
@@ -15004,7 +15010,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 14680 "shortcodes.c"
+#line 14686 "shortcodes.c"
 
 		goto _st191;
 		_st191:
@@ -15078,7 +15084,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 14753 "shortcodes.c"
+#line 14759 "shortcodes.c"
 
 		goto _st192;
 		_st192:
@@ -15140,7 +15146,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 14814 "shortcodes.c"
+#line 14820 "shortcodes.c"
 
 		goto _st193;
 		_st193:
@@ -15194,7 +15200,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 14867 "shortcodes.c"
+#line 14873 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15204,11 +15210,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 14880 "shortcodes.c"
+#line 14886 "shortcodes.c"
 
 		goto _st2099;
 		_ctr415:
@@ -15216,7 +15222,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 14887 "shortcodes.c"
+#line 14893 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15252,13 +15258,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 14928 "shortcodes.c"
+#line 14934 "shortcodes.c"
 
 		goto _st2099;
 		_ctr419:
@@ -15268,7 +15274,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 14937 "shortcodes.c"
+#line 14943 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15304,13 +15310,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 14978 "shortcodes.c"
+#line 14984 "shortcodes.c"
 
 		goto _st2099;
 		_ctr421:
@@ -15320,7 +15326,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 14987 "shortcodes.c"
+#line 14993 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15356,13 +15362,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 15028 "shortcodes.c"
+#line 15034 "shortcodes.c"
 
 		goto _st2099;
 		_ctr423:
@@ -15370,7 +15376,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 15035 "shortcodes.c"
+#line 15041 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15406,13 +15412,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 15076 "shortcodes.c"
+#line 15082 "shortcodes.c"
 
 		goto _st2099;
 		_ctr429:
@@ -15420,7 +15426,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 15083 "shortcodes.c"
+#line 15089 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -15428,7 +15434,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15090 "shortcodes.c"
+#line 15096 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15464,13 +15470,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 15131 "shortcodes.c"
+#line 15137 "shortcodes.c"
 
 		goto _st2099;
 		_ctr432:
@@ -15478,7 +15484,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 15138 "shortcodes.c"
+#line 15144 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -15486,7 +15492,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15145 "shortcodes.c"
+#line 15151 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -15522,13 +15528,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 15186 "shortcodes.c"
+#line 15192 "shortcodes.c"
 
 		goto _st2099;
 		_ctr456:
@@ -15538,7 +15544,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15195 "shortcodes.c"
+#line 15201 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15548,11 +15554,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15208 "shortcodes.c"
+#line 15214 "shortcodes.c"
 
 		goto _st2099;
 		_ctr458:
@@ -15560,7 +15566,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 15215 "shortcodes.c"
+#line 15221 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -15570,10 +15576,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 15227 "shortcodes.c"
+#line 15233 "shortcodes.c"
 
 		goto _st2099;
 		_ctr2283:
@@ -15581,7 +15587,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 15234 "shortcodes.c"
+#line 15240 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -15589,7 +15595,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15241 "shortcodes.c"
+#line 15247 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15599,11 +15605,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15254 "shortcodes.c"
+#line 15260 "shortcodes.c"
 
 		goto _st2099;
 		_ctr1494:
@@ -15611,7 +15617,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 15261 "shortcodes.c"
+#line 15267 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15621,11 +15627,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15274 "shortcodes.c"
+#line 15280 "shortcodes.c"
 
 		goto _st2099;
 		_ctr1323:
@@ -15633,7 +15639,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 15281 "shortcodes.c"
+#line 15287 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -15643,10 +15649,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 15293 "shortcodes.c"
+#line 15299 "shortcodes.c"
 
 		goto _st2099;
 		_ctr1328:
@@ -15656,7 +15662,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15302 "shortcodes.c"
+#line 15308 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15666,11 +15672,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15315 "shortcodes.c"
+#line 15321 "shortcodes.c"
 
 		goto _st2099;
 		_ctr1330:
@@ -15678,7 +15684,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 15322 "shortcodes.c"
+#line 15328 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15688,11 +15694,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15335 "shortcodes.c"
+#line 15341 "shortcodes.c"
 
 		goto _st2099;
 		_ctr2300:
@@ -15700,7 +15706,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 15342 "shortcodes.c"
+#line 15348 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -15708,7 +15714,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 15349 "shortcodes.c"
+#line 15355 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -15718,11 +15724,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 15362 "shortcodes.c"
+#line 15368 "shortcodes.c"
 
 		goto _st2099;
 		_st2099:
@@ -15887,7 +15893,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 15526 "shortcodes.c"
+#line 15532 "shortcodes.c"
 
 		goto _st200;
 		_st200:
@@ -15960,7 +15966,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 15598 "shortcodes.c"
+#line 15604 "shortcodes.c"
 
 		goto _st202;
 		_st202:
@@ -16034,7 +16040,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 15671 "shortcodes.c"
+#line 15677 "shortcodes.c"
 
 		goto _st203;
 		_st203:
@@ -16107,7 +16113,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 15743 "shortcodes.c"
+#line 15749 "shortcodes.c"
 
 		goto _st205;
 		_st205:
@@ -16163,7 +16169,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 15798 "shortcodes.c"
+#line 15804 "shortcodes.c"
 
 		goto _st207;
 		_st207:
@@ -16237,13 +16243,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 15871 "shortcodes.c"
+#line 15877 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 15876 "shortcodes.c"
+#line 15882 "shortcodes.c"
 
 		goto _st208;
 		_ctr439:
@@ -16251,7 +16257,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 15883 "shortcodes.c"
+#line 15889 "shortcodes.c"
 
 		goto _st208;
 		_ctr448:
@@ -16261,7 +16267,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -16279,13 +16285,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 15910 "shortcodes.c"
+#line 15916 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 15915 "shortcodes.c"
+#line 15921 "shortcodes.c"
 
 		goto _st208;
 		_ctr460:
@@ -16300,7 +16306,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -16322,13 +16328,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 15951 "shortcodes.c"
+#line 15957 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 15956 "shortcodes.c"
+#line 15962 "shortcodes.c"
 
 		goto _st208;
 		_st208:
@@ -16400,7 +16406,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 16027 "shortcodes.c"
+#line 16033 "shortcodes.c"
 
 		goto _st209;
 		_st209:
@@ -16462,7 +16468,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 16088 "shortcodes.c"
+#line 16094 "shortcodes.c"
 
 		goto _st210;
 		_ctr449:
@@ -16472,7 +16478,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -16490,7 +16496,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16115 "shortcodes.c"
+#line 16121 "shortcodes.c"
 
 		goto _st210;
 		_ctr461:
@@ -16505,7 +16511,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -16527,7 +16533,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16151 "shortcodes.c"
+#line 16157 "shortcodes.c"
 
 		goto _st210;
 		_st210:
@@ -16583,7 +16589,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -16601,7 +16607,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16224 "shortcodes.c"
+#line 16230 "shortcodes.c"
 
 		goto _st212;
 		_st212:
@@ -16697,7 +16703,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 16319 "shortcodes.c"
+#line 16325 "shortcodes.c"
 
 		goto _st215;
 		_ctr451:
@@ -16707,7 +16713,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -16725,7 +16731,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16346 "shortcodes.c"
+#line 16352 "shortcodes.c"
 
 		goto _st215;
 		_ctr463:
@@ -16740,7 +16746,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -16762,7 +16768,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16382 "shortcodes.c"
+#line 16388 "shortcodes.c"
 
 		goto _st215;
 		_st215:
@@ -16818,7 +16824,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 16437 "shortcodes.c"
+#line 16443 "shortcodes.c"
 
 		goto _st217;
 		_st217:
@@ -16892,7 +16898,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -16914,7 +16920,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16532 "shortcodes.c"
+#line 16538 "shortcodes.c"
 
 		goto _st218;
 		_st218:
@@ -17019,7 +17025,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 16636 "shortcodes.c"
+#line 16642 "shortcodes.c"
 
 		goto _st220;
 		_st220:
@@ -17075,13 +17081,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 16691 "shortcodes.c"
+#line 16697 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16696 "shortcodes.c"
+#line 16702 "shortcodes.c"
 
 		goto _st221;
 		_ctr470:
@@ -17089,7 +17095,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16703 "shortcodes.c"
+#line 16709 "shortcodes.c"
 
 		goto _st221;
 		_ctr467:
@@ -17099,7 +17105,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -17117,13 +17123,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16730 "shortcodes.c"
+#line 16736 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16735 "shortcodes.c"
+#line 16741 "shortcodes.c"
 
 		goto _st221;
 		_ctr2270:
@@ -17138,7 +17144,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -17160,13 +17166,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16771 "shortcodes.c"
+#line 16777 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16776 "shortcodes.c"
+#line 16782 "shortcodes.c"
 
 		goto _st221;
 		_st221:
@@ -17236,7 +17242,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 16845 "shortcodes.c"
+#line 16851 "shortcodes.c"
 
 		goto _st222;
 		_st222:
@@ -17298,13 +17304,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 16906 "shortcodes.c"
+#line 16912 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16911 "shortcodes.c"
+#line 16917 "shortcodes.c"
 
 		goto _st223;
 		_ctr481:
@@ -17312,7 +17318,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16918 "shortcodes.c"
+#line 16924 "shortcodes.c"
 
 		goto _st223;
 		_ctr476:
@@ -17322,7 +17328,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -17340,13 +17346,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16945 "shortcodes.c"
+#line 16951 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16950 "shortcodes.c"
+#line 16956 "shortcodes.c"
 
 		goto _st223;
 		_ctr488:
@@ -17361,7 +17367,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -17383,13 +17389,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 16986 "shortcodes.c"
+#line 16992 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 16991 "shortcodes.c"
+#line 16997 "shortcodes.c"
 
 		goto _st223;
 		_st223:
@@ -17461,7 +17467,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 17062 "shortcodes.c"
+#line 17068 "shortcodes.c"
 
 		goto _st224;
 		_st224:
@@ -17547,7 +17553,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 17147 "shortcodes.c"
+#line 17153 "shortcodes.c"
 
 		goto _st225;
 		_ctr477:
@@ -17557,7 +17563,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -17575,7 +17581,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 17174 "shortcodes.c"
+#line 17180 "shortcodes.c"
 
 		goto _st225;
 		_ctr489:
@@ -17590,7 +17596,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -17612,7 +17618,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 17210 "shortcodes.c"
+#line 17216 "shortcodes.c"
 
 		goto _st225;
 		_st225:
@@ -17656,13 +17662,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 17253 "shortcodes.c"
+#line 17259 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 17258 "shortcodes.c"
+#line 17264 "shortcodes.c"
 
 		goto _st227;
 		_st227:
@@ -17694,13 +17700,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 17289 "shortcodes.c"
+#line 17295 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 17294 "shortcodes.c"
+#line 17300 "shortcodes.c"
 
 		goto _st228;
 		_st228:
@@ -17837,7 +17843,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 17430 "shortcodes.c"
+#line 17436 "shortcodes.c"
 
 		goto _st232;
 		_st232:
@@ -17911,7 +17917,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 17503 "shortcodes.c"
+#line 17509 "shortcodes.c"
 
 		goto _st233;
 		_st233:
@@ -17973,7 +17979,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 17564 "shortcodes.c"
+#line 17570 "shortcodes.c"
 
 		goto _st234;
 		_st234:
@@ -18027,7 +18033,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 17617 "shortcodes.c"
+#line 17623 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18037,11 +18043,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 17630 "shortcodes.c"
+#line 17636 "shortcodes.c"
 
 		goto _st2100;
 		_ctr513:
@@ -18049,7 +18055,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 17637 "shortcodes.c"
+#line 17643 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18085,13 +18091,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17678 "shortcodes.c"
+#line 17684 "shortcodes.c"
 
 		goto _st2100;
 		_ctr517:
@@ -18101,7 +18107,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17687 "shortcodes.c"
+#line 17693 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18137,13 +18143,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17728 "shortcodes.c"
+#line 17734 "shortcodes.c"
 
 		goto _st2100;
 		_ctr519:
@@ -18153,7 +18159,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17737 "shortcodes.c"
+#line 17743 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18189,13 +18195,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17778 "shortcodes.c"
+#line 17784 "shortcodes.c"
 
 		goto _st2100;
 		_ctr521:
@@ -18203,7 +18209,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 17785 "shortcodes.c"
+#line 17791 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18239,13 +18245,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17826 "shortcodes.c"
+#line 17832 "shortcodes.c"
 
 		goto _st2100;
 		_ctr527:
@@ -18253,7 +18259,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 17833 "shortcodes.c"
+#line 17839 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -18261,7 +18267,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17840 "shortcodes.c"
+#line 17846 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18297,13 +18303,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17881 "shortcodes.c"
+#line 17887 "shortcodes.c"
 
 		goto _st2100;
 		_ctr530:
@@ -18311,7 +18317,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 17888 "shortcodes.c"
+#line 17894 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -18319,7 +18325,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17895 "shortcodes.c"
+#line 17901 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -18355,13 +18361,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 17936 "shortcodes.c"
+#line 17942 "shortcodes.c"
 
 		goto _st2100;
 		_ctr2265:
@@ -18371,7 +18377,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17945 "shortcodes.c"
+#line 17951 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18381,11 +18387,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 17958 "shortcodes.c"
+#line 17964 "shortcodes.c"
 
 		goto _st2100;
 		_ctr542:
@@ -18393,7 +18399,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 17965 "shortcodes.c"
+#line 17971 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -18403,10 +18409,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 17977 "shortcodes.c"
+#line 17983 "shortcodes.c"
 
 		goto _st2100;
 		_ctr540:
@@ -18414,7 +18420,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 17984 "shortcodes.c"
+#line 17990 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -18422,7 +18428,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 17991 "shortcodes.c"
+#line 17997 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18432,11 +18438,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 18004 "shortcodes.c"
+#line 18010 "shortcodes.c"
 
 		goto _st2100;
 		_ctr561:
@@ -18444,7 +18450,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 18011 "shortcodes.c"
+#line 18017 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18454,11 +18460,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 18024 "shortcodes.c"
+#line 18030 "shortcodes.c"
 
 		goto _st2100;
 		_ctr1278:
@@ -18466,7 +18472,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 18031 "shortcodes.c"
+#line 18037 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -18476,10 +18482,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 18043 "shortcodes.c"
+#line 18049 "shortcodes.c"
 
 		goto _st2100;
 		_ctr1283:
@@ -18489,7 +18495,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 18052 "shortcodes.c"
+#line 18058 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18499,11 +18505,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 18065 "shortcodes.c"
+#line 18071 "shortcodes.c"
 
 		goto _st2100;
 		_ctr1285:
@@ -18511,7 +18517,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 18072 "shortcodes.c"
+#line 18078 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18521,11 +18527,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 18085 "shortcodes.c"
+#line 18091 "shortcodes.c"
 
 		goto _st2100;
 		_ctr2259:
@@ -18533,7 +18539,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 18092 "shortcodes.c"
+#line 18098 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -18541,7 +18547,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 18099 "shortcodes.c"
+#line 18105 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -18551,11 +18557,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 18112 "shortcodes.c"
+#line 18118 "shortcodes.c"
 
 		goto _st2100;
 		_st2100:
@@ -18720,7 +18726,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18276 "shortcodes.c"
+#line 18282 "shortcodes.c"
 
 		goto _st241;
 		_st241:
@@ -18793,7 +18799,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18348 "shortcodes.c"
+#line 18354 "shortcodes.c"
 
 		goto _st243;
 		_st243:
@@ -18867,7 +18873,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18421 "shortcodes.c"
+#line 18427 "shortcodes.c"
 
 		goto _st244;
 		_st244:
@@ -18940,7 +18946,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18493 "shortcodes.c"
+#line 18499 "shortcodes.c"
 
 		goto _st246;
 		_st246:
@@ -18996,7 +19002,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 18548 "shortcodes.c"
+#line 18554 "shortcodes.c"
 
 		goto _st248;
 		_st248:
@@ -19070,7 +19076,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18621 "shortcodes.c"
+#line 18627 "shortcodes.c"
 
 		goto _st249;
 		_st249:
@@ -19144,7 +19150,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18694 "shortcodes.c"
+#line 18700 "shortcodes.c"
 
 		goto _st250;
 		_st250:
@@ -19217,7 +19223,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 18766 "shortcodes.c"
+#line 18772 "shortcodes.c"
 
 		goto _st252;
 		_ctr479:
@@ -19227,7 +19233,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -19245,7 +19251,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 18793 "shortcodes.c"
+#line 18799 "shortcodes.c"
 
 		goto _st252;
 		_ctr491:
@@ -19260,7 +19266,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -19282,7 +19288,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 18829 "shortcodes.c"
+#line 18835 "shortcodes.c"
 
 		goto _st252;
 		_st252:
@@ -19402,7 +19408,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 18948 "shortcodes.c"
+#line 18954 "shortcodes.c"
 
 		goto _st256;
 		_st256:
@@ -19470,13 +19476,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 19015 "shortcodes.c"
+#line 19021 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19020 "shortcodes.c"
+#line 19026 "shortcodes.c"
 
 		goto _st257;
 		_ctr549:
@@ -19484,7 +19490,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19027 "shortcodes.c"
+#line 19033 "shortcodes.c"
 
 		goto _st257;
 		_ctr556:
@@ -19494,7 +19500,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -19512,13 +19518,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19054 "shortcodes.c"
+#line 19060 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19059 "shortcodes.c"
+#line 19065 "shortcodes.c"
 
 		goto _st257;
 		_ctr563:
@@ -19533,7 +19539,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -19555,13 +19561,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19095 "shortcodes.c"
+#line 19101 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19100 "shortcodes.c"
+#line 19106 "shortcodes.c"
 
 		goto _st257;
 		_st257:
@@ -19631,7 +19637,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19169 "shortcodes.c"
+#line 19175 "shortcodes.c"
 
 		goto _st258;
 		_st258:
@@ -19687,7 +19693,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 19224 "shortcodes.c"
+#line 19230 "shortcodes.c"
 
 		goto _st259;
 		_ctr557:
@@ -19697,7 +19703,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -19715,7 +19721,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19251 "shortcodes.c"
+#line 19257 "shortcodes.c"
 
 		goto _st259;
 		_ctr564:
@@ -19730,7 +19736,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -19752,7 +19758,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19287 "shortcodes.c"
+#line 19293 "shortcodes.c"
 
 		goto _st259;
 		_st259:
@@ -19857,7 +19863,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19391 "shortcodes.c"
+#line 19397 "shortcodes.c"
 
 		goto _st263;
 		_st263:
@@ -19969,7 +19975,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19502 "shortcodes.c"
+#line 19508 "shortcodes.c"
 
 		goto _st265;
 		_st265:
@@ -20014,7 +20020,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19546 "shortcodes.c"
+#line 19552 "shortcodes.c"
 
 		goto _st266;
 		_st266:
@@ -20044,7 +20050,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19575 "shortcodes.c"
+#line 19581 "shortcodes.c"
 
 		goto _st267;
 		_st267:
@@ -20097,13 +20103,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 19627 "shortcodes.c"
+#line 19633 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19632 "shortcodes.c"
+#line 19638 "shortcodes.c"
 
 		goto _st268;
 		_ctr579:
@@ -20111,7 +20117,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19639 "shortcodes.c"
+#line 19645 "shortcodes.c"
 
 		goto _st268;
 		_ctr576:
@@ -20121,7 +20127,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -20139,13 +20145,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19666 "shortcodes.c"
+#line 19672 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19671 "shortcodes.c"
+#line 19677 "shortcodes.c"
 
 		goto _st268;
 		_ctr586:
@@ -20160,7 +20166,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -20182,13 +20188,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19707 "shortcodes.c"
+#line 19713 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 19712 "shortcodes.c"
+#line 19718 "shortcodes.c"
 
 		goto _st268;
 		_st268:
@@ -20258,7 +20264,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 19781 "shortcodes.c"
+#line 19787 "shortcodes.c"
 
 		goto _st269;
 		_st269:
@@ -20338,7 +20344,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 19860 "shortcodes.c"
+#line 19866 "shortcodes.c"
 
 		goto _st270;
 		_ctr577:
@@ -20348,7 +20354,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -20366,7 +20372,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19887 "shortcodes.c"
+#line 19893 "shortcodes.c"
 
 		goto _st270;
 		_ctr587:
@@ -20381,7 +20387,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -20403,7 +20409,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 19923 "shortcodes.c"
+#line 19929 "shortcodes.c"
 
 		goto _st270;
 		_st270:
@@ -20539,7 +20545,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 20058 "shortcodes.c"
+#line 20064 "shortcodes.c"
 
 		goto _st275;
 		_st275:
@@ -20608,7 +20614,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -20623,7 +20629,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20141 "shortcodes.c"
+#line 20147 "shortcodes.c"
 
 		goto _st276;
 		_st276:
@@ -20680,7 +20686,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 20197 "shortcodes.c"
+#line 20203 "shortcodes.c"
 
 		goto _st277;
 		_st277:
@@ -20733,13 +20739,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 20249 "shortcodes.c"
+#line 20255 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 20254 "shortcodes.c"
+#line 20260 "shortcodes.c"
 
 		goto _st278;
 		_ctr599:
@@ -20747,7 +20753,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 20261 "shortcodes.c"
+#line 20267 "shortcodes.c"
 
 		goto _st278;
 		_ctr596:
@@ -20757,7 +20763,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -20775,13 +20781,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20288 "shortcodes.c"
+#line 20294 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 20293 "shortcodes.c"
+#line 20299 "shortcodes.c"
 
 		goto _st278;
 		_ctr605:
@@ -20796,7 +20802,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -20818,13 +20824,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20329 "shortcodes.c"
+#line 20335 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 20334 "shortcodes.c"
+#line 20340 "shortcodes.c"
 
 		goto _st278;
 		_st278:
@@ -20894,7 +20900,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 20403 "shortcodes.c"
+#line 20409 "shortcodes.c"
 
 		goto _st279;
 		_st279:
@@ -20974,7 +20980,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 20482 "shortcodes.c"
+#line 20488 "shortcodes.c"
 
 		goto _st280;
 		_ctr597:
@@ -20984,7 +20990,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -21002,7 +21008,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20509 "shortcodes.c"
+#line 20515 "shortcodes.c"
 
 		goto _st280;
 		_ctr606:
@@ -21017,7 +21023,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -21039,7 +21045,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20545 "shortcodes.c"
+#line 20551 "shortcodes.c"
 
 		goto _st280;
 		_st280:
@@ -21123,13 +21129,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20628 "shortcodes.c"
+#line 20634 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 20633 "shortcodes.c"
+#line 20639 "shortcodes.c"
 
 		goto _st284;
 		_st284:
@@ -21158,13 +21164,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 20661 "shortcodes.c"
+#line 20667 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 20666 "shortcodes.c"
+#line 20672 "shortcodes.c"
 
 		goto _st285;
 		_st285:
@@ -21289,7 +21295,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 20790 "shortcodes.c"
+#line 20796 "shortcodes.c"
 
 		goto _st289;
 		_st289:
@@ -21360,7 +21366,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 20860 "shortcodes.c"
+#line 20866 "shortcodes.c"
 
 		goto _st290;
 		_st290:
@@ -21419,7 +21425,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 20918 "shortcodes.c"
+#line 20924 "shortcodes.c"
 
 		goto _st291;
 		_st291:
@@ -21467,7 +21473,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 20965 "shortcodes.c"
+#line 20971 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21477,11 +21483,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 20978 "shortcodes.c"
+#line 20984 "shortcodes.c"
 
 		goto _st2101;
 		_ctr631:
@@ -21489,7 +21495,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 20985 "shortcodes.c"
+#line 20991 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21525,13 +21531,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21026 "shortcodes.c"
+#line 21032 "shortcodes.c"
 
 		goto _st2101;
 		_ctr635:
@@ -21541,7 +21547,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21035 "shortcodes.c"
+#line 21041 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21577,13 +21583,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21076 "shortcodes.c"
+#line 21082 "shortcodes.c"
 
 		goto _st2101;
 		_ctr637:
@@ -21593,7 +21599,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21085 "shortcodes.c"
+#line 21091 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21629,13 +21635,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21126 "shortcodes.c"
+#line 21132 "shortcodes.c"
 
 		goto _st2101;
 		_ctr639:
@@ -21643,7 +21649,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 21133 "shortcodes.c"
+#line 21139 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21679,13 +21685,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21174 "shortcodes.c"
+#line 21180 "shortcodes.c"
 
 		goto _st2101;
 		_ctr645:
@@ -21693,7 +21699,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 21181 "shortcodes.c"
+#line 21187 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -21701,7 +21707,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21188 "shortcodes.c"
+#line 21194 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21737,13 +21743,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21229 "shortcodes.c"
+#line 21235 "shortcodes.c"
 
 		goto _st2101;
 		_ctr648:
@@ -21751,7 +21757,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 21236 "shortcodes.c"
+#line 21242 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -21759,7 +21765,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21243 "shortcodes.c"
+#line 21249 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -21795,13 +21801,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 21284 "shortcodes.c"
+#line 21290 "shortcodes.c"
 
 		goto _st2101;
 		_ctr673:
@@ -21811,7 +21817,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21293 "shortcodes.c"
+#line 21299 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21821,11 +21827,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21306 "shortcodes.c"
+#line 21312 "shortcodes.c"
 
 		goto _st2101;
 		_ctr675:
@@ -21833,7 +21839,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 21313 "shortcodes.c"
+#line 21319 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -21843,10 +21849,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 21325 "shortcodes.c"
+#line 21331 "shortcodes.c"
 
 		goto _st2101;
 		_ctr683:
@@ -21854,7 +21860,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 21332 "shortcodes.c"
+#line 21338 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -21862,7 +21868,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21339 "shortcodes.c"
+#line 21345 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21872,11 +21878,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21352 "shortcodes.c"
+#line 21358 "shortcodes.c"
 
 		goto _st2101;
 		_ctr2241:
@@ -21884,7 +21890,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 21359 "shortcodes.c"
+#line 21365 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21894,11 +21900,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21372 "shortcodes.c"
+#line 21378 "shortcodes.c"
 
 		goto _st2101;
 		_ctr910:
@@ -21906,7 +21912,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 21379 "shortcodes.c"
+#line 21385 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -21916,10 +21922,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 21391 "shortcodes.c"
+#line 21397 "shortcodes.c"
 
 		goto _st2101;
 		_ctr913:
@@ -21929,7 +21935,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21400 "shortcodes.c"
+#line 21406 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21939,11 +21945,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21413 "shortcodes.c"
+#line 21419 "shortcodes.c"
 
 		goto _st2101;
 		_ctr915:
@@ -21951,7 +21957,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 21420 "shortcodes.c"
+#line 21426 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21961,11 +21967,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21433 "shortcodes.c"
+#line 21439 "shortcodes.c"
 
 		goto _st2101;
 		_ctr2240:
@@ -21973,7 +21979,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 21440 "shortcodes.c"
+#line 21446 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -21981,7 +21987,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 21447 "shortcodes.c"
+#line 21453 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -21991,11 +21997,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 21460 "shortcodes.c"
+#line 21466 "shortcodes.c"
 
 		goto _st2101;
 		_st2101:
@@ -22142,7 +22148,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 21606 "shortcodes.c"
+#line 21612 "shortcodes.c"
 
 		goto _st298;
 		_st298:
@@ -22209,7 +22215,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 21672 "shortcodes.c"
+#line 21678 "shortcodes.c"
 
 		goto _st300;
 		_st300:
@@ -22280,7 +22286,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 21742 "shortcodes.c"
+#line 21748 "shortcodes.c"
 
 		goto _st301;
 		_st301:
@@ -22347,7 +22353,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 21808 "shortcodes.c"
+#line 21814 "shortcodes.c"
 
 		goto _st303;
 		_st303:
@@ -22397,7 +22403,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 21857 "shortcodes.c"
+#line 21863 "shortcodes.c"
 
 		goto _st305;
 		_st305:
@@ -22468,13 +22474,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 21927 "shortcodes.c"
+#line 21933 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 21932 "shortcodes.c"
+#line 21938 "shortcodes.c"
 
 		goto _st306;
 		_ctr655:
@@ -22482,7 +22488,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 21939 "shortcodes.c"
+#line 21945 "shortcodes.c"
 
 		goto _st306;
 		_ctr281:
@@ -22492,7 +22498,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -22510,13 +22516,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 21966 "shortcodes.c"
+#line 21972 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 21971 "shortcodes.c"
+#line 21977 "shortcodes.c"
 
 		goto _st306;
 		_ctr663:
@@ -22531,7 +22537,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -22553,13 +22559,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22007 "shortcodes.c"
+#line 22013 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 22012 "shortcodes.c"
+#line 22018 "shortcodes.c"
 
 		goto _st306;
 		_st306:
@@ -22631,7 +22637,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 22083 "shortcodes.c"
+#line 22089 "shortcodes.c"
 
 		goto _st307;
 		_st307:
@@ -22714,7 +22720,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 22165 "shortcodes.c"
+#line 22171 "shortcodes.c"
 
 		goto _st308;
 		_ctr283:
@@ -22724,7 +22730,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -22742,7 +22748,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22192 "shortcodes.c"
+#line 22198 "shortcodes.c"
 
 		goto _st308;
 		_ctr664:
@@ -22757,7 +22763,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -22779,7 +22785,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22228 "shortcodes.c"
+#line 22234 "shortcodes.c"
 
 		goto _st308;
 		_st308:
@@ -22834,7 +22840,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -22856,7 +22862,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22304 "shortcodes.c"
+#line 22310 "shortcodes.c"
 
 		goto _st310;
 		_st310:
@@ -23012,7 +23018,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 22459 "shortcodes.c"
+#line 22465 "shortcodes.c"
 
 		goto _st314;
 		_ctr285:
@@ -23022,7 +23028,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -23040,7 +23046,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22486 "shortcodes.c"
+#line 22492 "shortcodes.c"
 
 		goto _st314;
 		_ctr666:
@@ -23055,7 +23061,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -23077,7 +23083,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22522 "shortcodes.c"
+#line 22528 "shortcodes.c"
 
 		goto _st314;
 		_st314:
@@ -23127,7 +23133,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -23145,7 +23151,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22589 "shortcodes.c"
+#line 22595 "shortcodes.c"
 
 		goto _st316;
 		_st316:
@@ -23175,7 +23181,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 22618 "shortcodes.c"
+#line 22624 "shortcodes.c"
 
 		goto _st317;
 		_st317:
@@ -23247,7 +23253,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -23262,7 +23268,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 22704 "shortcodes.c"
+#line 22710 "shortcodes.c"
 
 		goto _st318;
 		_st318:
@@ -23336,7 +23342,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 22777 "shortcodes.c"
+#line 22783 "shortcodes.c"
 
 		goto _st319;
 		_st319:
@@ -23407,7 +23413,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 22847 "shortcodes.c"
+#line 22853 "shortcodes.c"
 
 		goto _st320;
 		_st320:
@@ -23515,7 +23521,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 22954 "shortcodes.c"
+#line 22960 "shortcodes.c"
 
 		goto _st324;
 		_st324:
@@ -23631,7 +23637,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 23069 "shortcodes.c"
+#line 23075 "shortcodes.c"
 
 		goto _st327;
 		_st327:
@@ -23702,13 +23708,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 23139 "shortcodes.c"
+#line 23145 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23144 "shortcodes.c"
+#line 23150 "shortcodes.c"
 
 		goto _st328;
 		_ctr697:
@@ -23716,7 +23722,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23151 "shortcodes.c"
+#line 23157 "shortcodes.c"
 
 		goto _st328;
 		_ctr905:
@@ -23726,7 +23732,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -23744,13 +23750,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23178 "shortcodes.c"
+#line 23184 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23183 "shortcodes.c"
+#line 23189 "shortcodes.c"
 
 		goto _st328;
 		_ctr2227:
@@ -23765,7 +23771,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -23787,13 +23793,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23219 "shortcodes.c"
+#line 23225 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23224 "shortcodes.c"
+#line 23230 "shortcodes.c"
 
 		goto _st328;
 		_st328:
@@ -23865,7 +23871,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 23295 "shortcodes.c"
+#line 23301 "shortcodes.c"
 
 		goto _st329;
 		_st329:
@@ -23901,7 +23907,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 23330 "shortcodes.c"
+#line 23336 "shortcodes.c"
 
 		goto _st330;
 		_st330:
@@ -23971,13 +23977,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 23399 "shortcodes.c"
+#line 23405 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23404 "shortcodes.c"
+#line 23410 "shortcodes.c"
 
 		goto _st332;
 		_ctr717:
@@ -23985,7 +23991,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23411 "shortcodes.c"
+#line 23417 "shortcodes.c"
 
 		goto _st332;
 		_ctr712:
@@ -23995,7 +24001,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -24013,13 +24019,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23438 "shortcodes.c"
+#line 23444 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23443 "shortcodes.c"
+#line 23449 "shortcodes.c"
 
 		goto _st332;
 		_ctr726:
@@ -24034,7 +24040,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -24056,13 +24062,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23479 "shortcodes.c"
+#line 23485 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 23484 "shortcodes.c"
+#line 23490 "shortcodes.c"
 
 		goto _st332;
 		_st332:
@@ -24131,7 +24137,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 23552 "shortcodes.c"
+#line 23558 "shortcodes.c"
 
 		goto _st333;
 		_st333:
@@ -24208,7 +24214,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 23628 "shortcodes.c"
+#line 23634 "shortcodes.c"
 
 		goto _st334;
 		_ctr713:
@@ -24218,7 +24224,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -24236,7 +24242,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23655 "shortcodes.c"
+#line 23661 "shortcodes.c"
 
 		goto _st334;
 		_ctr727:
@@ -24251,7 +24257,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -24273,7 +24279,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23691 "shortcodes.c"
+#line 23697 "shortcodes.c"
 
 		goto _st334;
 		_st334:
@@ -24316,7 +24322,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -24338,7 +24344,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23755 "shortcodes.c"
+#line 23761 "shortcodes.c"
 
 		goto _st336;
 		_st336:
@@ -24470,7 +24476,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 23886 "shortcodes.c"
+#line 23892 "shortcodes.c"
 
 		goto _st340;
 		_ctr715:
@@ -24480,7 +24486,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -24498,7 +24504,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23913 "shortcodes.c"
+#line 23919 "shortcodes.c"
 
 		goto _st340;
 		_ctr729:
@@ -24513,7 +24519,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -24535,7 +24541,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 23949 "shortcodes.c"
+#line 23955 "shortcodes.c"
 
 		goto _st340;
 		_st340:
@@ -24573,7 +24579,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 23986 "shortcodes.c"
+#line 23992 "shortcodes.c"
 
 		goto _st342;
 		_st342:
@@ -24611,13 +24617,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 24023 "shortcodes.c"
+#line 24029 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 24028 "shortcodes.c"
+#line 24034 "shortcodes.c"
 
 		goto _st344;
 		_st344:
@@ -24646,13 +24652,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 24056 "shortcodes.c"
+#line 24062 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 24061 "shortcodes.c"
+#line 24067 "shortcodes.c"
 
 		goto _st345;
 		_st345:
@@ -24777,7 +24783,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 24185 "shortcodes.c"
+#line 24191 "shortcodes.c"
 
 		goto _st349;
 		_st349:
@@ -24848,7 +24854,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 24255 "shortcodes.c"
+#line 24261 "shortcodes.c"
 
 		goto _st350;
 		_st350:
@@ -24907,7 +24913,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 24313 "shortcodes.c"
+#line 24319 "shortcodes.c"
 
 		goto _st351;
 		_st351:
@@ -24955,7 +24961,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 24360 "shortcodes.c"
+#line 24366 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -24965,11 +24971,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24373 "shortcodes.c"
+#line 24379 "shortcodes.c"
 
 		goto _st2102;
 		_ctr762:
@@ -24977,7 +24983,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 24380 "shortcodes.c"
+#line 24386 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25013,13 +25019,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24421 "shortcodes.c"
+#line 24427 "shortcodes.c"
 
 		goto _st2102;
 		_ctr766:
@@ -25029,7 +25035,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24430 "shortcodes.c"
+#line 24436 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25065,13 +25071,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24471 "shortcodes.c"
+#line 24477 "shortcodes.c"
 
 		goto _st2102;
 		_ctr768:
@@ -25081,7 +25087,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24480 "shortcodes.c"
+#line 24486 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25117,13 +25123,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24521 "shortcodes.c"
+#line 24527 "shortcodes.c"
 
 		goto _st2102;
 		_ctr770:
@@ -25131,7 +25137,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 24528 "shortcodes.c"
+#line 24534 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25167,13 +25173,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24569 "shortcodes.c"
+#line 24575 "shortcodes.c"
 
 		goto _st2102;
 		_ctr776:
@@ -25181,7 +25187,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 24576 "shortcodes.c"
+#line 24582 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -25189,7 +25195,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24583 "shortcodes.c"
+#line 24589 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25225,13 +25231,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24624 "shortcodes.c"
+#line 24630 "shortcodes.c"
 
 		goto _st2102;
 		_ctr779:
@@ -25239,7 +25245,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 24631 "shortcodes.c"
+#line 24637 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -25247,7 +25253,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24638 "shortcodes.c"
+#line 24644 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -25283,13 +25289,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 24679 "shortcodes.c"
+#line 24685 "shortcodes.c"
 
 		goto _st2102;
 		_ctr807:
@@ -25299,7 +25305,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24688 "shortcodes.c"
+#line 24694 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25309,11 +25315,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24701 "shortcodes.c"
+#line 24707 "shortcodes.c"
 
 		goto _st2102;
 		_ctr809:
@@ -25321,7 +25327,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 24708 "shortcodes.c"
+#line 24714 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -25331,10 +25337,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 24720 "shortcodes.c"
+#line 24726 "shortcodes.c"
 
 		goto _st2102;
 		_ctr2205:
@@ -25342,7 +25348,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 24727 "shortcodes.c"
+#line 24733 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -25350,7 +25356,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24734 "shortcodes.c"
+#line 24740 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25360,11 +25366,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24747 "shortcodes.c"
+#line 24753 "shortcodes.c"
 
 		goto _st2102;
 		_ctr2143:
@@ -25372,7 +25378,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 24754 "shortcodes.c"
+#line 24760 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25382,11 +25388,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24767 "shortcodes.c"
+#line 24773 "shortcodes.c"
 
 		goto _st2102;
 		_ctr1656:
@@ -25394,7 +25400,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 24774 "shortcodes.c"
+#line 24780 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -25404,10 +25410,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 24786 "shortcodes.c"
+#line 24792 "shortcodes.c"
 
 		goto _st2102;
 		_ctr1661:
@@ -25417,7 +25423,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24795 "shortcodes.c"
+#line 24801 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25427,11 +25433,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24808 "shortcodes.c"
+#line 24814 "shortcodes.c"
 
 		goto _st2102;
 		_ctr1663:
@@ -25439,7 +25445,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 24815 "shortcodes.c"
+#line 24821 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25449,11 +25455,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24828 "shortcodes.c"
+#line 24834 "shortcodes.c"
 
 		goto _st2102;
 		_ctr2222:
@@ -25461,7 +25467,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 24835 "shortcodes.c"
+#line 24841 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -25469,7 +25475,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 24842 "shortcodes.c"
+#line 24848 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -25479,11 +25485,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 24855 "shortcodes.c"
+#line 24861 "shortcodes.c"
 
 		goto _st2102;
 		_st2102:
@@ -25630,7 +25636,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25001 "shortcodes.c"
+#line 25007 "shortcodes.c"
 
 		goto _st358;
 		_st358:
@@ -25697,7 +25703,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25067 "shortcodes.c"
+#line 25073 "shortcodes.c"
 
 		goto _st360;
 		_st360:
@@ -25768,7 +25774,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25137 "shortcodes.c"
+#line 25143 "shortcodes.c"
 
 		goto _st361;
 		_st361:
@@ -25835,7 +25841,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25203 "shortcodes.c"
+#line 25209 "shortcodes.c"
 
 		goto _st363;
 		_st363:
@@ -25885,7 +25891,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 25252 "shortcodes.c"
+#line 25258 "shortcodes.c"
 
 		goto _st365;
 		_st365:
@@ -25956,13 +25962,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25322 "shortcodes.c"
+#line 25328 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25327 "shortcodes.c"
+#line 25333 "shortcodes.c"
 
 		goto _st366;
 		_ctr786:
@@ -25970,7 +25976,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25334 "shortcodes.c"
+#line 25340 "shortcodes.c"
 
 		goto _st366;
 		_ctr799:
@@ -25980,7 +25986,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -25998,13 +26004,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25361 "shortcodes.c"
+#line 25367 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25366 "shortcodes.c"
+#line 25372 "shortcodes.c"
 
 		goto _st366;
 		_ctr2192:
@@ -26019,7 +26025,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -26041,13 +26047,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25402 "shortcodes.c"
+#line 25408 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25407 "shortcodes.c"
+#line 25413 "shortcodes.c"
 
 		goto _st366;
 		_st366:
@@ -26119,7 +26125,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 25478 "shortcodes.c"
+#line 25484 "shortcodes.c"
 
 		goto _st367;
 		_st367:
@@ -26149,7 +26155,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 25507 "shortcodes.c"
+#line 25513 "shortcodes.c"
 
 		goto _st368;
 		_st368:
@@ -26208,7 +26214,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25565 "shortcodes.c"
+#line 25571 "shortcodes.c"
 
 		goto _st369;
 		_ctr800:
@@ -26218,7 +26224,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -26236,7 +26242,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25592 "shortcodes.c"
+#line 25598 "shortcodes.c"
 
 		goto _st369;
 		_ctr2193:
@@ -26251,7 +26257,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -26273,7 +26279,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25628 "shortcodes.c"
+#line 25634 "shortcodes.c"
 
 		goto _st369;
 		_st369:
@@ -26323,7 +26329,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -26341,7 +26347,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25695 "shortcodes.c"
+#line 25701 "shortcodes.c"
 
 		goto _st371;
 		_st371:
@@ -26428,7 +26434,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25781 "shortcodes.c"
+#line 25787 "shortcodes.c"
 
 		goto _st374;
 		_ctr802:
@@ -26438,7 +26444,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -26456,7 +26462,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25808 "shortcodes.c"
+#line 25814 "shortcodes.c"
 
 		goto _st374;
 		_ctr2195:
@@ -26471,7 +26477,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -26493,7 +26499,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25844 "shortcodes.c"
+#line 25850 "shortcodes.c"
 
 		goto _st374;
 		_st374:
@@ -26543,7 +26549,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 25893 "shortcodes.c"
+#line 25899 "shortcodes.c"
 
 		goto _st376;
 		_st376:
@@ -26602,13 +26608,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 25951 "shortcodes.c"
+#line 25957 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25956 "shortcodes.c"
+#line 25962 "shortcodes.c"
 
 		goto _st377;
 		_ctr815:
@@ -26616,7 +26622,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25963 "shortcodes.c"
+#line 25969 "shortcodes.c"
 
 		goto _st377;
 		_ctr810:
@@ -26626,7 +26632,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -26644,13 +26650,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 25990 "shortcodes.c"
+#line 25996 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 25995 "shortcodes.c"
+#line 26001 "shortcodes.c"
 
 		goto _st377;
 		_ctr2175:
@@ -26665,7 +26671,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -26687,13 +26693,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26031 "shortcodes.c"
+#line 26037 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 26036 "shortcodes.c"
+#line 26042 "shortcodes.c"
 
 		goto _st377;
 		_st377:
@@ -26765,7 +26771,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 26107 "shortcodes.c"
+#line 26113 "shortcodes.c"
 
 		goto _st378;
 		_st378:
@@ -26824,13 +26830,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 26165 "shortcodes.c"
+#line 26171 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 26170 "shortcodes.c"
+#line 26176 "shortcodes.c"
 
 		goto _st379;
 		_ctr828:
@@ -26838,7 +26844,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 26177 "shortcodes.c"
+#line 26183 "shortcodes.c"
 
 		goto _st379;
 		_ctr823:
@@ -26848,7 +26854,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -26866,13 +26872,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26204 "shortcodes.c"
+#line 26210 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 26209 "shortcodes.c"
+#line 26215 "shortcodes.c"
 
 		goto _st379;
 		_ctr837:
@@ -26887,7 +26893,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -26909,13 +26915,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26245 "shortcodes.c"
+#line 26251 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 26250 "shortcodes.c"
+#line 26256 "shortcodes.c"
 
 		goto _st379;
 		_st379:
@@ -26987,7 +26993,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 26321 "shortcodes.c"
+#line 26327 "shortcodes.c"
 
 		goto _st380;
 		_st380:
@@ -27070,7 +27076,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 26403 "shortcodes.c"
+#line 26409 "shortcodes.c"
 
 		goto _st381;
 		_ctr824:
@@ -27080,7 +27086,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -27098,7 +27104,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26430 "shortcodes.c"
+#line 26436 "shortcodes.c"
 
 		goto _st381;
 		_ctr838:
@@ -27113,7 +27119,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -27135,7 +27141,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26466 "shortcodes.c"
+#line 26472 "shortcodes.c"
 
 		goto _st381;
 		_st381:
@@ -27176,13 +27182,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26506 "shortcodes.c"
+#line 26512 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 26511 "shortcodes.c"
+#line 26517 "shortcodes.c"
 
 		goto _st383;
 		_st383:
@@ -27211,13 +27217,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 26539 "shortcodes.c"
+#line 26545 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 26544 "shortcodes.c"
+#line 26550 "shortcodes.c"
 
 		goto _st384;
 		_st384:
@@ -27342,7 +27348,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 26668 "shortcodes.c"
+#line 26674 "shortcodes.c"
 
 		goto _st388;
 		_st388:
@@ -27413,7 +27419,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 26738 "shortcodes.c"
+#line 26744 "shortcodes.c"
 
 		goto _st389;
 		_st389:
@@ -27472,7 +27478,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 26796 "shortcodes.c"
+#line 26802 "shortcodes.c"
 
 		goto _st390;
 		_st390:
@@ -27520,7 +27526,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 26843 "shortcodes.c"
+#line 26849 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -27530,11 +27536,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 26856 "shortcodes.c"
+#line 26862 "shortcodes.c"
 
 		goto _st2103;
 		_ctr862:
@@ -27542,7 +27548,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 26863 "shortcodes.c"
+#line 26869 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27578,13 +27584,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 26904 "shortcodes.c"
+#line 26910 "shortcodes.c"
 
 		goto _st2103;
 		_ctr866:
@@ -27594,7 +27600,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 26913 "shortcodes.c"
+#line 26919 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27630,13 +27636,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 26954 "shortcodes.c"
+#line 26960 "shortcodes.c"
 
 		goto _st2103;
 		_ctr868:
@@ -27646,7 +27652,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 26963 "shortcodes.c"
+#line 26969 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27682,13 +27688,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 27004 "shortcodes.c"
+#line 27010 "shortcodes.c"
 
 		goto _st2103;
 		_ctr870:
@@ -27696,7 +27702,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 27011 "shortcodes.c"
+#line 27017 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27732,13 +27738,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 27052 "shortcodes.c"
+#line 27058 "shortcodes.c"
 
 		goto _st2103;
 		_ctr876:
@@ -27746,7 +27752,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 27059 "shortcodes.c"
+#line 27065 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -27754,7 +27760,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27066 "shortcodes.c"
+#line 27072 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27790,13 +27796,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 27107 "shortcodes.c"
+#line 27113 "shortcodes.c"
 
 		goto _st2103;
 		_ctr879:
@@ -27804,7 +27810,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 27114 "shortcodes.c"
+#line 27120 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -27812,7 +27818,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27121 "shortcodes.c"
+#line 27127 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -27848,13 +27854,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 27162 "shortcodes.c"
+#line 27168 "shortcodes.c"
 
 		goto _st2103;
 		_ctr2170:
@@ -27864,7 +27870,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27171 "shortcodes.c"
+#line 27177 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -27874,11 +27880,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27184 "shortcodes.c"
+#line 27190 "shortcodes.c"
 
 		goto _st2103;
 		_ctr891:
@@ -27886,7 +27892,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 27191 "shortcodes.c"
+#line 27197 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -27896,10 +27902,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 27203 "shortcodes.c"
+#line 27209 "shortcodes.c"
 
 		goto _st2103;
 		_ctr889:
@@ -27907,7 +27913,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 27210 "shortcodes.c"
+#line 27216 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -27915,7 +27921,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27217 "shortcodes.c"
+#line 27223 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -27925,11 +27931,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27230 "shortcodes.c"
+#line 27236 "shortcodes.c"
 
 		goto _st2103;
 		_ctr923:
@@ -27937,7 +27943,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 27237 "shortcodes.c"
+#line 27243 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -27947,11 +27953,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27250 "shortcodes.c"
+#line 27256 "shortcodes.c"
 
 		goto _st2103;
 		_ctr1685:
@@ -27959,7 +27965,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 27257 "shortcodes.c"
+#line 27263 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -27969,10 +27975,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 27269 "shortcodes.c"
+#line 27275 "shortcodes.c"
 
 		goto _st2103;
 		_ctr1690:
@@ -27982,7 +27988,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27278 "shortcodes.c"
+#line 27284 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -27992,11 +27998,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27291 "shortcodes.c"
+#line 27297 "shortcodes.c"
 
 		goto _st2103;
 		_ctr1692:
@@ -28004,7 +28010,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 27298 "shortcodes.c"
+#line 27304 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -28014,11 +28020,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27311 "shortcodes.c"
+#line 27317 "shortcodes.c"
 
 		goto _st2103;
 		_ctr2164:
@@ -28026,7 +28032,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 27318 "shortcodes.c"
+#line 27324 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -28034,7 +28040,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 27325 "shortcodes.c"
+#line 27331 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -28044,11 +28050,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 27338 "shortcodes.c"
+#line 27344 "shortcodes.c"
 
 		goto _st2103;
 		_st2103:
@@ -28195,7 +28201,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27484 "shortcodes.c"
+#line 27490 "shortcodes.c"
 
 		goto _st397;
 		_st397:
@@ -28262,7 +28268,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27550 "shortcodes.c"
+#line 27556 "shortcodes.c"
 
 		goto _st399;
 		_st399:
@@ -28333,7 +28339,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27620 "shortcodes.c"
+#line 27626 "shortcodes.c"
 
 		goto _st400;
 		_st400:
@@ -28400,7 +28406,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27686 "shortcodes.c"
+#line 27692 "shortcodes.c"
 
 		goto _st402;
 		_st402:
@@ -28450,7 +28456,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 27735 "shortcodes.c"
+#line 27741 "shortcodes.c"
 
 		goto _st404;
 		_st404:
@@ -28521,7 +28527,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27805 "shortcodes.c"
+#line 27811 "shortcodes.c"
 
 		goto _st405;
 		_st405:
@@ -28592,7 +28598,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27875 "shortcodes.c"
+#line 27881 "shortcodes.c"
 
 		goto _st406;
 		_st406:
@@ -28659,7 +28665,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 27941 "shortcodes.c"
+#line 27947 "shortcodes.c"
 
 		goto _st408;
 		_ctr826:
@@ -28669,7 +28675,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -28687,7 +28693,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 27968 "shortcodes.c"
+#line 27974 "shortcodes.c"
 
 		goto _st408;
 		_ctr840:
@@ -28702,7 +28708,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -28724,7 +28730,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28004 "shortcodes.c"
+#line 28010 "shortcodes.c"
 
 		goto _st408;
 		_st408:
@@ -28832,7 +28838,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 28111 "shortcodes.c"
+#line 28117 "shortcodes.c"
 
 		goto _st412;
 		_st412:
@@ -28897,13 +28903,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 28175 "shortcodes.c"
+#line 28181 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 28180 "shortcodes.c"
+#line 28186 "shortcodes.c"
 
 		goto _st413;
 		_ctr898:
@@ -28911,7 +28917,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 28187 "shortcodes.c"
+#line 28193 "shortcodes.c"
 
 		goto _st413;
 		_ctr707:
@@ -28921,7 +28927,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -28939,13 +28945,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28214 "shortcodes.c"
+#line 28220 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 28219 "shortcodes.c"
+#line 28225 "shortcodes.c"
 
 		goto _st413;
 		_ctr917:
@@ -28960,7 +28966,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -28982,13 +28988,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28255 "shortcodes.c"
+#line 28261 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 28260 "shortcodes.c"
+#line 28266 "shortcodes.c"
 
 		goto _st413;
 		_st413:
@@ -29058,7 +29064,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 28329 "shortcodes.c"
+#line 28335 "shortcodes.c"
 
 		goto _st414;
 		_st414:
@@ -29117,7 +29123,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 28387 "shortcodes.c"
+#line 28393 "shortcodes.c"
 
 		goto _st415;
 		_ctr906:
@@ -29127,7 +29133,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -29145,7 +29151,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28414 "shortcodes.c"
+#line 28420 "shortcodes.c"
 
 		goto _st415;
 		_ctr2228:
@@ -29160,7 +29166,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -29182,7 +29188,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28450 "shortcodes.c"
+#line 28456 "shortcodes.c"
 
 		goto _st415;
 		_st415:
@@ -29232,7 +29238,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -29250,7 +29256,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28517 "shortcodes.c"
+#line 28523 "shortcodes.c"
 
 		goto _st417;
 		_st417:
@@ -29337,7 +29343,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 28603 "shortcodes.c"
+#line 28609 "shortcodes.c"
 
 		goto _st420;
 		_ctr908:
@@ -29347,7 +29353,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -29365,7 +29371,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28630 "shortcodes.c"
+#line 28636 "shortcodes.c"
 
 		goto _st420;
 		_ctr2230:
@@ -29380,7 +29386,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -29402,7 +29408,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28666 "shortcodes.c"
+#line 28672 "shortcodes.c"
 
 		goto _st420;
 		_st420:
@@ -29452,7 +29458,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 28715 "shortcodes.c"
+#line 28721 "shortcodes.c"
 
 		goto _st422;
 		_st422:
@@ -29532,7 +29538,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 28794 "shortcodes.c"
+#line 28800 "shortcodes.c"
 
 		goto _st423;
 		_ctr709:
@@ -29542,7 +29548,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -29560,7 +29566,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28821 "shortcodes.c"
+#line 28827 "shortcodes.c"
 
 		goto _st423;
 		_ctr918:
@@ -29575,7 +29581,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -29597,7 +29603,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 28857 "shortcodes.c"
+#line 28863 "shortcodes.c"
 
 		goto _st423;
 		_st423:
@@ -29733,7 +29739,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 28992 "shortcodes.c"
+#line 28998 "shortcodes.c"
 
 		goto _st428;
 		_st428:
@@ -29763,7 +29769,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 29021 "shortcodes.c"
+#line 29027 "shortcodes.c"
 
 		goto _st429;
 		_st429:
@@ -29822,13 +29828,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 29079 "shortcodes.c"
+#line 29085 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29084 "shortcodes.c"
+#line 29090 "shortcodes.c"
 
 		goto _st430;
 		_ctr933:
@@ -29836,7 +29842,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29091 "shortcodes.c"
+#line 29097 "shortcodes.c"
 
 		goto _st430;
 		_ctr928:
@@ -29846,7 +29852,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -29864,13 +29870,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29118 "shortcodes.c"
+#line 29124 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29123 "shortcodes.c"
+#line 29129 "shortcodes.c"
 
 		goto _st430;
 		_ctr941:
@@ -29885,7 +29891,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -29907,13 +29913,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29159 "shortcodes.c"
+#line 29165 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29164 "shortcodes.c"
+#line 29170 "shortcodes.c"
 
 		goto _st430;
 		_st430:
@@ -29985,7 +29991,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 29235 "shortcodes.c"
+#line 29241 "shortcodes.c"
 
 		goto _st431;
 		_st431:
@@ -30068,7 +30074,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 29317 "shortcodes.c"
+#line 29323 "shortcodes.c"
 
 		goto _st432;
 		_ctr929:
@@ -30078,7 +30084,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -30096,7 +30102,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29344 "shortcodes.c"
+#line 29350 "shortcodes.c"
 
 		goto _st432;
 		_ctr942:
@@ -30111,7 +30117,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -30133,7 +30139,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29380 "shortcodes.c"
+#line 29386 "shortcodes.c"
 
 		goto _st432;
 		_st432:
@@ -30188,7 +30194,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -30210,7 +30216,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29456 "shortcodes.c"
+#line 29462 "shortcodes.c"
 
 		goto _st434;
 		_st434:
@@ -30366,7 +30372,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 29611 "shortcodes.c"
+#line 29617 "shortcodes.c"
 
 		goto _st438;
 		_ctr931:
@@ -30376,7 +30382,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -30394,7 +30400,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29638 "shortcodes.c"
+#line 29644 "shortcodes.c"
 
 		goto _st438;
 		_ctr944:
@@ -30409,7 +30415,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -30431,7 +30437,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29674 "shortcodes.c"
+#line 29680 "shortcodes.c"
 
 		goto _st438;
 		_st438:
@@ -30481,7 +30487,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 29723 "shortcodes.c"
+#line 29729 "shortcodes.c"
 
 		goto _st440;
 		_st440:
@@ -30534,13 +30540,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 29775 "shortcodes.c"
+#line 29781 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29780 "shortcodes.c"
+#line 29786 "shortcodes.c"
 
 		goto _st441;
 		_ctr958:
@@ -30548,7 +30554,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29787 "shortcodes.c"
+#line 29793 "shortcodes.c"
 
 		goto _st441;
 		_ctr955:
@@ -30558,7 +30564,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -30576,13 +30582,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29814 "shortcodes.c"
+#line 29820 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29819 "shortcodes.c"
+#line 29825 "shortcodes.c"
 
 		goto _st441;
 		_ctr2137:
@@ -30597,7 +30603,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -30619,13 +30625,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29855 "shortcodes.c"
+#line 29861 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 29860 "shortcodes.c"
+#line 29866 "shortcodes.c"
 
 		goto _st441;
 		_st441:
@@ -30695,7 +30701,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 29929 "shortcodes.c"
+#line 29935 "shortcodes.c"
 
 		goto _st442;
 		_st442:
@@ -30736,13 +30742,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 29969 "shortcodes.c"
+#line 29975 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 29974 "shortcodes.c"
+#line 29980 "shortcodes.c"
 
 		goto _st444;
 		_st444:
@@ -30774,13 +30780,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 30005 "shortcodes.c"
+#line 30011 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 30010 "shortcodes.c"
+#line 30016 "shortcodes.c"
 
 		goto _st445;
 		_st445:
@@ -30917,7 +30923,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 30146 "shortcodes.c"
+#line 30152 "shortcodes.c"
 
 		goto _st449;
 		_st449:
@@ -30991,7 +30997,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 30219 "shortcodes.c"
+#line 30225 "shortcodes.c"
 
 		goto _st450;
 		_st450:
@@ -31053,7 +31059,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 30280 "shortcodes.c"
+#line 30286 "shortcodes.c"
 
 		goto _st451;
 		_st451:
@@ -31107,7 +31113,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 30333 "shortcodes.c"
+#line 30339 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31117,11 +31123,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30346 "shortcodes.c"
+#line 30352 "shortcodes.c"
 
 		goto _st2104;
 		_ctr986:
@@ -31129,7 +31135,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 30353 "shortcodes.c"
+#line 30359 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31165,13 +31171,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30394 "shortcodes.c"
+#line 30400 "shortcodes.c"
 
 		goto _st2104;
 		_ctr990:
@@ -31181,7 +31187,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30403 "shortcodes.c"
+#line 30409 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31217,13 +31223,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30444 "shortcodes.c"
+#line 30450 "shortcodes.c"
 
 		goto _st2104;
 		_ctr992:
@@ -31233,7 +31239,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30453 "shortcodes.c"
+#line 30459 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31269,13 +31275,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30494 "shortcodes.c"
+#line 30500 "shortcodes.c"
 
 		goto _st2104;
 		_ctr994:
@@ -31283,7 +31289,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 30501 "shortcodes.c"
+#line 30507 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31319,13 +31325,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30542 "shortcodes.c"
+#line 30548 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1000:
@@ -31333,7 +31339,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 30549 "shortcodes.c"
+#line 30555 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -31341,7 +31347,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30556 "shortcodes.c"
+#line 30562 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31377,13 +31383,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30597 "shortcodes.c"
+#line 30603 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1003:
@@ -31391,7 +31397,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 30604 "shortcodes.c"
+#line 30610 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -31399,7 +31405,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30611 "shortcodes.c"
+#line 30617 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -31435,13 +31441,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 30652 "shortcodes.c"
+#line 30658 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1037:
@@ -31451,7 +31457,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30661 "shortcodes.c"
+#line 30667 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31461,11 +31467,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30674 "shortcodes.c"
+#line 30680 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1039:
@@ -31473,7 +31479,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 30681 "shortcodes.c"
+#line 30687 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -31483,10 +31489,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 30693 "shortcodes.c"
+#line 30699 "shortcodes.c"
 
 		goto _st2104;
 		_ctr2118:
@@ -31494,7 +31500,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 30700 "shortcodes.c"
+#line 30706 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -31502,7 +31508,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30707 "shortcodes.c"
+#line 30713 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31512,11 +31518,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30720 "shortcodes.c"
+#line 30726 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1580:
@@ -31524,7 +31530,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 30727 "shortcodes.c"
+#line 30733 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31534,11 +31540,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30740 "shortcodes.c"
+#line 30746 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1863:
@@ -31546,7 +31552,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 30747 "shortcodes.c"
+#line 30753 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -31556,10 +31562,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 30759 "shortcodes.c"
+#line 30765 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1868:
@@ -31569,7 +31575,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30768 "shortcodes.c"
+#line 30774 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31579,11 +31585,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30781 "shortcodes.c"
+#line 30787 "shortcodes.c"
 
 		goto _st2104;
 		_ctr1870:
@@ -31591,7 +31597,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 30788 "shortcodes.c"
+#line 30794 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31601,11 +31607,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30801 "shortcodes.c"
+#line 30807 "shortcodes.c"
 
 		goto _st2104;
 		_ctr2135:
@@ -31613,7 +31619,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 30808 "shortcodes.c"
+#line 30814 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -31621,7 +31627,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 30815 "shortcodes.c"
+#line 30821 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -31631,11 +31637,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 30828 "shortcodes.c"
+#line 30834 "shortcodes.c"
 
 		goto _st2104;
 		_st2104:
@@ -31800,7 +31806,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 30992 "shortcodes.c"
+#line 30998 "shortcodes.c"
 
 		goto _st458;
 		_st458:
@@ -31873,7 +31879,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31064 "shortcodes.c"
+#line 31070 "shortcodes.c"
 
 		goto _st460;
 		_st460:
@@ -31947,7 +31953,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31137 "shortcodes.c"
+#line 31143 "shortcodes.c"
 
 		goto _st461;
 		_st461:
@@ -32020,7 +32026,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31209 "shortcodes.c"
+#line 31215 "shortcodes.c"
 
 		goto _st463;
 		_st463:
@@ -32076,7 +32082,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 31264 "shortcodes.c"
+#line 31270 "shortcodes.c"
 
 		goto _st465;
 		_st465:
@@ -32150,13 +32156,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31337 "shortcodes.c"
+#line 31343 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31342 "shortcodes.c"
+#line 31348 "shortcodes.c"
 
 		goto _st466;
 		_ctr1010:
@@ -32164,7 +32170,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31349 "shortcodes.c"
+#line 31355 "shortcodes.c"
 
 		goto _st466;
 		_ctr1029:
@@ -32174,7 +32180,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -32192,13 +32198,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31376 "shortcodes.c"
+#line 31382 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31381 "shortcodes.c"
+#line 31387 "shortcodes.c"
 
 		goto _st466;
 		_ctr2105:
@@ -32213,7 +32219,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -32235,13 +32241,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31417 "shortcodes.c"
+#line 31423 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31422 "shortcodes.c"
+#line 31428 "shortcodes.c"
 
 		goto _st466;
 		_st466:
@@ -32313,7 +32319,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 31493 "shortcodes.c"
+#line 31499 "shortcodes.c"
 
 		goto _st467;
 		_st467:
@@ -32369,13 +32375,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31548 "shortcodes.c"
+#line 31554 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31553 "shortcodes.c"
+#line 31559 "shortcodes.c"
 
 		goto _st468;
 		_ctr1022:
@@ -32383,7 +32389,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31560 "shortcodes.c"
+#line 31566 "shortcodes.c"
 
 		goto _st468;
 		_ctr1019:
@@ -32393,7 +32399,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -32411,13 +32417,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31587 "shortcodes.c"
+#line 31593 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31592 "shortcodes.c"
+#line 31598 "shortcodes.c"
 
 		goto _st468;
 		_ctr1041:
@@ -32432,7 +32438,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -32454,13 +32460,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31628 "shortcodes.c"
+#line 31634 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 31633 "shortcodes.c"
+#line 31639 "shortcodes.c"
 
 		goto _st468;
 		_st468:
@@ -32530,7 +32536,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 31702 "shortcodes.c"
+#line 31708 "shortcodes.c"
 
 		goto _st469;
 		_st469:
@@ -32592,7 +32598,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31763 "shortcodes.c"
+#line 31769 "shortcodes.c"
 
 		goto _st470;
 		_ctr1030:
@@ -32602,7 +32608,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -32620,7 +32626,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31790 "shortcodes.c"
+#line 31796 "shortcodes.c"
 
 		goto _st470;
 		_ctr2106:
@@ -32635,7 +32641,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -32657,7 +32663,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31826 "shortcodes.c"
+#line 31832 "shortcodes.c"
 
 		goto _st470;
 		_st470:
@@ -32713,7 +32719,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -32731,7 +32737,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 31899 "shortcodes.c"
+#line 31905 "shortcodes.c"
 
 		goto _st472;
 		_st472:
@@ -32827,7 +32833,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 31994 "shortcodes.c"
+#line 32000 "shortcodes.c"
 
 		goto _st475;
 		_ctr1032:
@@ -32837,7 +32843,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -32855,7 +32861,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32021 "shortcodes.c"
+#line 32027 "shortcodes.c"
 
 		goto _st475;
 		_ctr2108:
@@ -32870,7 +32876,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -32892,7 +32898,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32057 "shortcodes.c"
+#line 32063 "shortcodes.c"
 
 		goto _st475;
 		_st475:
@@ -32948,7 +32954,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 32112 "shortcodes.c"
+#line 32118 "shortcodes.c"
 
 		goto _st477;
 		_st477:
@@ -33031,7 +33037,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 32194 "shortcodes.c"
+#line 32200 "shortcodes.c"
 
 		goto _st478;
 		_ctr1020:
@@ -33041,7 +33047,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -33059,7 +33065,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32221 "shortcodes.c"
+#line 32227 "shortcodes.c"
 
 		goto _st478;
 		_ctr1042:
@@ -33074,7 +33080,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -33096,7 +33102,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32257 "shortcodes.c"
+#line 32263 "shortcodes.c"
 
 		goto _st478;
 		_st478:
@@ -33189,13 +33195,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32349 "shortcodes.c"
+#line 32355 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 32354 "shortcodes.c"
+#line 32360 "shortcodes.c"
 
 		goto _st482;
 		_st482:
@@ -33227,13 +33233,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 32385 "shortcodes.c"
+#line 32391 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 32390 "shortcodes.c"
+#line 32396 "shortcodes.c"
 
 		goto _st483;
 		_st483:
@@ -33370,7 +33376,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 32526 "shortcodes.c"
+#line 32532 "shortcodes.c"
 
 		goto _st487;
 		_st487:
@@ -33444,7 +33450,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 32599 "shortcodes.c"
+#line 32605 "shortcodes.c"
 
 		goto _st488;
 		_st488:
@@ -33506,7 +33512,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 32660 "shortcodes.c"
+#line 32666 "shortcodes.c"
 
 		goto _st489;
 		_st489:
@@ -33560,7 +33566,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 32713 "shortcodes.c"
+#line 32719 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -33570,11 +33576,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 32726 "shortcodes.c"
+#line 32732 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1067:
@@ -33582,7 +33588,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 32733 "shortcodes.c"
+#line 32739 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33618,13 +33624,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 32774 "shortcodes.c"
+#line 32780 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1071:
@@ -33634,7 +33640,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 32783 "shortcodes.c"
+#line 32789 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33670,13 +33676,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 32824 "shortcodes.c"
+#line 32830 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1073:
@@ -33686,7 +33692,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 32833 "shortcodes.c"
+#line 32839 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33722,13 +33728,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 32874 "shortcodes.c"
+#line 32880 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1075:
@@ -33736,7 +33742,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 32881 "shortcodes.c"
+#line 32887 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33772,13 +33778,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 32922 "shortcodes.c"
+#line 32928 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1081:
@@ -33786,7 +33792,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 32929 "shortcodes.c"
+#line 32935 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -33794,7 +33800,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 32936 "shortcodes.c"
+#line 32942 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33830,13 +33836,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 32977 "shortcodes.c"
+#line 32983 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1084:
@@ -33844,7 +33850,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 32984 "shortcodes.c"
+#line 32990 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -33852,7 +33858,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 32991 "shortcodes.c"
+#line 32997 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -33888,13 +33894,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 33032 "shortcodes.c"
+#line 33038 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1108:
@@ -33904,7 +33910,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 33041 "shortcodes.c"
+#line 33047 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -33914,11 +33920,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33054 "shortcodes.c"
+#line 33060 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1110:
@@ -33926,7 +33932,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 33061 "shortcodes.c"
+#line 33067 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -33936,10 +33942,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 33073 "shortcodes.c"
+#line 33079 "shortcodes.c"
 
 		goto _st2105;
 		_ctr2082:
@@ -33947,7 +33953,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 33080 "shortcodes.c"
+#line 33086 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -33955,7 +33961,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 33087 "shortcodes.c"
+#line 33093 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -33965,11 +33971,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33100 "shortcodes.c"
+#line 33106 "shortcodes.c"
 
 		goto _st2105;
 		_ctr2100:
@@ -33977,7 +33983,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 33107 "shortcodes.c"
+#line 33113 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -33987,11 +33993,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33120 "shortcodes.c"
+#line 33126 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1779:
@@ -33999,7 +34005,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 33127 "shortcodes.c"
+#line 33133 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -34009,10 +34015,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 33139 "shortcodes.c"
+#line 33145 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1784:
@@ -34022,7 +34028,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 33148 "shortcodes.c"
+#line 33154 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -34032,11 +34038,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33161 "shortcodes.c"
+#line 33167 "shortcodes.c"
 
 		goto _st2105;
 		_ctr1786:
@@ -34044,7 +34050,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 33168 "shortcodes.c"
+#line 33174 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -34054,11 +34060,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33181 "shortcodes.c"
+#line 33187 "shortcodes.c"
 
 		goto _st2105;
 		_ctr2099:
@@ -34066,7 +34072,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 33188 "shortcodes.c"
+#line 33194 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -34074,7 +34080,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 33195 "shortcodes.c"
+#line 33201 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -34084,11 +34090,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 33208 "shortcodes.c"
+#line 33214 "shortcodes.c"
 
 		goto _st2105;
 		_st2105:
@@ -34253,7 +34259,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33372 "shortcodes.c"
+#line 33378 "shortcodes.c"
 
 		goto _st496;
 		_st496:
@@ -34326,7 +34332,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33444 "shortcodes.c"
+#line 33450 "shortcodes.c"
 
 		goto _st498;
 		_st498:
@@ -34400,7 +34406,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33517 "shortcodes.c"
+#line 33523 "shortcodes.c"
 
 		goto _st499;
 		_st499:
@@ -34473,7 +34479,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33589 "shortcodes.c"
+#line 33595 "shortcodes.c"
 
 		goto _st501;
 		_st501:
@@ -34529,7 +34535,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 33644 "shortcodes.c"
+#line 33650 "shortcodes.c"
 
 		goto _st503;
 		_st503:
@@ -34603,13 +34609,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33717 "shortcodes.c"
+#line 33723 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 33722 "shortcodes.c"
+#line 33728 "shortcodes.c"
 
 		goto _st504;
 		_ctr1091:
@@ -34617,7 +34623,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 33729 "shortcodes.c"
+#line 33735 "shortcodes.c"
 
 		goto _st504;
 		_ctr1100:
@@ -34627,7 +34633,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -34645,13 +34651,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 33756 "shortcodes.c"
+#line 33762 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 33761 "shortcodes.c"
+#line 33767 "shortcodes.c"
 
 		goto _st504;
 		_ctr1112:
@@ -34666,7 +34672,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -34688,13 +34694,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 33797 "shortcodes.c"
+#line 33803 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 33802 "shortcodes.c"
+#line 33808 "shortcodes.c"
 
 		goto _st504;
 		_st504:
@@ -34766,7 +34772,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 33873 "shortcodes.c"
+#line 33879 "shortcodes.c"
 
 		goto _st505;
 		_st505:
@@ -34828,7 +34834,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 33934 "shortcodes.c"
+#line 33940 "shortcodes.c"
 
 		goto _st506;
 		_ctr1101:
@@ -34838,7 +34844,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -34856,7 +34862,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 33961 "shortcodes.c"
+#line 33967 "shortcodes.c"
 
 		goto _st506;
 		_ctr1113:
@@ -34871,7 +34877,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -34893,7 +34899,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 33997 "shortcodes.c"
+#line 34003 "shortcodes.c"
 
 		goto _st506;
 		_st506:
@@ -34949,7 +34955,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -34967,7 +34973,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34070 "shortcodes.c"
+#line 34076 "shortcodes.c"
 
 		goto _st508;
 		_st508:
@@ -35063,7 +35069,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 34165 "shortcodes.c"
+#line 34171 "shortcodes.c"
 
 		goto _st511;
 		_ctr1103:
@@ -35073,7 +35079,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -35091,7 +35097,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34192 "shortcodes.c"
+#line 34198 "shortcodes.c"
 
 		goto _st511;
 		_ctr1115:
@@ -35106,7 +35112,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -35128,7 +35134,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34228 "shortcodes.c"
+#line 34234 "shortcodes.c"
 
 		goto _st511;
 		_st511:
@@ -35184,7 +35190,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34283 "shortcodes.c"
+#line 34289 "shortcodes.c"
 
 		goto _st513;
 		_st513:
@@ -35258,7 +35264,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -35280,7 +35286,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34378 "shortcodes.c"
+#line 34384 "shortcodes.c"
 
 		goto _st514;
 		_st514:
@@ -35385,7 +35391,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34482 "shortcodes.c"
+#line 34488 "shortcodes.c"
 
 		goto _st516;
 		_st516:
@@ -35447,13 +35453,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 34543 "shortcodes.c"
+#line 34549 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34548 "shortcodes.c"
+#line 34554 "shortcodes.c"
 
 		goto _st517;
 		_ctr1124:
@@ -35461,7 +35467,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34555 "shortcodes.c"
+#line 34561 "shortcodes.c"
 
 		goto _st517;
 		_ctr1119:
@@ -35471,7 +35477,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -35489,13 +35495,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34582 "shortcodes.c"
+#line 34588 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34587 "shortcodes.c"
+#line 34593 "shortcodes.c"
 
 		goto _st517;
 		_ctr1960:
@@ -35510,7 +35516,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -35532,13 +35538,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34623 "shortcodes.c"
+#line 34629 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34628 "shortcodes.c"
+#line 34634 "shortcodes.c"
 
 		goto _st517;
 		_st517:
@@ -35610,7 +35616,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34699 "shortcodes.c"
+#line 34705 "shortcodes.c"
 
 		goto _st518;
 		_st518:
@@ -35655,7 +35661,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34743 "shortcodes.c"
+#line 34749 "shortcodes.c"
 
 		goto _st519;
 		_st519:
@@ -35685,7 +35691,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34772 "shortcodes.c"
+#line 34778 "shortcodes.c"
 
 		goto _st520;
 		_st520:
@@ -35744,13 +35750,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 34830 "shortcodes.c"
+#line 34836 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34835 "shortcodes.c"
+#line 34841 "shortcodes.c"
 
 		goto _st521;
 		_ctr1145:
@@ -35758,7 +35764,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34842 "shortcodes.c"
+#line 34848 "shortcodes.c"
 
 		goto _st521;
 		_ctr1140:
@@ -35768,7 +35774,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -35786,13 +35792,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34869 "shortcodes.c"
+#line 34875 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34874 "shortcodes.c"
+#line 34880 "shortcodes.c"
 
 		goto _st521;
 		_ctr1153:
@@ -35807,7 +35813,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -35829,13 +35835,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 34910 "shortcodes.c"
+#line 34916 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 34915 "shortcodes.c"
+#line 34921 "shortcodes.c"
 
 		goto _st521;
 		_st521:
@@ -35907,7 +35913,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 34986 "shortcodes.c"
+#line 34992 "shortcodes.c"
 
 		goto _st522;
 		_st522:
@@ -35990,7 +35996,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 35068 "shortcodes.c"
+#line 35074 "shortcodes.c"
 
 		goto _st523;
 		_ctr1141:
@@ -36000,7 +36006,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -36018,7 +36024,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35095 "shortcodes.c"
+#line 35101 "shortcodes.c"
 
 		goto _st523;
 		_ctr1154:
@@ -36033,7 +36039,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -36055,7 +36061,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35131 "shortcodes.c"
+#line 35137 "shortcodes.c"
 
 		goto _st523;
 		_st523:
@@ -36110,7 +36116,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -36132,7 +36138,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35207 "shortcodes.c"
+#line 35213 "shortcodes.c"
 
 		goto _st525;
 		_st525:
@@ -36288,7 +36294,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 35362 "shortcodes.c"
+#line 35368 "shortcodes.c"
 
 		goto _st529;
 		_ctr1143:
@@ -36298,7 +36304,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -36316,7 +36322,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35389 "shortcodes.c"
+#line 35395 "shortcodes.c"
 
 		goto _st529;
 		_ctr1156:
@@ -36331,7 +36337,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -36353,7 +36359,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35425 "shortcodes.c"
+#line 35431 "shortcodes.c"
 
 		goto _st529;
 		_st529:
@@ -36403,7 +36409,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -36421,7 +36427,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35492 "shortcodes.c"
+#line 35498 "shortcodes.c"
 
 		goto _st531;
 		_st531:
@@ -36451,7 +36457,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 35521 "shortcodes.c"
+#line 35527 "shortcodes.c"
 
 		goto _st532;
 		_st532:
@@ -36523,7 +36529,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -36538,7 +36544,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35607 "shortcodes.c"
+#line 35613 "shortcodes.c"
 
 		goto _st533;
 		_st533:
@@ -36606,13 +36612,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35674 "shortcodes.c"
+#line 35680 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 35679 "shortcodes.c"
+#line 35685 "shortcodes.c"
 
 		goto _st535;
 		_st535:
@@ -36644,13 +36650,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 35710 "shortcodes.c"
+#line 35716 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 35715 "shortcodes.c"
+#line 35721 "shortcodes.c"
 
 		goto _st536;
 		_st536:
@@ -36787,7 +36793,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 35851 "shortcodes.c"
+#line 35857 "shortcodes.c"
 
 		goto _st540;
 		_st540:
@@ -36861,7 +36867,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 35924 "shortcodes.c"
+#line 35930 "shortcodes.c"
 
 		goto _st541;
 		_st541:
@@ -36923,7 +36929,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 35985 "shortcodes.c"
+#line 35991 "shortcodes.c"
 
 		goto _st542;
 		_st542:
@@ -36977,7 +36983,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 36038 "shortcodes.c"
+#line 36044 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -36987,11 +36993,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36051 "shortcodes.c"
+#line 36057 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1189:
@@ -36999,7 +37005,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 36058 "shortcodes.c"
+#line 36064 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37035,13 +37041,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36099 "shortcodes.c"
+#line 36105 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1193:
@@ -37051,7 +37057,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36108 "shortcodes.c"
+#line 36114 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37087,13 +37093,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36149 "shortcodes.c"
+#line 36155 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1195:
@@ -37103,7 +37109,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36158 "shortcodes.c"
+#line 36164 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37139,13 +37145,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36199 "shortcodes.c"
+#line 36205 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1197:
@@ -37153,7 +37159,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 36206 "shortcodes.c"
+#line 36212 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37189,13 +37195,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36247 "shortcodes.c"
+#line 36253 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1203:
@@ -37203,7 +37209,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 36254 "shortcodes.c"
+#line 36260 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -37211,7 +37217,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36261 "shortcodes.c"
+#line 36267 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37247,13 +37253,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36302 "shortcodes.c"
+#line 36308 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1206:
@@ -37261,7 +37267,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 36309 "shortcodes.c"
+#line 36315 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -37269,7 +37275,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36316 "shortcodes.c"
+#line 36322 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -37305,13 +37311,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 36357 "shortcodes.c"
+#line 36363 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1230:
@@ -37321,7 +37327,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36366 "shortcodes.c"
+#line 36372 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37331,11 +37337,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36379 "shortcodes.c"
+#line 36385 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1232:
@@ -37343,7 +37349,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 36386 "shortcodes.c"
+#line 36392 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -37353,10 +37359,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 36398 "shortcodes.c"
+#line 36404 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1240:
@@ -37364,7 +37370,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 36405 "shortcodes.c"
+#line 36411 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -37372,7 +37378,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36412 "shortcodes.c"
+#line 36418 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37382,11 +37388,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36425 "shortcodes.c"
+#line 36431 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1271:
@@ -37394,7 +37400,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 36432 "shortcodes.c"
+#line 36438 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37404,11 +37410,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36445 "shortcodes.c"
+#line 36451 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1815:
@@ -37416,7 +37422,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 36452 "shortcodes.c"
+#line 36458 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -37426,10 +37432,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 36464 "shortcodes.c"
+#line 36470 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1820:
@@ -37439,7 +37445,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36473 "shortcodes.c"
+#line 36479 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37449,11 +37455,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36486 "shortcodes.c"
+#line 36492 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1822:
@@ -37461,7 +37467,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 36493 "shortcodes.c"
+#line 36499 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37471,11 +37477,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36506 "shortcodes.c"
+#line 36512 "shortcodes.c"
 
 		goto _st2106;
 		_ctr1958:
@@ -37483,7 +37489,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 36513 "shortcodes.c"
+#line 36519 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -37491,7 +37497,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 36520 "shortcodes.c"
+#line 36526 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -37501,11 +37507,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 36533 "shortcodes.c"
+#line 36539 "shortcodes.c"
 
 		goto _st2106;
 		_st2106:
@@ -37670,7 +37676,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 36697 "shortcodes.c"
+#line 36703 "shortcodes.c"
 
 		goto _st549;
 		_st549:
@@ -37743,7 +37749,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 36769 "shortcodes.c"
+#line 36775 "shortcodes.c"
 
 		goto _st551;
 		_st551:
@@ -37817,7 +37823,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 36842 "shortcodes.c"
+#line 36848 "shortcodes.c"
 
 		goto _st552;
 		_st552:
@@ -37890,7 +37896,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 36914 "shortcodes.c"
+#line 36920 "shortcodes.c"
 
 		goto _st554;
 		_st554:
@@ -37946,7 +37952,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 36969 "shortcodes.c"
+#line 36975 "shortcodes.c"
 
 		goto _st556;
 		_st556:
@@ -38020,13 +38026,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 37042 "shortcodes.c"
+#line 37048 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 37047 "shortcodes.c"
+#line 37053 "shortcodes.c"
 
 		goto _st557;
 		_ctr1213:
@@ -38034,7 +38040,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 37054 "shortcodes.c"
+#line 37060 "shortcodes.c"
 
 		goto _st557;
 		_ctr1133:
@@ -38044,7 +38050,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -38062,13 +38068,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37081 "shortcodes.c"
+#line 37087 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 37086 "shortcodes.c"
+#line 37092 "shortcodes.c"
 
 		goto _st557;
 		_ctr1220:
@@ -38083,7 +38089,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -38105,13 +38111,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37122 "shortcodes.c"
+#line 37128 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 37127 "shortcodes.c"
+#line 37133 "shortcodes.c"
 
 		goto _st557;
 		_st557:
@@ -38183,7 +38189,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 37198 "shortcodes.c"
+#line 37204 "shortcodes.c"
 
 		goto _st558;
 		_st558:
@@ -38269,7 +38275,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 37283 "shortcodes.c"
+#line 37289 "shortcodes.c"
 
 		goto _st559;
 		_ctr1135:
@@ -38279,7 +38285,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -38297,7 +38303,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37310 "shortcodes.c"
+#line 37316 "shortcodes.c"
 
 		goto _st559;
 		_ctr1221:
@@ -38312,7 +38318,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -38334,7 +38340,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37346 "shortcodes.c"
+#line 37352 "shortcodes.c"
 
 		goto _st559;
 		_st559:
@@ -38395,7 +38401,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -38417,7 +38423,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37428 "shortcodes.c"
+#line 37434 "shortcodes.c"
 
 		goto _st561;
 		_st561:
@@ -38585,7 +38591,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 37595 "shortcodes.c"
+#line 37601 "shortcodes.c"
 
 		goto _st565;
 		_ctr1137:
@@ -38595,7 +38601,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -38613,7 +38619,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37622 "shortcodes.c"
+#line 37628 "shortcodes.c"
 
 		goto _st565;
 		_ctr1223:
@@ -38628,7 +38634,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -38650,7 +38656,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37658 "shortcodes.c"
+#line 37664 "shortcodes.c"
 
 		goto _st565;
 		_st565:
@@ -38706,7 +38712,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -38724,7 +38730,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37731 "shortcodes.c"
+#line 37737 "shortcodes.c"
 
 		goto _st567;
 		_st567:
@@ -38757,7 +38763,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 37763 "shortcodes.c"
+#line 37769 "shortcodes.c"
 
 		goto _st568;
 		_st568:
@@ -38832,7 +38838,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -38847,7 +38853,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 37852 "shortcodes.c"
+#line 37858 "shortcodes.c"
 
 		goto _st569;
 		_st569:
@@ -38921,7 +38927,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 37925 "shortcodes.c"
+#line 37931 "shortcodes.c"
 
 		goto _st570;
 		_st570:
@@ -38995,7 +39001,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 37998 "shortcodes.c"
+#line 38004 "shortcodes.c"
 
 		goto _st571;
 		_st571:
@@ -39115,7 +39121,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 38117 "shortcodes.c"
+#line 38123 "shortcodes.c"
 
 		goto _st575;
 		_st575:
@@ -39183,13 +39189,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 38184 "shortcodes.c"
+#line 38190 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38189 "shortcodes.c"
+#line 38195 "shortcodes.c"
 
 		goto _st576;
 		_ctr1247:
@@ -39197,7 +39203,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38196 "shortcodes.c"
+#line 38202 "shortcodes.c"
 
 		goto _st576;
 		_ctr1266:
@@ -39207,7 +39213,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -39225,13 +39231,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38223 "shortcodes.c"
+#line 38229 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38228 "shortcodes.c"
+#line 38234 "shortcodes.c"
 
 		goto _st576;
 		_ctr1290:
@@ -39246,7 +39252,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -39268,13 +39274,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38264 "shortcodes.c"
+#line 38270 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38269 "shortcodes.c"
+#line 38275 "shortcodes.c"
 
 		goto _st576;
 		_st576:
@@ -39344,7 +39350,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 38338 "shortcodes.c"
+#line 38344 "shortcodes.c"
 
 		goto _st577;
 		_st577:
@@ -39406,13 +39412,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 38399 "shortcodes.c"
+#line 38405 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38404 "shortcodes.c"
+#line 38410 "shortcodes.c"
 
 		goto _st578;
 		_ctr1258:
@@ -39420,7 +39426,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38411 "shortcodes.c"
+#line 38417 "shortcodes.c"
 
 		goto _st578;
 		_ctr1253:
@@ -39430,7 +39436,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -39448,13 +39454,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38438 "shortcodes.c"
+#line 38444 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38443 "shortcodes.c"
+#line 38449 "shortcodes.c"
 
 		goto _st578;
 		_ctr1273:
@@ -39469,7 +39475,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -39491,13 +39497,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38479 "shortcodes.c"
+#line 38485 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 38484 "shortcodes.c"
+#line 38490 "shortcodes.c"
 
 		goto _st578;
 		_st578:
@@ -39569,7 +39575,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 38555 "shortcodes.c"
+#line 38561 "shortcodes.c"
 
 		goto _st579;
 		_st579:
@@ -39625,7 +39631,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 38610 "shortcodes.c"
+#line 38616 "shortcodes.c"
 
 		goto _st580;
 		_ctr1267:
@@ -39635,7 +39641,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -39653,7 +39659,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38637 "shortcodes.c"
+#line 38643 "shortcodes.c"
 
 		goto _st580;
 		_ctr1291:
@@ -39668,7 +39674,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -39690,7 +39696,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38673 "shortcodes.c"
+#line 38679 "shortcodes.c"
 
 		goto _st580;
 		_st580:
@@ -39795,7 +39801,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 38777 "shortcodes.c"
+#line 38783 "shortcodes.c"
 
 		goto _st584;
 		_st584:
@@ -39881,7 +39887,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 38862 "shortcodes.c"
+#line 38868 "shortcodes.c"
 
 		goto _st585;
 		_ctr1254:
@@ -39891,7 +39897,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -39909,7 +39915,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38889 "shortcodes.c"
+#line 38895 "shortcodes.c"
 
 		goto _st585;
 		_ctr1274:
@@ -39924,7 +39930,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -39946,7 +39952,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 38925 "shortcodes.c"
+#line 38931 "shortcodes.c"
 
 		goto _st585;
 		_st585:
@@ -40007,7 +40013,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -40029,7 +40035,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39007 "shortcodes.c"
+#line 39013 "shortcodes.c"
 
 		goto _st587;
 		_st587:
@@ -40197,7 +40203,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 39174 "shortcodes.c"
+#line 39180 "shortcodes.c"
 
 		goto _st591;
 		_ctr1256:
@@ -40207,7 +40213,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -40225,7 +40231,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39201 "shortcodes.c"
+#line 39207 "shortcodes.c"
 
 		goto _st591;
 		_ctr1276:
@@ -40240,7 +40246,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -40262,7 +40268,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39237 "shortcodes.c"
+#line 39243 "shortcodes.c"
 
 		goto _st591;
 		_st591:
@@ -40318,7 +40324,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -40336,7 +40342,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39310 "shortcodes.c"
+#line 39316 "shortcodes.c"
 
 		goto _st593;
 		_st593:
@@ -40369,7 +40375,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 39342 "shortcodes.c"
+#line 39348 "shortcodes.c"
 
 		goto _st594;
 		_st594:
@@ -40444,7 +40450,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -40459,7 +40465,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39431 "shortcodes.c"
+#line 39437 "shortcodes.c"
 
 		goto _st595;
 		_st595:
@@ -40516,7 +40522,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 39487 "shortcodes.c"
+#line 39493 "shortcodes.c"
 
 		goto _st596;
 		_st596:
@@ -40628,7 +40634,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 39598 "shortcodes.c"
+#line 39604 "shortcodes.c"
 
 		goto _st598;
 		_st598:
@@ -40690,13 +40696,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 39659 "shortcodes.c"
+#line 39665 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39664 "shortcodes.c"
+#line 39670 "shortcodes.c"
 
 		goto _st599;
 		_ctr1299:
@@ -40704,7 +40710,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39671 "shortcodes.c"
+#line 39677 "shortcodes.c"
 
 		goto _st599;
 		_ctr1294:
@@ -40714,7 +40720,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -40732,13 +40738,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39698 "shortcodes.c"
+#line 39704 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39703 "shortcodes.c"
+#line 39709 "shortcodes.c"
 
 		goto _st599;
 		_ctr1335:
@@ -40753,7 +40759,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -40775,13 +40781,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39739 "shortcodes.c"
+#line 39745 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39744 "shortcodes.c"
+#line 39750 "shortcodes.c"
 
 		goto _st599;
 		_st599:
@@ -40853,7 +40859,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 39815 "shortcodes.c"
+#line 39821 "shortcodes.c"
 
 		goto _st600;
 		_st600:
@@ -40915,13 +40921,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 39876 "shortcodes.c"
+#line 39882 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39881 "shortcodes.c"
+#line 39887 "shortcodes.c"
 
 		goto _st601;
 		_ctr1311:
@@ -40929,7 +40935,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39888 "shortcodes.c"
+#line 39894 "shortcodes.c"
 
 		goto _st601;
 		_ctr1306:
@@ -40939,7 +40945,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -40957,13 +40963,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39915 "shortcodes.c"
+#line 39921 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39920 "shortcodes.c"
+#line 39926 "shortcodes.c"
 
 		goto _st601;
 		_ctr1318:
@@ -40978,7 +40984,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -41000,13 +41006,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 39956 "shortcodes.c"
+#line 39962 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 39961 "shortcodes.c"
+#line 39967 "shortcodes.c"
 
 		goto _st601;
 		_st601:
@@ -41078,7 +41084,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 40032 "shortcodes.c"
+#line 40038 "shortcodes.c"
 
 		goto _st602;
 		_st602:
@@ -41164,7 +41170,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 40117 "shortcodes.c"
+#line 40123 "shortcodes.c"
 
 		goto _st603;
 		_ctr1307:
@@ -41174,7 +41180,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -41192,7 +41198,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40144 "shortcodes.c"
+#line 40150 "shortcodes.c"
 
 		goto _st603;
 		_ctr1319:
@@ -41207,7 +41213,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -41229,7 +41235,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40180 "shortcodes.c"
+#line 40186 "shortcodes.c"
 
 		goto _st603;
 		_st603:
@@ -41290,7 +41296,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -41312,7 +41318,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40262 "shortcodes.c"
+#line 40268 "shortcodes.c"
 
 		goto _st605;
 		_st605:
@@ -41480,7 +41486,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 40429 "shortcodes.c"
+#line 40435 "shortcodes.c"
 
 		goto _st609;
 		_ctr1309:
@@ -41490,7 +41496,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -41508,7 +41514,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40456 "shortcodes.c"
+#line 40462 "shortcodes.c"
 
 		goto _st609;
 		_ctr1321:
@@ -41523,7 +41529,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -41545,7 +41551,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40492 "shortcodes.c"
+#line 40498 "shortcodes.c"
 
 		goto _st609;
 		_st609:
@@ -41601,7 +41607,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -41619,7 +41625,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40565 "shortcodes.c"
+#line 40571 "shortcodes.c"
 
 		goto _st611;
 		_st611:
@@ -41652,7 +41658,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 40597 "shortcodes.c"
+#line 40603 "shortcodes.c"
 
 		goto _st612;
 		_st612:
@@ -41727,7 +41733,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -41742,7 +41748,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40686 "shortcodes.c"
+#line 40692 "shortcodes.c"
 
 		goto _st613;
 		_st613:
@@ -41799,7 +41805,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 40742 "shortcodes.c"
+#line 40748 "shortcodes.c"
 
 		goto _st614;
 		_st614:
@@ -41885,7 +41891,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 40827 "shortcodes.c"
+#line 40833 "shortcodes.c"
 
 		goto _st615;
 		_ctr1295:
@@ -41895,7 +41901,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -41913,7 +41919,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40854 "shortcodes.c"
+#line 40860 "shortcodes.c"
 
 		goto _st615;
 		_ctr1336:
@@ -41928,7 +41934,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -41950,7 +41956,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40890 "shortcodes.c"
+#line 40896 "shortcodes.c"
 
 		goto _st615;
 		_st615:
@@ -41994,13 +42000,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40933 "shortcodes.c"
+#line 40939 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 40938 "shortcodes.c"
+#line 40944 "shortcodes.c"
 
 		goto _st617;
 		_st617:
@@ -42032,13 +42038,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 40969 "shortcodes.c"
+#line 40975 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 40974 "shortcodes.c"
+#line 40980 "shortcodes.c"
 
 		goto _st618;
 		_st618:
@@ -42175,7 +42181,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 41110 "shortcodes.c"
+#line 41116 "shortcodes.c"
 
 		goto _st622;
 		_st622:
@@ -42249,7 +42255,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 41183 "shortcodes.c"
+#line 41189 "shortcodes.c"
 
 		goto _st623;
 		_st623:
@@ -42311,7 +42317,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 41244 "shortcodes.c"
+#line 41250 "shortcodes.c"
 
 		goto _st624;
 		_st624:
@@ -42365,7 +42371,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 41297 "shortcodes.c"
+#line 41303 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42375,11 +42381,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41310 "shortcodes.c"
+#line 41316 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1360:
@@ -42387,7 +42393,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 41317 "shortcodes.c"
+#line 41323 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42423,13 +42429,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41358 "shortcodes.c"
+#line 41364 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1364:
@@ -42439,7 +42445,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41367 "shortcodes.c"
+#line 41373 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42475,13 +42481,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41408 "shortcodes.c"
+#line 41414 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1366:
@@ -42491,7 +42497,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41417 "shortcodes.c"
+#line 41423 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42527,13 +42533,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41458 "shortcodes.c"
+#line 41464 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1368:
@@ -42541,7 +42547,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 41465 "shortcodes.c"
+#line 41471 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42577,13 +42583,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41506 "shortcodes.c"
+#line 41512 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1374:
@@ -42591,7 +42597,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 41513 "shortcodes.c"
+#line 41519 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -42599,7 +42605,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41520 "shortcodes.c"
+#line 41526 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42635,13 +42641,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41561 "shortcodes.c"
+#line 41567 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1377:
@@ -42649,7 +42655,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 41568 "shortcodes.c"
+#line 41574 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -42657,7 +42663,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41575 "shortcodes.c"
+#line 41581 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -42693,13 +42699,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 41616 "shortcodes.c"
+#line 41622 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1940:
@@ -42709,7 +42715,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41625 "shortcodes.c"
+#line 41631 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42719,11 +42725,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41638 "shortcodes.c"
+#line 41644 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1389:
@@ -42731,7 +42737,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 41645 "shortcodes.c"
+#line 41651 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -42741,10 +42747,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 41657 "shortcodes.c"
+#line 41663 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1387:
@@ -42752,7 +42758,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 41664 "shortcodes.c"
+#line 41670 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -42760,7 +42766,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41671 "shortcodes.c"
+#line 41677 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42770,11 +42776,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41684 "shortcodes.c"
+#line 41690 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1421:
@@ -42782,7 +42788,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 41691 "shortcodes.c"
+#line 41697 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42792,11 +42798,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41704 "shortcodes.c"
+#line 41710 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1616:
@@ -42804,7 +42810,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 41711 "shortcodes.c"
+#line 41717 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -42814,10 +42820,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 41723 "shortcodes.c"
+#line 41729 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1619:
@@ -42827,7 +42833,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41732 "shortcodes.c"
+#line 41738 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42837,11 +42843,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41745 "shortcodes.c"
+#line 41751 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1621:
@@ -42849,7 +42855,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 41752 "shortcodes.c"
+#line 41758 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42859,11 +42865,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41765 "shortcodes.c"
+#line 41771 "shortcodes.c"
 
 		goto _st2107;
 		_ctr1934:
@@ -42871,7 +42877,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 41772 "shortcodes.c"
+#line 41778 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -42879,7 +42885,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 41779 "shortcodes.c"
+#line 41785 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -42889,11 +42895,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 41792 "shortcodes.c"
+#line 41798 "shortcodes.c"
 
 		goto _st2107;
 		_st2107:
@@ -43058,7 +43064,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 41956 "shortcodes.c"
+#line 41962 "shortcodes.c"
 
 		goto _st631;
 		_st631:
@@ -43131,7 +43137,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42028 "shortcodes.c"
+#line 42034 "shortcodes.c"
 
 		goto _st633;
 		_st633:
@@ -43205,7 +43211,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42101 "shortcodes.c"
+#line 42107 "shortcodes.c"
 
 		goto _st634;
 		_st634:
@@ -43278,7 +43284,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42173 "shortcodes.c"
+#line 42179 "shortcodes.c"
 
 		goto _st636;
 		_st636:
@@ -43334,7 +43340,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 42228 "shortcodes.c"
+#line 42234 "shortcodes.c"
 
 		goto _st638;
 		_st638:
@@ -43408,7 +43414,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42301 "shortcodes.c"
+#line 42307 "shortcodes.c"
 
 		goto _st639;
 		_st639:
@@ -43482,7 +43488,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42374 "shortcodes.c"
+#line 42380 "shortcodes.c"
 
 		goto _st640;
 		_st640:
@@ -43555,7 +43561,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42446 "shortcodes.c"
+#line 42452 "shortcodes.c"
 
 		goto _st642;
 		_ctr1297:
@@ -43565,7 +43571,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -43583,7 +43589,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42473 "shortcodes.c"
+#line 42479 "shortcodes.c"
 
 		goto _st642;
 		_ctr1338:
@@ -43598,7 +43604,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -43620,7 +43626,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42509 "shortcodes.c"
+#line 42515 "shortcodes.c"
 
 		goto _st642;
 		_st642:
@@ -43740,7 +43746,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 42628 "shortcodes.c"
+#line 42634 "shortcodes.c"
 
 		goto _st646;
 		_st646:
@@ -43808,13 +43814,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42695 "shortcodes.c"
+#line 42701 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42700 "shortcodes.c"
+#line 42706 "shortcodes.c"
 
 		goto _st647;
 		_ctr1396:
@@ -43822,7 +43828,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42707 "shortcodes.c"
+#line 42713 "shortcodes.c"
 
 		goto _st647;
 		_ctr1416:
@@ -43832,7 +43838,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -43850,13 +43856,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42734 "shortcodes.c"
+#line 42740 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42739 "shortcodes.c"
+#line 42745 "shortcodes.c"
 
 		goto _st647;
 		_ctr1588:
@@ -43871,7 +43877,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -43893,13 +43899,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42775 "shortcodes.c"
+#line 42781 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42780 "shortcodes.c"
+#line 42786 "shortcodes.c"
 
 		goto _st647;
 		_st647:
@@ -43969,7 +43975,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 42849 "shortcodes.c"
+#line 42855 "shortcodes.c"
 
 		goto _st648;
 		_st648:
@@ -44031,13 +44037,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 42910 "shortcodes.c"
+#line 42916 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42915 "shortcodes.c"
+#line 42921 "shortcodes.c"
 
 		goto _st649;
 		_ctr1408:
@@ -44045,7 +44051,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42922 "shortcodes.c"
+#line 42928 "shortcodes.c"
 
 		goto _st649;
 		_ctr1403:
@@ -44055,7 +44061,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -44073,13 +44079,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42949 "shortcodes.c"
+#line 42955 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42954 "shortcodes.c"
+#line 42960 "shortcodes.c"
 
 		goto _st649;
 		_ctr1423:
@@ -44094,7 +44100,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -44116,13 +44122,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 42990 "shortcodes.c"
+#line 42996 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 42995 "shortcodes.c"
+#line 43001 "shortcodes.c"
 
 		goto _st649;
 		_st649:
@@ -44194,7 +44200,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 43066 "shortcodes.c"
+#line 43072 "shortcodes.c"
 
 		goto _st650;
 		_st650:
@@ -44250,7 +44256,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 43121 "shortcodes.c"
+#line 43127 "shortcodes.c"
 
 		goto _st651;
 		_ctr1417:
@@ -44260,7 +44266,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -44278,7 +44284,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43148 "shortcodes.c"
+#line 43154 "shortcodes.c"
 
 		goto _st651;
 		_ctr1589:
@@ -44293,7 +44299,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -44315,7 +44321,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43184 "shortcodes.c"
+#line 43190 "shortcodes.c"
 
 		goto _st651;
 		_st651:
@@ -44420,7 +44426,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 43288 "shortcodes.c"
+#line 43294 "shortcodes.c"
 
 		goto _st655;
 		_st655:
@@ -44506,7 +44512,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 43373 "shortcodes.c"
+#line 43379 "shortcodes.c"
 
 		goto _st656;
 		_ctr1404:
@@ -44516,7 +44522,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -44534,7 +44540,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43400 "shortcodes.c"
+#line 43406 "shortcodes.c"
 
 		goto _st656;
 		_ctr1424:
@@ -44549,7 +44555,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -44571,7 +44577,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43436 "shortcodes.c"
+#line 43442 "shortcodes.c"
 
 		goto _st656;
 		_st656:
@@ -44615,13 +44621,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43479 "shortcodes.c"
+#line 43485 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 43484 "shortcodes.c"
+#line 43490 "shortcodes.c"
 
 		goto _st658;
 		_st658:
@@ -44653,13 +44659,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 43515 "shortcodes.c"
+#line 43521 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 43520 "shortcodes.c"
+#line 43526 "shortcodes.c"
 
 		goto _st659;
 		_st659:
@@ -44796,7 +44802,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 43656 "shortcodes.c"
+#line 43662 "shortcodes.c"
 
 		goto _st663;
 		_st663:
@@ -44870,7 +44876,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 43729 "shortcodes.c"
+#line 43735 "shortcodes.c"
 
 		goto _st664;
 		_st664:
@@ -44932,7 +44938,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 43790 "shortcodes.c"
+#line 43796 "shortcodes.c"
 
 		goto _st665;
 		_st665:
@@ -44986,7 +44992,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 43843 "shortcodes.c"
+#line 43849 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -44996,11 +45002,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 43856 "shortcodes.c"
+#line 43862 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1448:
@@ -45008,7 +45014,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 43863 "shortcodes.c"
+#line 43869 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45044,13 +45050,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 43904 "shortcodes.c"
+#line 43910 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1452:
@@ -45060,7 +45066,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 43913 "shortcodes.c"
+#line 43919 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45096,13 +45102,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 43954 "shortcodes.c"
+#line 43960 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1454:
@@ -45112,7 +45118,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 43963 "shortcodes.c"
+#line 43969 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45148,13 +45154,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 44004 "shortcodes.c"
+#line 44010 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1456:
@@ -45162,7 +45168,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 44011 "shortcodes.c"
+#line 44017 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45198,13 +45204,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 44052 "shortcodes.c"
+#line 44058 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1462:
@@ -45212,7 +45218,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 44059 "shortcodes.c"
+#line 44065 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -45220,7 +45226,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44066 "shortcodes.c"
+#line 44072 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45256,13 +45262,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 44107 "shortcodes.c"
+#line 44113 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1465:
@@ -45270,7 +45276,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 44114 "shortcodes.c"
+#line 44120 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -45278,7 +45284,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44121 "shortcodes.c"
+#line 44127 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -45314,13 +45320,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 44162 "shortcodes.c"
+#line 44168 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1509:
@@ -45330,7 +45336,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44171 "shortcodes.c"
+#line 44177 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45340,11 +45346,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44184 "shortcodes.c"
+#line 44190 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1511:
@@ -45352,7 +45358,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 44191 "shortcodes.c"
+#line 44197 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -45362,10 +45368,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 44203 "shortcodes.c"
+#line 44209 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1519:
@@ -45373,7 +45379,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 44210 "shortcodes.c"
+#line 44216 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -45381,7 +45387,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44217 "shortcodes.c"
+#line 44223 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45391,11 +45397,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44230 "shortcodes.c"
+#line 44236 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1537:
@@ -45403,7 +45409,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 44237 "shortcodes.c"
+#line 44243 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45413,11 +45419,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44250 "shortcodes.c"
+#line 44256 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1559:
@@ -45425,7 +45431,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 44257 "shortcodes.c"
+#line 44263 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -45435,10 +45441,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 44269 "shortcodes.c"
+#line 44275 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1564:
@@ -45448,7 +45454,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44278 "shortcodes.c"
+#line 44284 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45458,11 +45464,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44291 "shortcodes.c"
+#line 44297 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1558:
@@ -45470,7 +45476,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 44298 "shortcodes.c"
+#line 44304 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45480,11 +45486,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44311 "shortcodes.c"
+#line 44317 "shortcodes.c"
 
 		goto _st2108;
 		_ctr1556:
@@ -45492,7 +45498,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 44318 "shortcodes.c"
+#line 44324 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -45500,7 +45506,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 44325 "shortcodes.c"
+#line 44331 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -45510,11 +45516,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 44338 "shortcodes.c"
+#line 44344 "shortcodes.c"
 
 		goto _st2108;
 		_st2108:
@@ -45679,7 +45685,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 44502 "shortcodes.c"
+#line 44508 "shortcodes.c"
 
 		goto _st672;
 		_st672:
@@ -45752,7 +45758,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 44574 "shortcodes.c"
+#line 44580 "shortcodes.c"
 
 		goto _st674;
 		_st674:
@@ -45826,7 +45832,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 44647 "shortcodes.c"
+#line 44653 "shortcodes.c"
 
 		goto _st675;
 		_st675:
@@ -45899,7 +45905,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 44719 "shortcodes.c"
+#line 44725 "shortcodes.c"
 
 		goto _st677;
 		_st677:
@@ -45955,7 +45961,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 44774 "shortcodes.c"
+#line 44780 "shortcodes.c"
 
 		goto _st679;
 		_st679:
@@ -46029,13 +46035,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 44847 "shortcodes.c"
+#line 44853 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 44852 "shortcodes.c"
+#line 44858 "shortcodes.c"
 
 		goto _st680;
 		_ctr1472:
@@ -46043,7 +46049,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 44859 "shortcodes.c"
+#line 44865 "shortcodes.c"
 
 		goto _st680;
 		_ctr568:
@@ -46053,7 +46059,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -46071,13 +46077,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 44886 "shortcodes.c"
+#line 44892 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 44891 "shortcodes.c"
+#line 44897 "shortcodes.c"
 
 		goto _st680;
 		_ctr1499:
@@ -46092,7 +46098,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -46114,13 +46120,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 44927 "shortcodes.c"
+#line 44933 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 44932 "shortcodes.c"
+#line 44938 "shortcodes.c"
 
 		goto _st680;
 		_st680:
@@ -46192,7 +46198,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 45003 "shortcodes.c"
+#line 45009 "shortcodes.c"
 
 		goto _st681;
 		_st681:
@@ -46248,13 +46254,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 45058 "shortcodes.c"
+#line 45064 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 45063 "shortcodes.c"
+#line 45069 "shortcodes.c"
 
 		goto _st682;
 		_ctr1483:
@@ -46262,7 +46268,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 45070 "shortcodes.c"
+#line 45076 "shortcodes.c"
 
 		goto _st682;
 		_ctr1480:
@@ -46272,7 +46278,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -46290,13 +46296,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45097 "shortcodes.c"
+#line 45103 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 45102 "shortcodes.c"
+#line 45108 "shortcodes.c"
 
 		goto _st682;
 		_ctr1488:
@@ -46311,7 +46317,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -46333,13 +46339,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45138 "shortcodes.c"
+#line 45144 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 45143 "shortcodes.c"
+#line 45149 "shortcodes.c"
 
 		goto _st682;
 		_st682:
@@ -46409,7 +46415,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 45212 "shortcodes.c"
+#line 45218 "shortcodes.c"
 
 		goto _st683;
 		_st683:
@@ -46492,7 +46498,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 45294 "shortcodes.c"
+#line 45300 "shortcodes.c"
 
 		goto _st684;
 		_ctr1481:
@@ -46502,7 +46508,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -46520,7 +46526,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45321 "shortcodes.c"
+#line 45327 "shortcodes.c"
 
 		goto _st684;
 		_ctr1489:
@@ -46535,7 +46541,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -46557,7 +46563,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45357 "shortcodes.c"
+#line 45363 "shortcodes.c"
 
 		goto _st684;
 		_st684:
@@ -46708,7 +46714,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 45507 "shortcodes.c"
+#line 45513 "shortcodes.c"
 
 		goto _st689;
 		_st689:
@@ -46780,7 +46786,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -46795,7 +46801,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45593 "shortcodes.c"
+#line 45599 "shortcodes.c"
 
 		goto _st690;
 		_st690:
@@ -46852,7 +46858,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 45649 "shortcodes.c"
+#line 45655 "shortcodes.c"
 
 		goto _st691;
 		_st691:
@@ -46938,7 +46944,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 45734 "shortcodes.c"
+#line 45740 "shortcodes.c"
 
 		goto _st692;
 		_ctr570:
@@ -46948,7 +46954,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -46966,7 +46972,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45761 "shortcodes.c"
+#line 45767 "shortcodes.c"
 
 		goto _st692;
 		_ctr1500:
@@ -46981,7 +46987,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -47003,7 +47009,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45797 "shortcodes.c"
+#line 45803 "shortcodes.c"
 
 		goto _st692;
 		_st692:
@@ -47064,7 +47070,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -47086,7 +47092,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 45879 "shortcodes.c"
+#line 45885 "shortcodes.c"
 
 		goto _st694;
 		_st694:
@@ -47254,7 +47260,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 46046 "shortcodes.c"
+#line 46052 "shortcodes.c"
 
 		goto _st698;
 		_ctr573:
@@ -47264,7 +47270,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -47282,7 +47288,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46073 "shortcodes.c"
+#line 46079 "shortcodes.c"
 
 		goto _st698;
 		_ctr1502:
@@ -47297,7 +47303,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -47319,7 +47325,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46109 "shortcodes.c"
+#line 46115 "shortcodes.c"
 
 		goto _st698;
 		_st698:
@@ -47375,7 +47381,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -47393,7 +47399,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46182 "shortcodes.c"
+#line 46188 "shortcodes.c"
 
 		goto _st700;
 		_st700:
@@ -47426,7 +47432,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 46214 "shortcodes.c"
+#line 46220 "shortcodes.c"
 
 		goto _st701;
 		_st701:
@@ -47501,7 +47507,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -47516,7 +47522,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46303 "shortcodes.c"
+#line 46309 "shortcodes.c"
 
 		goto _st702;
 		_st702:
@@ -47590,7 +47596,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 46376 "shortcodes.c"
+#line 46382 "shortcodes.c"
 
 		goto _st703;
 		_st703:
@@ -47664,7 +47670,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 46449 "shortcodes.c"
+#line 46455 "shortcodes.c"
 
 		goto _st704;
 		_st704:
@@ -47784,7 +47790,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 46568 "shortcodes.c"
+#line 46574 "shortcodes.c"
 
 		goto _st708;
 		_st708:
@@ -47852,13 +47858,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 46635 "shortcodes.c"
+#line 46641 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 46640 "shortcodes.c"
+#line 46646 "shortcodes.c"
 
 		goto _st709;
 		_ctr1526:
@@ -47866,7 +47872,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 46647 "shortcodes.c"
+#line 46653 "shortcodes.c"
 
 		goto _st709;
 		_ctr1532:
@@ -47876,7 +47882,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -47894,13 +47900,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46674 "shortcodes.c"
+#line 46680 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 46679 "shortcodes.c"
+#line 46685 "shortcodes.c"
 
 		goto _st709;
 		_ctr1539:
@@ -47915,7 +47921,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -47937,13 +47943,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46715 "shortcodes.c"
+#line 46721 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 46720 "shortcodes.c"
+#line 46726 "shortcodes.c"
 
 		goto _st709;
 		_st709:
@@ -48013,7 +48019,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 46789 "shortcodes.c"
+#line 46795 "shortcodes.c"
 
 		goto _st710;
 		_st710:
@@ -48069,7 +48075,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 46844 "shortcodes.c"
+#line 46850 "shortcodes.c"
 
 		goto _st711;
 		_ctr1533:
@@ -48079,7 +48085,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -48097,7 +48103,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46871 "shortcodes.c"
+#line 46877 "shortcodes.c"
 
 		goto _st711;
 		_ctr1540:
@@ -48112,7 +48118,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -48134,7 +48140,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 46907 "shortcodes.c"
+#line 46913 "shortcodes.c"
 
 		goto _st711;
 		_st711:
@@ -48239,7 +48245,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 47011 "shortcodes.c"
+#line 47017 "shortcodes.c"
 
 		goto _st715;
 		_st715:
@@ -48351,7 +48357,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 47122 "shortcodes.c"
+#line 47128 "shortcodes.c"
 
 		goto _st717;
 		_st717:
@@ -48423,7 +48429,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -48438,7 +48444,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 47208 "shortcodes.c"
+#line 47214 "shortcodes.c"
 
 		goto _st718;
 		_st718:
@@ -48569,7 +48575,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 47338 "shortcodes.c"
+#line 47344 "shortcodes.c"
 
 		goto _st721;
 		_st721:
@@ -48643,7 +48649,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 47411 "shortcodes.c"
+#line 47417 "shortcodes.c"
 
 		goto _st722;
 		_st722:
@@ -48717,7 +48723,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 47484 "shortcodes.c"
+#line 47490 "shortcodes.c"
 
 		goto _st723;
 		_st723:
@@ -48790,7 +48796,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 47556 "shortcodes.c"
+#line 47562 "shortcodes.c"
 
 		goto _st725;
 		_ctr1406:
@@ -48800,7 +48806,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -48818,7 +48824,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 47583 "shortcodes.c"
+#line 47589 "shortcodes.c"
 
 		goto _st725;
 		_ctr1426:
@@ -48833,7 +48839,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -48855,7 +48861,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 47619 "shortcodes.c"
+#line 47625 "shortcodes.c"
 
 		goto _st725;
 		_st725:
@@ -48939,7 +48945,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -48961,7 +48967,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 47724 "shortcodes.c"
+#line 47730 "shortcodes.c"
 
 		goto _st728;
 		_st728:
@@ -49112,7 +49118,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 47874 "shortcodes.c"
+#line 47880 "shortcodes.c"
 
 		goto _st732;
 		_st732:
@@ -49168,13 +49174,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 47929 "shortcodes.c"
+#line 47935 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 47934 "shortcodes.c"
+#line 47940 "shortcodes.c"
 
 		goto _st733;
 		_ctr1569:
@@ -49182,7 +49188,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 47941 "shortcodes.c"
+#line 47947 "shortcodes.c"
 
 		goto _st733;
 		_ctr1566:
@@ -49192,7 +49198,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -49210,13 +49216,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 47968 "shortcodes.c"
+#line 47974 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 47973 "shortcodes.c"
+#line 47979 "shortcodes.c"
 
 		goto _st733;
 		_ctr1574:
@@ -49231,7 +49237,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -49253,13 +49259,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48009 "shortcodes.c"
+#line 48015 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 48014 "shortcodes.c"
+#line 48020 "shortcodes.c"
 
 		goto _st733;
 		_st733:
@@ -49329,7 +49335,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 48083 "shortcodes.c"
+#line 48089 "shortcodes.c"
 
 		goto _st734;
 		_st734:
@@ -49412,7 +49418,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 48165 "shortcodes.c"
+#line 48171 "shortcodes.c"
 
 		goto _st735;
 		_ctr1567:
@@ -49422,7 +49428,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -49440,7 +49446,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48192 "shortcodes.c"
+#line 48198 "shortcodes.c"
 
 		goto _st735;
 		_ctr1575:
@@ -49455,7 +49461,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -49477,7 +49483,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48228 "shortcodes.c"
+#line 48234 "shortcodes.c"
 
 		goto _st735;
 		_st735:
@@ -49628,7 +49634,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 48378 "shortcodes.c"
+#line 48384 "shortcodes.c"
 
 		goto _st740;
 		_st740:
@@ -49700,7 +49706,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -49715,7 +49721,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48464 "shortcodes.c"
+#line 48470 "shortcodes.c"
 
 		goto _st741;
 		_st741:
@@ -49772,7 +49778,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -49790,7 +49796,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48538 "shortcodes.c"
+#line 48544 "shortcodes.c"
 
 		goto _st742;
 		_st742:
@@ -49823,7 +49829,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 48570 "shortcodes.c"
+#line 48576 "shortcodes.c"
 
 		goto _st743;
 		_st743:
@@ -49898,7 +49904,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -49913,7 +49919,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48659 "shortcodes.c"
+#line 48665 "shortcodes.c"
 
 		goto _st744;
 		_st744:
@@ -49970,7 +49976,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 48715 "shortcodes.c"
+#line 48721 "shortcodes.c"
 
 		goto _st745;
 		_st745:
@@ -50082,7 +50088,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 48826 "shortcodes.c"
+#line 48832 "shortcodes.c"
 
 		goto _st747;
 		_st747:
@@ -50154,7 +50160,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -50169,7 +50175,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 48912 "shortcodes.c"
+#line 48918 "shortcodes.c"
 
 		goto _st748;
 		_st748:
@@ -50300,7 +50306,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49042 "shortcodes.c"
+#line 49048 "shortcodes.c"
 
 		goto _st751;
 		_st751:
@@ -50374,13 +50380,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 49115 "shortcodes.c"
+#line 49121 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 49120 "shortcodes.c"
+#line 49126 "shortcodes.c"
 
 		goto _st752;
 		_ctr1602:
@@ -50388,7 +50394,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 49127 "shortcodes.c"
+#line 49133 "shortcodes.c"
 
 		goto _st752;
 		_ctr1611:
@@ -50398,7 +50404,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -50416,13 +50422,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49154 "shortcodes.c"
+#line 49160 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 49159 "shortcodes.c"
+#line 49165 "shortcodes.c"
 
 		goto _st752;
 		_ctr1623:
@@ -50437,7 +50443,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -50459,13 +50465,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49195 "shortcodes.c"
+#line 49201 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 49200 "shortcodes.c"
+#line 49206 "shortcodes.c"
 
 		goto _st752;
 		_st752:
@@ -50537,7 +50543,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49271 "shortcodes.c"
+#line 49277 "shortcodes.c"
 
 		goto _st753;
 		_st753:
@@ -50599,7 +50605,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 49332 "shortcodes.c"
+#line 49338 "shortcodes.c"
 
 		goto _st754;
 		_ctr1612:
@@ -50609,7 +50615,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -50627,7 +50633,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49359 "shortcodes.c"
+#line 49365 "shortcodes.c"
 
 		goto _st754;
 		_ctr1624:
@@ -50642,7 +50648,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -50664,7 +50670,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49395 "shortcodes.c"
+#line 49401 "shortcodes.c"
 
 		goto _st754;
 		_st754:
@@ -50720,7 +50726,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -50738,7 +50744,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49468 "shortcodes.c"
+#line 49474 "shortcodes.c"
 
 		goto _st756;
 		_st756:
@@ -50834,7 +50840,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 49563 "shortcodes.c"
+#line 49569 "shortcodes.c"
 
 		goto _st759;
 		_ctr1614:
@@ -50844,7 +50850,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -50862,7 +50868,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49590 "shortcodes.c"
+#line 49596 "shortcodes.c"
 
 		goto _st759;
 		_ctr1626:
@@ -50877,7 +50883,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -50899,7 +50905,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49626 "shortcodes.c"
+#line 49632 "shortcodes.c"
 
 		goto _st759;
 		_st759:
@@ -50955,7 +50961,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49681 "shortcodes.c"
+#line 49687 "shortcodes.c"
 
 		goto _st761;
 		_st761:
@@ -51029,7 +51035,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -51051,7 +51057,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 49776 "shortcodes.c"
+#line 49782 "shortcodes.c"
 
 		goto _st762;
 		_st762:
@@ -51156,7 +51162,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49880 "shortcodes.c"
+#line 49886 "shortcodes.c"
 
 		goto _st764;
 		_st764:
@@ -51195,7 +51201,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49918 "shortcodes.c"
+#line 49924 "shortcodes.c"
 
 		goto _st765;
 		_st765:
@@ -51225,7 +51231,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 49947 "shortcodes.c"
+#line 49953 "shortcodes.c"
 
 		goto _st766;
 		_st766:
@@ -51284,13 +51290,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 50005 "shortcodes.c"
+#line 50011 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50010 "shortcodes.c"
+#line 50016 "shortcodes.c"
 
 		goto _st767;
 		_ctr1642:
@@ -51298,7 +51304,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50017 "shortcodes.c"
+#line 50023 "shortcodes.c"
 
 		goto _st767;
 		_ctr1637:
@@ -51308,7 +51314,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -51326,13 +51332,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50044 "shortcodes.c"
+#line 50050 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50049 "shortcodes.c"
+#line 50055 "shortcodes.c"
 
 		goto _st767;
 		_ctr1651:
@@ -51347,7 +51353,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -51369,13 +51375,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50085 "shortcodes.c"
+#line 50091 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50090 "shortcodes.c"
+#line 50096 "shortcodes.c"
 
 		goto _st767;
 		_st767:
@@ -51447,7 +51453,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 50161 "shortcodes.c"
+#line 50167 "shortcodes.c"
 
 		goto _st768;
 		_st768:
@@ -51530,7 +51536,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 50243 "shortcodes.c"
+#line 50249 "shortcodes.c"
 
 		goto _st769;
 		_ctr1638:
@@ -51540,7 +51546,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -51558,7 +51564,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50270 "shortcodes.c"
+#line 50276 "shortcodes.c"
 
 		goto _st769;
 		_ctr1652:
@@ -51573,7 +51579,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -51595,7 +51601,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50306 "shortcodes.c"
+#line 50312 "shortcodes.c"
 
 		goto _st769;
 		_st769:
@@ -51650,7 +51656,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -51672,7 +51678,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50382 "shortcodes.c"
+#line 50388 "shortcodes.c"
 
 		goto _st771;
 		_st771:
@@ -51828,7 +51834,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 50537 "shortcodes.c"
+#line 50543 "shortcodes.c"
 
 		goto _st775;
 		_ctr1640:
@@ -51838,7 +51844,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -51856,7 +51862,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50564 "shortcodes.c"
+#line 50570 "shortcodes.c"
 
 		goto _st775;
 		_ctr1654:
@@ -51871,7 +51877,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -51893,7 +51899,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50600 "shortcodes.c"
+#line 50606 "shortcodes.c"
 
 		goto _st775;
 		_st775:
@@ -51943,7 +51949,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -51961,7 +51967,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50667 "shortcodes.c"
+#line 50673 "shortcodes.c"
 
 		goto _st777;
 		_st777:
@@ -51991,7 +51997,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 50696 "shortcodes.c"
+#line 50702 "shortcodes.c"
 
 		goto _st778;
 		_st778:
@@ -52063,7 +52069,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52078,7 +52084,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50782 "shortcodes.c"
+#line 50788 "shortcodes.c"
 
 		goto _st779;
 		_st779:
@@ -52135,7 +52141,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 50838 "shortcodes.c"
+#line 50844 "shortcodes.c"
 
 		goto _st780;
 		_st780:
@@ -52194,13 +52200,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 50896 "shortcodes.c"
+#line 50902 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50901 "shortcodes.c"
+#line 50907 "shortcodes.c"
 
 		goto _st781;
 		_ctr1672:
@@ -52208,7 +52214,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50908 "shortcodes.c"
+#line 50914 "shortcodes.c"
 
 		goto _st781;
 		_ctr1667:
@@ -52218,7 +52224,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52236,13 +52242,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50935 "shortcodes.c"
+#line 50941 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50940 "shortcodes.c"
+#line 50946 "shortcodes.c"
 
 		goto _st781;
 		_ctr1680:
@@ -52257,7 +52263,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -52279,13 +52285,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 50976 "shortcodes.c"
+#line 50982 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 50981 "shortcodes.c"
+#line 50987 "shortcodes.c"
 
 		goto _st781;
 		_st781:
@@ -52357,7 +52363,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 51052 "shortcodes.c"
+#line 51058 "shortcodes.c"
 
 		goto _st782;
 		_st782:
@@ -52440,7 +52446,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 51134 "shortcodes.c"
+#line 51140 "shortcodes.c"
 
 		goto _st783;
 		_ctr1668:
@@ -52450,7 +52456,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52468,7 +52474,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51161 "shortcodes.c"
+#line 51167 "shortcodes.c"
 
 		goto _st783;
 		_ctr1681:
@@ -52483,7 +52489,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -52505,7 +52511,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51197 "shortcodes.c"
+#line 51203 "shortcodes.c"
 
 		goto _st783;
 		_st783:
@@ -52560,7 +52566,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -52582,7 +52588,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51273 "shortcodes.c"
+#line 51279 "shortcodes.c"
 
 		goto _st785;
 		_st785:
@@ -52738,7 +52744,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 51428 "shortcodes.c"
+#line 51434 "shortcodes.c"
 
 		goto _st789;
 		_ctr1670:
@@ -52748,7 +52754,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52766,7 +52772,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51455 "shortcodes.c"
+#line 51461 "shortcodes.c"
 
 		goto _st789;
 		_ctr1683:
@@ -52781,7 +52787,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -52803,7 +52809,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51491 "shortcodes.c"
+#line 51497 "shortcodes.c"
 
 		goto _st789;
 		_st789:
@@ -52853,7 +52859,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52871,7 +52877,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51558 "shortcodes.c"
+#line 51564 "shortcodes.c"
 
 		goto _st791;
 		_st791:
@@ -52901,7 +52907,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 51587 "shortcodes.c"
+#line 51593 "shortcodes.c"
 
 		goto _st792;
 		_st792:
@@ -52973,7 +52979,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -52988,7 +52994,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51673 "shortcodes.c"
+#line 51679 "shortcodes.c"
 
 		goto _st793;
 		_st793:
@@ -53056,13 +53062,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51740 "shortcodes.c"
+#line 51746 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 51745 "shortcodes.c"
+#line 51751 "shortcodes.c"
 
 		goto _st795;
 		_st795:
@@ -53094,13 +53100,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 51776 "shortcodes.c"
+#line 51782 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 51781 "shortcodes.c"
+#line 51787 "shortcodes.c"
 
 		goto _st796;
 		_st796:
@@ -53237,7 +53243,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 51917 "shortcodes.c"
+#line 51923 "shortcodes.c"
 
 		goto _st800;
 		_st800:
@@ -53311,7 +53317,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 51990 "shortcodes.c"
+#line 51996 "shortcodes.c"
 
 		goto _st801;
 		_st801:
@@ -53373,7 +53379,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 52051 "shortcodes.c"
+#line 52057 "shortcodes.c"
 
 		goto _st802;
 		_st802:
@@ -53427,7 +53433,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 52104 "shortcodes.c"
+#line 52110 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53437,11 +53443,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52117 "shortcodes.c"
+#line 52123 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1716:
@@ -53449,7 +53455,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 52124 "shortcodes.c"
+#line 52130 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53485,13 +53491,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52165 "shortcodes.c"
+#line 52171 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1720:
@@ -53501,7 +53507,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52174 "shortcodes.c"
+#line 52180 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53537,13 +53543,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52215 "shortcodes.c"
+#line 52221 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1722:
@@ -53553,7 +53559,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52224 "shortcodes.c"
+#line 52230 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53589,13 +53595,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52265 "shortcodes.c"
+#line 52271 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1724:
@@ -53603,7 +53609,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 52272 "shortcodes.c"
+#line 52278 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53639,13 +53645,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52313 "shortcodes.c"
+#line 52319 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1730:
@@ -53653,7 +53659,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 52320 "shortcodes.c"
+#line 52326 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -53661,7 +53667,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52327 "shortcodes.c"
+#line 52333 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53697,13 +53703,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52368 "shortcodes.c"
+#line 52374 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1733:
@@ -53711,7 +53717,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 52375 "shortcodes.c"
+#line 52381 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -53719,7 +53725,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52382 "shortcodes.c"
+#line 52388 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -53755,13 +53761,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 52423 "shortcodes.c"
+#line 52429 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1770:
@@ -53771,7 +53777,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52432 "shortcodes.c"
+#line 52438 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53781,11 +53787,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52445 "shortcodes.c"
+#line 52451 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1772:
@@ -53793,7 +53799,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 52452 "shortcodes.c"
+#line 52458 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -53803,10 +53809,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 52464 "shortcodes.c"
+#line 52470 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1833:
@@ -53814,7 +53820,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 52471 "shortcodes.c"
+#line 52477 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -53822,7 +53828,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52478 "shortcodes.c"
+#line 52484 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53832,11 +53838,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52491 "shortcodes.c"
+#line 52497 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1881:
@@ -53844,7 +53850,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 52498 "shortcodes.c"
+#line 52504 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53854,11 +53860,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52511 "shortcodes.c"
+#line 52517 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1906:
@@ -53866,7 +53872,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 52518 "shortcodes.c"
+#line 52524 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -53876,10 +53882,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 52530 "shortcodes.c"
+#line 52536 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1909:
@@ -53889,7 +53895,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52539 "shortcodes.c"
+#line 52545 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53899,11 +53905,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52552 "shortcodes.c"
+#line 52558 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1911:
@@ -53911,7 +53917,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 52559 "shortcodes.c"
+#line 52565 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53921,11 +53927,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52572 "shortcodes.c"
+#line 52578 "shortcodes.c"
 
 		goto _st2109;
 		_ctr1926:
@@ -53933,7 +53939,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 52579 "shortcodes.c"
+#line 52585 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -53941,7 +53947,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 52586 "shortcodes.c"
+#line 52592 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -53951,11 +53957,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 52599 "shortcodes.c"
+#line 52605 "shortcodes.c"
 
 		goto _st2109;
 		_st2109:
@@ -54120,7 +54126,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 52763 "shortcodes.c"
+#line 52769 "shortcodes.c"
 
 		goto _st809;
 		_st809:
@@ -54193,7 +54199,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 52835 "shortcodes.c"
+#line 52841 "shortcodes.c"
 
 		goto _st811;
 		_st811:
@@ -54267,7 +54273,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 52908 "shortcodes.c"
+#line 52914 "shortcodes.c"
 
 		goto _st812;
 		_st812:
@@ -54340,7 +54346,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 52980 "shortcodes.c"
+#line 52986 "shortcodes.c"
 
 		goto _st814;
 		_st814:
@@ -54396,7 +54402,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 53035 "shortcodes.c"
+#line 53041 "shortcodes.c"
 
 		goto _st816;
 		_st816:
@@ -54470,13 +54476,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 53108 "shortcodes.c"
+#line 53114 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53113 "shortcodes.c"
+#line 53119 "shortcodes.c"
 
 		goto _st817;
 		_ctr1740:
@@ -54484,7 +54490,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53120 "shortcodes.c"
+#line 53126 "shortcodes.c"
 
 		goto _st817;
 		_ctr1762:
@@ -54494,7 +54500,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -54512,13 +54518,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53147 "shortcodes.c"
+#line 53153 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53152 "shortcodes.c"
+#line 53158 "shortcodes.c"
 
 		goto _st817;
 		_ctr1791:
@@ -54533,7 +54539,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -54555,13 +54561,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53188 "shortcodes.c"
+#line 53194 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53193 "shortcodes.c"
+#line 53199 "shortcodes.c"
 
 		goto _st817;
 		_st817:
@@ -54633,7 +54639,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 53264 "shortcodes.c"
+#line 53270 "shortcodes.c"
 
 		goto _st818;
 		_st818:
@@ -54695,13 +54701,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 53325 "shortcodes.c"
+#line 53331 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53330 "shortcodes.c"
+#line 53336 "shortcodes.c"
 
 		goto _st819;
 		_ctr1754:
@@ -54709,7 +54715,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53337 "shortcodes.c"
+#line 53343 "shortcodes.c"
 
 		goto _st819;
 		_ctr1749:
@@ -54719,7 +54725,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -54737,13 +54743,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53364 "shortcodes.c"
+#line 53370 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53369 "shortcodes.c"
+#line 53375 "shortcodes.c"
 
 		goto _st819;
 		_ctr1774:
@@ -54758,7 +54764,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -54780,13 +54786,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53405 "shortcodes.c"
+#line 53411 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 53410 "shortcodes.c"
+#line 53416 "shortcodes.c"
 
 		goto _st819;
 		_st819:
@@ -54858,7 +54864,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 53481 "shortcodes.c"
+#line 53487 "shortcodes.c"
 
 		goto _st820;
 		_st820:
@@ -54920,7 +54926,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 53542 "shortcodes.c"
+#line 53548 "shortcodes.c"
 
 		goto _st821;
 		_ctr1763:
@@ -54930,7 +54936,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -54948,7 +54954,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53569 "shortcodes.c"
+#line 53575 "shortcodes.c"
 
 		goto _st821;
 		_ctr1792:
@@ -54963,7 +54969,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -54985,7 +54991,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53605 "shortcodes.c"
+#line 53611 "shortcodes.c"
 
 		goto _st821;
 		_st821:
@@ -55041,7 +55047,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55059,7 +55065,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53678 "shortcodes.c"
+#line 53684 "shortcodes.c"
 
 		goto _st823;
 		_st823:
@@ -55155,7 +55161,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 53773 "shortcodes.c"
+#line 53779 "shortcodes.c"
 
 		goto _st826;
 		_ctr1765:
@@ -55165,7 +55171,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55183,7 +55189,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53800 "shortcodes.c"
+#line 53806 "shortcodes.c"
 
 		goto _st826;
 		_ctr1794:
@@ -55198,7 +55204,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -55220,7 +55226,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 53836 "shortcodes.c"
+#line 53842 "shortcodes.c"
 
 		goto _st826;
 		_st826:
@@ -55276,7 +55282,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 53891 "shortcodes.c"
+#line 53897 "shortcodes.c"
 
 		goto _st828;
 		_st828:
@@ -55362,7 +55368,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 53976 "shortcodes.c"
+#line 53982 "shortcodes.c"
 
 		goto _st829;
 		_ctr1750:
@@ -55372,7 +55378,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55390,7 +55396,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54003 "shortcodes.c"
+#line 54009 "shortcodes.c"
 
 		goto _st829;
 		_ctr1775:
@@ -55405,7 +55411,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -55427,7 +55433,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54039 "shortcodes.c"
+#line 54045 "shortcodes.c"
 
 		goto _st829;
 		_st829:
@@ -55488,7 +55494,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -55510,7 +55516,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54121 "shortcodes.c"
+#line 54127 "shortcodes.c"
 
 		goto _st831;
 		_st831:
@@ -55678,7 +55684,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 54288 "shortcodes.c"
+#line 54294 "shortcodes.c"
 
 		goto _st835;
 		_ctr1752:
@@ -55688,7 +55694,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55706,7 +55712,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54315 "shortcodes.c"
+#line 54321 "shortcodes.c"
 
 		goto _st835;
 		_ctr1777:
@@ -55721,7 +55727,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -55743,7 +55749,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54351 "shortcodes.c"
+#line 54357 "shortcodes.c"
 
 		goto _st835;
 		_st835:
@@ -55799,7 +55805,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55817,7 +55823,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54424 "shortcodes.c"
+#line 54430 "shortcodes.c"
 
 		goto _st837;
 		_st837:
@@ -55850,7 +55856,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 54456 "shortcodes.c"
+#line 54462 "shortcodes.c"
 
 		goto _st838;
 		_st838:
@@ -55925,7 +55931,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -55940,7 +55946,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54545 "shortcodes.c"
+#line 54551 "shortcodes.c"
 
 		goto _st839;
 		_st839:
@@ -55997,7 +56003,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 54601 "shortcodes.c"
+#line 54607 "shortcodes.c"
 
 		goto _st840;
 		_st840:
@@ -56071,7 +56077,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -56093,7 +56099,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54696 "shortcodes.c"
+#line 54702 "shortcodes.c"
 
 		goto _st841;
 		_st841:
@@ -56198,7 +56204,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 54800 "shortcodes.c"
+#line 54806 "shortcodes.c"
 
 		goto _st843;
 		_st843:
@@ -56260,13 +56266,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 54861 "shortcodes.c"
+#line 54867 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 54866 "shortcodes.c"
+#line 54872 "shortcodes.c"
 
 		goto _st844;
 		_ctr1803:
@@ -56274,7 +56280,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 54873 "shortcodes.c"
+#line 54879 "shortcodes.c"
 
 		goto _st844;
 		_ctr1798:
@@ -56284,7 +56290,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -56302,13 +56308,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54900 "shortcodes.c"
+#line 54906 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 54905 "shortcodes.c"
+#line 54911 "shortcodes.c"
 
 		goto _st844;
 		_ctr1810:
@@ -56323,7 +56329,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -56345,13 +56351,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 54941 "shortcodes.c"
+#line 54947 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 54946 "shortcodes.c"
+#line 54952 "shortcodes.c"
 
 		goto _st844;
 		_st844:
@@ -56423,7 +56429,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 55017 "shortcodes.c"
+#line 55023 "shortcodes.c"
 
 		goto _st845;
 		_st845:
@@ -56509,7 +56515,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 55102 "shortcodes.c"
+#line 55108 "shortcodes.c"
 
 		goto _st846;
 		_ctr1799:
@@ -56519,7 +56525,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -56537,7 +56543,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55129 "shortcodes.c"
+#line 55135 "shortcodes.c"
 
 		goto _st846;
 		_ctr1811:
@@ -56552,7 +56558,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -56574,7 +56580,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55165 "shortcodes.c"
+#line 55171 "shortcodes.c"
 
 		goto _st846;
 		_st846:
@@ -56635,7 +56641,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -56657,7 +56663,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55247 "shortcodes.c"
+#line 55253 "shortcodes.c"
 
 		goto _st848;
 		_st848:
@@ -56825,7 +56831,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 55414 "shortcodes.c"
+#line 55420 "shortcodes.c"
 
 		goto _st852;
 		_ctr1801:
@@ -56835,7 +56841,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -56853,7 +56859,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55441 "shortcodes.c"
+#line 55447 "shortcodes.c"
 
 		goto _st852;
 		_ctr1813:
@@ -56868,7 +56874,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -56890,7 +56896,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55477 "shortcodes.c"
+#line 55483 "shortcodes.c"
 
 		goto _st852;
 		_st852:
@@ -56946,7 +56952,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -56964,7 +56970,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55550 "shortcodes.c"
+#line 55556 "shortcodes.c"
 
 		goto _st854;
 		_st854:
@@ -56997,7 +57003,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 55582 "shortcodes.c"
+#line 55588 "shortcodes.c"
 
 		goto _st855;
 		_st855:
@@ -57072,7 +57078,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -57087,7 +57093,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55671 "shortcodes.c"
+#line 55677 "shortcodes.c"
 
 		goto _st856;
 		_st856:
@@ -57144,7 +57150,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 55727 "shortcodes.c"
+#line 55733 "shortcodes.c"
 
 		goto _st857;
 		_st857:
@@ -57219,7 +57225,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -57234,7 +57240,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 55816 "shortcodes.c"
+#line 55822 "shortcodes.c"
 
 		goto _st858;
 		_st858:
@@ -57308,7 +57314,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 55889 "shortcodes.c"
+#line 55895 "shortcodes.c"
 
 		goto _st859;
 		_st859:
@@ -57382,7 +57388,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 55962 "shortcodes.c"
+#line 55968 "shortcodes.c"
 
 		goto _st860;
 		_st860:
@@ -57502,7 +57508,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 56081 "shortcodes.c"
+#line 56087 "shortcodes.c"
 
 		goto _st864;
 		_st864:
@@ -57570,13 +57576,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 56148 "shortcodes.c"
+#line 56154 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56153 "shortcodes.c"
+#line 56159 "shortcodes.c"
 
 		goto _st865;
 		_ctr1840:
@@ -57584,7 +57590,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56160 "shortcodes.c"
+#line 56166 "shortcodes.c"
 
 		goto _st865;
 		_ctr1631:
@@ -57594,7 +57600,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -57612,13 +57618,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56187 "shortcodes.c"
+#line 56193 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56192 "shortcodes.c"
+#line 56198 "shortcodes.c"
 
 		goto _st865;
 		_ctr1875:
@@ -57633,7 +57639,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -57655,13 +57661,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56228 "shortcodes.c"
+#line 56234 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56233 "shortcodes.c"
+#line 56239 "shortcodes.c"
 
 		goto _st865;
 		_st865:
@@ -57731,7 +57737,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 56302 "shortcodes.c"
+#line 56308 "shortcodes.c"
 
 		goto _st866;
 		_st866:
@@ -57793,13 +57799,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 56363 "shortcodes.c"
+#line 56369 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56368 "shortcodes.c"
+#line 56374 "shortcodes.c"
 
 		goto _st867;
 		_ctr1851:
@@ -57807,7 +57813,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56375 "shortcodes.c"
+#line 56381 "shortcodes.c"
 
 		goto _st867;
 		_ctr1846:
@@ -57817,7 +57823,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -57835,13 +57841,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56402 "shortcodes.c"
+#line 56408 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56407 "shortcodes.c"
+#line 56413 "shortcodes.c"
 
 		goto _st867;
 		_ctr1858:
@@ -57856,7 +57862,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -57878,13 +57884,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56443 "shortcodes.c"
+#line 56449 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 56448 "shortcodes.c"
+#line 56454 "shortcodes.c"
 
 		goto _st867;
 		_st867:
@@ -57956,7 +57962,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 56519 "shortcodes.c"
+#line 56525 "shortcodes.c"
 
 		goto _st868;
 		_st868:
@@ -58042,7 +58048,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 56604 "shortcodes.c"
+#line 56610 "shortcodes.c"
 
 		goto _st869;
 		_ctr1847:
@@ -58052,7 +58058,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -58070,7 +58076,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56631 "shortcodes.c"
+#line 56637 "shortcodes.c"
 
 		goto _st869;
 		_ctr1859:
@@ -58085,7 +58091,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -58107,7 +58113,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56667 "shortcodes.c"
+#line 56673 "shortcodes.c"
 
 		goto _st869;
 		_st869:
@@ -58168,7 +58174,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -58190,7 +58196,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56749 "shortcodes.c"
+#line 56755 "shortcodes.c"
 
 		goto _st871;
 		_st871:
@@ -58358,7 +58364,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 56916 "shortcodes.c"
+#line 56922 "shortcodes.c"
 
 		goto _st875;
 		_ctr1849:
@@ -58368,7 +58374,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -58386,7 +58392,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56943 "shortcodes.c"
+#line 56949 "shortcodes.c"
 
 		goto _st875;
 		_ctr1861:
@@ -58401,7 +58407,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -58423,7 +58429,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 56979 "shortcodes.c"
+#line 56985 "shortcodes.c"
 
 		goto _st875;
 		_st875:
@@ -58479,7 +58485,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -58497,7 +58503,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57052 "shortcodes.c"
+#line 57058 "shortcodes.c"
 
 		goto _st877;
 		_st877:
@@ -58530,7 +58536,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 57084 "shortcodes.c"
+#line 57090 "shortcodes.c"
 
 		goto _st878;
 		_st878:
@@ -58605,7 +58611,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -58620,7 +58626,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57173 "shortcodes.c"
+#line 57179 "shortcodes.c"
 
 		goto _st879;
 		_st879:
@@ -58677,7 +58683,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 57229 "shortcodes.c"
+#line 57235 "shortcodes.c"
 
 		goto _st880;
 		_st880:
@@ -58760,7 +58766,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 57311 "shortcodes.c"
+#line 57317 "shortcodes.c"
 
 		goto _st881;
 		_ctr1634:
@@ -58770,7 +58776,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -58788,7 +58794,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57338 "shortcodes.c"
+#line 57344 "shortcodes.c"
 
 		goto _st881;
 		_ctr1876:
@@ -58803,7 +58809,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -58825,7 +58831,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57374 "shortcodes.c"
+#line 57380 "shortcodes.c"
 
 		goto _st881;
 		_st881:
@@ -58976,7 +58982,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 57524 "shortcodes.c"
+#line 57530 "shortcodes.c"
 
 		goto _st886;
 		_st886:
@@ -59048,7 +59054,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -59063,7 +59069,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57610 "shortcodes.c"
+#line 57616 "shortcodes.c"
 
 		goto _st887;
 		_st887:
@@ -59194,7 +59200,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 57740 "shortcodes.c"
+#line 57746 "shortcodes.c"
 
 		goto _st890;
 		_st890:
@@ -59268,13 +59274,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 57813 "shortcodes.c"
+#line 57819 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 57818 "shortcodes.c"
+#line 57824 "shortcodes.c"
 
 		goto _st891;
 		_ctr1893:
@@ -59282,7 +59288,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 57825 "shortcodes.c"
+#line 57831 "shortcodes.c"
 
 		goto _st891;
 		_ctr1901:
@@ -59292,7 +59298,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -59310,13 +59316,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57852 "shortcodes.c"
+#line 57858 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 57857 "shortcodes.c"
+#line 57863 "shortcodes.c"
 
 		goto _st891;
 		_ctr1913:
@@ -59331,7 +59337,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -59353,13 +59359,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 57893 "shortcodes.c"
+#line 57899 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 57898 "shortcodes.c"
+#line 57904 "shortcodes.c"
 
 		goto _st891;
 		_st891:
@@ -59431,7 +59437,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 57969 "shortcodes.c"
+#line 57975 "shortcodes.c"
 
 		goto _st892;
 		_st892:
@@ -59493,7 +59499,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 58030 "shortcodes.c"
+#line 58036 "shortcodes.c"
 
 		goto _st893;
 		_ctr1902:
@@ -59503,7 +59509,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -59521,7 +59527,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58057 "shortcodes.c"
+#line 58063 "shortcodes.c"
 
 		goto _st893;
 		_ctr1914:
@@ -59536,7 +59542,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -59558,7 +59564,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58093 "shortcodes.c"
+#line 58099 "shortcodes.c"
 
 		goto _st893;
 		_st893:
@@ -59614,7 +59620,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -59632,7 +59638,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58166 "shortcodes.c"
+#line 58172 "shortcodes.c"
 
 		goto _st895;
 		_st895:
@@ -59728,7 +59734,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 58261 "shortcodes.c"
+#line 58267 "shortcodes.c"
 
 		goto _st898;
 		_ctr1904:
@@ -59738,7 +59744,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -59756,7 +59762,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58288 "shortcodes.c"
+#line 58294 "shortcodes.c"
 
 		goto _st898;
 		_ctr1916:
@@ -59771,7 +59777,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -59793,7 +59799,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58324 "shortcodes.c"
+#line 58330 "shortcodes.c"
 
 		goto _st898;
 		_st898:
@@ -59849,7 +59855,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 58379 "shortcodes.c"
+#line 58385 "shortcodes.c"
 
 		goto _st900;
 		_st900:
@@ -59923,7 +59929,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -59945,7 +59951,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58474 "shortcodes.c"
+#line 58480 "shortcodes.c"
 
 		goto _st901;
 		_st901:
@@ -60050,7 +60056,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 58578 "shortcodes.c"
+#line 58584 "shortcodes.c"
 
 		goto _st903;
 		_st903:
@@ -60125,7 +60131,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -60140,7 +60146,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58667 "shortcodes.c"
+#line 58673 "shortcodes.c"
 
 		goto _st904;
 		_st904:
@@ -60214,7 +60220,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 58740 "shortcodes.c"
+#line 58746 "shortcodes.c"
 
 		goto _st905;
 		_st905:
@@ -60288,7 +60294,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 58813 "shortcodes.c"
+#line 58819 "shortcodes.c"
 
 		goto _st906;
 		_st906:
@@ -60344,7 +60350,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 58868 "shortcodes.c"
+#line 58874 "shortcodes.c"
 
 		goto _st908;
 		_st908:
@@ -60419,7 +60425,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -60434,7 +60440,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 58957 "shortcodes.c"
+#line 58963 "shortcodes.c"
 
 		goto _st909;
 		_st909:
@@ -60508,7 +60514,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 59030 "shortcodes.c"
+#line 59036 "shortcodes.c"
 
 		goto _st910;
 		_st910:
@@ -60582,7 +60588,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 59103 "shortcodes.c"
+#line 59109 "shortcodes.c"
 
 		goto _st911;
 		_st911:
@@ -60666,7 +60672,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -60688,7 +60694,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 59208 "shortcodes.c"
+#line 59214 "shortcodes.c"
 
 		goto _st914;
 		_st914:
@@ -60839,7 +60845,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -60857,7 +60863,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 59376 "shortcodes.c"
+#line 59382 "shortcodes.c"
 
 		goto _st918;
 		_st918:
@@ -60890,7 +60896,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 59408 "shortcodes.c"
+#line 59414 "shortcodes.c"
 
 		goto _st919;
 		_st919:
@@ -60965,7 +60971,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -60980,7 +60986,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 59497 "shortcodes.c"
+#line 59503 "shortcodes.c"
 
 		goto _st920;
 		_st920:
@@ -61037,7 +61043,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 59553 "shortcodes.c"
+#line 59559 "shortcodes.c"
 
 		goto _st921;
 		_st921:
@@ -61109,7 +61115,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -61124,7 +61130,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 59639 "shortcodes.c"
+#line 59645 "shortcodes.c"
 
 		goto _st922;
 		_st922:
@@ -61255,7 +61261,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 59769 "shortcodes.c"
+#line 59775 "shortcodes.c"
 
 		goto _st925;
 		_st925:
@@ -61329,7 +61335,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 59842 "shortcodes.c"
+#line 59848 "shortcodes.c"
 
 		goto _st926;
 		_st926:
@@ -61403,7 +61409,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 59915 "shortcodes.c"
+#line 59921 "shortcodes.c"
 
 		goto _st927;
 		_st927:
@@ -61459,7 +61465,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 59970 "shortcodes.c"
+#line 59976 "shortcodes.c"
 
 		goto _st929;
 		_st929:
@@ -61545,7 +61551,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 60055 "shortcodes.c"
+#line 60061 "shortcodes.c"
 
 		goto _st930;
 		_ctr1120:
@@ -61555,7 +61561,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -61573,7 +61579,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 60082 "shortcodes.c"
+#line 60088 "shortcodes.c"
 
 		goto _st930;
 		_ctr1961:
@@ -61588,7 +61594,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -61610,7 +61616,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 60118 "shortcodes.c"
+#line 60124 "shortcodes.c"
 
 		goto _st930;
 		_st930:
@@ -61654,13 +61660,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 60161 "shortcodes.c"
+#line 60167 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 60166 "shortcodes.c"
+#line 60172 "shortcodes.c"
 
 		goto _st932;
 		_st932:
@@ -61692,13 +61698,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 60197 "shortcodes.c"
+#line 60203 "shortcodes.c"
 
 			{
 #line 199 "shortcodes.rl"
 			sc_mark = p;}
 		
-#line 60202 "shortcodes.c"
+#line 60208 "shortcodes.c"
 
 		goto _st933;
 		_st933:
@@ -61835,7 +61841,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 60338 "shortcodes.c"
+#line 60344 "shortcodes.c"
 
 		goto _st937;
 		_st937:
@@ -61909,7 +61915,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 60411 "shortcodes.c"
+#line 60417 "shortcodes.c"
 
 		goto _st938;
 		_st938:
@@ -61971,7 +61977,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 60472 "shortcodes.c"
+#line 60478 "shortcodes.c"
 
 		goto _st939;
 		_st939:
@@ -62025,7 +62031,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 60525 "shortcodes.c"
+#line 60531 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62035,11 +62041,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60538 "shortcodes.c"
+#line 60544 "shortcodes.c"
 
 		goto _st2110;
 		_ctr1985:
@@ -62047,7 +62053,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 60545 "shortcodes.c"
+#line 60551 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62083,13 +62089,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60586 "shortcodes.c"
+#line 60592 "shortcodes.c"
 
 		goto _st2110;
 		_ctr1989:
@@ -62099,7 +62105,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60595 "shortcodes.c"
+#line 60601 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62135,13 +62141,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60636 "shortcodes.c"
+#line 60642 "shortcodes.c"
 
 		goto _st2110;
 		_ctr1991:
@@ -62151,7 +62157,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60645 "shortcodes.c"
+#line 60651 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62187,13 +62193,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60686 "shortcodes.c"
+#line 60692 "shortcodes.c"
 
 		goto _st2110;
 		_ctr1993:
@@ -62201,7 +62207,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 60693 "shortcodes.c"
+#line 60699 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62237,13 +62243,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60734 "shortcodes.c"
+#line 60740 "shortcodes.c"
 
 		goto _st2110;
 		_ctr1999:
@@ -62251,7 +62257,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 60741 "shortcodes.c"
+#line 60747 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -62259,7 +62265,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60748 "shortcodes.c"
+#line 60754 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62295,13 +62301,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60789 "shortcodes.c"
+#line 60795 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2002:
@@ -62309,7 +62315,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 60796 "shortcodes.c"
+#line 60802 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -62317,7 +62323,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60803 "shortcodes.c"
+#line 60809 "shortcodes.c"
 
 			{
 #line 203 "shortcodes.rl"
@@ -62353,13 +62359,13 @@ static const int shortcode_start = 2094;
 			}
 			if (!found) {
 				// We are not closing any shortcode, error
-				add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+				add_error(result, ERR_MISMATCHED_CLOSING_TAG,
 				(c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
 				// Do NOT increase c_sc
 			}
 		}
 		
-#line 60844 "shortcodes.c"
+#line 60850 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2025:
@@ -62369,7 +62375,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60853 "shortcodes.c"
+#line 60859 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62379,11 +62385,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60866 "shortcodes.c"
+#line 60872 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2027:
@@ -62391,7 +62397,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 60873 "shortcodes.c"
+#line 60879 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -62401,10 +62407,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 60885 "shortcodes.c"
+#line 60891 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2042:
@@ -62412,7 +62418,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 60892 "shortcodes.c"
+#line 60898 "shortcodes.c"
 
 			{
 #line 143 "shortcodes.rl"
@@ -62420,7 +62426,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60899 "shortcodes.c"
+#line 60905 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62430,11 +62436,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60912 "shortcodes.c"
+#line 60918 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2051:
@@ -62442,7 +62448,7 @@ static const int shortcode_start = 2094;
 #line 160 "shortcodes.rl"
 			sc_list[c_sc].escaped = 1;}
 		
-#line 60919 "shortcodes.c"
+#line 60925 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62452,11 +62458,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60932 "shortcodes.c"
+#line 60938 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2066:
@@ -62464,7 +62470,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 60939 "shortcodes.c"
+#line 60945 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -62474,10 +62480,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 60951 "shortcodes.c"
+#line 60957 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2071:
@@ -62487,7 +62493,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 60960 "shortcodes.c"
+#line 60966 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62497,11 +62503,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60973 "shortcodes.c"
+#line 60979 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2065:
@@ -62509,7 +62515,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 60980 "shortcodes.c"
+#line 60986 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62519,11 +62525,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 60993 "shortcodes.c"
+#line 60999 "shortcodes.c"
 
 		goto _st2110;
 		_ctr2063:
@@ -62531,7 +62537,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 61000 "shortcodes.c"
+#line 61006 "shortcodes.c"
 
 			{
 #line 153 "shortcodes.rl"
@@ -62539,7 +62545,7 @@ static const int shortcode_start = 2094;
 			sc_list[c_sc].self_closing = 1;
 		}
 		
-#line 61007 "shortcodes.c"
+#line 61013 "shortcodes.c"
 
 			{
 #line 187 "shortcodes.rl"
@@ -62549,11 +62555,11 @@ static const int shortcode_start = 2094;
 				data_mark = p+1;
 				c_sc++;
 			} else {
-				add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+				add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
 			}
 		}
 		
-#line 61020 "shortcodes.c"
+#line 61026 "shortcodes.c"
 
 		goto _st2110;
 		_st2110:
@@ -62718,7 +62724,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61184 "shortcodes.c"
+#line 61190 "shortcodes.c"
 
 		goto _st946;
 		_st946:
@@ -62791,7 +62797,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61256 "shortcodes.c"
+#line 61262 "shortcodes.c"
 
 		goto _st948;
 		_st948:
@@ -62865,7 +62871,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61329 "shortcodes.c"
+#line 61335 "shortcodes.c"
 
 		goto _st949;
 		_st949:
@@ -62938,7 +62944,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61401 "shortcodes.c"
+#line 61407 "shortcodes.c"
 
 		goto _st951;
 		_st951:
@@ -62994,7 +63000,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 61456 "shortcodes.c"
+#line 61462 "shortcodes.c"
 
 		goto _st953;
 		_st953:
@@ -63068,13 +63074,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61529 "shortcodes.c"
+#line 61535 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 61534 "shortcodes.c"
+#line 61540 "shortcodes.c"
 
 		goto _st954;
 		_ctr2009:
@@ -63082,7 +63088,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 61541 "shortcodes.c"
+#line 61547 "shortcodes.c"
 
 		goto _st954;
 		_ctr2017:
@@ -63092,7 +63098,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -63110,13 +63116,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 61568 "shortcodes.c"
+#line 61574 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 61573 "shortcodes.c"
+#line 61579 "shortcodes.c"
 
 		goto _st954;
 		_ctr2029:
@@ -63131,7 +63137,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -63153,13 +63159,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 61609 "shortcodes.c"
+#line 61615 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 61614 "shortcodes.c"
+#line 61620 "shortcodes.c"
 
 		goto _st954;
 		_st954:
@@ -63231,7 +63237,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 61685 "shortcodes.c"
+#line 61691 "shortcodes.c"
 
 		goto _st955;
 		_st955:
@@ -63293,7 +63299,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61746 "shortcodes.c"
+#line 61752 "shortcodes.c"
 
 		goto _st956;
 		_ctr2018:
@@ -63303,7 +63309,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -63321,7 +63327,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 61773 "shortcodes.c"
+#line 61779 "shortcodes.c"
 
 		goto _st956;
 		_ctr2030:
@@ -63336,7 +63342,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -63358,7 +63364,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 61809 "shortcodes.c"
+#line 61815 "shortcodes.c"
 
 		goto _st956;
 		_st956:
@@ -63414,7 +63420,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -63432,7 +63438,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 61882 "shortcodes.c"
+#line 61888 "shortcodes.c"
 
 		goto _st958;
 		_st958:
@@ -63528,7 +63534,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 61977 "shortcodes.c"
+#line 61983 "shortcodes.c"
 
 		goto _st961;
 		_ctr2020:
@@ -63538,7 +63544,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -63556,7 +63562,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62004 "shortcodes.c"
+#line 62010 "shortcodes.c"
 
 		goto _st961;
 		_ctr2032:
@@ -63571,7 +63577,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -63593,7 +63599,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62040 "shortcodes.c"
+#line 62046 "shortcodes.c"
 
 		goto _st961;
 		_st961:
@@ -63649,7 +63655,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 62095 "shortcodes.c"
+#line 62101 "shortcodes.c"
 
 		goto _st963;
 		_st963:
@@ -63723,7 +63729,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -63745,7 +63751,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62190 "shortcodes.c"
+#line 62196 "shortcodes.c"
 
 		goto _st964;
 		_st964:
@@ -63850,7 +63856,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 62294 "shortcodes.c"
+#line 62300 "shortcodes.c"
 
 		goto _st966;
 		_st966:
@@ -63925,7 +63931,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -63940,7 +63946,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62383 "shortcodes.c"
+#line 62389 "shortcodes.c"
 
 		goto _st967;
 		_st967:
@@ -64014,7 +64020,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 62456 "shortcodes.c"
+#line 62462 "shortcodes.c"
 
 		goto _st968;
 		_st968:
@@ -64088,7 +64094,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 62529 "shortcodes.c"
+#line 62535 "shortcodes.c"
 
 		goto _st969;
 		_st969:
@@ -64208,7 +64214,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 62648 "shortcodes.c"
+#line 62654 "shortcodes.c"
 
 		goto _st973;
 		_st973:
@@ -64276,7 +64282,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 62715 "shortcodes.c"
+#line 62721 "shortcodes.c"
 
 		goto _st974;
 		_ctr468:
@@ -64286,7 +64292,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -64304,7 +64310,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62742 "shortcodes.c"
+#line 62748 "shortcodes.c"
 
 		goto _st974;
 		_ctr2271:
@@ -64319,7 +64325,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -64341,7 +64347,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 62778 "shortcodes.c"
+#line 62784 "shortcodes.c"
 
 		goto _st974;
 		_st974:
@@ -64520,7 +64526,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 62956 "shortcodes.c"
+#line 62962 "shortcodes.c"
 
 		goto _st980;
 		_st980:
@@ -64594,7 +64600,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 63029 "shortcodes.c"
+#line 63035 "shortcodes.c"
 
 		goto _st981;
 		_st981:
@@ -64668,7 +64674,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 63102 "shortcodes.c"
+#line 63108 "shortcodes.c"
 
 		goto _st982;
 		_st982:
@@ -64741,7 +64747,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 63174 "shortcodes.c"
+#line 63180 "shortcodes.c"
 
 		goto _st984;
 		_ctr1122:
@@ -64751,7 +64757,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -64769,7 +64775,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63201 "shortcodes.c"
+#line 63207 "shortcodes.c"
 
 		goto _st984;
 		_ctr1963:
@@ -64784,7 +64790,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -64806,7 +64812,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63237 "shortcodes.c"
+#line 63243 "shortcodes.c"
 
 		goto _st984;
 		_st984:
@@ -64890,7 +64896,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -64912,7 +64918,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63342 "shortcodes.c"
+#line 63348 "shortcodes.c"
 
 		goto _st987;
 		_st987:
@@ -65063,7 +65069,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -65081,7 +65087,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63510 "shortcodes.c"
+#line 63516 "shortcodes.c"
 
 		goto _st991;
 		_st991:
@@ -65114,7 +65120,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 63542 "shortcodes.c"
+#line 63548 "shortcodes.c"
 
 		goto _st992;
 		_st992:
@@ -65189,7 +65195,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -65204,7 +65210,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63631 "shortcodes.c"
+#line 63637 "shortcodes.c"
 
 		goto _st993;
 		_st993:
@@ -65261,7 +65267,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 63687 "shortcodes.c"
+#line 63693 "shortcodes.c"
 
 		goto _st994;
 		_st994:
@@ -65336,7 +65342,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -65351,7 +65357,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 63776 "shortcodes.c"
+#line 63782 "shortcodes.c"
 
 		goto _st995;
 		_st995:
@@ -65425,7 +65431,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 63849 "shortcodes.c"
+#line 63855 "shortcodes.c"
 
 		goto _st996;
 		_st996:
@@ -65499,7 +65505,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 63922 "shortcodes.c"
+#line 63928 "shortcodes.c"
 
 		goto _st997;
 		_st997:
@@ -65619,7 +65625,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 64041 "shortcodes.c"
+#line 64047 "shortcodes.c"
 
 		goto _st1001;
 		_st1001:
@@ -65744,7 +65750,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 64165 "shortcodes.c"
+#line 64171 "shortcodes.c"
 
 		goto _st1004;
 		_st1004:
@@ -65818,7 +65824,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 64238 "shortcodes.c"
+#line 64244 "shortcodes.c"
 
 		goto _st1005;
 		_st1005:
@@ -65892,7 +65898,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 64311 "shortcodes.c"
+#line 64317 "shortcodes.c"
 
 		goto _st1006;
 		_st1006:
@@ -66017,7 +66023,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 64435 "shortcodes.c"
+#line 64441 "shortcodes.c"
 
 		goto _st1010;
 		_st1010:
@@ -66089,7 +66095,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -66104,7 +66110,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 64521 "shortcodes.c"
+#line 64527 "shortcodes.c"
 
 		goto _st1011;
 		_st1011:
@@ -66161,7 +66167,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 64577 "shortcodes.c"
+#line 64583 "shortcodes.c"
 
 		goto _st1012;
 		_st1012:
@@ -66235,7 +66241,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -66257,7 +66263,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 64672 "shortcodes.c"
+#line 64678 "shortcodes.c"
 
 		goto _st1013;
 		_st1013:
@@ -66362,7 +66368,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 64776 "shortcodes.c"
+#line 64782 "shortcodes.c"
 
 		goto _st1015;
 		_st1015:
@@ -66437,7 +66443,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -66452,7 +66458,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 64865 "shortcodes.c"
+#line 64871 "shortcodes.c"
 
 		goto _st1016;
 		_st1016:
@@ -66526,7 +66532,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 64938 "shortcodes.c"
+#line 64944 "shortcodes.c"
 
 		goto _st1017;
 		_st1017:
@@ -66600,7 +66606,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 65011 "shortcodes.c"
+#line 65017 "shortcodes.c"
 
 		goto _st1018;
 		_st1018:
@@ -66720,7 +66726,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 65130 "shortcodes.c"
+#line 65136 "shortcodes.c"
 
 		goto _st1022;
 		_st1022:
@@ -66845,7 +66851,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 65254 "shortcodes.c"
+#line 65260 "shortcodes.c"
 
 		goto _st1025;
 		_st1025:
@@ -66919,7 +66925,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 65327 "shortcodes.c"
+#line 65333 "shortcodes.c"
 
 		goto _st1026;
 		_st1026:
@@ -66993,7 +66999,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 65400 "shortcodes.c"
+#line 65406 "shortcodes.c"
 
 		goto _st1027;
 		_st1027:
@@ -67049,7 +67055,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 65455 "shortcodes.c"
+#line 65461 "shortcodes.c"
 
 		goto _st1029;
 		_st1029:
@@ -67129,7 +67135,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 65534 "shortcodes.c"
+#line 65540 "shortcodes.c"
 
 		goto _st1030;
 		_ctr956:
@@ -67139,7 +67145,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -67157,7 +67163,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 65561 "shortcodes.c"
+#line 65567 "shortcodes.c"
 
 		goto _st1030;
 		_ctr2138:
@@ -67172,7 +67178,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -67194,7 +67200,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 65597 "shortcodes.c"
+#line 65603 "shortcodes.c"
 
 		goto _st1030;
 		_st1030:
@@ -67330,7 +67336,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 65732 "shortcodes.c"
+#line 65738 "shortcodes.c"
 
 		goto _st1035;
 		_st1035:
@@ -67399,7 +67405,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -67414,7 +67420,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 65815 "shortcodes.c"
+#line 65821 "shortcodes.c"
 
 		goto _st1036;
 		_st1036:
@@ -67471,7 +67477,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -67489,7 +67495,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 65889 "shortcodes.c"
+#line 65895 "shortcodes.c"
 
 		goto _st1037;
 		_st1037:
@@ -67519,7 +67525,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 65918 "shortcodes.c"
+#line 65924 "shortcodes.c"
 
 		goto _st1038;
 		_st1038:
@@ -67591,7 +67597,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -67606,7 +67612,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66004 "shortcodes.c"
+#line 66010 "shortcodes.c"
 
 		goto _st1039;
 		_st1039:
@@ -67663,7 +67669,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 66060 "shortcodes.c"
+#line 66066 "shortcodes.c"
 
 		goto _st1040;
 		_st1040:
@@ -67732,7 +67738,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -67747,7 +67753,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66143 "shortcodes.c"
+#line 66149 "shortcodes.c"
 
 		goto _st1041;
 		_st1041:
@@ -67872,7 +67878,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 66267 "shortcodes.c"
+#line 66273 "shortcodes.c"
 
 		goto _st1044;
 		_st1044:
@@ -67943,7 +67949,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 66337 "shortcodes.c"
+#line 66343 "shortcodes.c"
 
 		goto _st1045;
 		_st1045:
@@ -68014,7 +68020,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 66407 "shortcodes.c"
+#line 66413 "shortcodes.c"
 
 		goto _st1046;
 		_st1046:
@@ -68089,7 +68095,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -68111,7 +68117,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66503 "shortcodes.c"
+#line 66509 "shortcodes.c"
 
 		goto _st1049;
 		_st1049:
@@ -68250,7 +68256,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -68268,7 +68274,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66659 "shortcodes.c"
+#line 66665 "shortcodes.c"
 
 		goto _st1053;
 		_st1053:
@@ -68298,7 +68304,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 66688 "shortcodes.c"
+#line 66694 "shortcodes.c"
 
 		goto _st1054;
 		_st1054:
@@ -68370,7 +68376,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -68385,7 +68391,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66774 "shortcodes.c"
+#line 66780 "shortcodes.c"
 
 		goto _st1055;
 		_st1055:
@@ -68442,7 +68448,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 66830 "shortcodes.c"
+#line 66836 "shortcodes.c"
 
 		goto _st1056;
 		_st1056:
@@ -68525,7 +68531,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 66912 "shortcodes.c"
+#line 66918 "shortcodes.c"
 
 		goto _st1057;
 		_ctr811:
@@ -68535,7 +68541,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -68553,7 +68559,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66939 "shortcodes.c"
+#line 66945 "shortcodes.c"
 
 		goto _st1057;
 		_ctr2176:
@@ -68568,7 +68574,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -68590,7 +68596,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 66975 "shortcodes.c"
+#line 66981 "shortcodes.c"
 
 		goto _st1057;
 		_st1057:
@@ -68645,7 +68651,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -68667,7 +68673,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67051 "shortcodes.c"
+#line 67057 "shortcodes.c"
 
 		goto _st1059;
 		_st1059:
@@ -68823,7 +68829,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 67206 "shortcodes.c"
+#line 67212 "shortcodes.c"
 
 		goto _st1063;
 		_ctr813:
@@ -68833,7 +68839,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -68851,7 +68857,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67233 "shortcodes.c"
+#line 67239 "shortcodes.c"
 
 		goto _st1063;
 		_ctr2178:
@@ -68866,7 +68872,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -68888,7 +68894,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67269 "shortcodes.c"
+#line 67275 "shortcodes.c"
 
 		goto _st1063;
 		_st1063:
@@ -68938,7 +68944,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -68956,7 +68962,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67336 "shortcodes.c"
+#line 67342 "shortcodes.c"
 
 		goto _st1065;
 		_st1065:
@@ -68986,7 +68992,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 67365 "shortcodes.c"
+#line 67371 "shortcodes.c"
 
 		goto _st1066;
 		_st1066:
@@ -69058,7 +69064,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -69073,7 +69079,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67451 "shortcodes.c"
+#line 67457 "shortcodes.c"
 
 		goto _st1067;
 		_st1067:
@@ -69130,7 +69136,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 67507 "shortcodes.c"
+#line 67513 "shortcodes.c"
 
 		goto _st1068;
 		_st1068:
@@ -69201,7 +69207,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -69223,7 +69229,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67599 "shortcodes.c"
+#line 67605 "shortcodes.c"
 
 		goto _st1069;
 		_st1069:
@@ -69322,7 +69328,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 67697 "shortcodes.c"
+#line 67703 "shortcodes.c"
 
 		goto _st1071;
 		_st1071:
@@ -69394,7 +69400,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -69409,7 +69415,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 67783 "shortcodes.c"
+#line 67789 "shortcodes.c"
 
 		goto _st1072;
 		_st1072:
@@ -69483,7 +69489,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 67856 "shortcodes.c"
+#line 67862 "shortcodes.c"
 
 		goto _st1073;
 		_st1073:
@@ -69554,7 +69560,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 67926 "shortcodes.c"
+#line 67932 "shortcodes.c"
 
 		goto _st1074;
 		_st1074:
@@ -69662,7 +69668,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 68033 "shortcodes.c"
+#line 68039 "shortcodes.c"
 
 		goto _st1078;
 		_st1078:
@@ -69778,7 +69784,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 68148 "shortcodes.c"
+#line 68154 "shortcodes.c"
 
 		goto _st1081;
 		_st1081:
@@ -69849,7 +69855,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 68218 "shortcodes.c"
+#line 68224 "shortcodes.c"
 
 		goto _st1082;
 		_st1082:
@@ -69920,7 +69926,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 68288 "shortcodes.c"
+#line 68294 "shortcodes.c"
 
 		goto _st1083;
 		_st1083:
@@ -69970,7 +69976,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -69988,7 +69994,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 68355 "shortcodes.c"
+#line 68361 "shortcodes.c"
 
 		goto _st1085;
 		_st1085:
@@ -70012,7 +70018,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 68378 "shortcodes.c"
+#line 68384 "shortcodes.c"
 
 		goto _st1086;
 		_st1086:
@@ -70078,7 +70084,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -70093,7 +70099,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 68458 "shortcodes.c"
+#line 68464 "shortcodes.c"
 
 		goto _st1087;
 		_st1087:
@@ -70147,7 +70153,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 68511 "shortcodes.c"
+#line 68517 "shortcodes.c"
 
 		goto _st1088;
 		_st1088:
@@ -70218,7 +70224,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -70240,7 +70246,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 68603 "shortcodes.c"
+#line 68609 "shortcodes.c"
 
 		goto _st1089;
 		_st1089:
@@ -70339,7 +70345,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 68701 "shortcodes.c"
+#line 68707 "shortcodes.c"
 
 		goto _st1091;
 		_st1091:
@@ -70411,7 +70417,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -70426,7 +70432,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 68787 "shortcodes.c"
+#line 68793 "shortcodes.c"
 
 		goto _st1092;
 		_st1092:
@@ -70500,7 +70506,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 68860 "shortcodes.c"
+#line 68866 "shortcodes.c"
 
 		goto _st1093;
 		_st1093:
@@ -70571,7 +70577,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 68930 "shortcodes.c"
+#line 68936 "shortcodes.c"
 
 		goto _st1094;
 		_st1094:
@@ -70684,7 +70690,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 69042 "shortcodes.c"
+#line 69048 "shortcodes.c"
 
 		goto _st1098;
 		_st1098:
@@ -70753,7 +70759,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -70768,7 +70774,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 69125 "shortcodes.c"
+#line 69131 "shortcodes.c"
 
 		goto _st1099;
 		_st1099:
@@ -70825,7 +70831,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 69181 "shortcodes.c"
+#line 69187 "shortcodes.c"
 
 		goto _st1100;
 		_st1100:
@@ -70897,7 +70903,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -70912,7 +70918,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 69267 "shortcodes.c"
+#line 69273 "shortcodes.c"
 
 		goto _st1101;
 		_st1101:
@@ -71043,7 +71049,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 69397 "shortcodes.c"
+#line 69403 "shortcodes.c"
 
 		goto _st1104;
 		_st1104:
@@ -71117,7 +71123,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 69470 "shortcodes.c"
+#line 69476 "shortcodes.c"
 
 		goto _st1105;
 		_st1105:
@@ -71191,7 +71197,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 69543 "shortcodes.c"
+#line 69549 "shortcodes.c"
 
 		goto _st1106;
 		_st1106:
@@ -71275,7 +71281,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -71297,7 +71303,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 69648 "shortcodes.c"
+#line 69654 "shortcodes.c"
 
 		goto _st1109;
 		_st1109:
@@ -71448,7 +71454,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -71466,7 +71472,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 69816 "shortcodes.c"
+#line 69822 "shortcodes.c"
 
 		goto _st1113;
 		_st1113:
@@ -71499,7 +71505,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 69848 "shortcodes.c"
+#line 69854 "shortcodes.c"
 
 		goto _st1114;
 		_st1114:
@@ -71574,7 +71580,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -71589,7 +71595,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 69937 "shortcodes.c"
+#line 69943 "shortcodes.c"
 
 		goto _st1115;
 		_st1115:
@@ -71646,7 +71652,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 69993 "shortcodes.c"
+#line 69999 "shortcodes.c"
 
 		goto _st1116;
 		_st1116:
@@ -71758,7 +71764,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 70104 "shortcodes.c"
+#line 70110 "shortcodes.c"
 
 		goto _st1118;
 		_st1118:
@@ -71830,7 +71836,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -71845,7 +71851,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 70190 "shortcodes.c"
+#line 70196 "shortcodes.c"
 
 		goto _st1119;
 		_st1119:
@@ -71902,7 +71908,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 70246 "shortcodes.c"
+#line 70252 "shortcodes.c"
 
 		goto _st1120;
 		_st1120:
@@ -71977,7 +71983,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -71992,7 +71998,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 70335 "shortcodes.c"
+#line 70341 "shortcodes.c"
 
 		goto _st1121;
 		_st1121:
@@ -72066,7 +72072,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 70408 "shortcodes.c"
+#line 70414 "shortcodes.c"
 
 		goto _st1122;
 		_st1122:
@@ -72140,7 +72146,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 70481 "shortcodes.c"
+#line 70487 "shortcodes.c"
 
 		goto _st1123;
 		_st1123:
@@ -72260,7 +72266,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 70600 "shortcodes.c"
+#line 70606 "shortcodes.c"
 
 		goto _st1127;
 		_st1127:
@@ -72385,7 +72391,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 70724 "shortcodes.c"
+#line 70730 "shortcodes.c"
 
 		goto _st1130;
 		_st1130:
@@ -72459,7 +72465,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 70797 "shortcodes.c"
+#line 70803 "shortcodes.c"
 
 		goto _st1131;
 		_st1131:
@@ -72533,7 +72539,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 70870 "shortcodes.c"
+#line 70876 "shortcodes.c"
 
 		goto _st1132;
 		_st1132:
@@ -72589,7 +72595,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 70925 "shortcodes.c"
+#line 70931 "shortcodes.c"
 
 		goto _st1134;
 		_st1134:
@@ -72660,7 +72666,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -72682,7 +72688,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 71017 "shortcodes.c"
+#line 71023 "shortcodes.c"
 
 		goto _st1135;
 		_st1135:
@@ -72781,7 +72787,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71115 "shortcodes.c"
+#line 71121 "shortcodes.c"
 
 		goto _st1137;
 		_st1137:
@@ -72853,7 +72859,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -72868,7 +72874,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 71201 "shortcodes.c"
+#line 71207 "shortcodes.c"
 
 		goto _st1138;
 		_st1138:
@@ -72942,7 +72948,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 71274 "shortcodes.c"
+#line 71280 "shortcodes.c"
 
 		goto _st1139;
 		_st1139:
@@ -73013,7 +73019,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 71344 "shortcodes.c"
+#line 71350 "shortcodes.c"
 
 		goto _st1140;
 		_st1140:
@@ -73121,7 +73127,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71451 "shortcodes.c"
+#line 71457 "shortcodes.c"
 
 		goto _st1144;
 		_st1144:
@@ -73237,7 +73243,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71566 "shortcodes.c"
+#line 71572 "shortcodes.c"
 
 		goto _st1147;
 		_st1147:
@@ -73308,7 +73314,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 71636 "shortcodes.c"
+#line 71642 "shortcodes.c"
 
 		goto _st1148;
 		_st1148:
@@ -73379,7 +73385,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 71706 "shortcodes.c"
+#line 71712 "shortcodes.c"
 
 		goto _st1149;
 		_st1149:
@@ -73429,7 +73435,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71755 "shortcodes.c"
+#line 71761 "shortcodes.c"
 
 		goto _st1151;
 		_st1151:
@@ -73492,7 +73498,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -73507,7 +73513,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 71832 "shortcodes.c"
+#line 71838 "shortcodes.c"
 
 		goto _st1152;
 		_st1152:
@@ -73561,7 +73567,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71885 "shortcodes.c"
+#line 71891 "shortcodes.c"
 
 		goto _st1153;
 		_st1153:
@@ -73667,7 +73673,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 71990 "shortcodes.c"
+#line 71996 "shortcodes.c"
 
 		goto _st1155;
 		_st1155:
@@ -73736,7 +73742,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -73751,7 +73757,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 72073 "shortcodes.c"
+#line 72079 "shortcodes.c"
 
 		goto _st1156;
 		_st1156:
@@ -73876,7 +73882,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 72197 "shortcodes.c"
+#line 72203 "shortcodes.c"
 
 		goto _st1159;
 		_st1159:
@@ -73947,7 +73953,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72267 "shortcodes.c"
+#line 72273 "shortcodes.c"
 
 		goto _st1160;
 		_st1160:
@@ -74018,7 +74024,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72337 "shortcodes.c"
+#line 72343 "shortcodes.c"
 
 		goto _st1161;
 		_st1161:
@@ -74068,7 +74074,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 72386 "shortcodes.c"
+#line 72392 "shortcodes.c"
 
 		goto _st1163;
 		_st1163:
@@ -74140,7 +74146,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -74155,7 +74161,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 72472 "shortcodes.c"
+#line 72478 "shortcodes.c"
 
 		goto _st1164;
 		_st1164:
@@ -74229,7 +74235,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72545 "shortcodes.c"
+#line 72551 "shortcodes.c"
 
 		goto _st1165;
 		_st1165:
@@ -74300,7 +74306,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72615 "shortcodes.c"
+#line 72621 "shortcodes.c"
 
 		goto _st1166;
 		_st1166:
@@ -74408,7 +74414,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 72722 "shortcodes.c"
+#line 72728 "shortcodes.c"
 
 		goto _st1170;
 		_st1170:
@@ -74524,7 +74530,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 72837 "shortcodes.c"
+#line 72843 "shortcodes.c"
 
 		goto _st1173;
 		_st1173:
@@ -74595,7 +74601,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72907 "shortcodes.c"
+#line 72913 "shortcodes.c"
 
 		goto _st1174;
 		_st1174:
@@ -74666,7 +74672,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 72977 "shortcodes.c"
+#line 72983 "shortcodes.c"
 
 		goto _st1175;
 		_st1175:
@@ -74716,7 +74722,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 73026 "shortcodes.c"
+#line 73032 "shortcodes.c"
 
 		goto _st1177;
 		_st1177:
@@ -74781,7 +74787,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -74803,7 +74809,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73112 "shortcodes.c"
+#line 73118 "shortcodes.c"
 
 		goto _st1178;
 		_st1178:
@@ -74890,7 +74896,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 73198 "shortcodes.c"
+#line 73204 "shortcodes.c"
 
 		goto _st1180;
 		_st1180:
@@ -74956,7 +74962,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -74971,7 +74977,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73278 "shortcodes.c"
+#line 73284 "shortcodes.c"
 
 		goto _st1181;
 		_st1181:
@@ -75042,7 +75048,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 73348 "shortcodes.c"
+#line 73354 "shortcodes.c"
 
 		goto _st1182;
 		_st1182:
@@ -75107,7 +75113,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 73412 "shortcodes.c"
+#line 73418 "shortcodes.c"
 
 		goto _st1183;
 		_st1183:
@@ -75191,7 +75197,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 73495 "shortcodes.c"
+#line 73501 "shortcodes.c"
 
 		goto _st1187;
 		_st1187:
@@ -75289,7 +75295,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 73592 "shortcodes.c"
+#line 73598 "shortcodes.c"
 
 		goto _st1190;
 		_st1190:
@@ -75354,7 +75360,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 73656 "shortcodes.c"
+#line 73662 "shortcodes.c"
 
 		goto _st1191;
 		_st1191:
@@ -75419,7 +75425,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 73720 "shortcodes.c"
+#line 73726 "shortcodes.c"
 
 		goto _st1192;
 		_st1192:
@@ -75457,7 +75463,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -75475,7 +75481,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73775 "shortcodes.c"
+#line 73781 "shortcodes.c"
 
 		goto _st1194;
 		_st1194:
@@ -75544,7 +75550,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 73843 "shortcodes.c"
+#line 73849 "shortcodes.c"
 
 		goto _st1197;
 		_ctr31:
@@ -75554,7 +75560,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -75572,7 +75578,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73870 "shortcodes.c"
+#line 73876 "shortcodes.c"
 
 		goto _st1197;
 		_ctr4140:
@@ -75587,7 +75593,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -75609,7 +75615,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73906 "shortcodes.c"
+#line 73912 "shortcodes.c"
 
 		goto _st1197;
 		_st1197:
@@ -75658,7 +75664,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73954 "shortcodes.c"
+#line 73960 "shortcodes.c"
 
 		goto _st1200;
 		_st1200:
@@ -75687,7 +75693,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 73982 "shortcodes.c"
+#line 73988 "shortcodes.c"
 
 		goto _st1201;
 		_st1201:
@@ -75785,7 +75791,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 74079 "shortcodes.c"
+#line 74085 "shortcodes.c"
 
 		goto _st1204;
 		_st1204:
@@ -75856,13 +75862,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 74149 "shortcodes.c"
+#line 74155 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 74154 "shortcodes.c"
+#line 74160 "shortcodes.c"
 
 		goto _st1205;
 		_ctr2430:
@@ -75870,7 +75876,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 74161 "shortcodes.c"
+#line 74167 "shortcodes.c"
 
 		goto _st1205;
 		_ctr2439:
@@ -75880,7 +75886,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -75898,13 +75904,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74188 "shortcodes.c"
+#line 74194 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 74193 "shortcodes.c"
+#line 74199 "shortcodes.c"
 
 		goto _st1205;
 		_ctr2449:
@@ -75919,7 +75925,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -75941,13 +75947,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74229 "shortcodes.c"
+#line 74235 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 74234 "shortcodes.c"
+#line 74240 "shortcodes.c"
 
 		goto _st1205;
 		_st1205:
@@ -76019,7 +76025,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 74305 "shortcodes.c"
+#line 74311 "shortcodes.c"
 
 		goto _st1206;
 		_st1206:
@@ -76078,7 +76084,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 74363 "shortcodes.c"
+#line 74369 "shortcodes.c"
 
 		goto _st1207;
 		_ctr2440:
@@ -76088,7 +76094,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -76106,7 +76112,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74390 "shortcodes.c"
+#line 74396 "shortcodes.c"
 
 		goto _st1207;
 		_ctr2450:
@@ -76121,7 +76127,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -76143,7 +76149,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74426 "shortcodes.c"
+#line 74432 "shortcodes.c"
 
 		goto _st1207;
 		_st1207:
@@ -76193,7 +76199,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -76211,7 +76217,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74493 "shortcodes.c"
+#line 74499 "shortcodes.c"
 
 		goto _st1209;
 		_st1209:
@@ -76298,7 +76304,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 74579 "shortcodes.c"
+#line 74585 "shortcodes.c"
 
 		goto _st1212;
 		_ctr2442:
@@ -76308,7 +76314,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -76326,7 +76332,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74606 "shortcodes.c"
+#line 74612 "shortcodes.c"
 
 		goto _st1212;
 		_ctr2452:
@@ -76341,7 +76347,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -76363,7 +76369,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74642 "shortcodes.c"
+#line 74648 "shortcodes.c"
 
 		goto _st1212;
 		_st1212:
@@ -76411,7 +76417,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 74689 "shortcodes.c"
+#line 74695 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -76421,10 +76427,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 74701 "shortcodes.c"
+#line 74707 "shortcodes.c"
 
 		goto _st2111;
 		_ctr3952:
@@ -76432,7 +76438,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 74708 "shortcodes.c"
+#line 74714 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -76442,10 +76448,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 74720 "shortcodes.c"
+#line 74726 "shortcodes.c"
 
 		goto _st2111;
 		_st2111:
@@ -76472,7 +76478,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 74746 "shortcodes.c"
+#line 74752 "shortcodes.c"
 
 		goto _st1214;
 		_st1214:
@@ -76543,7 +76549,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -76565,7 +76571,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 74838 "shortcodes.c"
+#line 74844 "shortcodes.c"
 
 		goto _st1215;
 		_st1215:
@@ -76664,7 +76670,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 74936 "shortcodes.c"
+#line 74942 "shortcodes.c"
 
 		goto _st1217;
 		_st1217:
@@ -76694,7 +76700,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 74965 "shortcodes.c"
+#line 74971 "shortcodes.c"
 
 		goto _st1218;
 		_st1218:
@@ -76736,7 +76742,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 75006 "shortcodes.c"
+#line 75012 "shortcodes.c"
 
 		goto _st1219;
 		_st1219:
@@ -76774,7 +76780,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75043 "shortcodes.c"
+#line 75049 "shortcodes.c"
 
 		goto _st1221;
 		_st1221:
@@ -76803,7 +76809,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75071 "shortcodes.c"
+#line 75077 "shortcodes.c"
 
 		goto _st1222;
 		_st1222:
@@ -76901,7 +76907,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 75168 "shortcodes.c"
+#line 75174 "shortcodes.c"
 
 		goto _st1225;
 		_st1225:
@@ -76972,13 +76978,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 75238 "shortcodes.c"
+#line 75244 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 75243 "shortcodes.c"
+#line 75249 "shortcodes.c"
 
 		goto _st1226;
 		_ctr2480:
@@ -76986,7 +76992,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 75250 "shortcodes.c"
+#line 75256 "shortcodes.c"
 
 		goto _st1226;
 		_ctr2460:
@@ -76996,7 +77002,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -77014,13 +77020,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75277 "shortcodes.c"
+#line 75283 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 75282 "shortcodes.c"
+#line 75288 "shortcodes.c"
 
 		goto _st1226;
 		_ctr2488:
@@ -77035,7 +77041,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -77057,13 +77063,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75318 "shortcodes.c"
+#line 75324 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 75323 "shortcodes.c"
+#line 75329 "shortcodes.c"
 
 		goto _st1226;
 		_st1226:
@@ -77135,7 +77141,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 75394 "shortcodes.c"
+#line 75400 "shortcodes.c"
 
 		goto _st1227;
 		_st1227:
@@ -77218,7 +77224,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 75476 "shortcodes.c"
+#line 75482 "shortcodes.c"
 
 		goto _st1228;
 		_ctr2461:
@@ -77228,7 +77234,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -77246,7 +77252,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75503 "shortcodes.c"
+#line 75509 "shortcodes.c"
 
 		goto _st1228;
 		_ctr2489:
@@ -77261,7 +77267,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -77283,7 +77289,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75539 "shortcodes.c"
+#line 75545 "shortcodes.c"
 
 		goto _st1228;
 		_st1228:
@@ -77338,7 +77344,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -77360,7 +77366,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75615 "shortcodes.c"
+#line 75621 "shortcodes.c"
 
 		goto _st1230;
 		_st1230:
@@ -77516,7 +77522,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 75770 "shortcodes.c"
+#line 75776 "shortcodes.c"
 
 		goto _st1234;
 		_ctr2463:
@@ -77526,7 +77532,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -77544,7 +77550,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75797 "shortcodes.c"
+#line 75803 "shortcodes.c"
 
 		goto _st1234;
 		_ctr2491:
@@ -77559,7 +77565,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -77581,7 +77587,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75833 "shortcodes.c"
+#line 75839 "shortcodes.c"
 
 		goto _st1234;
 		_st1234:
@@ -77629,7 +77635,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 75880 "shortcodes.c"
+#line 75886 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -77639,10 +77645,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 75892 "shortcodes.c"
+#line 75898 "shortcodes.c"
 
 		goto _st2112;
 		_ctr3140:
@@ -77650,7 +77656,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 75899 "shortcodes.c"
+#line 75905 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -77660,10 +77666,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 75911 "shortcodes.c"
+#line 75917 "shortcodes.c"
 
 		goto _st2112;
 		_st2112:
@@ -77690,7 +77696,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -77708,7 +77714,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 75955 "shortcodes.c"
+#line 75961 "shortcodes.c"
 
 		goto _st1236;
 		_st1236:
@@ -77738,7 +77744,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 75984 "shortcodes.c"
+#line 75990 "shortcodes.c"
 
 		goto _st1237;
 		_st1237:
@@ -77810,7 +77816,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -77825,7 +77831,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76070 "shortcodes.c"
+#line 76076 "shortcodes.c"
 
 		goto _st1238;
 		_st1238:
@@ -77899,7 +77905,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 76143 "shortcodes.c"
+#line 76149 "shortcodes.c"
 
 		goto _st1239;
 		_st1239:
@@ -77970,7 +77976,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 76213 "shortcodes.c"
+#line 76219 "shortcodes.c"
 
 		goto _st1240;
 		_st1240:
@@ -78071,7 +78077,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 76313 "shortcodes.c"
+#line 76319 "shortcodes.c"
 
 		goto _st1244;
 		_st1244:
@@ -78136,13 +78142,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 76377 "shortcodes.c"
+#line 76383 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76382 "shortcodes.c"
+#line 76388 "shortcodes.c"
 
 		goto _st1245;
 		_ctr2512:
@@ -78150,7 +78156,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76389 "shortcodes.c"
+#line 76395 "shortcodes.c"
 
 		goto _st1245;
 		_ctr2523:
@@ -78160,7 +78166,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -78178,13 +78184,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76416 "shortcodes.c"
+#line 76422 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76421 "shortcodes.c"
+#line 76427 "shortcodes.c"
 
 		goto _st1245;
 		_ctr4096:
@@ -78199,7 +78205,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -78221,13 +78227,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76457 "shortcodes.c"
+#line 76463 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76462 "shortcodes.c"
+#line 76468 "shortcodes.c"
 
 		goto _st1245;
 		_st1245:
@@ -78297,7 +78303,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 76531 "shortcodes.c"
+#line 76537 "shortcodes.c"
 
 		goto _st1246;
 		_st1246:
@@ -78327,7 +78333,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 76560 "shortcodes.c"
+#line 76566 "shortcodes.c"
 
 		goto _st1247;
 		_st1247:
@@ -78380,7 +78386,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 76612 "shortcodes.c"
+#line 76618 "shortcodes.c"
 
 		goto _st1248;
 		_ctr2524:
@@ -78390,7 +78396,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -78408,7 +78414,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76639 "shortcodes.c"
+#line 76645 "shortcodes.c"
 
 		goto _st1248;
 		_ctr4097:
@@ -78423,7 +78429,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -78445,7 +78451,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76675 "shortcodes.c"
+#line 76681 "shortcodes.c"
 
 		goto _st1248;
 		_st1248:
@@ -78538,7 +78544,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 76767 "shortcodes.c"
+#line 76773 "shortcodes.c"
 
 		goto _st1252;
 		_st1252:
@@ -78580,7 +78586,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 76808 "shortcodes.c"
+#line 76814 "shortcodes.c"
 
 		goto _st1253;
 		_st1253:
@@ -78644,13 +78650,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 76871 "shortcodes.c"
+#line 76877 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76876 "shortcodes.c"
+#line 76882 "shortcodes.c"
 
 		goto _st1255;
 		_ctr2539:
@@ -78658,7 +78664,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76883 "shortcodes.c"
+#line 76889 "shortcodes.c"
 
 		goto _st1255;
 		_ctr2536:
@@ -78668,7 +78674,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -78686,13 +78692,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76910 "shortcodes.c"
+#line 76916 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76915 "shortcodes.c"
+#line 76921 "shortcodes.c"
 
 		goto _st1255;
 		_ctr2546:
@@ -78707,7 +78713,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -78729,13 +78735,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 76951 "shortcodes.c"
+#line 76957 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 76956 "shortcodes.c"
+#line 76962 "shortcodes.c"
 
 		goto _st1255;
 		_st1255:
@@ -78802,7 +78808,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 77022 "shortcodes.c"
+#line 77028 "shortcodes.c"
 
 		goto _st1256;
 		_st1256:
@@ -78876,7 +78882,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 77095 "shortcodes.c"
+#line 77101 "shortcodes.c"
 
 		goto _st1257;
 		_ctr2537:
@@ -78886,7 +78892,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -78904,7 +78910,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77122 "shortcodes.c"
+#line 77128 "shortcodes.c"
 
 		goto _st1257;
 		_ctr2547:
@@ -78919,7 +78925,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -78941,7 +78947,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77158 "shortcodes.c"
+#line 77164 "shortcodes.c"
 
 		goto _st1257;
 		_st1257:
@@ -79047,7 +79053,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 77263 "shortcodes.c"
+#line 77269 "shortcodes.c"
 
 		goto _st1262;
 		_st1262:
@@ -79085,7 +79091,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77300 "shortcodes.c"
+#line 77306 "shortcodes.c"
 
 		goto _st1264;
 		_st1264:
@@ -79114,7 +79120,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77328 "shortcodes.c"
+#line 77334 "shortcodes.c"
 
 		goto _st1265;
 		_st1265:
@@ -79212,7 +79218,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 77425 "shortcodes.c"
+#line 77431 "shortcodes.c"
 
 		goto _st1268;
 		_st1268:
@@ -79283,13 +79289,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 77495 "shortcodes.c"
+#line 77501 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 77500 "shortcodes.c"
+#line 77506 "shortcodes.c"
 
 		goto _st1269;
 		_ctr2569:
@@ -79297,7 +79303,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 77507 "shortcodes.c"
+#line 77513 "shortcodes.c"
 
 		goto _st1269;
 		_ctr2582:
@@ -79307,7 +79313,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -79325,13 +79331,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77534 "shortcodes.c"
+#line 77540 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 77539 "shortcodes.c"
+#line 77545 "shortcodes.c"
 
 		goto _st1269;
 		_ctr4063:
@@ -79346,7 +79352,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -79368,13 +79374,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77575 "shortcodes.c"
+#line 77581 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 77580 "shortcodes.c"
+#line 77586 "shortcodes.c"
 
 		goto _st1269;
 		_st1269:
@@ -79446,7 +79452,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 77651 "shortcodes.c"
+#line 77657 "shortcodes.c"
 
 		goto _st1270;
 		_st1270:
@@ -79476,7 +79482,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 77680 "shortcodes.c"
+#line 77686 "shortcodes.c"
 
 		goto _st1271;
 		_st1271:
@@ -79535,7 +79541,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 77738 "shortcodes.c"
+#line 77744 "shortcodes.c"
 
 		goto _st1272;
 		_ctr2583:
@@ -79545,7 +79551,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -79563,7 +79569,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77765 "shortcodes.c"
+#line 77771 "shortcodes.c"
 
 		goto _st1272;
 		_ctr4064:
@@ -79578,7 +79584,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -79600,7 +79606,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77801 "shortcodes.c"
+#line 77807 "shortcodes.c"
 
 		goto _st1272;
 		_st1272:
@@ -79650,7 +79656,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -79668,7 +79674,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77868 "shortcodes.c"
+#line 77874 "shortcodes.c"
 
 		goto _st1274;
 		_st1274:
@@ -79755,7 +79761,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 77954 "shortcodes.c"
+#line 77960 "shortcodes.c"
 
 		goto _st1277;
 		_ctr2585:
@@ -79765,7 +79771,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -79783,7 +79789,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 77981 "shortcodes.c"
+#line 77987 "shortcodes.c"
 
 		goto _st1277;
 		_ctr4066:
@@ -79798,7 +79804,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -79820,7 +79826,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78017 "shortcodes.c"
+#line 78023 "shortcodes.c"
 
 		goto _st1277;
 		_st1277:
@@ -79868,7 +79874,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 78064 "shortcodes.c"
+#line 78070 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -79878,10 +79884,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 78076 "shortcodes.c"
+#line 78082 "shortcodes.c"
 
 		goto _st2113;
 		_ctr2994:
@@ -79889,7 +79895,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 78083 "shortcodes.c"
+#line 78089 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -79899,10 +79905,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 78095 "shortcodes.c"
+#line 78101 "shortcodes.c"
 
 		goto _st2113;
 		_st2113:
@@ -79929,7 +79935,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 78121 "shortcodes.c"
+#line 78127 "shortcodes.c"
 
 		goto _st1279;
 		_st1279:
@@ -79982,13 +79988,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 78173 "shortcodes.c"
+#line 78179 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78178 "shortcodes.c"
+#line 78184 "shortcodes.c"
 
 		goto _st1280;
 		_ctr2594:
@@ -79996,7 +80002,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78185 "shortcodes.c"
+#line 78191 "shortcodes.c"
 
 		goto _st1280;
 		_ctr2591:
@@ -80006,7 +80012,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -80024,13 +80030,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78212 "shortcodes.c"
+#line 78218 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78217 "shortcodes.c"
+#line 78223 "shortcodes.c"
 
 		goto _st1280;
 		_ctr2600:
@@ -80045,7 +80051,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -80067,13 +80073,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78253 "shortcodes.c"
+#line 78259 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78258 "shortcodes.c"
+#line 78264 "shortcodes.c"
 
 		goto _st1280;
 		_st1280:
@@ -80143,7 +80149,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 78327 "shortcodes.c"
+#line 78333 "shortcodes.c"
 
 		goto _st1281;
 		_st1281:
@@ -80223,7 +80229,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 78406 "shortcodes.c"
+#line 78412 "shortcodes.c"
 
 		goto _st1282;
 		_ctr2592:
@@ -80233,7 +80239,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -80251,7 +80257,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78433 "shortcodes.c"
+#line 78439 "shortcodes.c"
 
 		goto _st1282;
 		_ctr2601:
@@ -80266,7 +80272,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -80288,7 +80294,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78469 "shortcodes.c"
+#line 78475 "shortcodes.c"
 
 		goto _st1282;
 		_st1282:
@@ -80424,7 +80430,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 78604 "shortcodes.c"
+#line 78610 "shortcodes.c"
 
 		goto _st1287;
 		_st1287:
@@ -80493,7 +80499,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -80508,7 +80514,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78687 "shortcodes.c"
+#line 78693 "shortcodes.c"
 
 		goto _st1288;
 		_st1288:
@@ -80576,7 +80582,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78754 "shortcodes.c"
+#line 78760 "shortcodes.c"
 
 		goto _st1290;
 		_st1290:
@@ -80608,7 +80614,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 78785 "shortcodes.c"
+#line 78791 "shortcodes.c"
 
 		goto _st1291;
 		_st1291:
@@ -80715,7 +80721,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 78891 "shortcodes.c"
+#line 78897 "shortcodes.c"
 
 		goto _st1294;
 		_st1294:
@@ -80789,13 +80795,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 78964 "shortcodes.c"
+#line 78970 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78969 "shortcodes.c"
+#line 78975 "shortcodes.c"
 
 		goto _st1295;
 		_ctr2623:
@@ -80803,7 +80809,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 78976 "shortcodes.c"
+#line 78982 "shortcodes.c"
 
 		goto _st1295;
 		_ctr2632:
@@ -80813,7 +80819,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -80831,13 +80837,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79003 "shortcodes.c"
+#line 79009 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79008 "shortcodes.c"
+#line 79014 "shortcodes.c"
 
 		goto _st1295;
 		_ctr2642:
@@ -80852,7 +80858,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -80874,13 +80880,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79044 "shortcodes.c"
+#line 79050 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79049 "shortcodes.c"
+#line 79055 "shortcodes.c"
 
 		goto _st1295;
 		_st1295:
@@ -80952,7 +80958,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 79120 "shortcodes.c"
+#line 79126 "shortcodes.c"
 
 		goto _st1296;
 		_st1296:
@@ -81014,7 +81020,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 79181 "shortcodes.c"
+#line 79187 "shortcodes.c"
 
 		goto _st1297;
 		_ctr2633:
@@ -81024,7 +81030,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -81042,7 +81048,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79208 "shortcodes.c"
+#line 79214 "shortcodes.c"
 
 		goto _st1297;
 		_ctr2643:
@@ -81057,7 +81063,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -81079,7 +81085,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79244 "shortcodes.c"
+#line 79250 "shortcodes.c"
 
 		goto _st1297;
 		_st1297:
@@ -81135,7 +81141,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -81153,7 +81159,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79317 "shortcodes.c"
+#line 79323 "shortcodes.c"
 
 		goto _st1299;
 		_st1299:
@@ -81249,7 +81255,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 79412 "shortcodes.c"
+#line 79418 "shortcodes.c"
 
 		goto _st1302;
 		_ctr2635:
@@ -81259,7 +81265,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -81277,7 +81283,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79439 "shortcodes.c"
+#line 79445 "shortcodes.c"
 
 		goto _st1302;
 		_ctr2645:
@@ -81292,7 +81298,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -81314,7 +81320,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79475 "shortcodes.c"
+#line 79481 "shortcodes.c"
 
 		goto _st1302;
 		_st1302:
@@ -81368,7 +81374,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 79528 "shortcodes.c"
+#line 79534 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -81378,10 +81384,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 79540 "shortcodes.c"
+#line 79546 "shortcodes.c"
 
 		goto _st2114;
 		_ctr3267:
@@ -81389,7 +81395,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 79547 "shortcodes.c"
+#line 79553 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -81399,10 +81405,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 79559 "shortcodes.c"
+#line 79565 "shortcodes.c"
 
 		goto _st2114;
 		_st2114:
@@ -81432,7 +81438,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 79588 "shortcodes.c"
+#line 79594 "shortcodes.c"
 
 		goto _st1304;
 		_st1304:
@@ -81506,7 +81512,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -81528,7 +81534,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79683 "shortcodes.c"
+#line 79689 "shortcodes.c"
 
 		goto _st1305;
 		_st1305:
@@ -81633,7 +81639,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 79787 "shortcodes.c"
+#line 79793 "shortcodes.c"
 
 		goto _st1307;
 		_st1307:
@@ -81689,13 +81695,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 79842 "shortcodes.c"
+#line 79848 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79847 "shortcodes.c"
+#line 79853 "shortcodes.c"
 
 		goto _st1308;
 		_ctr2652:
@@ -81703,7 +81709,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79854 "shortcodes.c"
+#line 79860 "shortcodes.c"
 
 		goto _st1308;
 		_ctr2649:
@@ -81713,7 +81719,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -81731,13 +81737,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79881 "shortcodes.c"
+#line 79887 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79886 "shortcodes.c"
+#line 79892 "shortcodes.c"
 
 		goto _st1308;
 		_ctr4033:
@@ -81752,7 +81758,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -81774,13 +81780,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 79922 "shortcodes.c"
+#line 79928 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 79927 "shortcodes.c"
+#line 79933 "shortcodes.c"
 
 		goto _st1308;
 		_st1308:
@@ -81850,7 +81856,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 79996 "shortcodes.c"
+#line 80002 "shortcodes.c"
 
 		goto _st1309;
 		_st1309:
@@ -81912,13 +81918,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 80057 "shortcodes.c"
+#line 80063 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 80062 "shortcodes.c"
+#line 80068 "shortcodes.c"
 
 		goto _st1310;
 		_ctr2663:
@@ -81926,7 +81932,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 80069 "shortcodes.c"
+#line 80075 "shortcodes.c"
 
 		goto _st1310;
 		_ctr2658:
@@ -81936,7 +81942,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -81954,13 +81960,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80096 "shortcodes.c"
+#line 80102 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 80101 "shortcodes.c"
+#line 80107 "shortcodes.c"
 
 		goto _st1310;
 		_ctr2670:
@@ -81975,7 +81981,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -81997,13 +82003,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80137 "shortcodes.c"
+#line 80143 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 80142 "shortcodes.c"
+#line 80148 "shortcodes.c"
 
 		goto _st1310;
 		_st1310:
@@ -82075,7 +82081,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 80213 "shortcodes.c"
+#line 80219 "shortcodes.c"
 
 		goto _st1311;
 		_st1311:
@@ -82161,7 +82167,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 80298 "shortcodes.c"
+#line 80304 "shortcodes.c"
 
 		goto _st1312;
 		_ctr2659:
@@ -82171,7 +82177,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -82189,7 +82195,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80325 "shortcodes.c"
+#line 80331 "shortcodes.c"
 
 		goto _st1312;
 		_ctr2671:
@@ -82204,7 +82210,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -82226,7 +82232,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80361 "shortcodes.c"
+#line 80367 "shortcodes.c"
 
 		goto _st1312;
 		_st1312:
@@ -82270,7 +82276,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80404 "shortcodes.c"
+#line 80410 "shortcodes.c"
 
 		goto _st1314;
 		_st1314:
@@ -82302,7 +82308,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80435 "shortcodes.c"
+#line 80441 "shortcodes.c"
 
 		goto _st1315;
 		_st1315:
@@ -82409,7 +82415,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 80541 "shortcodes.c"
+#line 80547 "shortcodes.c"
 
 		goto _st1318;
 		_st1318:
@@ -82483,7 +82489,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 80614 "shortcodes.c"
+#line 80620 "shortcodes.c"
 
 		goto _st1319;
 		_st1319:
@@ -82557,7 +82563,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 80687 "shortcodes.c"
+#line 80693 "shortcodes.c"
 
 		goto _st1320;
 		_st1320:
@@ -82630,7 +82636,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 80759 "shortcodes.c"
+#line 80765 "shortcodes.c"
 
 		goto _st1322;
 		_ctr2661:
@@ -82640,7 +82646,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -82658,7 +82664,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80786 "shortcodes.c"
+#line 80792 "shortcodes.c"
 
 		goto _st1322;
 		_ctr2673:
@@ -82673,7 +82679,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -82695,7 +82701,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 80822 "shortcodes.c"
+#line 80828 "shortcodes.c"
 
 		goto _st1322;
 		_st1322:
@@ -82749,7 +82755,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 80875 "shortcodes.c"
+#line 80881 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -82759,10 +82765,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 80887 "shortcodes.c"
+#line 80893 "shortcodes.c"
 
 		goto _st2115;
 		_ctr3224:
@@ -82770,7 +82776,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 80894 "shortcodes.c"
+#line 80900 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -82780,10 +82786,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 80906 "shortcodes.c"
+#line 80912 "shortcodes.c"
 
 		goto _st2115;
 		_st2115:
@@ -82870,7 +82876,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 80992 "shortcodes.c"
+#line 80998 "shortcodes.c"
 
 		goto _st1326;
 		_st1326:
@@ -82938,13 +82944,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 81059 "shortcodes.c"
+#line 81065 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81064 "shortcodes.c"
+#line 81070 "shortcodes.c"
 
 		goto _st1327;
 		_ctr2700:
@@ -82952,7 +82958,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81071 "shortcodes.c"
+#line 81077 "shortcodes.c"
 
 		goto _st1327;
 		_ctr2707:
@@ -82962,7 +82968,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -82980,13 +82986,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81098 "shortcodes.c"
+#line 81104 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81103 "shortcodes.c"
+#line 81109 "shortcodes.c"
 
 		goto _st1327;
 		_ctr2713:
@@ -83001,7 +83007,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -83023,13 +83029,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81139 "shortcodes.c"
+#line 81145 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81144 "shortcodes.c"
+#line 81150 "shortcodes.c"
 
 		goto _st1327;
 		_st1327:
@@ -83099,7 +83105,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81213 "shortcodes.c"
+#line 81219 "shortcodes.c"
 
 		goto _st1328;
 		_st1328:
@@ -83155,7 +83161,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 81268 "shortcodes.c"
+#line 81274 "shortcodes.c"
 
 		goto _st1329;
 		_ctr2708:
@@ -83165,7 +83171,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -83183,7 +83189,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81295 "shortcodes.c"
+#line 81301 "shortcodes.c"
 
 		goto _st1329;
 		_ctr2714:
@@ -83198,7 +83204,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -83220,7 +83226,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81331 "shortcodes.c"
+#line 81337 "shortcodes.c"
 
 		goto _st1329;
 		_st1329:
@@ -83325,7 +83331,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81435 "shortcodes.c"
+#line 81441 "shortcodes.c"
 
 		goto _st1333;
 		_st1333:
@@ -83437,7 +83443,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81546 "shortcodes.c"
+#line 81552 "shortcodes.c"
 
 		goto _st1335;
 		_st1335:
@@ -83482,7 +83488,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81590 "shortcodes.c"
+#line 81596 "shortcodes.c"
 
 		goto _st1336;
 		_st1336:
@@ -83512,7 +83518,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81619 "shortcodes.c"
+#line 81625 "shortcodes.c"
 
 		goto _st1337;
 		_st1337:
@@ -83565,13 +83571,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 81671 "shortcodes.c"
+#line 81677 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81676 "shortcodes.c"
+#line 81682 "shortcodes.c"
 
 		goto _st1338;
 		_ctr2729:
@@ -83579,7 +83585,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81683 "shortcodes.c"
+#line 81689 "shortcodes.c"
 
 		goto _st1338;
 		_ctr2726:
@@ -83589,7 +83595,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -83607,13 +83613,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81710 "shortcodes.c"
+#line 81716 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81715 "shortcodes.c"
+#line 81721 "shortcodes.c"
 
 		goto _st1338;
 		_ctr2736:
@@ -83628,7 +83634,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -83650,13 +83656,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81751 "shortcodes.c"
+#line 81757 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 81756 "shortcodes.c"
+#line 81762 "shortcodes.c"
 
 		goto _st1338;
 		_st1338:
@@ -83726,7 +83732,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 81825 "shortcodes.c"
+#line 81831 "shortcodes.c"
 
 		goto _st1339;
 		_st1339:
@@ -83806,7 +83812,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 81904 "shortcodes.c"
+#line 81910 "shortcodes.c"
 
 		goto _st1340;
 		_ctr2727:
@@ -83816,7 +83822,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -83834,7 +83840,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81931 "shortcodes.c"
+#line 81937 "shortcodes.c"
 
 		goto _st1340;
 		_ctr2737:
@@ -83849,7 +83855,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -83871,7 +83877,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 81967 "shortcodes.c"
+#line 81973 "shortcodes.c"
 
 		goto _st1340;
 		_st1340:
@@ -84007,7 +84013,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 82102 "shortcodes.c"
+#line 82108 "shortcodes.c"
 
 		goto _st1345;
 		_st1345:
@@ -84076,7 +84082,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -84091,7 +84097,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82185 "shortcodes.c"
+#line 82191 "shortcodes.c"
 
 		goto _st1346;
 		_st1346:
@@ -84148,7 +84154,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 82241 "shortcodes.c"
+#line 82247 "shortcodes.c"
 
 		goto _st1347;
 		_st1347:
@@ -84201,13 +84207,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 82293 "shortcodes.c"
+#line 82299 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82298 "shortcodes.c"
+#line 82304 "shortcodes.c"
 
 		goto _st1348;
 		_ctr2748:
@@ -84215,7 +84221,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82305 "shortcodes.c"
+#line 82311 "shortcodes.c"
 
 		goto _st1348;
 		_ctr2745:
@@ -84225,7 +84231,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -84243,13 +84249,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82332 "shortcodes.c"
+#line 82338 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82337 "shortcodes.c"
+#line 82343 "shortcodes.c"
 
 		goto _st1348;
 		_ctr2754:
@@ -84264,7 +84270,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -84286,13 +84292,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82373 "shortcodes.c"
+#line 82379 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82378 "shortcodes.c"
+#line 82384 "shortcodes.c"
 
 		goto _st1348;
 		_st1348:
@@ -84362,7 +84368,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 82447 "shortcodes.c"
+#line 82453 "shortcodes.c"
 
 		goto _st1349;
 		_st1349:
@@ -84442,7 +84448,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 82526 "shortcodes.c"
+#line 82532 "shortcodes.c"
 
 		goto _st1350;
 		_ctr2746:
@@ -84452,7 +84458,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -84470,7 +84476,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82553 "shortcodes.c"
+#line 82559 "shortcodes.c"
 
 		goto _st1350;
 		_ctr2755:
@@ -84485,7 +84491,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -84507,7 +84513,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82589 "shortcodes.c"
+#line 82595 "shortcodes.c"
 
 		goto _st1350;
 		_st1350:
@@ -84591,7 +84597,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82672 "shortcodes.c"
+#line 82678 "shortcodes.c"
 
 		goto _st1354;
 		_st1354:
@@ -84620,7 +84626,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82700 "shortcodes.c"
+#line 82706 "shortcodes.c"
 
 		goto _st1355;
 		_st1355:
@@ -84718,7 +84724,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 82797 "shortcodes.c"
+#line 82803 "shortcodes.c"
 
 		goto _st1358;
 		_st1358:
@@ -84789,13 +84795,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 82867 "shortcodes.c"
+#line 82873 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82872 "shortcodes.c"
+#line 82878 "shortcodes.c"
 
 		goto _st1359;
 		_ctr2774:
@@ -84803,7 +84809,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82879 "shortcodes.c"
+#line 82885 "shortcodes.c"
 
 		goto _st1359;
 		_ctr2529:
@@ -84813,7 +84819,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -84831,13 +84837,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82906 "shortcodes.c"
+#line 82912 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82911 "shortcodes.c"
+#line 82917 "shortcodes.c"
 
 		goto _st1359;
 		_ctr2782:
@@ -84852,7 +84858,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -84874,13 +84880,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 82947 "shortcodes.c"
+#line 82953 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 82952 "shortcodes.c"
+#line 82958 "shortcodes.c"
 
 		goto _st1359;
 		_st1359:
@@ -84952,7 +84958,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 83023 "shortcodes.c"
+#line 83029 "shortcodes.c"
 
 		goto _st1360;
 		_st1360:
@@ -85035,7 +85041,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 83105 "shortcodes.c"
+#line 83111 "shortcodes.c"
 
 		goto _st1361;
 		_ctr2531:
@@ -85045,7 +85051,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -85063,7 +85069,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83132 "shortcodes.c"
+#line 83138 "shortcodes.c"
 
 		goto _st1361;
 		_ctr2783:
@@ -85078,7 +85084,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -85100,7 +85106,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83168 "shortcodes.c"
+#line 83174 "shortcodes.c"
 
 		goto _st1361;
 		_st1361:
@@ -85155,7 +85161,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -85177,7 +85183,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83244 "shortcodes.c"
+#line 83250 "shortcodes.c"
 
 		goto _st1363;
 		_st1363:
@@ -85333,7 +85339,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 83399 "shortcodes.c"
+#line 83405 "shortcodes.c"
 
 		goto _st1367;
 		_ctr2533:
@@ -85343,7 +85349,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -85361,7 +85367,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83426 "shortcodes.c"
+#line 83432 "shortcodes.c"
 
 		goto _st1367;
 		_ctr2785:
@@ -85376,7 +85382,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -85398,7 +85404,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83462 "shortcodes.c"
+#line 83468 "shortcodes.c"
 
 		goto _st1367;
 		_st1367:
@@ -85446,7 +85452,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 83509 "shortcodes.c"
+#line 83515 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -85456,10 +85462,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 83521 "shortcodes.c"
+#line 83527 "shortcodes.c"
 
 		goto _st2116;
 		_ctr2961:
@@ -85467,7 +85473,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 83528 "shortcodes.c"
+#line 83534 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -85477,10 +85483,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 83540 "shortcodes.c"
+#line 83546 "shortcodes.c"
 
 		goto _st2116;
 		_st2116:
@@ -85507,7 +85513,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -85525,7 +85531,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83584 "shortcodes.c"
+#line 83590 "shortcodes.c"
 
 		goto _st1369;
 		_st1369:
@@ -85555,7 +85561,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 83613 "shortcodes.c"
+#line 83619 "shortcodes.c"
 
 		goto _st1370;
 		_st1370:
@@ -85627,7 +85633,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -85642,7 +85648,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 83699 "shortcodes.c"
+#line 83705 "shortcodes.c"
 
 		goto _st1371;
 		_st1371:
@@ -85716,7 +85722,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 83772 "shortcodes.c"
+#line 83778 "shortcodes.c"
 
 		goto _st1372;
 		_st1372:
@@ -85787,7 +85793,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 83842 "shortcodes.c"
+#line 83848 "shortcodes.c"
 
 		goto _st1373;
 		_st1373:
@@ -85888,7 +85894,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 83942 "shortcodes.c"
+#line 83948 "shortcodes.c"
 
 		goto _st1377;
 		_st1377:
@@ -86001,7 +86007,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 84054 "shortcodes.c"
+#line 84060 "shortcodes.c"
 
 		goto _st1380;
 		_st1380:
@@ -86072,13 +86078,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 84124 "shortcodes.c"
+#line 84130 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84129 "shortcodes.c"
+#line 84135 "shortcodes.c"
 
 		goto _st1381;
 		_ctr2813:
@@ -86086,7 +86092,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84136 "shortcodes.c"
+#line 84142 "shortcodes.c"
 
 		goto _st1381;
 		_ctr2956:
@@ -86096,7 +86102,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -86114,13 +86120,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84163 "shortcodes.c"
+#line 84169 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84168 "shortcodes.c"
+#line 84174 "shortcodes.c"
 
 		goto _st1381;
 		_ctr3995:
@@ -86135,7 +86141,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -86157,13 +86163,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84204 "shortcodes.c"
+#line 84210 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84209 "shortcodes.c"
+#line 84215 "shortcodes.c"
 
 		goto _st1381;
 		_st1381:
@@ -86235,7 +86241,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 84280 "shortcodes.c"
+#line 84286 "shortcodes.c"
 
 		goto _st1382;
 		_st1382:
@@ -86271,7 +86277,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 84315 "shortcodes.c"
+#line 84321 "shortcodes.c"
 
 		goto _st1383;
 		_st1383:
@@ -86341,13 +86347,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 84384 "shortcodes.c"
+#line 84390 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84389 "shortcodes.c"
+#line 84395 "shortcodes.c"
 
 		goto _st1385;
 		_ctr2833:
@@ -86355,7 +86361,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84396 "shortcodes.c"
+#line 84402 "shortcodes.c"
 
 		goto _st1385;
 		_ctr2828:
@@ -86365,7 +86371,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -86383,13 +86389,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84423 "shortcodes.c"
+#line 84429 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84428 "shortcodes.c"
+#line 84434 "shortcodes.c"
 
 		goto _st1385;
 		_ctr2842:
@@ -86404,7 +86410,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -86426,13 +86432,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84464 "shortcodes.c"
+#line 84470 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 84469 "shortcodes.c"
+#line 84475 "shortcodes.c"
 
 		goto _st1385;
 		_st1385:
@@ -86501,7 +86507,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 84537 "shortcodes.c"
+#line 84543 "shortcodes.c"
 
 		goto _st1386;
 		_st1386:
@@ -86578,7 +86584,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 84613 "shortcodes.c"
+#line 84619 "shortcodes.c"
 
 		goto _st1387;
 		_ctr2829:
@@ -86588,7 +86594,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -86606,7 +86612,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84640 "shortcodes.c"
+#line 84646 "shortcodes.c"
 
 		goto _st1387;
 		_ctr2843:
@@ -86621,7 +86627,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -86643,7 +86649,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84676 "shortcodes.c"
+#line 84682 "shortcodes.c"
 
 		goto _st1387;
 		_st1387:
@@ -86686,7 +86692,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -86708,7 +86714,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84740 "shortcodes.c"
+#line 84746 "shortcodes.c"
 
 		goto _st1389;
 		_st1389:
@@ -86840,7 +86846,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 84871 "shortcodes.c"
+#line 84877 "shortcodes.c"
 
 		goto _st1393;
 		_ctr2831:
@@ -86850,7 +86856,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -86868,7 +86874,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84898 "shortcodes.c"
+#line 84904 "shortcodes.c"
 
 		goto _st1393;
 		_ctr2845:
@@ -86883,7 +86889,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -86905,7 +86911,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 84934 "shortcodes.c"
+#line 84940 "shortcodes.c"
 
 		goto _st1393;
 		_st1393:
@@ -86943,7 +86949,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 84971 "shortcodes.c"
+#line 84977 "shortcodes.c"
 
 		goto _st1395;
 		_st1395:
@@ -86981,7 +86987,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85008 "shortcodes.c"
+#line 85014 "shortcodes.c"
 
 		goto _st1397;
 		_st1397:
@@ -87010,7 +87016,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85036 "shortcodes.c"
+#line 85042 "shortcodes.c"
 
 		goto _st1398;
 		_st1398:
@@ -87108,7 +87114,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 85133 "shortcodes.c"
+#line 85139 "shortcodes.c"
 
 		goto _st1401;
 		_st1401:
@@ -87179,13 +87185,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 85203 "shortcodes.c"
+#line 85209 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85208 "shortcodes.c"
+#line 85214 "shortcodes.c"
 
 		goto _st1402;
 		_ctr2870:
@@ -87193,7 +87199,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85215 "shortcodes.c"
+#line 85221 "shortcodes.c"
 
 		goto _st1402;
 		_ctr2883:
@@ -87203,7 +87209,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -87221,13 +87227,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85242 "shortcodes.c"
+#line 85248 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85247 "shortcodes.c"
+#line 85253 "shortcodes.c"
 
 		goto _st1402;
 		_ctr3962:
@@ -87242,7 +87248,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -87264,13 +87270,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85283 "shortcodes.c"
+#line 85289 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85288 "shortcodes.c"
+#line 85294 "shortcodes.c"
 
 		goto _st1402;
 		_st1402:
@@ -87342,7 +87348,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 85359 "shortcodes.c"
+#line 85365 "shortcodes.c"
 
 		goto _st1403;
 		_st1403:
@@ -87372,7 +87378,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 85388 "shortcodes.c"
+#line 85394 "shortcodes.c"
 
 		goto _st1404;
 		_st1404:
@@ -87431,7 +87437,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 85446 "shortcodes.c"
+#line 85452 "shortcodes.c"
 
 		goto _st1405;
 		_ctr2884:
@@ -87441,7 +87447,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -87459,7 +87465,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85473 "shortcodes.c"
+#line 85479 "shortcodes.c"
 
 		goto _st1405;
 		_ctr3963:
@@ -87474,7 +87480,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -87496,7 +87502,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85509 "shortcodes.c"
+#line 85515 "shortcodes.c"
 
 		goto _st1405;
 		_st1405:
@@ -87546,7 +87552,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -87564,7 +87570,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85576 "shortcodes.c"
+#line 85582 "shortcodes.c"
 
 		goto _st1407;
 		_st1407:
@@ -87651,7 +87657,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 85662 "shortcodes.c"
+#line 85668 "shortcodes.c"
 
 		goto _st1410;
 		_ctr2886:
@@ -87661,7 +87667,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -87679,7 +87685,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85689 "shortcodes.c"
+#line 85695 "shortcodes.c"
 
 		goto _st1410;
 		_ctr3965:
@@ -87694,7 +87700,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -87716,7 +87722,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85725 "shortcodes.c"
+#line 85731 "shortcodes.c"
 
 		goto _st1410;
 		_st1410:
@@ -87764,7 +87770,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 85772 "shortcodes.c"
+#line 85778 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -87774,10 +87780,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 85784 "shortcodes.c"
+#line 85790 "shortcodes.c"
 
 		goto _st2117;
 		_ctr3525:
@@ -87785,7 +87791,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 85791 "shortcodes.c"
+#line 85797 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -87795,10 +87801,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 85803 "shortcodes.c"
+#line 85809 "shortcodes.c"
 
 		goto _st2117;
 		_st2117:
@@ -87825,7 +87831,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 85829 "shortcodes.c"
+#line 85835 "shortcodes.c"
 
 		goto _st1412;
 		_st1412:
@@ -87884,13 +87890,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 85887 "shortcodes.c"
+#line 85893 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85892 "shortcodes.c"
+#line 85898 "shortcodes.c"
 
 		goto _st1413;
 		_ctr2897:
@@ -87898,7 +87904,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85899 "shortcodes.c"
+#line 85905 "shortcodes.c"
 
 		goto _st1413;
 		_ctr2892:
@@ -87908,7 +87914,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -87926,13 +87932,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85926 "shortcodes.c"
+#line 85932 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85931 "shortcodes.c"
+#line 85937 "shortcodes.c"
 
 		goto _st1413;
 		_ctr3947:
@@ -87947,7 +87953,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -87969,13 +87975,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 85967 "shortcodes.c"
+#line 85973 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 85972 "shortcodes.c"
+#line 85978 "shortcodes.c"
 
 		goto _st1413;
 		_st1413:
@@ -88047,7 +88053,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 86043 "shortcodes.c"
+#line 86049 "shortcodes.c"
 
 		goto _st1414;
 		_st1414:
@@ -88106,13 +88112,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 86101 "shortcodes.c"
+#line 86107 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 86106 "shortcodes.c"
+#line 86112 "shortcodes.c"
 
 		goto _st1415;
 		_ctr2910:
@@ -88120,7 +88126,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 86113 "shortcodes.c"
+#line 86119 "shortcodes.c"
 
 		goto _st1415;
 		_ctr2905:
@@ -88130,7 +88136,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -88148,13 +88154,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86140 "shortcodes.c"
+#line 86146 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 86145 "shortcodes.c"
+#line 86151 "shortcodes.c"
 
 		goto _st1415;
 		_ctr2919:
@@ -88169,7 +88175,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -88191,13 +88197,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86181 "shortcodes.c"
+#line 86187 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 86186 "shortcodes.c"
+#line 86192 "shortcodes.c"
 
 		goto _st1415;
 		_st1415:
@@ -88269,7 +88275,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 86257 "shortcodes.c"
+#line 86263 "shortcodes.c"
 
 		goto _st1416;
 		_st1416:
@@ -88352,7 +88358,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 86339 "shortcodes.c"
+#line 86345 "shortcodes.c"
 
 		goto _st1417;
 		_ctr2906:
@@ -88362,7 +88368,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -88380,7 +88386,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86366 "shortcodes.c"
+#line 86372 "shortcodes.c"
 
 		goto _st1417;
 		_ctr2920:
@@ -88395,7 +88401,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -88417,7 +88423,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86402 "shortcodes.c"
+#line 86408 "shortcodes.c"
 
 		goto _st1417;
 		_st1417:
@@ -88458,7 +88464,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86442 "shortcodes.c"
+#line 86448 "shortcodes.c"
 
 		goto _st1419;
 		_st1419:
@@ -88487,7 +88493,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86470 "shortcodes.c"
+#line 86476 "shortcodes.c"
 
 		goto _st1420;
 		_st1420:
@@ -88585,7 +88591,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 86567 "shortcodes.c"
+#line 86573 "shortcodes.c"
 
 		goto _st1423;
 		_st1423:
@@ -88656,7 +88662,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 86637 "shortcodes.c"
+#line 86643 "shortcodes.c"
 
 		goto _st1424;
 		_st1424:
@@ -88727,7 +88733,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 86707 "shortcodes.c"
+#line 86713 "shortcodes.c"
 
 		goto _st1425;
 		_st1425:
@@ -88794,7 +88800,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 86773 "shortcodes.c"
+#line 86779 "shortcodes.c"
 
 		goto _st1427;
 		_ctr2908:
@@ -88804,7 +88810,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -88822,7 +88828,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86800 "shortcodes.c"
+#line 86806 "shortcodes.c"
 
 		goto _st1427;
 		_ctr2922:
@@ -88837,7 +88843,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -88859,7 +88865,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 86836 "shortcodes.c"
+#line 86842 "shortcodes.c"
 
 		goto _st1427;
 		_st1427:
@@ -88907,7 +88913,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 86883 "shortcodes.c"
+#line 86889 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -88917,10 +88923,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 86895 "shortcodes.c"
+#line 86901 "shortcodes.c"
 
 		goto _st2118;
 		_ctr3552:
@@ -88928,7 +88934,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 86902 "shortcodes.c"
+#line 86908 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -88938,10 +88944,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 86914 "shortcodes.c"
+#line 86920 "shortcodes.c"
 
 		goto _st2118;
 		_st2118:
@@ -89019,7 +89025,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 86991 "shortcodes.c"
+#line 86997 "shortcodes.c"
 
 		goto _st1431;
 		_st1431:
@@ -89084,13 +89090,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 87055 "shortcodes.c"
+#line 87061 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87060 "shortcodes.c"
+#line 87066 "shortcodes.c"
 
 		goto _st1432;
 		_ctr2949:
@@ -89098,7 +89104,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87067 "shortcodes.c"
+#line 87073 "shortcodes.c"
 
 		goto _st1432;
 		_ctr2823:
@@ -89108,7 +89114,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -89126,13 +89132,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87094 "shortcodes.c"
+#line 87100 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87099 "shortcodes.c"
+#line 87105 "shortcodes.c"
 
 		goto _st1432;
 		_ctr2966:
@@ -89147,7 +89153,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -89169,13 +89175,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87135 "shortcodes.c"
+#line 87141 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87140 "shortcodes.c"
+#line 87146 "shortcodes.c"
 
 		goto _st1432;
 		_st1432:
@@ -89245,7 +89251,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 87209 "shortcodes.c"
+#line 87215 "shortcodes.c"
 
 		goto _st1433;
 		_st1433:
@@ -89304,7 +89310,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 87267 "shortcodes.c"
+#line 87273 "shortcodes.c"
 
 		goto _st1434;
 		_ctr2957:
@@ -89314,7 +89320,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -89332,7 +89338,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87294 "shortcodes.c"
+#line 87300 "shortcodes.c"
 
 		goto _st1434;
 		_ctr3996:
@@ -89347,7 +89353,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -89369,7 +89375,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87330 "shortcodes.c"
+#line 87336 "shortcodes.c"
 
 		goto _st1434;
 		_st1434:
@@ -89419,7 +89425,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -89437,7 +89443,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87397 "shortcodes.c"
+#line 87403 "shortcodes.c"
 
 		goto _st1436;
 		_st1436:
@@ -89524,7 +89530,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 87483 "shortcodes.c"
+#line 87489 "shortcodes.c"
 
 		goto _st1439;
 		_ctr2959:
@@ -89534,7 +89540,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -89552,7 +89558,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87510 "shortcodes.c"
+#line 87516 "shortcodes.c"
 
 		goto _st1439;
 		_ctr3998:
@@ -89567,7 +89573,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -89589,7 +89595,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87546 "shortcodes.c"
+#line 87552 "shortcodes.c"
 
 		goto _st1439;
 		_st1439:
@@ -89639,7 +89645,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 87595 "shortcodes.c"
+#line 87601 "shortcodes.c"
 
 		goto _st1441;
 		_st1441:
@@ -89719,7 +89725,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 87674 "shortcodes.c"
+#line 87680 "shortcodes.c"
 
 		goto _st1442;
 		_ctr2825:
@@ -89729,7 +89735,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -89747,7 +89753,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87701 "shortcodes.c"
+#line 87707 "shortcodes.c"
 
 		goto _st1442;
 		_ctr2967:
@@ -89762,7 +89768,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -89784,7 +89790,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87737 "shortcodes.c"
+#line 87743 "shortcodes.c"
 
 		goto _st1442;
 		_st1442:
@@ -89920,7 +89926,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 87872 "shortcodes.c"
+#line 87878 "shortcodes.c"
 
 		goto _st1447;
 		_st1447:
@@ -89950,7 +89956,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 87901 "shortcodes.c"
+#line 87907 "shortcodes.c"
 
 		goto _st1448;
 		_st1448:
@@ -90009,13 +90015,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 87959 "shortcodes.c"
+#line 87965 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87964 "shortcodes.c"
+#line 87970 "shortcodes.c"
 
 		goto _st1449;
 		_ctr2981:
@@ -90023,7 +90029,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 87971 "shortcodes.c"
+#line 87977 "shortcodes.c"
 
 		goto _st1449;
 		_ctr2976:
@@ -90033,7 +90039,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -90051,13 +90057,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 87998 "shortcodes.c"
+#line 88004 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88003 "shortcodes.c"
+#line 88009 "shortcodes.c"
 
 		goto _st1449;
 		_ctr2989:
@@ -90072,7 +90078,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -90094,13 +90100,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88039 "shortcodes.c"
+#line 88045 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88044 "shortcodes.c"
+#line 88050 "shortcodes.c"
 
 		goto _st1449;
 		_st1449:
@@ -90172,7 +90178,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 88115 "shortcodes.c"
+#line 88121 "shortcodes.c"
 
 		goto _st1450;
 		_st1450:
@@ -90255,7 +90261,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 88197 "shortcodes.c"
+#line 88203 "shortcodes.c"
 
 		goto _st1451;
 		_ctr2977:
@@ -90265,7 +90271,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -90283,7 +90289,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88224 "shortcodes.c"
+#line 88230 "shortcodes.c"
 
 		goto _st1451;
 		_ctr2990:
@@ -90298,7 +90304,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -90320,7 +90326,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88260 "shortcodes.c"
+#line 88266 "shortcodes.c"
 
 		goto _st1451;
 		_st1451:
@@ -90375,7 +90381,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -90397,7 +90403,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88336 "shortcodes.c"
+#line 88342 "shortcodes.c"
 
 		goto _st1453;
 		_st1453:
@@ -90553,7 +90559,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 88491 "shortcodes.c"
+#line 88497 "shortcodes.c"
 
 		goto _st1457;
 		_ctr2979:
@@ -90563,7 +90569,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -90581,7 +90587,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88518 "shortcodes.c"
+#line 88524 "shortcodes.c"
 
 		goto _st1457;
 		_ctr2992:
@@ -90596,7 +90602,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -90618,7 +90624,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88554 "shortcodes.c"
+#line 88560 "shortcodes.c"
 
 		goto _st1457;
 		_st1457:
@@ -90668,7 +90674,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 88603 "shortcodes.c"
+#line 88609 "shortcodes.c"
 
 		goto _st1459;
 		_st1459:
@@ -90721,13 +90727,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 88655 "shortcodes.c"
+#line 88661 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88660 "shortcodes.c"
+#line 88666 "shortcodes.c"
 
 		goto _st1460;
 		_ctr3004:
@@ -90735,7 +90741,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88667 "shortcodes.c"
+#line 88673 "shortcodes.c"
 
 		goto _st1460;
 		_ctr3001:
@@ -90745,7 +90751,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -90763,13 +90769,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88694 "shortcodes.c"
+#line 88700 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88699 "shortcodes.c"
+#line 88705 "shortcodes.c"
 
 		goto _st1460;
 		_ctr3913:
@@ -90784,7 +90790,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -90806,13 +90812,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88735 "shortcodes.c"
+#line 88741 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 88740 "shortcodes.c"
+#line 88746 "shortcodes.c"
 
 		goto _st1460;
 		_st1460:
@@ -90882,7 +90888,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 88809 "shortcodes.c"
+#line 88815 "shortcodes.c"
 
 		goto _st1461;
 		_st1461:
@@ -90923,7 +90929,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88849 "shortcodes.c"
+#line 88855 "shortcodes.c"
 
 		goto _st1463;
 		_st1463:
@@ -90955,7 +90961,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 88880 "shortcodes.c"
+#line 88886 "shortcodes.c"
 
 		goto _st1464;
 		_st1464:
@@ -91062,7 +91068,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 88986 "shortcodes.c"
+#line 88992 "shortcodes.c"
 
 		goto _st1467;
 		_st1467:
@@ -91136,13 +91142,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 89059 "shortcodes.c"
+#line 89065 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89064 "shortcodes.c"
+#line 89070 "shortcodes.c"
 
 		goto _st1468;
 		_ctr3026:
@@ -91150,7 +91156,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89071 "shortcodes.c"
+#line 89077 "shortcodes.c"
 
 		goto _st1468;
 		_ctr3045:
@@ -91160,7 +91166,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -91178,13 +91184,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89098 "shortcodes.c"
+#line 89104 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89103 "shortcodes.c"
+#line 89109 "shortcodes.c"
 
 		goto _st1468;
 		_ctr3883:
@@ -91199,7 +91205,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -91221,13 +91227,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89139 "shortcodes.c"
+#line 89145 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89144 "shortcodes.c"
+#line 89150 "shortcodes.c"
 
 		goto _st1468;
 		_st1468:
@@ -91299,7 +91305,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 89215 "shortcodes.c"
+#line 89221 "shortcodes.c"
 
 		goto _st1469;
 		_st1469:
@@ -91355,13 +91361,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 89270 "shortcodes.c"
+#line 89276 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89275 "shortcodes.c"
+#line 89281 "shortcodes.c"
 
 		goto _st1470;
 		_ctr3038:
@@ -91369,7 +91375,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89282 "shortcodes.c"
+#line 89288 "shortcodes.c"
 
 		goto _st1470;
 		_ctr3035:
@@ -91379,7 +91385,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -91397,13 +91403,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89309 "shortcodes.c"
+#line 89315 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89314 "shortcodes.c"
+#line 89320 "shortcodes.c"
 
 		goto _st1470;
 		_ctr3055:
@@ -91418,7 +91424,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -91440,13 +91446,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89350 "shortcodes.c"
+#line 89356 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 89355 "shortcodes.c"
+#line 89361 "shortcodes.c"
 
 		goto _st1470;
 		_st1470:
@@ -91516,7 +91522,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 89424 "shortcodes.c"
+#line 89430 "shortcodes.c"
 
 		goto _st1471;
 		_st1471:
@@ -91578,7 +91584,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 89485 "shortcodes.c"
+#line 89491 "shortcodes.c"
 
 		goto _st1472;
 		_ctr3046:
@@ -91588,7 +91594,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -91606,7 +91612,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89512 "shortcodes.c"
+#line 89518 "shortcodes.c"
 
 		goto _st1472;
 		_ctr3884:
@@ -91621,7 +91627,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -91643,7 +91649,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89548 "shortcodes.c"
+#line 89554 "shortcodes.c"
 
 		goto _st1472;
 		_st1472:
@@ -91699,7 +91705,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -91717,7 +91723,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89621 "shortcodes.c"
+#line 89627 "shortcodes.c"
 
 		goto _st1474;
 		_st1474:
@@ -91813,7 +91819,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 89716 "shortcodes.c"
+#line 89722 "shortcodes.c"
 
 		goto _st1477;
 		_ctr3048:
@@ -91823,7 +91829,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -91841,7 +91847,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89743 "shortcodes.c"
+#line 89749 "shortcodes.c"
 
 		goto _st1477;
 		_ctr3886:
@@ -91856,7 +91862,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -91878,7 +91884,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 89779 "shortcodes.c"
+#line 89785 "shortcodes.c"
 
 		goto _st1477;
 		_st1477:
@@ -91932,7 +91938,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 89832 "shortcodes.c"
+#line 89838 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -91942,10 +91948,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 89844 "shortcodes.c"
+#line 89850 "shortcodes.c"
 
 		goto _st2119;
 		_ctr3691:
@@ -91953,7 +91959,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 89851 "shortcodes.c"
+#line 89857 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -91963,10 +91969,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 89863 "shortcodes.c"
+#line 89869 "shortcodes.c"
 
 		goto _st2119;
 		_st2119:
@@ -91996,7 +92002,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 89892 "shortcodes.c"
+#line 89898 "shortcodes.c"
 
 		goto _st1479;
 		_st1479:
@@ -92079,7 +92085,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 89974 "shortcodes.c"
+#line 89980 "shortcodes.c"
 
 		goto _st1480;
 		_ctr3036:
@@ -92089,7 +92095,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -92107,7 +92113,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90001 "shortcodes.c"
+#line 90007 "shortcodes.c"
 
 		goto _st1480;
 		_ctr3056:
@@ -92122,7 +92128,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -92144,7 +92150,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90037 "shortcodes.c"
+#line 90043 "shortcodes.c"
 
 		goto _st1480;
 		_st1480:
@@ -92237,7 +92243,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90129 "shortcodes.c"
+#line 90135 "shortcodes.c"
 
 		goto _st1484;
 		_st1484:
@@ -92269,7 +92275,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90160 "shortcodes.c"
+#line 90166 "shortcodes.c"
 
 		goto _st1485;
 		_st1485:
@@ -92376,7 +92382,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 90266 "shortcodes.c"
+#line 90272 "shortcodes.c"
 
 		goto _st1488;
 		_st1488:
@@ -92450,13 +92456,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 90339 "shortcodes.c"
+#line 90345 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 90344 "shortcodes.c"
+#line 90350 "shortcodes.c"
 
 		goto _st1489;
 		_ctr3075:
@@ -92464,7 +92470,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 90351 "shortcodes.c"
+#line 90357 "shortcodes.c"
 
 		goto _st1489;
 		_ctr3084:
@@ -92474,7 +92480,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -92492,13 +92498,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90378 "shortcodes.c"
+#line 90384 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 90383 "shortcodes.c"
+#line 90389 "shortcodes.c"
 
 		goto _st1489;
 		_ctr3094:
@@ -92513,7 +92519,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -92535,13 +92541,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90419 "shortcodes.c"
+#line 90425 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 90424 "shortcodes.c"
+#line 90430 "shortcodes.c"
 
 		goto _st1489;
 		_st1489:
@@ -92613,7 +92619,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 90495 "shortcodes.c"
+#line 90501 "shortcodes.c"
 
 		goto _st1490;
 		_st1490:
@@ -92675,7 +92681,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 90556 "shortcodes.c"
+#line 90562 "shortcodes.c"
 
 		goto _st1491;
 		_ctr3085:
@@ -92685,7 +92691,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -92703,7 +92709,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90583 "shortcodes.c"
+#line 90589 "shortcodes.c"
 
 		goto _st1491;
 		_ctr3095:
@@ -92718,7 +92724,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -92740,7 +92746,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90619 "shortcodes.c"
+#line 90625 "shortcodes.c"
 
 		goto _st1491;
 		_st1491:
@@ -92796,7 +92802,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -92814,7 +92820,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90692 "shortcodes.c"
+#line 90698 "shortcodes.c"
 
 		goto _st1493;
 		_st1493:
@@ -92910,7 +92916,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 90787 "shortcodes.c"
+#line 90793 "shortcodes.c"
 
 		goto _st1496;
 		_ctr3087:
@@ -92920,7 +92926,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -92938,7 +92944,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90814 "shortcodes.c"
+#line 90820 "shortcodes.c"
 
 		goto _st1496;
 		_ctr3097:
@@ -92953,7 +92959,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -92975,7 +92981,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 90850 "shortcodes.c"
+#line 90856 "shortcodes.c"
 
 		goto _st1496;
 		_st1496:
@@ -93029,7 +93035,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 90903 "shortcodes.c"
+#line 90909 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -93039,10 +93045,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 90915 "shortcodes.c"
+#line 90921 "shortcodes.c"
 
 		goto _st2120;
 		_ctr3612:
@@ -93050,7 +93056,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 90922 "shortcodes.c"
+#line 90928 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -93060,10 +93066,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 90934 "shortcodes.c"
+#line 90940 "shortcodes.c"
 
 		goto _st2120;
 		_st2120:
@@ -93093,7 +93099,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 90963 "shortcodes.c"
+#line 90969 "shortcodes.c"
 
 		goto _st1498;
 		_st1498:
@@ -93167,7 +93173,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -93189,7 +93195,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91058 "shortcodes.c"
+#line 91064 "shortcodes.c"
 
 		goto _st1499;
 		_st1499:
@@ -93294,7 +93300,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 91162 "shortcodes.c"
+#line 91168 "shortcodes.c"
 
 		goto _st1501;
 		_st1501:
@@ -93356,13 +93362,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 91223 "shortcodes.c"
+#line 91229 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91228 "shortcodes.c"
+#line 91234 "shortcodes.c"
 
 		goto _st1502;
 		_ctr3106:
@@ -93370,7 +93376,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91235 "shortcodes.c"
+#line 91241 "shortcodes.c"
 
 		goto _st1502;
 		_ctr3101:
@@ -93380,7 +93386,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -93398,13 +93404,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91262 "shortcodes.c"
+#line 91268 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91267 "shortcodes.c"
+#line 91273 "shortcodes.c"
 
 		goto _st1502;
 		_ctr3778:
@@ -93419,7 +93425,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -93441,13 +93447,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91303 "shortcodes.c"
+#line 91309 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91308 "shortcodes.c"
+#line 91314 "shortcodes.c"
 
 		goto _st1502;
 		_st1502:
@@ -93519,7 +93525,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 91379 "shortcodes.c"
+#line 91385 "shortcodes.c"
 
 		goto _st1503;
 		_st1503:
@@ -93564,7 +93570,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 91423 "shortcodes.c"
+#line 91429 "shortcodes.c"
 
 		goto _st1504;
 		_st1504:
@@ -93594,7 +93600,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 91452 "shortcodes.c"
+#line 91458 "shortcodes.c"
 
 		goto _st1505;
 		_st1505:
@@ -93653,13 +93659,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 91510 "shortcodes.c"
+#line 91516 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91515 "shortcodes.c"
+#line 91521 "shortcodes.c"
 
 		goto _st1506;
 		_ctr3127:
@@ -93667,7 +93673,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91522 "shortcodes.c"
+#line 91528 "shortcodes.c"
 
 		goto _st1506;
 		_ctr3122:
@@ -93677,7 +93683,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -93695,13 +93701,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91549 "shortcodes.c"
+#line 91555 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91554 "shortcodes.c"
+#line 91560 "shortcodes.c"
 
 		goto _st1506;
 		_ctr3135:
@@ -93716,7 +93722,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -93738,13 +93744,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91590 "shortcodes.c"
+#line 91596 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 91595 "shortcodes.c"
+#line 91601 "shortcodes.c"
 
 		goto _st1506;
 		_st1506:
@@ -93816,7 +93822,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 91666 "shortcodes.c"
+#line 91672 "shortcodes.c"
 
 		goto _st1507;
 		_st1507:
@@ -93899,7 +93905,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 91748 "shortcodes.c"
+#line 91754 "shortcodes.c"
 
 		goto _st1508;
 		_ctr3123:
@@ -93909,7 +93915,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -93927,7 +93933,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91775 "shortcodes.c"
+#line 91781 "shortcodes.c"
 
 		goto _st1508;
 		_ctr3136:
@@ -93942,7 +93948,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -93964,7 +93970,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91811 "shortcodes.c"
+#line 91817 "shortcodes.c"
 
 		goto _st1508;
 		_st1508:
@@ -94019,7 +94025,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -94041,7 +94047,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 91887 "shortcodes.c"
+#line 91893 "shortcodes.c"
 
 		goto _st1510;
 		_st1510:
@@ -94197,7 +94203,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 92042 "shortcodes.c"
+#line 92048 "shortcodes.c"
 
 		goto _st1514;
 		_ctr3125:
@@ -94207,7 +94213,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -94225,7 +94231,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92069 "shortcodes.c"
+#line 92075 "shortcodes.c"
 
 		goto _st1514;
 		_ctr3138:
@@ -94240,7 +94246,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -94262,7 +94268,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92105 "shortcodes.c"
+#line 92111 "shortcodes.c"
 
 		goto _st1514;
 		_st1514:
@@ -94312,7 +94318,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -94330,7 +94336,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92172 "shortcodes.c"
+#line 92178 "shortcodes.c"
 
 		goto _st1516;
 		_st1516:
@@ -94360,7 +94366,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 92201 "shortcodes.c"
+#line 92207 "shortcodes.c"
 
 		goto _st1517;
 		_st1517:
@@ -94432,7 +94438,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -94447,7 +94453,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92287 "shortcodes.c"
+#line 92293 "shortcodes.c"
 
 		goto _st1518;
 		_st1518:
@@ -94515,7 +94521,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92354 "shortcodes.c"
+#line 92360 "shortcodes.c"
 
 		goto _st1520;
 		_st1520:
@@ -94547,7 +94553,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92385 "shortcodes.c"
+#line 92391 "shortcodes.c"
 
 		goto _st1521;
 		_st1521:
@@ -94654,7 +94660,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 92491 "shortcodes.c"
+#line 92497 "shortcodes.c"
 
 		goto _st1524;
 		_st1524:
@@ -94728,13 +94734,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 92564 "shortcodes.c"
+#line 92570 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 92569 "shortcodes.c"
+#line 92575 "shortcodes.c"
 
 		goto _st1525;
 		_ctr3163:
@@ -94742,7 +94748,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 92576 "shortcodes.c"
+#line 92582 "shortcodes.c"
 
 		goto _st1525;
 		_ctr3115:
@@ -94752,7 +94758,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -94770,13 +94776,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92603 "shortcodes.c"
+#line 92609 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 92608 "shortcodes.c"
+#line 92614 "shortcodes.c"
 
 		goto _st1525;
 		_ctr3170:
@@ -94791,7 +94797,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -94813,13 +94819,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92644 "shortcodes.c"
+#line 92650 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 92649 "shortcodes.c"
+#line 92655 "shortcodes.c"
 
 		goto _st1525;
 		_st1525:
@@ -94891,7 +94897,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 92720 "shortcodes.c"
+#line 92726 "shortcodes.c"
 
 		goto _st1526;
 		_st1526:
@@ -94977,7 +94983,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 92805 "shortcodes.c"
+#line 92811 "shortcodes.c"
 
 		goto _st1527;
 		_ctr3117:
@@ -94987,7 +94993,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -95005,7 +95011,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92832 "shortcodes.c"
+#line 92838 "shortcodes.c"
 
 		goto _st1527;
 		_ctr3171:
@@ -95020,7 +95026,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -95042,7 +95048,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92868 "shortcodes.c"
+#line 92874 "shortcodes.c"
 
 		goto _st1527;
 		_st1527:
@@ -95103,7 +95109,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -95125,7 +95131,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 92950 "shortcodes.c"
+#line 92956 "shortcodes.c"
 
 		goto _st1529;
 		_st1529:
@@ -95293,7 +95299,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 93117 "shortcodes.c"
+#line 93123 "shortcodes.c"
 
 		goto _st1533;
 		_ctr3119:
@@ -95303,7 +95309,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -95321,7 +95327,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93144 "shortcodes.c"
+#line 93150 "shortcodes.c"
 
 		goto _st1533;
 		_ctr3173:
@@ -95336,7 +95342,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -95358,7 +95364,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93180 "shortcodes.c"
+#line 93186 "shortcodes.c"
 
 		goto _st1533;
 		_st1533:
@@ -95412,7 +95418,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 93233 "shortcodes.c"
+#line 93239 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -95422,10 +95428,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 93245 "shortcodes.c"
+#line 93251 "shortcodes.c"
 
 		goto _st2121;
 		_ctr3646:
@@ -95433,7 +95439,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 93252 "shortcodes.c"
+#line 93258 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -95443,10 +95449,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 93264 "shortcodes.c"
+#line 93270 "shortcodes.c"
 
 		goto _st2121;
 		_st2121:
@@ -95476,7 +95482,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -95494,7 +95500,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93311 "shortcodes.c"
+#line 93317 "shortcodes.c"
 
 		goto _st1535;
 		_st1535:
@@ -95527,7 +95533,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 93343 "shortcodes.c"
+#line 93349 "shortcodes.c"
 
 		goto _st1536;
 		_st1536:
@@ -95602,7 +95608,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -95617,7 +95623,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93432 "shortcodes.c"
+#line 93438 "shortcodes.c"
 
 		goto _st1537;
 		_st1537:
@@ -95691,7 +95697,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 93505 "shortcodes.c"
+#line 93511 "shortcodes.c"
 
 		goto _st1538;
 		_st1538:
@@ -95765,7 +95771,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 93578 "shortcodes.c"
+#line 93584 "shortcodes.c"
 
 		goto _st1539;
 		_st1539:
@@ -95878,7 +95884,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 93690 "shortcodes.c"
+#line 93696 "shortcodes.c"
 
 		goto _st1543;
 		_st1543:
@@ -95946,13 +95952,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 93757 "shortcodes.c"
+#line 93763 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93762 "shortcodes.c"
+#line 93768 "shortcodes.c"
 
 		goto _st1544;
 		_ctr3194:
@@ -95960,7 +95966,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93769 "shortcodes.c"
+#line 93775 "shortcodes.c"
 
 		goto _st1544;
 		_ctr3213:
@@ -95970,7 +95976,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -95988,13 +95994,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93796 "shortcodes.c"
+#line 93802 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93801 "shortcodes.c"
+#line 93807 "shortcodes.c"
 
 		goto _st1544;
 		_ctr3234:
@@ -96009,7 +96015,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -96031,13 +96037,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 93837 "shortcodes.c"
+#line 93843 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93842 "shortcodes.c"
+#line 93848 "shortcodes.c"
 
 		goto _st1544;
 		_st1544:
@@ -96107,7 +96113,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 93911 "shortcodes.c"
+#line 93917 "shortcodes.c"
 
 		goto _st1545;
 		_st1545:
@@ -96169,13 +96175,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 93972 "shortcodes.c"
+#line 93978 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93977 "shortcodes.c"
+#line 93983 "shortcodes.c"
 
 		goto _st1546;
 		_ctr3205:
@@ -96183,7 +96189,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 93984 "shortcodes.c"
+#line 93990 "shortcodes.c"
 
 		goto _st1546;
 		_ctr3200:
@@ -96193,7 +96199,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -96211,13 +96217,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94011 "shortcodes.c"
+#line 94017 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 94016 "shortcodes.c"
+#line 94022 "shortcodes.c"
 
 		goto _st1546;
 		_ctr3219:
@@ -96232,7 +96238,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -96254,13 +96260,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94052 "shortcodes.c"
+#line 94058 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 94057 "shortcodes.c"
+#line 94063 "shortcodes.c"
 
 		goto _st1546;
 		_st1546:
@@ -96332,7 +96338,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 94128 "shortcodes.c"
+#line 94134 "shortcodes.c"
 
 		goto _st1547;
 		_st1547:
@@ -96388,7 +96394,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 94183 "shortcodes.c"
+#line 94189 "shortcodes.c"
 
 		goto _st1548;
 		_ctr3214:
@@ -96398,7 +96404,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -96416,7 +96422,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94210 "shortcodes.c"
+#line 94216 "shortcodes.c"
 
 		goto _st1548;
 		_ctr3235:
@@ -96431,7 +96437,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -96453,7 +96459,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94246 "shortcodes.c"
+#line 94252 "shortcodes.c"
 
 		goto _st1548;
 		_st1548:
@@ -96558,7 +96564,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 94350 "shortcodes.c"
+#line 94356 "shortcodes.c"
 
 		goto _st1552;
 		_st1552:
@@ -96644,7 +96650,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 94435 "shortcodes.c"
+#line 94441 "shortcodes.c"
 
 		goto _st1553;
 		_ctr3201:
@@ -96654,7 +96660,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -96672,7 +96678,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94462 "shortcodes.c"
+#line 94468 "shortcodes.c"
 
 		goto _st1553;
 		_ctr3220:
@@ -96687,7 +96693,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -96709,7 +96715,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94498 "shortcodes.c"
+#line 94504 "shortcodes.c"
 
 		goto _st1553;
 		_st1553:
@@ -96770,7 +96776,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -96792,7 +96798,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94580 "shortcodes.c"
+#line 94586 "shortcodes.c"
 
 		goto _st1555;
 		_st1555:
@@ -96960,7 +96966,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 94747 "shortcodes.c"
+#line 94753 "shortcodes.c"
 
 		goto _st1559;
 		_ctr3203:
@@ -96970,7 +96976,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -96988,7 +96994,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94774 "shortcodes.c"
+#line 94780 "shortcodes.c"
 
 		goto _st1559;
 		_ctr3222:
@@ -97003,7 +97009,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -97025,7 +97031,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94810 "shortcodes.c"
+#line 94816 "shortcodes.c"
 
 		goto _st1559;
 		_st1559:
@@ -97081,7 +97087,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -97099,7 +97105,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 94883 "shortcodes.c"
+#line 94889 "shortcodes.c"
 
 		goto _st1561;
 		_st1561:
@@ -97132,7 +97138,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 94915 "shortcodes.c"
+#line 94921 "shortcodes.c"
 
 		goto _st1562;
 		_st1562:
@@ -97207,7 +97213,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -97222,7 +97228,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95004 "shortcodes.c"
+#line 95010 "shortcodes.c"
 
 		goto _st1563;
 		_st1563:
@@ -97279,7 +97285,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 95060 "shortcodes.c"
+#line 95066 "shortcodes.c"
 
 		goto _st1564;
 		_st1564:
@@ -97391,7 +97397,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 95171 "shortcodes.c"
+#line 95177 "shortcodes.c"
 
 		goto _st1566;
 		_st1566:
@@ -97453,13 +97459,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 95232 "shortcodes.c"
+#line 95238 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95237 "shortcodes.c"
+#line 95243 "shortcodes.c"
 
 		goto _st1567;
 		_ctr3243:
@@ -97467,7 +97473,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95244 "shortcodes.c"
+#line 95250 "shortcodes.c"
 
 		goto _st1567;
 		_ctr3238:
@@ -97477,7 +97483,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -97495,13 +97501,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95271 "shortcodes.c"
+#line 95277 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95276 "shortcodes.c"
+#line 95282 "shortcodes.c"
 
 		goto _st1567;
 		_ctr3277:
@@ -97516,7 +97522,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -97538,13 +97544,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95312 "shortcodes.c"
+#line 95318 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95317 "shortcodes.c"
+#line 95323 "shortcodes.c"
 
 		goto _st1567;
 		_st1567:
@@ -97616,7 +97622,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 95388 "shortcodes.c"
+#line 95394 "shortcodes.c"
 
 		goto _st1568;
 		_st1568:
@@ -97678,13 +97684,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 95449 "shortcodes.c"
+#line 95455 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95454 "shortcodes.c"
+#line 95460 "shortcodes.c"
 
 		goto _st1569;
 		_ctr3255:
@@ -97692,7 +97698,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95461 "shortcodes.c"
+#line 95467 "shortcodes.c"
 
 		goto _st1569;
 		_ctr3250:
@@ -97702,7 +97708,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -97720,13 +97726,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95488 "shortcodes.c"
+#line 95494 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95493 "shortcodes.c"
+#line 95499 "shortcodes.c"
 
 		goto _st1569;
 		_ctr3262:
@@ -97741,7 +97747,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -97763,13 +97769,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95529 "shortcodes.c"
+#line 95535 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 95534 "shortcodes.c"
+#line 95540 "shortcodes.c"
 
 		goto _st1569;
 		_st1569:
@@ -97841,7 +97847,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 95605 "shortcodes.c"
+#line 95611 "shortcodes.c"
 
 		goto _st1570;
 		_st1570:
@@ -97927,7 +97933,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 95690 "shortcodes.c"
+#line 95696 "shortcodes.c"
 
 		goto _st1571;
 		_ctr3251:
@@ -97937,7 +97943,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -97955,7 +97961,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95717 "shortcodes.c"
+#line 95723 "shortcodes.c"
 
 		goto _st1571;
 		_ctr3263:
@@ -97970,7 +97976,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -97992,7 +97998,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95753 "shortcodes.c"
+#line 95759 "shortcodes.c"
 
 		goto _st1571;
 		_st1571:
@@ -98053,7 +98059,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -98075,7 +98081,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 95835 "shortcodes.c"
+#line 95841 "shortcodes.c"
 
 		goto _st1573;
 		_st1573:
@@ -98243,7 +98249,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 96002 "shortcodes.c"
+#line 96008 "shortcodes.c"
 
 		goto _st1577;
 		_ctr3253:
@@ -98253,7 +98259,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -98271,7 +98277,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96029 "shortcodes.c"
+#line 96035 "shortcodes.c"
 
 		goto _st1577;
 		_ctr3265:
@@ -98286,7 +98292,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -98308,7 +98314,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96065 "shortcodes.c"
+#line 96071 "shortcodes.c"
 
 		goto _st1577;
 		_st1577:
@@ -98364,7 +98370,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -98382,7 +98388,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96138 "shortcodes.c"
+#line 96144 "shortcodes.c"
 
 		goto _st1579;
 		_st1579:
@@ -98415,7 +98421,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 96170 "shortcodes.c"
+#line 96176 "shortcodes.c"
 
 		goto _st1580;
 		_st1580:
@@ -98490,7 +98496,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -98505,7 +98511,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96259 "shortcodes.c"
+#line 96265 "shortcodes.c"
 
 		goto _st1581;
 		_st1581:
@@ -98562,7 +98568,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 96315 "shortcodes.c"
+#line 96321 "shortcodes.c"
 
 		goto _st1582;
 		_st1582:
@@ -98648,7 +98654,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 96400 "shortcodes.c"
+#line 96406 "shortcodes.c"
 
 		goto _st1583;
 		_ctr3239:
@@ -98658,7 +98664,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -98676,7 +98682,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96427 "shortcodes.c"
+#line 96433 "shortcodes.c"
 
 		goto _st1583;
 		_ctr3278:
@@ -98691,7 +98697,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -98713,7 +98719,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96463 "shortcodes.c"
+#line 96469 "shortcodes.c"
 
 		goto _st1583;
 		_st1583:
@@ -98757,7 +98763,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96506 "shortcodes.c"
+#line 96512 "shortcodes.c"
 
 		goto _st1585;
 		_st1585:
@@ -98789,7 +98795,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96537 "shortcodes.c"
+#line 96543 "shortcodes.c"
 
 		goto _st1586;
 		_st1586:
@@ -98896,7 +98902,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 96643 "shortcodes.c"
+#line 96649 "shortcodes.c"
 
 		goto _st1589;
 		_st1589:
@@ -98970,7 +98976,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 96716 "shortcodes.c"
+#line 96722 "shortcodes.c"
 
 		goto _st1590;
 		_st1590:
@@ -99044,7 +99050,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 96789 "shortcodes.c"
+#line 96795 "shortcodes.c"
 
 		goto _st1591;
 		_st1591:
@@ -99117,7 +99123,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 96861 "shortcodes.c"
+#line 96867 "shortcodes.c"
 
 		goto _st1593;
 		_ctr3241:
@@ -99127,7 +99133,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -99145,7 +99151,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96888 "shortcodes.c"
+#line 96894 "shortcodes.c"
 
 		goto _st1593;
 		_ctr3280:
@@ -99160,7 +99166,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -99182,7 +99188,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 96924 "shortcodes.c"
+#line 96930 "shortcodes.c"
 
 		goto _st1593;
 		_st1593:
@@ -99236,7 +99242,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 96977 "shortcodes.c"
+#line 96983 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -99246,10 +99252,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 96989 "shortcodes.c"
+#line 96995 "shortcodes.c"
 
 		goto _st2122;
 		_ctr3487:
@@ -99257,7 +99263,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 96996 "shortcodes.c"
+#line 97002 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -99267,10 +99273,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 97008 "shortcodes.c"
+#line 97014 "shortcodes.c"
 
 		goto _st2122;
 		_st2122:
@@ -99357,7 +99363,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 97094 "shortcodes.c"
+#line 97100 "shortcodes.c"
 
 		goto _st1597;
 		_st1597:
@@ -99425,13 +99431,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 97161 "shortcodes.c"
+#line 97167 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97166 "shortcodes.c"
+#line 97172 "shortcodes.c"
 
 		goto _st1598;
 		_ctr3307:
@@ -99439,7 +99445,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97173 "shortcodes.c"
+#line 97179 "shortcodes.c"
 
 		goto _st1598;
 		_ctr3327:
@@ -99449,7 +99455,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -99467,13 +99473,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97200 "shortcodes.c"
+#line 97206 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97205 "shortcodes.c"
+#line 97211 "shortcodes.c"
 
 		goto _st1598;
 		_ctr3459:
@@ -99488,7 +99494,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -99510,13 +99516,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97241 "shortcodes.c"
+#line 97247 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97246 "shortcodes.c"
+#line 97252 "shortcodes.c"
 
 		goto _st1598;
 		_st1598:
@@ -99586,7 +99592,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 97315 "shortcodes.c"
+#line 97321 "shortcodes.c"
 
 		goto _st1599;
 		_st1599:
@@ -99648,13 +99654,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 97376 "shortcodes.c"
+#line 97382 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97381 "shortcodes.c"
+#line 97387 "shortcodes.c"
 
 		goto _st1600;
 		_ctr3319:
@@ -99662,7 +99668,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97388 "shortcodes.c"
+#line 97394 "shortcodes.c"
 
 		goto _st1600;
 		_ctr3314:
@@ -99672,7 +99678,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -99690,13 +99696,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97415 "shortcodes.c"
+#line 97421 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97420 "shortcodes.c"
+#line 97426 "shortcodes.c"
 
 		goto _st1600;
 		_ctr3333:
@@ -99711,7 +99717,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -99733,13 +99739,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97456 "shortcodes.c"
+#line 97462 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 97461 "shortcodes.c"
+#line 97467 "shortcodes.c"
 
 		goto _st1600;
 		_st1600:
@@ -99811,7 +99817,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 97532 "shortcodes.c"
+#line 97538 "shortcodes.c"
 
 		goto _st1601;
 		_st1601:
@@ -99867,7 +99873,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 97587 "shortcodes.c"
+#line 97593 "shortcodes.c"
 
 		goto _st1602;
 		_ctr3328:
@@ -99877,7 +99883,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -99895,7 +99901,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97614 "shortcodes.c"
+#line 97620 "shortcodes.c"
 
 		goto _st1602;
 		_ctr3460:
@@ -99910,7 +99916,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -99932,7 +99938,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97650 "shortcodes.c"
+#line 97656 "shortcodes.c"
 
 		goto _st1602;
 		_st1602:
@@ -100037,7 +100043,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 97754 "shortcodes.c"
+#line 97760 "shortcodes.c"
 
 		goto _st1606;
 		_st1606:
@@ -100123,7 +100129,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 97839 "shortcodes.c"
+#line 97845 "shortcodes.c"
 
 		goto _st1607;
 		_ctr3315:
@@ -100133,7 +100139,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -100151,7 +100157,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97866 "shortcodes.c"
+#line 97872 "shortcodes.c"
 
 		goto _st1607;
 		_ctr3334:
@@ -100166,7 +100172,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -100188,7 +100194,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97902 "shortcodes.c"
+#line 97908 "shortcodes.c"
 
 		goto _st1607;
 		_st1607:
@@ -100232,7 +100238,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97945 "shortcodes.c"
+#line 97951 "shortcodes.c"
 
 		goto _st1609;
 		_st1609:
@@ -100264,7 +100270,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 97976 "shortcodes.c"
+#line 97982 "shortcodes.c"
 
 		goto _st1610;
 		_st1610:
@@ -100371,7 +100377,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 98082 "shortcodes.c"
+#line 98088 "shortcodes.c"
 
 		goto _st1613;
 		_st1613:
@@ -100445,13 +100451,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 98155 "shortcodes.c"
+#line 98161 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98160 "shortcodes.c"
+#line 98166 "shortcodes.c"
 
 		goto _st1614;
 		_ctr3352:
@@ -100459,7 +100465,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98167 "shortcodes.c"
+#line 98173 "shortcodes.c"
 
 		goto _st1614;
 		_ctr2718:
@@ -100469,7 +100475,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -100487,13 +100493,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98194 "shortcodes.c"
+#line 98200 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98199 "shortcodes.c"
+#line 98205 "shortcodes.c"
 
 		goto _st1614;
 		_ctr3378:
@@ -100508,7 +100514,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -100530,13 +100536,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98235 "shortcodes.c"
+#line 98241 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98240 "shortcodes.c"
+#line 98246 "shortcodes.c"
 
 		goto _st1614;
 		_st1614:
@@ -100608,7 +100614,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 98311 "shortcodes.c"
+#line 98317 "shortcodes.c"
 
 		goto _st1615;
 		_st1615:
@@ -100664,13 +100670,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 98366 "shortcodes.c"
+#line 98372 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98371 "shortcodes.c"
+#line 98377 "shortcodes.c"
 
 		goto _st1616;
 		_ctr3363:
@@ -100678,7 +100684,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98378 "shortcodes.c"
+#line 98384 "shortcodes.c"
 
 		goto _st1616;
 		_ctr3360:
@@ -100688,7 +100694,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -100706,13 +100712,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98405 "shortcodes.c"
+#line 98411 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98410 "shortcodes.c"
+#line 98416 "shortcodes.c"
 
 		goto _st1616;
 		_ctr3368:
@@ -100727,7 +100733,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -100749,13 +100755,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98446 "shortcodes.c"
+#line 98452 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 98451 "shortcodes.c"
+#line 98457 "shortcodes.c"
 
 		goto _st1616;
 		_st1616:
@@ -100825,7 +100831,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 98520 "shortcodes.c"
+#line 98526 "shortcodes.c"
 
 		goto _st1617;
 		_st1617:
@@ -100908,7 +100914,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 98602 "shortcodes.c"
+#line 98608 "shortcodes.c"
 
 		goto _st1618;
 		_ctr3361:
@@ -100918,7 +100924,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -100936,7 +100942,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98629 "shortcodes.c"
+#line 98635 "shortcodes.c"
 
 		goto _st1618;
 		_ctr3369:
@@ -100951,7 +100957,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -100973,7 +100979,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98665 "shortcodes.c"
+#line 98671 "shortcodes.c"
 
 		goto _st1618;
 		_st1618:
@@ -101124,7 +101130,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 98815 "shortcodes.c"
+#line 98821 "shortcodes.c"
 
 		goto _st1623;
 		_st1623:
@@ -101196,7 +101202,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -101211,7 +101217,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 98901 "shortcodes.c"
+#line 98907 "shortcodes.c"
 
 		goto _st1624;
 		_st1624:
@@ -101268,7 +101274,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 98957 "shortcodes.c"
+#line 98963 "shortcodes.c"
 
 		goto _st1625;
 		_st1625:
@@ -101354,7 +101360,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 99042 "shortcodes.c"
+#line 99048 "shortcodes.c"
 
 		goto _st1626;
 		_ctr2720:
@@ -101364,7 +101370,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -101382,7 +101388,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99069 "shortcodes.c"
+#line 99075 "shortcodes.c"
 
 		goto _st1626;
 		_ctr3379:
@@ -101397,7 +101403,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -101419,7 +101425,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99105 "shortcodes.c"
+#line 99111 "shortcodes.c"
 
 		goto _st1626;
 		_st1626:
@@ -101480,7 +101486,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -101502,7 +101508,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99187 "shortcodes.c"
+#line 99193 "shortcodes.c"
 
 		goto _st1628;
 		_st1628:
@@ -101670,7 +101676,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 99354 "shortcodes.c"
+#line 99360 "shortcodes.c"
 
 		goto _st1632;
 		_ctr2723:
@@ -101680,7 +101686,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -101698,7 +101704,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99381 "shortcodes.c"
+#line 99387 "shortcodes.c"
 
 		goto _st1632;
 		_ctr3381:
@@ -101713,7 +101719,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -101735,7 +101741,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99417 "shortcodes.c"
+#line 99423 "shortcodes.c"
 
 		goto _st1632;
 		_st1632:
@@ -101789,7 +101795,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 99470 "shortcodes.c"
+#line 99476 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -101799,10 +101805,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 99482 "shortcodes.c"
+#line 99488 "shortcodes.c"
 
 		goto _st2123;
 		_ctr3432:
@@ -101810,7 +101816,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 99489 "shortcodes.c"
+#line 99495 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -101820,10 +101826,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 99501 "shortcodes.c"
+#line 99507 "shortcodes.c"
 
 		goto _st2123;
 		_st2123:
@@ -101853,7 +101859,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -101871,7 +101877,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99548 "shortcodes.c"
+#line 99554 "shortcodes.c"
 
 		goto _st1634;
 		_st1634:
@@ -101904,7 +101910,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 99580 "shortcodes.c"
+#line 99586 "shortcodes.c"
 
 		goto _st1635;
 		_st1635:
@@ -101979,7 +101985,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -101994,7 +102000,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 99669 "shortcodes.c"
+#line 99675 "shortcodes.c"
 
 		goto _st1636;
 		_st1636:
@@ -102068,7 +102074,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 99742 "shortcodes.c"
+#line 99748 "shortcodes.c"
 
 		goto _st1637;
 		_st1637:
@@ -102142,7 +102148,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 99815 "shortcodes.c"
+#line 99821 "shortcodes.c"
 
 		goto _st1638;
 		_st1638:
@@ -102255,7 +102261,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 99927 "shortcodes.c"
+#line 99933 "shortcodes.c"
 
 		goto _st1642;
 		_st1642:
@@ -102323,13 +102329,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 99994 "shortcodes.c"
+#line 100000 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 99999 "shortcodes.c"
+#line 100005 "shortcodes.c"
 
 		goto _st1643;
 		_ctr3402:
@@ -102337,7 +102343,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 100006 "shortcodes.c"
+#line 100012 "shortcodes.c"
 
 		goto _st1643;
 		_ctr3408:
@@ -102347,7 +102353,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -102365,13 +102371,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100033 "shortcodes.c"
+#line 100039 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 100038 "shortcodes.c"
+#line 100044 "shortcodes.c"
 
 		goto _st1643;
 		_ctr3414:
@@ -102386,7 +102392,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -102408,13 +102414,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100074 "shortcodes.c"
+#line 100080 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 100079 "shortcodes.c"
+#line 100085 "shortcodes.c"
 
 		goto _st1643;
 		_st1643:
@@ -102484,7 +102490,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 100148 "shortcodes.c"
+#line 100154 "shortcodes.c"
 
 		goto _st1644;
 		_st1644:
@@ -102540,7 +102546,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 100203 "shortcodes.c"
+#line 100209 "shortcodes.c"
 
 		goto _st1645;
 		_ctr3409:
@@ -102550,7 +102556,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -102568,7 +102574,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100230 "shortcodes.c"
+#line 100236 "shortcodes.c"
 
 		goto _st1645;
 		_ctr3415:
@@ -102583,7 +102589,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -102605,7 +102611,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100266 "shortcodes.c"
+#line 100272 "shortcodes.c"
 
 		goto _st1645;
 		_st1645:
@@ -102710,7 +102716,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 100370 "shortcodes.c"
+#line 100376 "shortcodes.c"
 
 		goto _st1649;
 		_st1649:
@@ -102822,7 +102828,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 100481 "shortcodes.c"
+#line 100487 "shortcodes.c"
 
 		goto _st1651;
 		_st1651:
@@ -102894,7 +102900,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -102909,7 +102915,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100567 "shortcodes.c"
+#line 100573 "shortcodes.c"
 
 		goto _st1652;
 		_st1652:
@@ -103037,7 +103043,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 100694 "shortcodes.c"
+#line 100700 "shortcodes.c"
 
 		goto _st1655;
 		_st1655:
@@ -103111,7 +103117,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 100767 "shortcodes.c"
+#line 100773 "shortcodes.c"
 
 		goto _st1656;
 		_st1656:
@@ -103185,7 +103191,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 100840 "shortcodes.c"
+#line 100846 "shortcodes.c"
 
 		goto _st1657;
 		_st1657:
@@ -103258,7 +103264,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 100912 "shortcodes.c"
+#line 100918 "shortcodes.c"
 
 		goto _st1659;
 		_ctr3317:
@@ -103268,7 +103274,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -103286,7 +103292,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100939 "shortcodes.c"
+#line 100945 "shortcodes.c"
 
 		goto _st1659;
 		_ctr3336:
@@ -103301,7 +103307,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -103323,7 +103329,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 100975 "shortcodes.c"
+#line 100981 "shortcodes.c"
 
 		goto _st1659;
 		_st1659:
@@ -103407,7 +103413,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -103429,7 +103435,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101080 "shortcodes.c"
+#line 101086 "shortcodes.c"
 
 		goto _st1662;
 		_st1662:
@@ -103580,7 +103586,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 101230 "shortcodes.c"
+#line 101236 "shortcodes.c"
 
 		goto _st1666;
 		_st1666:
@@ -103636,13 +103642,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 101285 "shortcodes.c"
+#line 101291 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 101290 "shortcodes.c"
+#line 101296 "shortcodes.c"
 
 		goto _st1667;
 		_ctr3441:
@@ -103650,7 +103656,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 101297 "shortcodes.c"
+#line 101303 "shortcodes.c"
 
 		goto _st1667;
 		_ctr3438:
@@ -103660,7 +103666,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -103678,13 +103684,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101324 "shortcodes.c"
+#line 101330 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 101329 "shortcodes.c"
+#line 101335 "shortcodes.c"
 
 		goto _st1667;
 		_ctr3446:
@@ -103699,7 +103705,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -103721,13 +103727,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101365 "shortcodes.c"
+#line 101371 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 101370 "shortcodes.c"
+#line 101376 "shortcodes.c"
 
 		goto _st1667;
 		_st1667:
@@ -103797,7 +103803,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 101439 "shortcodes.c"
+#line 101445 "shortcodes.c"
 
 		goto _st1668;
 		_st1668:
@@ -103880,7 +103886,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 101521 "shortcodes.c"
+#line 101527 "shortcodes.c"
 
 		goto _st1669;
 		_ctr3439:
@@ -103890,7 +103896,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -103908,7 +103914,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101548 "shortcodes.c"
+#line 101554 "shortcodes.c"
 
 		goto _st1669;
 		_ctr3447:
@@ -103923,7 +103929,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -103945,7 +103951,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101584 "shortcodes.c"
+#line 101590 "shortcodes.c"
 
 		goto _st1669;
 		_st1669:
@@ -104096,7 +104102,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 101734 "shortcodes.c"
+#line 101740 "shortcodes.c"
 
 		goto _st1674;
 		_st1674:
@@ -104168,7 +104174,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -104183,7 +104189,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101820 "shortcodes.c"
+#line 101826 "shortcodes.c"
 
 		goto _st1675;
 		_st1675:
@@ -104240,7 +104246,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -104258,7 +104264,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 101894 "shortcodes.c"
+#line 101900 "shortcodes.c"
 
 		goto _st1676;
 		_st1676:
@@ -104291,7 +104297,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 101926 "shortcodes.c"
+#line 101932 "shortcodes.c"
 
 		goto _st1677;
 		_st1677:
@@ -104366,7 +104372,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -104381,7 +104387,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102015 "shortcodes.c"
+#line 102021 "shortcodes.c"
 
 		goto _st1678;
 		_st1678:
@@ -104438,7 +104444,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 102071 "shortcodes.c"
+#line 102077 "shortcodes.c"
 
 		goto _st1679;
 		_st1679:
@@ -104550,7 +104556,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 102182 "shortcodes.c"
+#line 102188 "shortcodes.c"
 
 		goto _st1681;
 		_st1681:
@@ -104622,7 +104628,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -104637,7 +104643,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102268 "shortcodes.c"
+#line 102274 "shortcodes.c"
 
 		goto _st1682;
 		_st1682:
@@ -104765,7 +104771,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 102395 "shortcodes.c"
+#line 102401 "shortcodes.c"
 
 		goto _st1685;
 		_st1685:
@@ -104839,13 +104845,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 102468 "shortcodes.c"
+#line 102474 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 102473 "shortcodes.c"
+#line 102479 "shortcodes.c"
 
 		goto _st1686;
 		_ctr3473:
@@ -104853,7 +104859,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 102480 "shortcodes.c"
+#line 102486 "shortcodes.c"
 
 		goto _st1686;
 		_ctr3482:
@@ -104863,7 +104869,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -104881,13 +104887,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102507 "shortcodes.c"
+#line 102513 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 102512 "shortcodes.c"
+#line 102518 "shortcodes.c"
 
 		goto _st1686;
 		_ctr3492:
@@ -104902,7 +104908,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -104924,13 +104930,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102548 "shortcodes.c"
+#line 102554 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 102553 "shortcodes.c"
+#line 102559 "shortcodes.c"
 
 		goto _st1686;
 		_st1686:
@@ -105002,7 +105008,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 102624 "shortcodes.c"
+#line 102630 "shortcodes.c"
 
 		goto _st1687;
 		_st1687:
@@ -105064,7 +105070,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 102685 "shortcodes.c"
+#line 102691 "shortcodes.c"
 
 		goto _st1688;
 		_ctr3483:
@@ -105074,7 +105080,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -105092,7 +105098,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102712 "shortcodes.c"
+#line 102718 "shortcodes.c"
 
 		goto _st1688;
 		_ctr3493:
@@ -105107,7 +105113,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -105129,7 +105135,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102748 "shortcodes.c"
+#line 102754 "shortcodes.c"
 
 		goto _st1688;
 		_st1688:
@@ -105185,7 +105191,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -105203,7 +105209,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102821 "shortcodes.c"
+#line 102827 "shortcodes.c"
 
 		goto _st1690;
 		_st1690:
@@ -105299,7 +105305,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 102916 "shortcodes.c"
+#line 102922 "shortcodes.c"
 
 		goto _st1693;
 		_ctr3485:
@@ -105309,7 +105315,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -105327,7 +105333,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102943 "shortcodes.c"
+#line 102949 "shortcodes.c"
 
 		goto _st1693;
 		_ctr3495:
@@ -105342,7 +105348,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -105364,7 +105370,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 102979 "shortcodes.c"
+#line 102985 "shortcodes.c"
 
 		goto _st1693;
 		_st1693:
@@ -105420,7 +105426,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 103034 "shortcodes.c"
+#line 103040 "shortcodes.c"
 
 		goto _st1695;
 		_st1695:
@@ -105494,7 +105500,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -105516,7 +105522,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103129 "shortcodes.c"
+#line 103135 "shortcodes.c"
 
 		goto _st1696;
 		_st1696:
@@ -105621,7 +105627,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 103233 "shortcodes.c"
+#line 103239 "shortcodes.c"
 
 		goto _st1698;
 		_st1698:
@@ -105660,7 +105666,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 103271 "shortcodes.c"
+#line 103277 "shortcodes.c"
 
 		goto _st1699;
 		_st1699:
@@ -105690,7 +105696,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 103300 "shortcodes.c"
+#line 103306 "shortcodes.c"
 
 		goto _st1700;
 		_st1700:
@@ -105749,13 +105755,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 103358 "shortcodes.c"
+#line 103364 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 103363 "shortcodes.c"
+#line 103369 "shortcodes.c"
 
 		goto _st1701;
 		_ctr3511:
@@ -105763,7 +105769,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 103370 "shortcodes.c"
+#line 103376 "shortcodes.c"
 
 		goto _st1701;
 		_ctr3506:
@@ -105773,7 +105779,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -105791,13 +105797,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103397 "shortcodes.c"
+#line 103403 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 103402 "shortcodes.c"
+#line 103408 "shortcodes.c"
 
 		goto _st1701;
 		_ctr3520:
@@ -105812,7 +105818,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -105834,13 +105840,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103438 "shortcodes.c"
+#line 103444 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 103443 "shortcodes.c"
+#line 103449 "shortcodes.c"
 
 		goto _st1701;
 		_st1701:
@@ -105912,7 +105918,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 103514 "shortcodes.c"
+#line 103520 "shortcodes.c"
 
 		goto _st1702;
 		_st1702:
@@ -105995,7 +106001,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 103596 "shortcodes.c"
+#line 103602 "shortcodes.c"
 
 		goto _st1703;
 		_ctr3507:
@@ -106005,7 +106011,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106023,7 +106029,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103623 "shortcodes.c"
+#line 103629 "shortcodes.c"
 
 		goto _st1703;
 		_ctr3521:
@@ -106038,7 +106044,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -106060,7 +106066,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103659 "shortcodes.c"
+#line 103665 "shortcodes.c"
 
 		goto _st1703;
 		_st1703:
@@ -106115,7 +106121,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -106137,7 +106143,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103735 "shortcodes.c"
+#line 103741 "shortcodes.c"
 
 		goto _st1705;
 		_st1705:
@@ -106293,7 +106299,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 103890 "shortcodes.c"
+#line 103896 "shortcodes.c"
 
 		goto _st1709;
 		_ctr3509:
@@ -106303,7 +106309,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106321,7 +106327,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103917 "shortcodes.c"
+#line 103923 "shortcodes.c"
 
 		goto _st1709;
 		_ctr3523:
@@ -106336,7 +106342,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -106358,7 +106364,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 103953 "shortcodes.c"
+#line 103959 "shortcodes.c"
 
 		goto _st1709;
 		_st1709:
@@ -106408,7 +106414,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106426,7 +106432,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104020 "shortcodes.c"
+#line 104026 "shortcodes.c"
 
 		goto _st1711;
 		_st1711:
@@ -106456,7 +106462,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 104049 "shortcodes.c"
+#line 104055 "shortcodes.c"
 
 		goto _st1712;
 		_st1712:
@@ -106528,7 +106534,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106543,7 +106549,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104135 "shortcodes.c"
+#line 104141 "shortcodes.c"
 
 		goto _st1713;
 		_st1713:
@@ -106600,7 +106606,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 104191 "shortcodes.c"
+#line 104197 "shortcodes.c"
 
 		goto _st1714;
 		_st1714:
@@ -106659,13 +106665,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 104249 "shortcodes.c"
+#line 104255 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 104254 "shortcodes.c"
+#line 104260 "shortcodes.c"
 
 		goto _st1715;
 		_ctr3539:
@@ -106673,7 +106679,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 104261 "shortcodes.c"
+#line 104267 "shortcodes.c"
 
 		goto _st1715;
 		_ctr3534:
@@ -106683,7 +106689,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106701,13 +106707,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104288 "shortcodes.c"
+#line 104294 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 104293 "shortcodes.c"
+#line 104299 "shortcodes.c"
 
 		goto _st1715;
 		_ctr3547:
@@ -106722,7 +106728,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -106744,13 +106750,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104329 "shortcodes.c"
+#line 104335 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 104334 "shortcodes.c"
+#line 104340 "shortcodes.c"
 
 		goto _st1715;
 		_st1715:
@@ -106822,7 +106828,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 104405 "shortcodes.c"
+#line 104411 "shortcodes.c"
 
 		goto _st1716;
 		_st1716:
@@ -106905,7 +106911,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 104487 "shortcodes.c"
+#line 104493 "shortcodes.c"
 
 		goto _st1717;
 		_ctr3535:
@@ -106915,7 +106921,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -106933,7 +106939,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104514 "shortcodes.c"
+#line 104520 "shortcodes.c"
 
 		goto _st1717;
 		_ctr3548:
@@ -106948,7 +106954,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -106970,7 +106976,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104550 "shortcodes.c"
+#line 104556 "shortcodes.c"
 
 		goto _st1717;
 		_st1717:
@@ -107025,7 +107031,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -107047,7 +107053,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104626 "shortcodes.c"
+#line 104632 "shortcodes.c"
 
 		goto _st1719;
 		_st1719:
@@ -107203,7 +107209,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 104781 "shortcodes.c"
+#line 104787 "shortcodes.c"
 
 		goto _st1723;
 		_ctr3537:
@@ -107213,7 +107219,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -107231,7 +107237,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104808 "shortcodes.c"
+#line 104814 "shortcodes.c"
 
 		goto _st1723;
 		_ctr3550:
@@ -107246,7 +107252,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -107268,7 +107274,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104844 "shortcodes.c"
+#line 104850 "shortcodes.c"
 
 		goto _st1723;
 		_st1723:
@@ -107318,7 +107324,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -107336,7 +107342,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 104911 "shortcodes.c"
+#line 104917 "shortcodes.c"
 
 		goto _st1725;
 		_st1725:
@@ -107366,7 +107372,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 104940 "shortcodes.c"
+#line 104946 "shortcodes.c"
 
 		goto _st1726;
 		_st1726:
@@ -107438,7 +107444,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -107453,7 +107459,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105026 "shortcodes.c"
+#line 105032 "shortcodes.c"
 
 		goto _st1727;
 		_st1727:
@@ -107521,7 +107527,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105093 "shortcodes.c"
+#line 105099 "shortcodes.c"
 
 		goto _st1729;
 		_st1729:
@@ -107553,7 +107559,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105124 "shortcodes.c"
+#line 105130 "shortcodes.c"
 
 		goto _st1730;
 		_st1730:
@@ -107660,7 +107666,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 105230 "shortcodes.c"
+#line 105236 "shortcodes.c"
 
 		goto _st1733;
 		_st1733:
@@ -107734,13 +107740,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 105303 "shortcodes.c"
+#line 105309 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105308 "shortcodes.c"
+#line 105314 "shortcodes.c"
 
 		goto _st1734;
 		_ctr3575:
@@ -107748,7 +107754,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105315 "shortcodes.c"
+#line 105321 "shortcodes.c"
 
 		goto _st1734;
 		_ctr3597:
@@ -107758,7 +107764,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -107776,13 +107782,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105342 "shortcodes.c"
+#line 105348 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105347 "shortcodes.c"
+#line 105353 "shortcodes.c"
 
 		goto _st1734;
 		_ctr3622:
@@ -107797,7 +107803,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -107819,13 +107825,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105383 "shortcodes.c"
+#line 105389 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105388 "shortcodes.c"
+#line 105394 "shortcodes.c"
 
 		goto _st1734;
 		_st1734:
@@ -107897,7 +107903,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 105459 "shortcodes.c"
+#line 105465 "shortcodes.c"
 
 		goto _st1735;
 		_st1735:
@@ -107959,13 +107965,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 105520 "shortcodes.c"
+#line 105526 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105525 "shortcodes.c"
+#line 105531 "shortcodes.c"
 
 		goto _st1736;
 		_ctr3589:
@@ -107973,7 +107979,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105532 "shortcodes.c"
+#line 105538 "shortcodes.c"
 
 		goto _st1736;
 		_ctr3584:
@@ -107983,7 +107989,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -108001,13 +108007,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105559 "shortcodes.c"
+#line 105565 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105564 "shortcodes.c"
+#line 105570 "shortcodes.c"
 
 		goto _st1736;
 		_ctr3607:
@@ -108022,7 +108028,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -108044,13 +108050,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105600 "shortcodes.c"
+#line 105606 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 105605 "shortcodes.c"
+#line 105611 "shortcodes.c"
 
 		goto _st1736;
 		_st1736:
@@ -108122,7 +108128,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 105676 "shortcodes.c"
+#line 105682 "shortcodes.c"
 
 		goto _st1737;
 		_st1737:
@@ -108184,7 +108190,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 105737 "shortcodes.c"
+#line 105743 "shortcodes.c"
 
 		goto _st1738;
 		_ctr3598:
@@ -108194,7 +108200,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -108212,7 +108218,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105764 "shortcodes.c"
+#line 105770 "shortcodes.c"
 
 		goto _st1738;
 		_ctr3623:
@@ -108227,7 +108233,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -108249,7 +108255,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105800 "shortcodes.c"
+#line 105806 "shortcodes.c"
 
 		goto _st1738;
 		_st1738:
@@ -108305,7 +108311,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -108323,7 +108329,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105873 "shortcodes.c"
+#line 105879 "shortcodes.c"
 
 		goto _st1740;
 		_st1740:
@@ -108419,7 +108425,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 105968 "shortcodes.c"
+#line 105974 "shortcodes.c"
 
 		goto _st1743;
 		_ctr3600:
@@ -108429,7 +108435,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -108447,7 +108453,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 105995 "shortcodes.c"
+#line 106001 "shortcodes.c"
 
 		goto _st1743;
 		_ctr3625:
@@ -108462,7 +108468,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -108484,7 +108490,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106031 "shortcodes.c"
+#line 106037 "shortcodes.c"
 
 		goto _st1743;
 		_st1743:
@@ -108538,7 +108544,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 106084 "shortcodes.c"
+#line 106090 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -108548,10 +108554,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 106096 "shortcodes.c"
+#line 106102 "shortcodes.c"
 
 		goto _st2124;
 		_ctr3731:
@@ -108559,7 +108565,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 106103 "shortcodes.c"
+#line 106109 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -108569,10 +108575,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 106115 "shortcodes.c"
+#line 106121 "shortcodes.c"
 
 		goto _st2124;
 		_st2124:
@@ -108602,7 +108608,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 106144 "shortcodes.c"
+#line 106150 "shortcodes.c"
 
 		goto _st1745;
 		_st1745:
@@ -108688,7 +108694,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 106229 "shortcodes.c"
+#line 106235 "shortcodes.c"
 
 		goto _st1746;
 		_ctr3585:
@@ -108698,7 +108704,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -108716,7 +108722,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106256 "shortcodes.c"
+#line 106262 "shortcodes.c"
 
 		goto _st1746;
 		_ctr3608:
@@ -108731,7 +108737,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -108753,7 +108759,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106292 "shortcodes.c"
+#line 106298 "shortcodes.c"
 
 		goto _st1746;
 		_st1746:
@@ -108814,7 +108820,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -108836,7 +108842,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106374 "shortcodes.c"
+#line 106380 "shortcodes.c"
 
 		goto _st1748;
 		_st1748:
@@ -109004,7 +109010,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 106541 "shortcodes.c"
+#line 106547 "shortcodes.c"
 
 		goto _st1752;
 		_ctr3587:
@@ -109014,7 +109020,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -109032,7 +109038,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106568 "shortcodes.c"
+#line 106574 "shortcodes.c"
 
 		goto _st1752;
 		_ctr3610:
@@ -109047,7 +109053,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -109069,7 +109075,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106604 "shortcodes.c"
+#line 106610 "shortcodes.c"
 
 		goto _st1752;
 		_st1752:
@@ -109125,7 +109131,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -109143,7 +109149,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106677 "shortcodes.c"
+#line 106683 "shortcodes.c"
 
 		goto _st1754;
 		_st1754:
@@ -109176,7 +109182,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 106709 "shortcodes.c"
+#line 106715 "shortcodes.c"
 
 		goto _st1755;
 		_st1755:
@@ -109251,7 +109257,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -109266,7 +109272,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106798 "shortcodes.c"
+#line 106804 "shortcodes.c"
 
 		goto _st1756;
 		_st1756:
@@ -109323,7 +109329,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 106854 "shortcodes.c"
+#line 106860 "shortcodes.c"
 
 		goto _st1757;
 		_st1757:
@@ -109397,7 +109403,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -109419,7 +109425,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 106949 "shortcodes.c"
+#line 106955 "shortcodes.c"
 
 		goto _st1758;
 		_st1758:
@@ -109524,7 +109530,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 107053 "shortcodes.c"
+#line 107059 "shortcodes.c"
 
 		goto _st1760;
 		_st1760:
@@ -109586,13 +109592,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 107114 "shortcodes.c"
+#line 107120 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 107119 "shortcodes.c"
+#line 107125 "shortcodes.c"
 
 		goto _st1761;
 		_ctr3634:
@@ -109600,7 +109606,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 107126 "shortcodes.c"
+#line 107132 "shortcodes.c"
 
 		goto _st1761;
 		_ctr3629:
@@ -109610,7 +109616,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -109628,13 +109634,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107153 "shortcodes.c"
+#line 107159 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 107158 "shortcodes.c"
+#line 107164 "shortcodes.c"
 
 		goto _st1761;
 		_ctr3641:
@@ -109649,7 +109655,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -109671,13 +109677,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107194 "shortcodes.c"
+#line 107200 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 107199 "shortcodes.c"
+#line 107205 "shortcodes.c"
 
 		goto _st1761;
 		_st1761:
@@ -109749,7 +109755,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 107270 "shortcodes.c"
+#line 107276 "shortcodes.c"
 
 		goto _st1762;
 		_st1762:
@@ -109835,7 +109841,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 107355 "shortcodes.c"
+#line 107361 "shortcodes.c"
 
 		goto _st1763;
 		_ctr3630:
@@ -109845,7 +109851,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -109863,7 +109869,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107382 "shortcodes.c"
+#line 107388 "shortcodes.c"
 
 		goto _st1763;
 		_ctr3642:
@@ -109878,7 +109884,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -109900,7 +109906,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107418 "shortcodes.c"
+#line 107424 "shortcodes.c"
 
 		goto _st1763;
 		_st1763:
@@ -109961,7 +109967,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -109983,7 +109989,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107500 "shortcodes.c"
+#line 107506 "shortcodes.c"
 
 		goto _st1765;
 		_st1765:
@@ -110151,7 +110157,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 107667 "shortcodes.c"
+#line 107673 "shortcodes.c"
 
 		goto _st1769;
 		_ctr3632:
@@ -110161,7 +110167,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -110179,7 +110185,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107694 "shortcodes.c"
+#line 107700 "shortcodes.c"
 
 		goto _st1769;
 		_ctr3644:
@@ -110194,7 +110200,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -110216,7 +110222,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107730 "shortcodes.c"
+#line 107736 "shortcodes.c"
 
 		goto _st1769;
 		_st1769:
@@ -110272,7 +110278,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -110290,7 +110296,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107803 "shortcodes.c"
+#line 107809 "shortcodes.c"
 
 		goto _st1771;
 		_st1771:
@@ -110323,7 +110329,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 107835 "shortcodes.c"
+#line 107841 "shortcodes.c"
 
 		goto _st1772;
 		_st1772:
@@ -110398,7 +110404,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -110413,7 +110419,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 107924 "shortcodes.c"
+#line 107930 "shortcodes.c"
 
 		goto _st1773;
 		_st1773:
@@ -110470,7 +110476,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 107980 "shortcodes.c"
+#line 107986 "shortcodes.c"
 
 		goto _st1774;
 		_st1774:
@@ -110545,7 +110551,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -110560,7 +110566,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108069 "shortcodes.c"
+#line 108075 "shortcodes.c"
 
 		goto _st1775;
 		_st1775:
@@ -110634,7 +110640,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 108142 "shortcodes.c"
+#line 108148 "shortcodes.c"
 
 		goto _st1776;
 		_st1776:
@@ -110708,7 +110714,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 108215 "shortcodes.c"
+#line 108221 "shortcodes.c"
 
 		goto _st1777;
 		_st1777:
@@ -110821,7 +110827,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 108327 "shortcodes.c"
+#line 108333 "shortcodes.c"
 
 		goto _st1781;
 		_st1781:
@@ -110889,13 +110895,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 108394 "shortcodes.c"
+#line 108400 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108399 "shortcodes.c"
+#line 108405 "shortcodes.c"
 
 		goto _st1782;
 		_ctr3668:
@@ -110903,7 +110909,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108406 "shortcodes.c"
+#line 108412 "shortcodes.c"
 
 		goto _st1782;
 		_ctr3500:
@@ -110913,7 +110919,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -110931,13 +110937,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108433 "shortcodes.c"
+#line 108439 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108438 "shortcodes.c"
+#line 108444 "shortcodes.c"
 
 		goto _st1782;
 		_ctr3701:
@@ -110952,7 +110958,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -110974,13 +110980,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108474 "shortcodes.c"
+#line 108480 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108479 "shortcodes.c"
+#line 108485 "shortcodes.c"
 
 		goto _st1782;
 		_st1782:
@@ -111050,7 +111056,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 108548 "shortcodes.c"
+#line 108554 "shortcodes.c"
 
 		goto _st1783;
 		_st1783:
@@ -111112,13 +111118,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 108609 "shortcodes.c"
+#line 108615 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108614 "shortcodes.c"
+#line 108620 "shortcodes.c"
 
 		goto _st1784;
 		_ctr3679:
@@ -111126,7 +111132,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108621 "shortcodes.c"
+#line 108627 "shortcodes.c"
 
 		goto _st1784;
 		_ctr3674:
@@ -111136,7 +111142,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -111154,13 +111160,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108648 "shortcodes.c"
+#line 108654 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108653 "shortcodes.c"
+#line 108659 "shortcodes.c"
 
 		goto _st1784;
 		_ctr3686:
@@ -111175,7 +111181,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -111197,13 +111203,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108689 "shortcodes.c"
+#line 108695 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 108694 "shortcodes.c"
+#line 108700 "shortcodes.c"
 
 		goto _st1784;
 		_st1784:
@@ -111275,7 +111281,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 108765 "shortcodes.c"
+#line 108771 "shortcodes.c"
 
 		goto _st1785;
 		_st1785:
@@ -111361,7 +111367,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 108850 "shortcodes.c"
+#line 108856 "shortcodes.c"
 
 		goto _st1786;
 		_ctr3675:
@@ -111371,7 +111377,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -111389,7 +111395,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108877 "shortcodes.c"
+#line 108883 "shortcodes.c"
 
 		goto _st1786;
 		_ctr3687:
@@ -111404,7 +111410,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -111426,7 +111432,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108913 "shortcodes.c"
+#line 108919 "shortcodes.c"
 
 		goto _st1786;
 		_st1786:
@@ -111487,7 +111493,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -111509,7 +111515,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 108995 "shortcodes.c"
+#line 109001 "shortcodes.c"
 
 		goto _st1788;
 		_st1788:
@@ -111677,7 +111683,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 109162 "shortcodes.c"
+#line 109168 "shortcodes.c"
 
 		goto _st1792;
 		_ctr3677:
@@ -111687,7 +111693,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -111705,7 +111711,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109189 "shortcodes.c"
+#line 109195 "shortcodes.c"
 
 		goto _st1792;
 		_ctr3689:
@@ -111720,7 +111726,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -111742,7 +111748,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109225 "shortcodes.c"
+#line 109231 "shortcodes.c"
 
 		goto _st1792;
 		_st1792:
@@ -111798,7 +111804,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -111816,7 +111822,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109298 "shortcodes.c"
+#line 109304 "shortcodes.c"
 
 		goto _st1794;
 		_st1794:
@@ -111849,7 +111855,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 109330 "shortcodes.c"
+#line 109336 "shortcodes.c"
 
 		goto _st1795;
 		_st1795:
@@ -111924,7 +111930,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -111939,7 +111945,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109419 "shortcodes.c"
+#line 109425 "shortcodes.c"
 
 		goto _st1796;
 		_st1796:
@@ -111996,7 +112002,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 109475 "shortcodes.c"
+#line 109481 "shortcodes.c"
 
 		goto _st1797;
 		_st1797:
@@ -112079,7 +112085,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 109557 "shortcodes.c"
+#line 109563 "shortcodes.c"
 
 		goto _st1798;
 		_ctr3503:
@@ -112089,7 +112095,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -112107,7 +112113,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109584 "shortcodes.c"
+#line 109590 "shortcodes.c"
 
 		goto _st1798;
 		_ctr3702:
@@ -112122,7 +112128,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -112144,7 +112150,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109620 "shortcodes.c"
+#line 109626 "shortcodes.c"
 
 		goto _st1798;
 		_st1798:
@@ -112295,7 +112301,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 109770 "shortcodes.c"
+#line 109776 "shortcodes.c"
 
 		goto _st1803;
 		_st1803:
@@ -112367,7 +112373,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -112382,7 +112388,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 109856 "shortcodes.c"
+#line 109862 "shortcodes.c"
 
 		goto _st1804;
 		_st1804:
@@ -112510,7 +112516,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 109983 "shortcodes.c"
+#line 109989 "shortcodes.c"
 
 		goto _st1807;
 		_st1807:
@@ -112584,13 +112590,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 110056 "shortcodes.c"
+#line 110062 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 110061 "shortcodes.c"
+#line 110067 "shortcodes.c"
 
 		goto _st1808;
 		_ctr3718:
@@ -112598,7 +112604,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 110068 "shortcodes.c"
+#line 110074 "shortcodes.c"
 
 		goto _st1808;
 		_ctr3726:
@@ -112608,7 +112614,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -112626,13 +112632,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110095 "shortcodes.c"
+#line 110101 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 110100 "shortcodes.c"
+#line 110106 "shortcodes.c"
 
 		goto _st1808;
 		_ctr3736:
@@ -112647,7 +112653,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -112669,13 +112675,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110136 "shortcodes.c"
+#line 110142 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 110141 "shortcodes.c"
+#line 110147 "shortcodes.c"
 
 		goto _st1808;
 		_st1808:
@@ -112747,7 +112753,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 110212 "shortcodes.c"
+#line 110218 "shortcodes.c"
 
 		goto _st1809;
 		_st1809:
@@ -112809,7 +112815,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 110273 "shortcodes.c"
+#line 110279 "shortcodes.c"
 
 		goto _st1810;
 		_ctr3727:
@@ -112819,7 +112825,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -112837,7 +112843,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110300 "shortcodes.c"
+#line 110306 "shortcodes.c"
 
 		goto _st1810;
 		_ctr3737:
@@ -112852,7 +112858,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -112874,7 +112880,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110336 "shortcodes.c"
+#line 110342 "shortcodes.c"
 
 		goto _st1810;
 		_st1810:
@@ -112930,7 +112936,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -112948,7 +112954,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110409 "shortcodes.c"
+#line 110415 "shortcodes.c"
 
 		goto _st1812;
 		_st1812:
@@ -113044,7 +113050,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 110504 "shortcodes.c"
+#line 110510 "shortcodes.c"
 
 		goto _st1815;
 		_ctr3729:
@@ -113054,7 +113060,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -113072,7 +113078,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110531 "shortcodes.c"
+#line 110537 "shortcodes.c"
 
 		goto _st1815;
 		_ctr3739:
@@ -113087,7 +113093,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -113109,7 +113115,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110567 "shortcodes.c"
+#line 110573 "shortcodes.c"
 
 		goto _st1815;
 		_st1815:
@@ -113165,7 +113171,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 110622 "shortcodes.c"
+#line 110628 "shortcodes.c"
 
 		goto _st1817;
 		_st1817:
@@ -113239,7 +113245,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -113261,7 +113267,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110717 "shortcodes.c"
+#line 110723 "shortcodes.c"
 
 		goto _st1818;
 		_st1818:
@@ -113366,7 +113372,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 110821 "shortcodes.c"
+#line 110827 "shortcodes.c"
 
 		goto _st1820;
 		_st1820:
@@ -113441,7 +113447,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -113456,7 +113462,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 110910 "shortcodes.c"
+#line 110916 "shortcodes.c"
 
 		goto _st1821;
 		_st1821:
@@ -113530,7 +113536,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 110983 "shortcodes.c"
+#line 110989 "shortcodes.c"
 
 		goto _st1822;
 		_st1822:
@@ -113604,7 +113610,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 111056 "shortcodes.c"
+#line 111062 "shortcodes.c"
 
 		goto _st1823;
 		_st1823:
@@ -113660,7 +113666,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 111111 "shortcodes.c"
+#line 111117 "shortcodes.c"
 
 		goto _st1825;
 		_st1825:
@@ -113735,7 +113741,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -113750,7 +113756,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 111200 "shortcodes.c"
+#line 111206 "shortcodes.c"
 
 		goto _st1826;
 		_st1826:
@@ -113824,7 +113830,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 111273 "shortcodes.c"
+#line 111279 "shortcodes.c"
 
 		goto _st1827;
 		_st1827:
@@ -113898,7 +113904,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 111346 "shortcodes.c"
+#line 111352 "shortcodes.c"
 
 		goto _st1828;
 		_st1828:
@@ -113982,7 +113988,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -114004,7 +114010,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 111451 "shortcodes.c"
+#line 111457 "shortcodes.c"
 
 		goto _st1831;
 		_st1831:
@@ -114155,7 +114161,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -114173,7 +114179,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 111619 "shortcodes.c"
+#line 111625 "shortcodes.c"
 
 		goto _st1835;
 		_st1835:
@@ -114206,7 +114212,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 111651 "shortcodes.c"
+#line 111657 "shortcodes.c"
 
 		goto _st1836;
 		_st1836:
@@ -114281,7 +114287,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -114296,7 +114302,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 111740 "shortcodes.c"
+#line 111746 "shortcodes.c"
 
 		goto _st1837;
 		_st1837:
@@ -114353,7 +114359,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 111796 "shortcodes.c"
+#line 111802 "shortcodes.c"
 
 		goto _st1838;
 		_st1838:
@@ -114425,7 +114431,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -114440,7 +114446,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 111882 "shortcodes.c"
+#line 111888 "shortcodes.c"
 
 		goto _st1839;
 		_st1839:
@@ -114568,7 +114574,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 112009 "shortcodes.c"
+#line 112015 "shortcodes.c"
 
 		goto _st1842;
 		_st1842:
@@ -114642,7 +114648,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 112082 "shortcodes.c"
+#line 112088 "shortcodes.c"
 
 		goto _st1843;
 		_st1843:
@@ -114716,7 +114722,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 112155 "shortcodes.c"
+#line 112161 "shortcodes.c"
 
 		goto _st1844;
 		_st1844:
@@ -114772,7 +114778,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 112210 "shortcodes.c"
+#line 112216 "shortcodes.c"
 
 		goto _st1846;
 		_st1846:
@@ -114858,7 +114864,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 112295 "shortcodes.c"
+#line 112301 "shortcodes.c"
 
 		goto _st1847;
 		_ctr3102:
@@ -114868,7 +114874,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -114886,7 +114892,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112322 "shortcodes.c"
+#line 112328 "shortcodes.c"
 
 		goto _st1847;
 		_ctr3779:
@@ -114901,7 +114907,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -114923,7 +114929,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112358 "shortcodes.c"
+#line 112364 "shortcodes.c"
 
 		goto _st1847;
 		_st1847:
@@ -114967,7 +114973,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112401 "shortcodes.c"
+#line 112407 "shortcodes.c"
 
 		goto _st1849;
 		_st1849:
@@ -114999,7 +115005,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112432 "shortcodes.c"
+#line 112438 "shortcodes.c"
 
 		goto _st1850;
 		_st1850:
@@ -115106,7 +115112,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 112538 "shortcodes.c"
+#line 112544 "shortcodes.c"
 
 		goto _st1853;
 		_st1853:
@@ -115180,13 +115186,13 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 112611 "shortcodes.c"
+#line 112617 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 112616 "shortcodes.c"
+#line 112622 "shortcodes.c"
 
 		goto _st1854;
 		_ctr3797:
@@ -115194,7 +115200,7 @@ static const int shortcode_start = 2094;
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 112623 "shortcodes.c"
+#line 112629 "shortcodes.c"
 
 		goto _st1854;
 		_ctr3805:
@@ -115204,7 +115210,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -115222,13 +115228,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112650 "shortcodes.c"
+#line 112656 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 112655 "shortcodes.c"
+#line 112661 "shortcodes.c"
 
 		goto _st1854;
 		_ctr3815:
@@ -115243,7 +115249,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -115265,13 +115271,13 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112691 "shortcodes.c"
+#line 112697 "shortcodes.c"
 
 			{
 #line 136 "shortcodes.rl"
 			in_arg = 0; }
 		
-#line 112696 "shortcodes.c"
+#line 112702 "shortcodes.c"
 
 		goto _st1854;
 		_st1854:
@@ -115343,7 +115349,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 112767 "shortcodes.c"
+#line 112773 "shortcodes.c"
 
 		goto _st1855;
 		_st1855:
@@ -115405,7 +115411,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 112828 "shortcodes.c"
+#line 112834 "shortcodes.c"
 
 		goto _st1856;
 		_ctr3806:
@@ -115415,7 +115421,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -115433,7 +115439,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112855 "shortcodes.c"
+#line 112861 "shortcodes.c"
 
 		goto _st1856;
 		_ctr3816:
@@ -115448,7 +115454,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -115470,7 +115476,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112891 "shortcodes.c"
+#line 112897 "shortcodes.c"
 
 		goto _st1856;
 		_st1856:
@@ -115526,7 +115532,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -115544,7 +115550,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 112964 "shortcodes.c"
+#line 112970 "shortcodes.c"
 
 		goto _st1858;
 		_st1858:
@@ -115640,7 +115646,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 113059 "shortcodes.c"
+#line 113065 "shortcodes.c"
 
 		goto _st1861;
 		_ctr3808:
@@ -115650,7 +115656,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -115668,7 +115674,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113086 "shortcodes.c"
+#line 113092 "shortcodes.c"
 
 		goto _st1861;
 		_ctr3818:
@@ -115683,7 +115689,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -115705,7 +115711,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113122 "shortcodes.c"
+#line 113128 "shortcodes.c"
 
 		goto _st1861;
 		_st1861:
@@ -115759,7 +115765,7 @@ static const int shortcode_start = 2094;
 #line 151 "shortcodes.rl"
 			sc_list[c_sc].markdown = 0;}
 		
-#line 113175 "shortcodes.c"
+#line 113181 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -115769,10 +115775,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 113187 "shortcodes.c"
+#line 113193 "shortcodes.c"
 
 		goto _st2125;
 		_ctr3848:
@@ -115780,7 +115786,7 @@ static const int shortcode_start = 2094;
 #line 141 "shortcodes.rl"
 			sc_list[c_sc].markdown = 1;}
 		
-#line 113194 "shortcodes.c"
+#line 113200 "shortcodes.c"
 
 			{
 #line 171 "shortcodes.rl"
@@ -115790,10 +115796,10 @@ static const int shortcode_start = 2094;
 				sc_list[c_sc].name.start = 0;
 				sc_list[c_sc].name.len=0;
 			}
-			add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+			add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
 		}
 		
-#line 113206 "shortcodes.c"
+#line 113212 "shortcodes.c"
 
 		goto _st2125;
 		_st2125:
@@ -115823,7 +115829,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 113235 "shortcodes.c"
+#line 113241 "shortcodes.c"
 
 		goto _st1863;
 		_st1863:
@@ -115897,7 +115903,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -115919,7 +115925,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113330 "shortcodes.c"
+#line 113336 "shortcodes.c"
 
 		goto _st1864;
 		_st1864:
@@ -116024,7 +116030,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 113434 "shortcodes.c"
+#line 113440 "shortcodes.c"
 
 		goto _st1866;
 		_st1866:
@@ -116099,7 +116105,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -116114,7 +116120,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113523 "shortcodes.c"
+#line 113529 "shortcodes.c"
 
 		goto _st1867;
 		_st1867:
@@ -116188,7 +116194,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 113596 "shortcodes.c"
+#line 113602 "shortcodes.c"
 
 		goto _st1868;
 		_st1868:
@@ -116262,7 +116268,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 113669 "shortcodes.c"
+#line 113675 "shortcodes.c"
 
 		goto _st1869;
 		_st1869:
@@ -116375,7 +116381,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 113781 "shortcodes.c"
+#line 113787 "shortcodes.c"
 
 		goto _st1873;
 		_st1873:
@@ -116443,7 +116449,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 113848 "shortcodes.c"
+#line 113854 "shortcodes.c"
 
 		goto _st1874;
 		_ctr2650:
@@ -116453,7 +116459,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -116471,7 +116477,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113875 "shortcodes.c"
+#line 113881 "shortcodes.c"
 
 		goto _st1874;
 		_ctr4034:
@@ -116486,7 +116492,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -116508,7 +116514,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 113911 "shortcodes.c"
+#line 113917 "shortcodes.c"
 
 		goto _st1874;
 		_st1874:
@@ -116684,7 +116690,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 114086 "shortcodes.c"
+#line 114092 "shortcodes.c"
 
 		goto _st1880;
 		_st1880:
@@ -116758,7 +116764,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 114159 "shortcodes.c"
+#line 114165 "shortcodes.c"
 
 		goto _st1881;
 		_st1881:
@@ -116832,7 +116838,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 114232 "shortcodes.c"
+#line 114238 "shortcodes.c"
 
 		goto _st1882;
 		_st1882:
@@ -116905,7 +116911,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 114304 "shortcodes.c"
+#line 114310 "shortcodes.c"
 
 		goto _st1884;
 		_ctr3104:
@@ -116915,7 +116921,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -116933,7 +116939,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114331 "shortcodes.c"
+#line 114337 "shortcodes.c"
 
 		goto _st1884;
 		_ctr3781:
@@ -116948,7 +116954,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -116970,7 +116976,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114367 "shortcodes.c"
+#line 114373 "shortcodes.c"
 
 		goto _st1884;
 		_st1884:
@@ -117054,7 +117060,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -117076,7 +117082,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114472 "shortcodes.c"
+#line 114478 "shortcodes.c"
 
 		goto _st1887;
 		_st1887:
@@ -117227,7 +117233,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -117245,7 +117251,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114640 "shortcodes.c"
+#line 114646 "shortcodes.c"
 
 		goto _st1891;
 		_st1891:
@@ -117278,7 +117284,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 114672 "shortcodes.c"
+#line 114678 "shortcodes.c"
 
 		goto _st1892;
 		_st1892:
@@ -117353,7 +117359,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -117368,7 +117374,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114761 "shortcodes.c"
+#line 114767 "shortcodes.c"
 
 		goto _st1893;
 		_st1893:
@@ -117425,7 +117431,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 114817 "shortcodes.c"
+#line 114823 "shortcodes.c"
 
 		goto _st1894;
 		_st1894:
@@ -117500,7 +117506,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -117515,7 +117521,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 114906 "shortcodes.c"
+#line 114912 "shortcodes.c"
 
 		goto _st1895;
 		_st1895:
@@ -117589,7 +117595,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 114979 "shortcodes.c"
+#line 114985 "shortcodes.c"
 
 		goto _st1896;
 		_st1896:
@@ -117663,7 +117669,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 115052 "shortcodes.c"
+#line 115058 "shortcodes.c"
 
 		goto _st1897;
 		_st1897:
@@ -117776,7 +117782,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 115164 "shortcodes.c"
+#line 115170 "shortcodes.c"
 
 		goto _st1901;
 		_st1901:
@@ -117898,7 +117904,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 115285 "shortcodes.c"
+#line 115291 "shortcodes.c"
 
 		goto _st1904;
 		_st1904:
@@ -117972,7 +117978,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 115358 "shortcodes.c"
+#line 115364 "shortcodes.c"
 
 		goto _st1905;
 		_st1905:
@@ -118046,7 +118052,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 115431 "shortcodes.c"
+#line 115437 "shortcodes.c"
 
 		goto _st1906;
 		_st1906:
@@ -118171,7 +118177,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 115555 "shortcodes.c"
+#line 115561 "shortcodes.c"
 
 		goto _st1910;
 		_st1910:
@@ -118243,7 +118249,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -118258,7 +118264,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 115641 "shortcodes.c"
+#line 115647 "shortcodes.c"
 
 		goto _st1911;
 		_st1911:
@@ -118315,7 +118321,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 115697 "shortcodes.c"
+#line 115703 "shortcodes.c"
 
 		goto _st1912;
 		_st1912:
@@ -118389,7 +118395,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -118411,7 +118417,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 115792 "shortcodes.c"
+#line 115798 "shortcodes.c"
 
 		goto _st1913;
 		_st1913:
@@ -118516,7 +118522,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 115896 "shortcodes.c"
+#line 115902 "shortcodes.c"
 
 		goto _st1915;
 		_st1915:
@@ -118591,7 +118597,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -118606,7 +118612,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 115985 "shortcodes.c"
+#line 115991 "shortcodes.c"
 
 		goto _st1916;
 		_st1916:
@@ -118680,7 +118686,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 116058 "shortcodes.c"
+#line 116064 "shortcodes.c"
 
 		goto _st1917;
 		_st1917:
@@ -118754,7 +118760,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 116131 "shortcodes.c"
+#line 116137 "shortcodes.c"
 
 		goto _st1918;
 		_st1918:
@@ -118867,7 +118873,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 116243 "shortcodes.c"
+#line 116249 "shortcodes.c"
 
 		goto _st1922;
 		_st1922:
@@ -118989,7 +118995,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 116364 "shortcodes.c"
+#line 116370 "shortcodes.c"
 
 		goto _st1925;
 		_st1925:
@@ -119063,7 +119069,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 116437 "shortcodes.c"
+#line 116443 "shortcodes.c"
 
 		goto _st1926;
 		_st1926:
@@ -119137,7 +119143,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 116510 "shortcodes.c"
+#line 116516 "shortcodes.c"
 
 		goto _st1927;
 		_st1927:
@@ -119193,7 +119199,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 116565 "shortcodes.c"
+#line 116571 "shortcodes.c"
 
 		goto _st1929;
 		_st1929:
@@ -119273,7 +119279,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 116644 "shortcodes.c"
+#line 116650 "shortcodes.c"
 
 		goto _st1930;
 		_ctr3002:
@@ -119283,7 +119289,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -119301,7 +119307,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 116671 "shortcodes.c"
+#line 116677 "shortcodes.c"
 
 		goto _st1930;
 		_ctr3914:
@@ -119316,7 +119322,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -119338,7 +119344,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 116707 "shortcodes.c"
+#line 116713 "shortcodes.c"
 
 		goto _st1930;
 		_st1930:
@@ -119474,7 +119480,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 116842 "shortcodes.c"
+#line 116848 "shortcodes.c"
 
 		goto _st1935;
 		_st1935:
@@ -119543,7 +119549,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -119558,7 +119564,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 116925 "shortcodes.c"
+#line 116931 "shortcodes.c"
 
 		goto _st1936;
 		_st1936:
@@ -119615,7 +119621,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -119633,7 +119639,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 116999 "shortcodes.c"
+#line 117005 "shortcodes.c"
 
 		goto _st1937;
 		_st1937:
@@ -119663,7 +119669,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 117028 "shortcodes.c"
+#line 117034 "shortcodes.c"
 
 		goto _st1938;
 		_st1938:
@@ -119735,7 +119741,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -119750,7 +119756,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 117114 "shortcodes.c"
+#line 117120 "shortcodes.c"
 
 		goto _st1939;
 		_st1939:
@@ -119807,7 +119813,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 117170 "shortcodes.c"
+#line 117176 "shortcodes.c"
 
 		goto _st1940;
 		_st1940:
@@ -119876,7 +119882,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -119891,7 +119897,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 117253 "shortcodes.c"
+#line 117259 "shortcodes.c"
 
 		goto _st1941;
 		_st1941:
@@ -120013,7 +120019,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 117374 "shortcodes.c"
+#line 117380 "shortcodes.c"
 
 		goto _st1944;
 		_st1944:
@@ -120084,7 +120090,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 117444 "shortcodes.c"
+#line 117450 "shortcodes.c"
 
 		goto _st1945;
 		_st1945:
@@ -120155,7 +120161,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 117514 "shortcodes.c"
+#line 117520 "shortcodes.c"
 
 		goto _st1946;
 		_st1946:
@@ -120230,7 +120236,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -120252,7 +120258,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 117610 "shortcodes.c"
+#line 117616 "shortcodes.c"
 
 		goto _st1949;
 		_st1949:
@@ -120391,7 +120397,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -120409,7 +120415,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 117766 "shortcodes.c"
+#line 117772 "shortcodes.c"
 
 		goto _st1953;
 		_st1953:
@@ -120439,7 +120445,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 117795 "shortcodes.c"
+#line 117801 "shortcodes.c"
 
 		goto _st1954;
 		_st1954:
@@ -120511,7 +120517,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -120526,7 +120532,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 117881 "shortcodes.c"
+#line 117887 "shortcodes.c"
 
 		goto _st1955;
 		_st1955:
@@ -120583,7 +120589,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 117937 "shortcodes.c"
+#line 117943 "shortcodes.c"
 
 		goto _st1956;
 		_st1956:
@@ -120666,7 +120672,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 118019 "shortcodes.c"
+#line 118025 "shortcodes.c"
 
 		goto _st1957;
 		_ctr2893:
@@ -120676,7 +120682,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -120694,7 +120700,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118046 "shortcodes.c"
+#line 118052 "shortcodes.c"
 
 		goto _st1957;
 		_ctr3948:
@@ -120709,7 +120715,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -120731,7 +120737,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118082 "shortcodes.c"
+#line 118088 "shortcodes.c"
 
 		goto _st1957;
 		_st1957:
@@ -120786,7 +120792,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -120808,7 +120814,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118158 "shortcodes.c"
+#line 118164 "shortcodes.c"
 
 		goto _st1959;
 		_st1959:
@@ -120964,7 +120970,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 118313 "shortcodes.c"
+#line 118319 "shortcodes.c"
 
 		goto _st1963;
 		_ctr2895:
@@ -120974,7 +120980,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -120992,7 +120998,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118340 "shortcodes.c"
+#line 118346 "shortcodes.c"
 
 		goto _st1963;
 		_ctr3950:
@@ -121007,7 +121013,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -121029,7 +121035,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118376 "shortcodes.c"
+#line 118382 "shortcodes.c"
 
 		goto _st1963;
 		_st1963:
@@ -121079,7 +121085,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -121097,7 +121103,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118443 "shortcodes.c"
+#line 118449 "shortcodes.c"
 
 		goto _st1965;
 		_st1965:
@@ -121127,7 +121133,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 118472 "shortcodes.c"
+#line 118478 "shortcodes.c"
 
 		goto _st1966;
 		_st1966:
@@ -121199,7 +121205,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -121214,7 +121220,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118558 "shortcodes.c"
+#line 118564 "shortcodes.c"
 
 		goto _st1967;
 		_st1967:
@@ -121271,7 +121277,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 118614 "shortcodes.c"
+#line 118620 "shortcodes.c"
 
 		goto _st1968;
 		_st1968:
@@ -121342,7 +121348,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -121364,7 +121370,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118706 "shortcodes.c"
+#line 118712 "shortcodes.c"
 
 		goto _st1969;
 		_st1969:
@@ -121463,7 +121469,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 118804 "shortcodes.c"
+#line 118810 "shortcodes.c"
 
 		goto _st1971;
 		_st1971:
@@ -121535,7 +121541,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -121550,7 +121556,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 118890 "shortcodes.c"
+#line 118896 "shortcodes.c"
 
 		goto _st1972;
 		_st1972:
@@ -121624,7 +121630,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 118963 "shortcodes.c"
+#line 118969 "shortcodes.c"
 
 		goto _st1973;
 		_st1973:
@@ -121695,7 +121701,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 119033 "shortcodes.c"
+#line 119039 "shortcodes.c"
 
 		goto _st1974;
 		_st1974:
@@ -121796,7 +121802,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 119133 "shortcodes.c"
+#line 119139 "shortcodes.c"
 
 		goto _st1978;
 		_st1978:
@@ -121909,7 +121915,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 119245 "shortcodes.c"
+#line 119251 "shortcodes.c"
 
 		goto _st1981;
 		_st1981:
@@ -121980,7 +121986,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 119315 "shortcodes.c"
+#line 119321 "shortcodes.c"
 
 		goto _st1982;
 		_st1982:
@@ -122051,7 +122057,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 119385 "shortcodes.c"
+#line 119391 "shortcodes.c"
 
 		goto _st1983;
 		_st1983:
@@ -122101,7 +122107,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -122119,7 +122125,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 119452 "shortcodes.c"
+#line 119458 "shortcodes.c"
 
 		goto _st1985;
 		_st1985:
@@ -122143,7 +122149,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 119475 "shortcodes.c"
+#line 119481 "shortcodes.c"
 
 		goto _st1986;
 		_st1986:
@@ -122209,7 +122215,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -122224,7 +122230,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 119555 "shortcodes.c"
+#line 119561 "shortcodes.c"
 
 		goto _st1987;
 		_st1987:
@@ -122278,7 +122284,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 119608 "shortcodes.c"
+#line 119614 "shortcodes.c"
 
 		goto _st1988;
 		_st1988:
@@ -122349,7 +122355,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -122371,7 +122377,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 119700 "shortcodes.c"
+#line 119706 "shortcodes.c"
 
 		goto _st1989;
 		_st1989:
@@ -122470,7 +122476,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 119798 "shortcodes.c"
+#line 119804 "shortcodes.c"
 
 		goto _st1991;
 		_st1991:
@@ -122542,7 +122548,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -122557,7 +122563,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 119884 "shortcodes.c"
+#line 119890 "shortcodes.c"
 
 		goto _st1992;
 		_st1992:
@@ -122631,7 +122637,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 119957 "shortcodes.c"
+#line 119963 "shortcodes.c"
 
 		goto _st1993;
 		_st1993:
@@ -122702,7 +122708,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 120027 "shortcodes.c"
+#line 120033 "shortcodes.c"
 
 		goto _st1994;
 		_st1994:
@@ -122815,7 +122821,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 120139 "shortcodes.c"
+#line 120145 "shortcodes.c"
 
 		goto _st1998;
 		_st1998:
@@ -122884,7 +122890,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -122899,7 +122905,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 120222 "shortcodes.c"
+#line 120228 "shortcodes.c"
 
 		goto _st1999;
 		_st1999:
@@ -122956,7 +122962,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 120278 "shortcodes.c"
+#line 120284 "shortcodes.c"
 
 		goto _st2000;
 		_st2000:
@@ -123028,7 +123034,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -123043,7 +123049,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 120364 "shortcodes.c"
+#line 120370 "shortcodes.c"
 
 		goto _st2001;
 		_st2001:
@@ -123171,7 +123177,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 120491 "shortcodes.c"
+#line 120497 "shortcodes.c"
 
 		goto _st2004;
 		_st2004:
@@ -123245,7 +123251,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 120564 "shortcodes.c"
+#line 120570 "shortcodes.c"
 
 		goto _st2005;
 		_st2005:
@@ -123319,7 +123325,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 120637 "shortcodes.c"
+#line 120643 "shortcodes.c"
 
 		goto _st2006;
 		_st2006:
@@ -123403,7 +123409,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -123425,7 +123431,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 120742 "shortcodes.c"
+#line 120748 "shortcodes.c"
 
 		goto _st2009;
 		_st2009:
@@ -123576,7 +123582,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -123594,7 +123600,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 120910 "shortcodes.c"
+#line 120916 "shortcodes.c"
 
 		goto _st2013;
 		_st2013:
@@ -123627,7 +123633,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 120942 "shortcodes.c"
+#line 120948 "shortcodes.c"
 
 		goto _st2014;
 		_st2014:
@@ -123702,7 +123708,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -123717,7 +123723,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 121031 "shortcodes.c"
+#line 121037 "shortcodes.c"
 
 		goto _st2015;
 		_st2015:
@@ -123774,7 +123780,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 121087 "shortcodes.c"
+#line 121093 "shortcodes.c"
 
 		goto _st2016;
 		_st2016:
@@ -123886,7 +123892,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 121198 "shortcodes.c"
+#line 121204 "shortcodes.c"
 
 		goto _st2018;
 		_st2018:
@@ -123958,7 +123964,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -123973,7 +123979,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 121284 "shortcodes.c"
+#line 121290 "shortcodes.c"
 
 		goto _st2019;
 		_st2019:
@@ -124030,7 +124036,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 121340 "shortcodes.c"
+#line 121346 "shortcodes.c"
 
 		goto _st2020;
 		_st2020:
@@ -124105,7 +124111,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -124120,7 +124126,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 121429 "shortcodes.c"
+#line 121435 "shortcodes.c"
 
 		goto _st2021;
 		_st2021:
@@ -124194,7 +124200,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 121502 "shortcodes.c"
+#line 121508 "shortcodes.c"
 
 		goto _st2022;
 		_st2022:
@@ -124268,7 +124274,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 121575 "shortcodes.c"
+#line 121581 "shortcodes.c"
 
 		goto _st2023;
 		_st2023:
@@ -124381,7 +124387,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 121687 "shortcodes.c"
+#line 121693 "shortcodes.c"
 
 		goto _st2027;
 		_st2027:
@@ -124503,7 +124509,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 121808 "shortcodes.c"
+#line 121814 "shortcodes.c"
 
 		goto _st2030;
 		_st2030:
@@ -124577,7 +124583,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 121881 "shortcodes.c"
+#line 121887 "shortcodes.c"
 
 		goto _st2031;
 		_st2031:
@@ -124651,7 +124657,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 121954 "shortcodes.c"
+#line 121960 "shortcodes.c"
 
 		goto _st2032;
 		_st2032:
@@ -124707,7 +124713,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122009 "shortcodes.c"
+#line 122015 "shortcodes.c"
 
 		goto _st2034;
 		_st2034:
@@ -124778,7 +124784,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -124800,7 +124806,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 122101 "shortcodes.c"
+#line 122107 "shortcodes.c"
 
 		goto _st2035;
 		_st2035:
@@ -124899,7 +124905,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122199 "shortcodes.c"
+#line 122205 "shortcodes.c"
 
 		goto _st2037;
 		_st2037:
@@ -124971,7 +124977,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -124986,7 +124992,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 122285 "shortcodes.c"
+#line 122291 "shortcodes.c"
 
 		goto _st2038;
 		_st2038:
@@ -125060,7 +125066,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 122358 "shortcodes.c"
+#line 122364 "shortcodes.c"
 
 		goto _st2039;
 		_st2039:
@@ -125131,7 +125137,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 122428 "shortcodes.c"
+#line 122434 "shortcodes.c"
 
 		goto _st2040;
 		_st2040:
@@ -125232,7 +125238,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122528 "shortcodes.c"
+#line 122534 "shortcodes.c"
 
 		goto _st2044;
 		_st2044:
@@ -125345,7 +125351,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122640 "shortcodes.c"
+#line 122646 "shortcodes.c"
 
 		goto _st2047;
 		_st2047:
@@ -125416,7 +125422,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 122710 "shortcodes.c"
+#line 122716 "shortcodes.c"
 
 		goto _st2048;
 		_st2048:
@@ -125487,7 +125493,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 122780 "shortcodes.c"
+#line 122786 "shortcodes.c"
 
 		goto _st2049;
 		_st2049:
@@ -125537,7 +125543,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122829 "shortcodes.c"
+#line 122835 "shortcodes.c"
 
 		goto _st2051;
 		_st2051:
@@ -125600,7 +125606,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -125615,7 +125621,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 122906 "shortcodes.c"
+#line 122912 "shortcodes.c"
 
 		goto _st2052;
 		_st2052:
@@ -125669,7 +125675,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 122959 "shortcodes.c"
+#line 122965 "shortcodes.c"
 
 		goto _st2053;
 		_st2053:
@@ -125775,7 +125781,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 123064 "shortcodes.c"
+#line 123070 "shortcodes.c"
 
 		goto _st2055;
 		_st2055:
@@ -125844,7 +125850,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -125859,7 +125865,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 123147 "shortcodes.c"
+#line 123153 "shortcodes.c"
 
 		goto _st2056;
 		_st2056:
@@ -125981,7 +125987,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 123268 "shortcodes.c"
+#line 123274 "shortcodes.c"
 
 		goto _st2059;
 		_st2059:
@@ -126052,7 +126058,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 123338 "shortcodes.c"
+#line 123344 "shortcodes.c"
 
 		goto _st2060;
 		_st2060:
@@ -126123,7 +126129,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 123408 "shortcodes.c"
+#line 123414 "shortcodes.c"
 
 		goto _st2061;
 		_st2061:
@@ -126173,7 +126179,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 123457 "shortcodes.c"
+#line 123463 "shortcodes.c"
 
 		goto _st2063;
 		_st2063:
@@ -126245,7 +126251,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -126260,7 +126266,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 123543 "shortcodes.c"
+#line 123549 "shortcodes.c"
 
 		goto _st2064;
 		_st2064:
@@ -126334,7 +126340,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 123616 "shortcodes.c"
+#line 123622 "shortcodes.c"
 
 		goto _st2065;
 		_st2065:
@@ -126405,7 +126411,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 123686 "shortcodes.c"
+#line 123692 "shortcodes.c"
 
 		goto _st2066;
 		_st2066:
@@ -126506,7 +126512,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 123786 "shortcodes.c"
+#line 123792 "shortcodes.c"
 
 		goto _st2070;
 		_st2070:
@@ -126619,7 +126625,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 123898 "shortcodes.c"
+#line 123904 "shortcodes.c"
 
 		goto _st2073;
 		_st2073:
@@ -126690,7 +126696,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 123968 "shortcodes.c"
+#line 123974 "shortcodes.c"
 
 		goto _st2074;
 		_st2074:
@@ -126761,7 +126767,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 124038 "shortcodes.c"
+#line 124044 "shortcodes.c"
 
 		goto _st2075;
 		_st2075:
@@ -126811,7 +126817,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 124087 "shortcodes.c"
+#line 124093 "shortcodes.c"
 
 		goto _st2077;
 		_st2077:
@@ -126876,7 +126882,7 @@ static const int shortcode_start = 2094;
 				if (last_val_mark != mark) {
 					if (!in_arg) {
 						if (sc_list[c_sc].argcount >= ARG_MAX) {
-							add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+							add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 							arg_overflow = 1;
 						} else {
 							cur_arg = sc_list[c_sc].argcount;
@@ -126898,7 +126904,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 124173 "shortcodes.c"
+#line 124179 "shortcodes.c"
 
 		goto _st2078;
 		_st2078:
@@ -126985,7 +126991,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 124259 "shortcodes.c"
+#line 124265 "shortcodes.c"
 
 		goto _st2080;
 		_st2080:
@@ -127051,7 +127057,7 @@ static const int shortcode_start = 2094;
 			if (c_sc < SC_MAX) {
 				if (!in_arg) {
 					if (sc_list[c_sc].argcount >= ARG_MAX) {
-						add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+						add_error(result, ERR_TOO_MANY_ARGS, mark-start);
 						arg_overflow = 1;
 					} else {
 						cur_arg = sc_list[c_sc].argcount;
@@ -127066,7 +127072,7 @@ static const int shortcode_start = 2094;
 			}
 		}
 		
-#line 124339 "shortcodes.c"
+#line 124345 "shortcodes.c"
 
 		goto _st2081;
 		_st2081:
@@ -127137,7 +127143,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 124409 "shortcodes.c"
+#line 124415 "shortcodes.c"
 
 		goto _st2082;
 		_st2082:
@@ -127202,7 +127208,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 124473 "shortcodes.c"
+#line 124479 "shortcodes.c"
 
 		goto _st2083;
 		_st2083:
@@ -127279,7 +127285,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 124549 "shortcodes.c"
+#line 124555 "shortcodes.c"
 
 		goto _st2087;
 		_st2087:
@@ -127374,7 +127380,7 @@ static const int shortcode_start = 2094;
 			mark = p;
 		}
 		
-#line 124643 "shortcodes.c"
+#line 124649 "shortcodes.c"
 
 		goto _st2090;
 		_st2090:
@@ -127439,7 +127445,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 124707 "shortcodes.c"
+#line 124713 "shortcodes.c"
 
 		goto _st2091;
 		_st2091:
@@ -127504,7 +127510,7 @@ static const int shortcode_start = 2094;
 			arg_overflow = 0;
 		}
 		
-#line 124771 "shortcodes.c"
+#line 124777 "shortcodes.c"
 
 		goto _st2092;
 		_st2092:
@@ -129664,9 +129670,8 @@ static const int shortcode_start = 2094;
 		_out: {}
 	}
 	
-#line 282 "shortcodes.rl"
+#line 288 "shortcodes.rl"
 
 	
-	result.sccount = c_sc;
-	return result;
+	result->sccount = c_sc;
 }

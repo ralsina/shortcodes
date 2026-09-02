@@ -48,7 +48,7 @@
       if (c_sc < SC_MAX) {
         if (!in_arg) {
           if (sc_list[c_sc].argcount >= ARG_MAX) {
-            add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+            add_error(result, ERR_TOO_MANY_ARGS, mark-start);
             arg_overflow = 1;
           } else {
             cur_arg = sc_list[c_sc].argcount;
@@ -70,7 +70,7 @@
       if (c_sc < SC_MAX) {
         if (!in_arg) {
           if (sc_list[c_sc].argcount >= ARG_MAX) {
-            add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+            add_error(result, ERR_TOO_MANY_ARGS, mark-start);
             arg_overflow = 1;
           } else {
             cur_arg = sc_list[c_sc].argcount;
@@ -104,7 +104,7 @@
         if (last_val_mark != mark) {
           if (!in_arg) {
             if (sc_list[c_sc].argcount >= ARG_MAX) {
-              add_error(&result, ERR_TOO_MANY_ARGS, mark-start);
+              add_error(result, ERR_TOO_MANY_ARGS, mark-start);
               arg_overflow = 1;
             } else {
               cur_arg = sc_list[c_sc].argcount;
@@ -174,7 +174,7 @@
       sc_list[c_sc].name.start = 0;
       sc_list[c_sc].name.len=0;
     }
-    add_error(&result, ERR_MISMATCHED_BRACKET, p-start-2);
+    add_error(result, ERR_MISMATCHED_BRACKET, p-start-2);
   };
 
   # A full shortcode
@@ -190,7 +190,7 @@
         data_mark = p+1;
         c_sc++;
       } else {
-        add_error(&result, ERR_TOO_MANY_SHORTCODES, p-start);
+        add_error(result, ERR_TOO_MANY_SHORTCODES, p-start);
       }
     };
 
@@ -232,7 +232,7 @@
     }
     if (!found) {
       // We are not closing any shortcode, error
-      add_error(&result, ERR_MISMATCHED_CLOSING_TAG,
+      add_error(result, ERR_MISMATCHED_CLOSING_TAG,
           (c_sc < SC_MAX) ? sc_list[c_sc].whole.start : 0);
       // Do NOT increase c_sc
     }
@@ -254,7 +254,11 @@ static void add_error(sc_result *result, unsigned int code, unsigned int positio
   }
 }
 
-sc_result parse(char *input, unsigned int len) {
+/* The result is written into a caller-provided sc_result instead of
+being returned by value: the struct is ~160KB, and by-value returns
+make optimizing compilers explode the copies into hundreds of
+thousands of instructions. */
+void parse(char *input, unsigned int len, sc_result *result) {
 
   %%write data;
   char *eof = input + len;
@@ -265,9 +269,11 @@ sc_result parse(char *input, unsigned int len) {
   char *p = input;
   char *pe = p + len;
 
-  sc_result result;
-  result.errcount = 0;
-  shortcode *sc_list = result.sc;
+  /* Zero the whole result: some fields (escaped, self_closing, ...)
+  are only assigned when their actions fire, and callers rely on
+  them being 0 otherwise. */
+  memset(result, 0, sizeof(*result));
+  shortcode *sc_list = result->sc;
   int c_sc = 0;
 
   char *mark = p;
@@ -281,6 +287,5 @@ sc_result parse(char *input, unsigned int len) {
   %% write init;
   %% write exec;
 
-  result.sccount = c_sc;
-  return result;
+  result->sccount = c_sc;
 }

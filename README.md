@@ -95,3 +95,14 @@ require "shortcodes"
 ## Usage in C
 
 Just copy `shortcodes.c` and `shortcodes.h` into your project and have fun.
+
+```c
+sc_result result;
+parse(input, len, &result);
+```
+
+The caller provides the `sc_result`: it is ~160KB, and returning it by
+value used to make optimizing compilers explode compile times
+dramatically. See
+[docs/compile-time-pitfall.md](docs/compile-time-pitfall.md) for the
+full story.
